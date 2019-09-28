@@ -3,16 +3,18 @@ import {Icon, Menu} from 'antd';
 import Style from './Style.module.scss';
 import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG/PAGE';
+import {Profile} from '../../Class';
 
 interface Props
 {
     children?: ReactNode,
     isLoggedIn: boolean,
+    username: Profile['username']
 }
 
 function RootView(props: Props)
 {
-    const {children, isLoggedIn} = props;
+    const {children, isLoggedIn, username} = props;
     return (
         <div className={Style.Root}>
             <Menu mode={'horizontal'} theme={'dark'} className={Style.menu} selectable={false}>
@@ -27,7 +29,7 @@ function RootView(props: Props)
                                     </Link>
                                 </Menu.Item>
                                 <Menu.Item>
-                                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER]}>{/*TODO: 替换 :username*/}
+                                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER].replace(':username', username)}>
                                         <Icon type="user" />个人中心
                                     </Link>
                                 </Menu.Item>
