@@ -27,7 +27,7 @@ function RootView(props: Props)
                                     </Link>
                                 </Menu.Item>
                                 <Menu.Item>
-                                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER]}>
+                                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER]}>{/*TODO: 替换 :username*/}
                                         <Icon type="user" />个人中心
                                     </Link>
                                 </Menu.Item>

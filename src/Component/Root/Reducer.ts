@@ -10,14 +10,14 @@ const reducer: Reducer = (state, action) =>
         {
             return {
                 ...state,
-                login: true,
+                isLoggedIn: true,
             };
         }
         case SET_LOGGED_OUT:
         {
             return {
                 ...state,
-                login: false,
+                isLoggedIn: false,
             };
         }
         default:

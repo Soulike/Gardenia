@@ -1,9 +1,8 @@
 import crypto from 'crypto';
 
-const hash = crypto.createHash('sha256');
-
 export function sha256(text: string): string
 {
+    const hash = crypto.createHash('sha256');
     hash.update(text);
     return hash.digest('hex');
 }
