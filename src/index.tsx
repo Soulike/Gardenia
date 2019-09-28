@@ -4,6 +4,9 @@ import './index.scss';
 import {Provider} from 'react-redux';
 import Store from './Store';
 import Loading from './Component/Loading';
+import './ModuleConfig';
+import {LocaleProvider} from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
 import * as serviceWorker from './serviceWorker';
 
 const Router = React.lazy(() => import('./Router'));
@@ -11,7 +14,9 @@ const Router = React.lazy(() => import('./Router'));
 ReactDOM.render(
     <Suspense fallback={<Loading />}>
         <Provider store={Store}>
-            <Router />
+            <LocaleProvider locale={zhCN}>
+                <Router />
+            </LocaleProvider>
         </Provider>
     </Suspense>, document.getElementById('root'));
 

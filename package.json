@@ -9,8 +9,12 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.2",
     "@types/react-router-dom": "^5.1.0",
+    "antd": "^3.23.4",
+    "babel-plugin-import": "^1.12.2",
+    "customize-cra": "^0.7.0",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
+    "react-app-rewired": "^2.1.3",
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
@@ -23,12 +27,12 @@
     "source-map-explorer": "^2.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build-dev": "react-scripts build",
-    "build": "react-scripts build && rm -rf build/static/js/*.map && rm -rf build/static/css/*.map",
+    "start": "react-app-rewired start",
+    "build-dev": "react-app-rewired build",
+    "build": "react-app-rewired build && rm -rf build/static/js/*.map && rm -rf build/static/css/*.map",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build -b build",
-    "test": "react-scripts test",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
