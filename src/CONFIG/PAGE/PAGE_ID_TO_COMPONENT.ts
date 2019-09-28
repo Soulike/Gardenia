@@ -1,6 +1,8 @@
 import {PAGE_ID} from './PAGE_ID';
-import Login from '../../Page/Login';
-import Register from '../../Page/Register';
+import React from 'react';
+
+const Login = React.lazy(() => import('../../Page/Login'));
+const Register = React.lazy(() => import('../../Page/Register'));
 
 export const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.INDEX]: undefined,

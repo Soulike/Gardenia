@@ -7,8 +7,14 @@ import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {FormProps} from 'antd/lib/form';
 import {Crypto} from '../../Function';
+import {setLoggedInAction} from '../../Component/Root/Action/Action';
+import {connect} from 'react-redux';
 
-interface Props extends RouteComponentProps {}
+interface Props extends RouteComponentProps
+{
+    setLoggedIn: () => any,
+    isLoggedIn: boolean
+}
 
 interface State
 {
@@ -30,6 +36,11 @@ class Login extends PureComponent<Props, State>
     componentDidMount()
     {
         document.title = '登录';
+        const {isLoggedIn} = this.props;
+        if (isLoggedIn)
+        {
+            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
+        }
     }
 
     onUsernameInputChange: InputProps['onChange'] = e =>
@@ -60,6 +71,8 @@ class Login extends PureComponent<Props, State>
         const isSuccessful = await Account.login(username, hash);
         if (isSuccessful)
         {
+            const {setLoggedIn} = this.props;
+            setLoggedIn();
             notification.success({message: '登录成功'});
             this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
         }
@@ -77,4 +90,16 @@ class Login extends PureComponent<Props, State>
     }
 }
 
-export default withRouter(Login);
+const mapStateToProps = (state: any) =>
+{
+    const {Root: {isLoggedIn}} = state;
+    return {
+        isLoggedIn,
+    };
+};
+
+const mapDispatchToProps = {
+    setLoggedIn: setLoggedInAction,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

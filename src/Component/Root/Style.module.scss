@@ -1,0 +1,17 @@
+.Root {
+    width: 100vw;
+
+    .menu {
+        margin-bottom: 10vh;
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: bolder;
+            color: #FFF;
+        }
+
+        .accountMenu {
+            float: right;
+        }
+    }
+}
