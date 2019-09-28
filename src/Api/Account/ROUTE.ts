@@ -1,6 +1,6 @@
 import {prefix} from '../Function';
 
-export function accountPrefix(url: string): string
+function accountPrefix(url: string): string
 {
     return prefix(`/account${url}`);
 }

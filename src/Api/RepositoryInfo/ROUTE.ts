@@ -1,6 +1,6 @@
 import {prefix} from '../Function';
 
-export function repositoryInfoPrefix(url: string): string
+function repositoryInfoPrefix(url: string): string
 {
     return prefix(`/repositoryInfo${url}`);
 }
