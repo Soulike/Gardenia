@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import Store from './Store';
 import Loading from './Component/Loading';
 import './ModuleConfig';
-import {LocaleProvider} from 'antd';
+import {ConfigProvider} from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import * as serviceWorker from './serviceWorker';
 
@@ -14,9 +14,9 @@ const Router = React.lazy(() => import('./Router'));
 ReactDOM.render(
     <Suspense fallback={<Loading />}>
         <Provider store={Store}>
-            <LocaleProvider locale={zhCN}>
+            <ConfigProvider locale={zhCN}>
                 <Router />
-            </LocaleProvider>
+            </ConfigProvider>
         </Provider>
     </Suspense>, document.getElementById('root'));
 

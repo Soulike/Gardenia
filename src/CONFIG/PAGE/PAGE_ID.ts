@@ -1,1 +1,6 @@
-export const PAGE_ID: { [index: string]: string } = {};
+export const PAGE_ID = {
+    INDEX: 'INDEX',
+    CREATE_REPOSITORY: 'CREATE_REPOSITORY',
+    PERSONAL_CENTER: 'PERSONAL_CENTER',
+    REPOSITORY: 'REPOSITORY',
+};
