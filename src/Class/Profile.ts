@@ -9,6 +9,7 @@ export class Profile
     public username: string;
     public nickname: string;
     public avatar: string;
+    private _email: string = '';
 
     constructor(username: string, nickname: string, email: string, avatar: string)
     {
@@ -18,7 +19,11 @@ export class Profile
         this.avatar = avatar;
     }
 
-    private _email: string = '';
+    toJSON()
+    {
+        const {username, nickname, avatar, _email} = this;
+        return {username, nickname, email: _email, avatar};
+    }
 
     get email(): string
     {
