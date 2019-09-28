@@ -1,1 +1,3 @@
-export * from './Request';
+import * as Account from './Request';
+
+export {Account};

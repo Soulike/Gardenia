@@ -1,1 +1,3 @@
-export * from './Request';
+import * as Repository from './Request';
+
+export {Repository};

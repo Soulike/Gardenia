@@ -1,1 +1,3 @@
-export * from './Crypto';
+import * as Crypto from './Crypto';
+
+export {Crypto};
