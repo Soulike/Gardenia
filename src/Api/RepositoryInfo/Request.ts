@@ -60,14 +60,14 @@ export async function branch(username: string, name: string): Promise<Array<stri
     }
 }
 
-export async function lastCommit(username: string, name: string, branch: string): Promise<Commit | null>
+export async function lastCommit(username: string, name: string, branch: string, file?: string): Promise<Commit | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Commit>> =
             await axios.get(LAST_COMMIT, {
                 params: {
-                    json: JSON.stringify({username, name, branch}),
+                    json: JSON.stringify({username, name, branch, file}),
                 },
             });
         if (isSuccessful)

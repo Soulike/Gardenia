@@ -1,8 +1,8 @@
-.FileList {
+.FileReader {
     border: 1px solid #DDD;
     border-radius: 3px;
 
-    .lastCommitInfoBar {
+    .fileInfoBar {
         padding: 10px;
         border-bottom: 1px solid #DDD;
 
@@ -10,16 +10,20 @@
             display: inline-block;
         }
 
-        .committerName, .message, .commitHash, .time {
+        .committerName, .fileName, .message, .commitHash, .time {
             margin: 0 3px;
         }
 
-        .committerName {
+        .committerName, .fileName {
             font-weight: bold;
         }
 
         .commitHash, .time {
             float: right;
         }
+    }
+
+    .content {
+        margin: 10px;
     }
 }

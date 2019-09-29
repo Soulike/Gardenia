@@ -9,8 +9,16 @@ import CloneButton from './Component/CloneButton';
 import InfoBar from './Component/InfoBar';
 import BranchButton from './Component/BranchButton';
 import FileList from './Component/FileList';
+import FileReader from './Component/FileReader';
 
-interface Props extends RouteComponentProps
+interface Match
+{
+    username: string,
+    repository: string,
+    path: string,
+}
+
+interface Props extends RouteComponentProps<Match>
 {
     repository: RepositoryClass,
     branches: Array<string>,
@@ -25,6 +33,8 @@ function RepositoryView(props: Props)
         loading,
         commitCount,
         branches,
+        location: {pathname},
+        match: {params: {path}},
     } = props;
     return (
         <div className={Style.Repository}>
@@ -53,7 +63,11 @@ function RepositoryView(props: Props)
                     <BranchButton branches={branches} />
                     <CloneButton username={username} repository={name} />
                 </div>
-                <FileList />
+                {
+                    path === undefined || pathname.slice(-1) === '/' ?
+                        <FileList /> :
+                        <FileReader />
+                }
             </Skeleton>
         </div>
     );
