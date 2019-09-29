@@ -1,10 +1,8 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Repository} from '../../Class';
-import {Card, Empty, List} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
-import {Link} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG/PAGE';
+import RepositoryList from '../../Component/RepositoryList';
 
 interface Props
 {
@@ -20,24 +18,7 @@ function IndexView(props: Props)
     return (
         <div className={Style.Index}>
             <InfiniteScroll loadMore={loadMore} initialLoad={false} hasMore={hasMore}>
-                <List dataSource={repositoryList}
-                      loading={loading}
-                      locale={{emptyText: <Empty description={'没有仓库'} />}}
-                      renderItem={repository =>
-                      {
-                          const {username, name, description} = repository;
-                          return (
-                              <Link className={Style.repositoryWrapper}
-                                    target={'__blank'} rel={'noreferrer noopener'}
-                                    to={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY]
-                                      .replace(':username', username)
-                                      .replace(':repository', name)
-                                      .replace(':path*', '')}>
-                                  <Card className={Style.repository} hoverable={true}>
-                                      <Card.Meta title={`${username} - ${name}`} description={description} />
-                                  </Card>
-                              </Link>);
-                      }} />
+                <RepositoryList repositoryList={repositoryList} loading={loading} />
             </InfiniteScroll>
         </div>);
 }
