@@ -1,7 +1,7 @@
 import {Commit, Repository as RepositoryClass, ResponseBody} from '../../Class';
 import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
-import {BRANCH, DIRECTORY, LAST_COMMIT, REPOSITORY} from './ROUTE';
+import {BRANCH, COMMIT_COUNT, DIRECTORY, LAST_COMMIT, REPOSITORY} from './ROUTE';
 import {ObjectType} from '../../CONSTANT';
 
 export async function repository(username: string, name: string): Promise<RepositoryClass | null>
@@ -96,6 +96,34 @@ export async function directory(username: string, name: string, branch: string, 
             await axios.get(DIRECTORY, {
                 params: {
                     json: JSON.stringify({username, name, branch, path}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        notification.error({message: '网络异常'});
+        return null;
+    }
+}
+
+export async function commitCount(username: string, name: string, branch: string): Promise<{ commitCount: number } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commitCount: number }>> =
+            await axios.get(COMMIT_COUNT, {
+                params: {
+                    json: JSON.stringify({username, name, branch}),
                 },
             });
         if (isSuccessful)

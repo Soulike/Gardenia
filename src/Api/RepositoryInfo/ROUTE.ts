@@ -9,3 +9,4 @@ export const REPOSITORY = repositoryInfoPrefix('/repository');
 export const BRANCH = repositoryInfoPrefix('/branch');
 export const LAST_COMMIT = repositoryInfoPrefix('/lastCommit');
 export const DIRECTORY = repositoryInfoPrefix('/directory');
+export const COMMIT_COUNT = repositoryInfoPrefix('/commitCount');
