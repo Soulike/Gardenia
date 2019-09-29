@@ -5,7 +5,6 @@ import {Commit, Repository as RepositoryClass} from '../../Class';
 import {RepositoryInfo} from '../../Api';
 import {setBranchAction} from './Action/Action';
 import {connect} from 'react-redux';
-import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 
 interface Match
 {
@@ -15,7 +14,6 @@ interface Match
 
 interface Props extends RouteComponentProps<Match>
 {
-    branch: string,
     setBranch: (branch: string) => any
 }
 
@@ -75,38 +73,21 @@ class Repository extends PureComponent<Props, State>
         this.setState({loading: false});
     }
 
-    onBranchClick: (branch: string) => MenuItemProps['onClick'] = branch =>
-    {
-        return () =>
-        {
-            const {setBranch} = this.props;
-            setBranch(branch);
-        };
-    };
-
     render()
     {
         const {repository, commitCount, branches, lastCommit, loading} = this.state;
-        const {branch} = this.props;
         return (
             <View repository={repository}
                   commitCount={commitCount}
                   loading={loading}
                   branches={branches}
-                  branch={branch}
-                  lastCommit={lastCommit} onBranchClick={this.onBranchClick} />
+                  lastCommit={lastCommit} />
         );
     }
 }
-
-const mapStateToProps = (state: any) =>
-{
-    const {Repository: {branch}} = state;
-    return {branch};
-};
 
 const mapDispatchToProps = {
     setBranch: setBranchAction,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Repository));
+export default withRouter(connect(null, mapDispatchToProps)(Repository));
