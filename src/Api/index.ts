@@ -1,4 +1,4 @@
-import './AxiosGlobalConfig';
+import './Axios';
 
 export * from './Account';
 export * from './Repository';

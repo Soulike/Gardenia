@@ -36,7 +36,7 @@ class Index extends PureComponent<Props, State>
     loadMore = async () =>
     {
         const {repositoryList, lastEnd} = this.state;
-        const repositoryListFromServer = await RepositoryApi.getPublicList(lastEnd, lastEnd + Index.PAGE_SIZE);
+        const repositoryListFromServer = await RepositoryApi.getList(lastEnd, lastEnd + Index.PAGE_SIZE);
         this.setState({loading: false});
         if (repositoryListFromServer !== null)
         {
