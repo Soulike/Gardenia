@@ -11,12 +11,14 @@ export default () =>
         <BrowserRouter>
             <Switch>
                 <Root>
-                    {
-                        Object.values(PAGE_ID).map(pageId => <Route path={PAGE_ID_TO_ROUTE[pageId]}
-                                                                    component={PAGE_ID_TO_COMPONENT[pageId]}
-                                                                    exact={true}
-                                                                    key={pageId} />)
-                    }
+                    <Switch>
+                        {
+                            Object.values(PAGE_ID).map(pageId => <Route path={PAGE_ID_TO_ROUTE[pageId]}
+                                                                        component={PAGE_ID_TO_COMPONENT[pageId]}
+                                                                        exact={true}
+                                                                        key={pageId} />)
+                        }
+                    </Switch>
                 </Root>
                 <Route render={NotFound} />
             </Switch>
