@@ -6,6 +6,7 @@ const Register = React.lazy(() => import('../../Page/Register'));
 const Index = React.lazy(() => import('../../Page/Index'));
 const CreateRepository = React.lazy(() => import('../../Page/CreateRepository'));
 const PersonalCenter = React.lazy(() => import('../../Page/PersonalCenter'));
+const Repository = React.lazy(() => import('../../Page/Repository'));
 
 export const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.INDEX]: Index,
@@ -13,5 +14,5 @@ export const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.REGISTER]: Register,
     [PAGE_ID.CREATE_REPOSITORY]: CreateRepository,
     [PAGE_ID.PERSONAL_CENTER]: PersonalCenter,
-    [PAGE_ID.REPOSITORY]: undefined,
+    [PAGE_ID.REPOSITORY]: Repository,
 };
