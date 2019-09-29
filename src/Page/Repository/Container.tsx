@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Commit, Repository as RepositoryClass} from '../../Class';
+import {Repository as RepositoryClass} from '../../Class';
 import {RepositoryInfo} from '../../Api';
 import {setBranchAction} from './Action/Action';
 import {connect} from 'react-redux';
@@ -22,7 +22,6 @@ interface State
     repository: RepositoryClass,
     branches: Array<string>,
     commitCount: number,
-    lastCommit: Commit,
     loading: boolean,
 }
 
@@ -35,7 +34,6 @@ class Repository extends PureComponent<Props, State>
             repository: new RepositoryClass('', '', '', true),
             branches: [],
             commitCount: 0,
-            lastCommit: new Commit('', '', '', '', ''),
             loading: true,
         };
     }
@@ -44,11 +42,10 @@ class Repository extends PureComponent<Props, State>
     async componentDidMount()
     {
         const {match: {params: {username, repository: name}}} = this.props;
-        const [repository, branches, commitCountWrapper, lastCommit] = await Promise.all([
+        const [repository, branches, commitCountWrapper] = await Promise.all([
             RepositoryInfo.repository(username, name),
             RepositoryInfo.branch(username, name),
             RepositoryInfo.commitCount(username, name, 'HEAD'),
-            RepositoryInfo.lastCommit(username, name, 'HEAD'),
         ]);
         if (repository !== null)
         {
@@ -66,22 +63,17 @@ class Repository extends PureComponent<Props, State>
         {
             this.setState({commitCount: commitCountWrapper.commitCount});
         }
-        if (lastCommit !== null)
-        {
-            this.setState({lastCommit});
-        }
         this.setState({loading: false});
     }
 
     render()
     {
-        const {repository, commitCount, branches, lastCommit, loading} = this.state;
+        const {repository, commitCount, branches, loading} = this.state;
         return (
             <View repository={repository}
                   commitCount={commitCount}
                   loading={loading}
-                  branches={branches}
-                  lastCommit={lastCommit} />
+                  branches={branches} />
         );
     }
 }

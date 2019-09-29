@@ -1,0 +1,24 @@
+.Item {
+    padding: 7px 10px;
+
+    .icon, .fileName, .message, .time {
+        display: inline-block;
+    }
+
+    .icon {
+        width: 2%;
+    }
+
+    .fileName {
+        width: 25%;
+    }
+
+    .message {
+        width: 60%;
+    }
+
+    .time {
+        text-align: right;
+        width: 13%;
+    }
+}

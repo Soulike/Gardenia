@@ -1,0 +1,29 @@
+.FileList {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+
+    .lastCommitInfoBar {
+        padding: 10px;
+        border-bottom: 1px solid #DDD;
+
+        & > * {
+            display: inline-block;
+        }
+
+        .committerName, .message, .commitHash, .time {
+            margin: 0 3px;
+        }
+
+        .committerName {
+            font-weight: bold;
+        }
+
+        .commitHash, .time {
+            float: right;
+        }
+
+        .fileList {
+            box-sizing: border-box;
+        }
+    }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Commit, Repository as RepositoryClass} from '../../Class';
+import {Repository as RepositoryClass} from '../../Class';
 import {Skeleton} from 'antd';
 import AccessibilityTag from '../../Component/AccessibilityTag';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
@@ -8,13 +8,13 @@ import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG/PAGE';
 import CloneButton from './Component/CloneButton';
 import InfoBar from './Component/InfoBar';
 import BranchButton from './Component/BranchButton';
+import FileList from './Component/FileList';
 
 interface Props extends RouteComponentProps
 {
     repository: RepositoryClass,
     branches: Array<string>,
     commitCount: number,
-    lastCommit: Commit,
     loading: boolean,
 }
 
@@ -25,7 +25,6 @@ function RepositoryView(props: Props)
         loading,
         commitCount,
         branches,
-        lastCommit,
     } = props;
     return (
         <div className={Style.Repository}>
@@ -54,6 +53,7 @@ function RepositoryView(props: Props)
                     <BranchButton branches={branches} />
                     <CloneButton username={username} repository={name} />
                 </div>
+                <FileList />
             </Skeleton>
         </div>
     );
