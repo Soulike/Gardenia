@@ -1,9 +1,10 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Card, Empty, List, Tag} from 'antd';
+import {Card, Empty, List} from 'antd';
 import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG/PAGE';
 import {Repository} from '../../Class';
+import AccessibilityTag from '../AccessibilityTag';
 
 interface Props
 {
@@ -31,11 +32,7 @@ function RepositoryList(props: Props)
                           <Card className={Style.repository} hoverable={true}>
                               <Card.Meta title={
                                   <React.Fragment>
-                                      {
-                                          isPublic ?
-                                              <Tag color={'blue'}>公共</Tag> :
-                                              <Tag color={'gold'}>私人</Tag>
-                                      }
+                                      <AccessibilityTag isPublic={isPublic} />
                                       {username}/{name}
                                   </React.Fragment>
                               } description={
