@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {ResponseBody} from '../../Class';
-import {LOGIN, REGISTER} from './ROUTE';
+import {CHECK_SESSION, LOGIN, REGISTER} from './ROUTE';
 import {notification} from 'antd';
 
 export async function login(username: string, hash: string): Promise<true | null>
@@ -45,6 +45,28 @@ export async function register(username: string, hash: string, email: string): P
         else
         {
             notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        notification.error({message: '网络异常'});
+        return null;
+    }
+}
+
+export async function checkSession(): Promise<{ isValid: boolean } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isValid: boolean }>> = await axios.get(CHECK_SESSION);
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
             return null;
         }
     }

@@ -2,12 +2,14 @@ import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {connect} from 'react-redux';
 import {Profile as ProfileClass} from '../../Class';
-import {Profile as ProfileApi} from '../../Api';
+import {Account, Profile as ProfileApi} from '../../Api';
+import {setLoggedInAction} from './Action/Action';
 
 interface Props
 {
     children?: ReactNode,
     isLoggedIn: boolean,
+    setLoggedIn: () => any;
 }
 
 interface State
@@ -23,6 +25,22 @@ class Root extends PureComponent<Props, State>
         this.state = {
             profile: new ProfileClass('', '', 'example@example.com', ''),
         };
+    }
+
+    async componentDidMount()
+    {
+        // 检查是不是已经登录了
+        const result = await Account.checkSession();
+        if (result !== null && result.isValid)
+        {
+            const {setLoggedIn} = this.props;
+            setLoggedIn();
+            const profile = await ProfileApi.get();
+            if (profile !== null)
+            {
+                this.setState({profile});
+            }
+        }
     }
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
@@ -59,4 +77,8 @@ const mapStateToProps = (state: any) =>
     };
 };
 
-export default connect(mapStateToProps)(Root);
+const mapDispatchToProps = {
+    setLoggedIn: setLoggedInAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Root);
