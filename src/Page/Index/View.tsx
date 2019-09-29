@@ -27,9 +27,9 @@ function IndexView(props: Props)
                       {
                           const {username, name, description} = repository;
                           return (
-                              <Link
-                                  target={'__blank'} rel={'noreferrer noopener'}
-                                  to={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY]
+                              <Link className={Style.repositoryWrapper}
+                                    target={'__blank'} rel={'noreferrer noopener'}
+                                    to={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY]
                                       .replace(':username', username)
                                       .replace(':repository', name)
                                       .replace(':path*', '')}>

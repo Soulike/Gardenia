@@ -18,7 +18,9 @@ function RootView(props: Props)
     return (
         <div className={Style.Root}>
             <Menu mode={'horizontal'} theme={'dark'} className={Style.menu} selectable={false}>
-                <Menu.Item className={Style.title}>Git Demo</Menu.Item>
+                <Menu.Item className={Style.title}>
+                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]}>Git Demo</Link>
+                </Menu.Item>
                 <Menu.Item className={Style.accountMenu}>
                     {
                         isLoggedIn ?
