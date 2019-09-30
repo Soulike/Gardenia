@@ -74,23 +74,21 @@ class FileReader extends PureComponent<Props, State>
         const {isBinary, rawContent, lastCommit, loading} = this.state;
         let html = '';
         const pre = document.createElement('pre');
-        const code = document.createElement('code');
-        pre.append(code);
-        code.innerText = rawContent;
+        const node = document.createElement('div');
+        node.append(pre);
+        pre.innerText = rawContent;
         if (isBinary)
         {
             html = `<p style={{textAlign: 'center'}}>二进制文件无法显示</p>`;
         }
         else if (rawContent.length <= 50 * 1024)    // 小于 50K 执行高亮
         {
-            const node = document.createElement('div');
-            node.append(pre);
             hljs.highlightBlock(pre);
             html = node.innerHTML;
         }
         else    // 大于 50K 就不再高亮
         {
-            html = rawContent;
+            html = node.innerHTML;
         }
         return (
             <View html={html}
