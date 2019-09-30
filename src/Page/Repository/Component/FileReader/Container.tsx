@@ -5,6 +5,8 @@ import {Commit} from '../../../../Class';
 import {Repository, RepositoryInfo} from '../../../../Api';
 import {connect} from 'react-redux';
 import hljs from 'highlight.js';
+import {extname} from 'path';
+import showdown from 'showdown';
 
 interface Match
 {
@@ -28,6 +30,13 @@ interface State
 
 class FileReader extends PureComponent<Props, State>
 {
+    private static mdConverter = new showdown.Converter({
+        tables: true,
+        strikethrough: true,
+        tasklists: true,
+        emoji: true,
+    });
+
     constructor(props: Props)
     {
         super(props);
@@ -80,30 +89,39 @@ class FileReader extends PureComponent<Props, State>
     render()
     {
         const {match: {params: {path}}} = this.props;
-        const pathSplit = path.split('/');
         const {isBinary, rawContent, lastCommit, loading} = this.state;
+        const pathSplit = path.split('/');
+        const fileName = pathSplit[pathSplit.length - 1];
+        const ext = extname(fileName);
         let html = '';
-        const pre = document.createElement('pre');
-        const node = document.createElement('div');
-        node.append(pre);
-        pre.innerText = rawContent;
-        if (isBinary)
+        if (ext === '.md' || ext === '.markdown')   // 是 markdown，就渲染出来
         {
-            html = `<p style={{textAlign: 'center'}}>二进制文件无法显示</p>`;
+            html = FileReader.mdConverter.makeHtml(rawContent);
         }
-        else if (rawContent.length <= 50 * 1024)    // 小于 50K 执行高亮
+        else    // 是代码，就进行高亮
         {
-            hljs.highlightBlock(pre);
-            html = node.innerHTML;
-        }
-        else    // 大于 50K 就不再高亮
-        {
-            html = node.innerHTML;
+            const pre = document.createElement('pre');
+            const node = document.createElement('div');
+            node.append(pre);
+            pre.innerText = rawContent;
+            if (isBinary)
+            {
+                html = `<p style={{textAlign: 'center'}}>二进制文件无法显示</p>`;
+            }
+            else if (rawContent.length <= 50 * 1024)    // 小于 50K 执行高亮
+            {
+                hljs.highlightBlock(pre);
+                html = node.innerHTML;
+            }
+            else    // 大于 50K 就不再高亮
+            {
+                html = node.innerHTML;
+            }
         }
         return (
             <View html={html}
                   lastCommit={lastCommit}
-                  fileName={pathSplit[pathSplit.length - 1]} loading={loading} />
+                  fileName={fileName} loading={loading} />
         );
 
     }

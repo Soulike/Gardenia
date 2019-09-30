@@ -10,6 +10,7 @@ import InfoBar from './Component/InfoBar';
 import BranchButton from './Component/BranchButton';
 import FileList from './Component/FileList';
 import FileReader from './Component/FileReader';
+import Empty from './Component/Empty';
 
 interface Match
 {
@@ -63,7 +64,7 @@ function RepositoryView(props: Props)
                 <InfoBar commitCount={commitCount} branchCount={branches.length} />
                 {
                     isEmpty ?
-                        <div>仓库为空</div> :
+                        <Empty /> :
                         <React.Fragment>
                             <div className={Style.buttonWrapper}>
                                 <BranchButton branches={branches} />
