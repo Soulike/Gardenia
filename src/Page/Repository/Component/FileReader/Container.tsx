@@ -67,6 +67,16 @@ class FileReader extends PureComponent<Props, State>
         }
     }
 
+    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    {
+        const {branch: preBranch} = prevProps;
+        const {branch} = this.props;
+        if (branch !== preBranch)   // 分支切换，就重新获取文件信息
+        {
+            await this.componentDidMount();
+        }
+    }
+
     render()
     {
         const {match: {params: {path}}} = this.props;
