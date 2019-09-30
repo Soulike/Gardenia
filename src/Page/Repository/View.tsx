@@ -24,6 +24,7 @@ interface Props extends RouteComponentProps<Match>
     branches: Array<string>,
     commitCount: number,
     loading: boolean,
+    isEmpty: boolean,
 }
 
 function RepositoryView(props: Props)
@@ -35,6 +36,7 @@ function RepositoryView(props: Props)
         branches,
         location: {pathname},
         match: {params: {path}},
+        isEmpty,
     } = props;
     return (
         <div className={Style.Repository}>
@@ -59,14 +61,20 @@ function RepositoryView(props: Props)
                     {description}
                 </div>
                 <InfoBar commitCount={commitCount} branchCount={branches.length} />
-                <div className={Style.buttonWrapper}>
-                    <BranchButton branches={branches} />
-                    <CloneButton username={username} repository={name} />
-                </div>
                 {
-                    path === undefined || pathname.slice(-1) === '/' ?
-                        <FileList /> :
-                        <FileReader />
+                    isEmpty ?
+                        <div>仓库为空</div> :
+                        <React.Fragment>
+                            <div className={Style.buttonWrapper}>
+                                <BranchButton branches={branches} />
+                                <CloneButton username={username} repository={name} />
+                            </div>
+                            {
+                                path === undefined || pathname.slice(-1) === '/' ?
+                                    <FileList /> :
+                                    <FileReader />
+                            }
+                        </React.Fragment>
                 }
             </Skeleton>
         </div>
