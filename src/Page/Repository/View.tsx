@@ -5,12 +5,13 @@ import {Skeleton} from 'antd';
 import AccessibilityTag from '../../Component/AccessibilityTag';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG/PAGE';
-import CloneButton from './Component/CloneButton';
 import InfoBar from './Component/InfoBar';
-import BranchButton from './Component/BranchButton';
-import FileList from './Component/FileList';
-import FileReader from './Component/FileReader';
-import Empty from './Component/Empty';
+
+const BranchButton = React.lazy(() => import('./Component/BranchButton'));
+const FileList = React.lazy(() => import('./Component/FileList'));
+const CloneButton = React.lazy(() => import('./Component/CloneButton'));
+const Empty = React.lazy(() => import('./Component/Empty'));
+const FileReader = React.lazy(() => import('./Component/FileReader'));
 
 interface Match
 {
