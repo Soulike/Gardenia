@@ -21,7 +21,7 @@ function BranchButtonView(props: Props)
                 }
             </Menu>
         }>
-            <Button>{branch}<Icon type="caret-down" /></Button>
+            <Button>分支：{branch}<Icon type="caret-down" /></Button>
         </Dropdown>
     );
 }

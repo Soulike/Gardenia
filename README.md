@@ -1,3 +1,3 @@
-# React 项目模版
+# Soulike Git
 
-本项目用于快速构建 React 项目。
+模仿 GitHub 制作的托管平台，前端部分。
