@@ -6,7 +6,7 @@ import {RepositoryInfo} from '../../../../Api';
 import {connect} from 'react-redux';
 import hljs from 'highlight.js';
 import {extname} from 'path';
-import showdown from 'showdown';
+import {mdConverter} from '../../../../Singleton';
 import {ObjectType} from '../../../../CONSTANT';
 
 interface Match
@@ -33,12 +33,6 @@ interface State
 
 class FileReader extends PureComponent<Props, State>
 {
-    private static mdConverter = new showdown.Converter({
-        tables: true,
-        strikethrough: true,
-        tasklists: true,
-        emoji: true,
-    });
 
     constructor(props: Props)
     {
@@ -123,7 +117,7 @@ class FileReader extends PureComponent<Props, State>
             const ext = extname(fileName);
             if (ext === '.md' || ext === '.markdown')   // 是 markdown，就渲染出来
             {
-                html = FileReader.mdConverter.makeHtml(rawContent);
+                html = mdConverter.makeHtml(rawContent);
             }
             else    // 是代码，就进行高亮
             {

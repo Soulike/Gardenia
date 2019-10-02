@@ -1,0 +1,14 @@
+.Readme {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+
+    .title {
+        font-weight: bold;
+        padding: 10px;
+        border-bottom: 1px solid #DDD;
+    }
+
+    .content {
+        padding: 10px 25px;
+    }
+}
