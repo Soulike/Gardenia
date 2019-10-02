@@ -8,4 +8,3 @@ function repositoryPrefix(url: string): string
 export const GET_LIST = repositoryPrefix('/getList');
 export const CREATE = repositoryPrefix('/create');
 export const DEL = repositoryPrefix('/del');
-export const GET_FILE = repositoryPrefix('/getFile');

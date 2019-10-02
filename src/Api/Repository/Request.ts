@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import {Repository as RepositoryClass, ResponseBody} from '../../Class';
 import {notification} from 'antd';
-import {CREATE, DEL, GET_FILE, GET_LIST} from './ROUTE';
+import {CREATE, DEL, GET_LIST} from './ROUTE';
 
 export async function getList(start: number, end: number, username?: string): Promise<Array<RepositoryClass> | null>
 {
@@ -62,34 +62,6 @@ export async function del(name: string): Promise<true | null>
         if (isSuccessful)
         {
             return true;
-        }
-        else
-        {
-            notification.warn({message});
-            return null;
-        }
-    }
-    catch (e)
-    {
-        console.error(e);
-        notification.error({message: '网络异常'});
-        return null;
-    }
-}
-
-export async function getFile(username: string, repositoryName: string, filePath: string, hash: string): Promise<{ isBinary: boolean, content?: string } | null>
-{
-    try
-    {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ isBinary: boolean, content?: string }>> =
-            await axios.get(GET_FILE, {
-                params: {
-                    json: JSON.stringify({username, repositoryName, filePath, hash}),
-                },
-            });
-        if (isSuccessful)
-        {
-            return data!;
         }
         else
         {

@@ -181,6 +181,7 @@ export async function rawFile(username: string, repositoryName: string, filePath
                 params: {
                     json: JSON.stringify({username, repositoryName, filePath, commitHash}),
                 },
+                transformResponse: data => data,    // 明确告知 axios 不要对返回的数据做任何处理
             });
         return data;
     }
