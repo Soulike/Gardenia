@@ -2,10 +2,13 @@ import React from 'react';
 import Style from './Style.module.scss';
 import 'highlight.js/scss/github-gist.scss';
 import {Commit} from '../../../../Class';
-import {Spin} from 'antd';
+import {Alert, Spin} from 'antd';
 
 interface Props
 {
+    isBinary: boolean,
+    isOversize: boolean,
+    exists: boolean,
     fileName: string,
     html: string,
     lastCommit: Commit,
@@ -14,7 +17,7 @@ interface Props
 
 function FileReader(props: Props)
 {
-    const {fileName, html, lastCommit: {committerName, message, time, commitHash}, loading} = props;
+    const {isBinary, isOversize, exists, fileName, html, lastCommit: {committerName, message, time, commitHash}, loading} = props;
     return (
         <div className={Style.FileReader}>
             <Spin spinning={loading}>
@@ -25,7 +28,15 @@ function FileReader(props: Props)
                     <div className={Style.time}>{time}</div>
                     <div className={Style.commitHash}>最后提交：{commitHash.slice(0, 7)}</div>
                 </div>
-                <div className={Style.content} dangerouslySetInnerHTML={{__html: html}} />
+                {
+                    exists ?
+                        isBinary ?
+                            <Alert type={'info'} showIcon={true} message={'二进制文件无法显示'} description={'你可以直接查看原文件'} /> :
+                            isOversize ?
+                                <Alert type={'info'} showIcon={true} message={'文件太大'} description={'你可以直接查看原文件'} /> :
+                                <div className={Style.content} dangerouslySetInnerHTML={{__html: html}} /> :
+                        <Alert type={'error'} showIcon={true} message={'文件不存在'} />
+                }
             </Spin>
         </div>
     );
