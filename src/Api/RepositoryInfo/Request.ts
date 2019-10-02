@@ -1,7 +1,7 @@
 import {Commit, Repository as RepositoryClass, ResponseBody} from '../../Class';
 import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
-import {BRANCH, COMMIT_COUNT, DIRECTORY, LAST_COMMIT, REPOSITORY} from './ROUTE';
+import {BRANCH, COMMIT_COUNT, DIRECTORY, FILE_INFO, LAST_COMMIT, RAW_FILE, REPOSITORY} from './ROUTE';
 import {ObjectType} from '../../CONSTANT';
 
 export async function repository(username: string, name: string): Promise<RepositoryClass | null>
@@ -135,6 +135,54 @@ export async function commitCount(username: string, name: string, branch: string
             notification.warn({message});
             return null;
         }
+    }
+    catch (e)
+    {
+        console.error(e);
+        notification.error({message: '网络异常'});
+        return null;
+    }
+}
+
+export async function fileInfo(username: string, repositoryName: string, filePath: string, commitHash: string): Promise<{ exists: boolean, type?: ObjectType, size?: number, isBinary?: boolean } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ exists: boolean, type?: ObjectType, size?: number, isBinary?: boolean }>> =
+            await axios.get(FILE_INFO, {
+                params: {
+                    json: JSON.stringify({username, repositoryName, filePath, commitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        notification.error({message: '网络异常'});
+        return null;
+    }
+}
+
+export async function rawFile(username: string, repositoryName: string, filePath: string, commitHash: string): Promise<string | null>
+{
+    try
+    {
+        const {data}: AxiosResponse<string> =
+            await axios.get(RAW_FILE, {
+                params: {
+                    json: JSON.stringify({username, repositoryName, filePath, commitHash}),
+                },
+            });
+        return data;
     }
     catch (e)
     {
