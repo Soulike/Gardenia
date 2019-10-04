@@ -41,7 +41,7 @@ class BranchButton extends PureComponent<Props>
         const {match: {params: {branch}}, branches} = this.props;
         return (
             <View branches={branches}
-                  branch={branch == undefined || branch === 'HEAD' ? branches[0] : branch}
+                  branch={branch === undefined || branch === 'HEAD' ? branches[0] : branch}
                   onBranchClick={this.onBranchClick} />
         );
     }
