@@ -39,7 +39,6 @@ class Repository extends PureComponent<Props, State>
         };
     }
 
-
     async componentDidMount()
     {
         const {match: {params: {username, repository: name}}} = this.props;
@@ -75,6 +74,23 @@ class Repository extends PureComponent<Props, State>
             this.setState({branches});
         }
         this.setState({loading: false});
+    }
+
+    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    {
+        const {match: {params: {branch: preBranch}}} = prevProps;
+        const {match: {params: {branch}}} = this.props;
+        if (preBranch !== branch)    // 分支切换，重新获取提交相关信息
+        {
+            const {match: {params: {username, repository: name, branch}}} = this.props;
+            const commitCountWrapper = await RepositoryInfo.commitCount(username, name, branch);
+            if (commitCountWrapper !== null)
+            {
+                const {commitCount} = commitCountWrapper;
+                this.setState({commitCount});
+            }
+            this.setState({loading: false});
+        }
     }
 
     render()

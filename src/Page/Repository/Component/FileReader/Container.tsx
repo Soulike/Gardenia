@@ -7,7 +7,7 @@ import hljs from 'highlight.js';
 import {extname} from 'path';
 import {mdConverter} from '../../../../Singleton';
 import {ObjectType} from '../../../../CONSTANT';
-import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../Router/PAGE';
+import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../Router';
 
 interface Match
 {

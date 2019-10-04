@@ -4,7 +4,7 @@ import {ObjectType} from '../../../../../../CONSTANT';
 import {Commit} from '../../../../../../Class';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import Style from './Style.module.scss';
-import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../../../Router/PAGE';
+import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../../../Router';
 
 interface Match
 {

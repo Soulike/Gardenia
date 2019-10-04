@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Card, Empty, List} from 'antd';
 import {Link} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../Router/PAGE';
+import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../Router';
 import {Repository} from '../../Class';
 import AccessibilityTag from '../AccessibilityTag';
 

@@ -7,7 +7,7 @@ import {Profile} from '../../Api/Profile';
 import {Repository as RepositoryApi} from '../../Api';
 import {Repository as RepositoryClass} from '../../Class';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../Router/PAGE';
+import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../Router';
 
 interface Props extends RouteComponentProps {}
 
