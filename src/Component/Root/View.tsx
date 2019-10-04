@@ -2,8 +2,10 @@ import React, {ReactNode} from 'react';
 import {Icon, Menu} from 'antd';
 import Style from './Style.module.scss';
 import {Link} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router';
+import {CONFIG as ROUTER_CONFIG} from '../../Router';
 import {Profile} from '../../Class';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface Props
 {

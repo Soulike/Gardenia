@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Card, Empty, List} from 'antd';
 import {Link} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../Router';
+import {Function as RouterFunction} from '../../Router';
 import {Repository} from '../../Class';
 import AccessibilityTag from '../AccessibilityTag';
 
@@ -25,7 +25,7 @@ function RepositoryList(props: Props)
                   return (
                       <Link className={Style.repositoryWrapper}
                             target={'__blank'} rel={'noreferrer noopener'}
-                            to={PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](username, name)}>
+                            to={RouterFunction.generateRepositoryRoute({username, repository: name})}>
                           <Card className={Style.repository} hoverable={true}>
                               <Card.Meta title={
                                   <React.Fragment>

@@ -4,7 +4,7 @@ import {Repository as RepositoryClass} from '../../Class';
 import {Skeleton} from 'antd';
 import AccessibilityTag from '../../Component/AccessibilityTag';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import InfoBar from './Component/InfoBar';
 import {ObjectType} from '../../CONSTANT';
 
@@ -14,16 +14,7 @@ const CloneButton = React.lazy(() => import('./Component/CloneButton'));
 const Empty = React.lazy(() => import('./Component/Empty'));
 const FileReader = React.lazy(() => import('./Component/FileReader'));
 
-interface Match
-{
-    username: string,
-    repository: string,
-    objectType: string,
-    branch: string,
-    path: string,
-}
-
-interface Props extends RouteComponentProps<Match>
+interface Props extends RouteComponentProps<RouterInterface.Repository>
 {
     repository: RepositoryClass,
     branches: Array<string>,
@@ -49,9 +40,9 @@ function RepositoryView(props: Props)
                     <div className={Style.basicInfo}>
                         <AccessibilityTag isPublic={isPublic} />
                         <div className={Style.usernameAndName}>
-                            <Link to={PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.PERSONAL_CENTER](username)}>
+                            <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
                                 {username}
-                            </Link> / <Link to={PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](username, name)}>
+                            </Link> / <Link to={RouterFunction.generateRepositoryRoute({username, repository: name})}>
                             <b>{name}</b>
                         </Link>
                         </div>
@@ -70,7 +61,7 @@ function RepositoryView(props: Props)
                                 <CloneButton username={username} repository={name} />
                             </div>
                             {
-                                objectType === undefined || objectType.toUpperCase() === ObjectType.TREE ?
+                                objectType === undefined || objectType === ObjectType.TREE ?
                                     <FileList /> :
                                     <FileReader />
                             }

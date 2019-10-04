@@ -7,18 +7,9 @@ import hljs from 'highlight.js';
 import {extname} from 'path';
 import {mdConverter} from '../../../../Singleton';
 import {ObjectType} from '../../../../CONSTANT';
-import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 
-interface Match
-{
-    username: string,
-    repository: string,
-    objectType: string,
-    branch: string,
-    path: string,
-}
-
-interface Props extends RouteComponentProps<Match> {}
+interface Props extends RouteComponentProps<RouterInterface.Repository> {}
 
 interface State
 {
@@ -48,10 +39,10 @@ class FileReader extends PureComponent<Props, State>
 
     async componentDidMount()
     {
-        const {match: {params: {username, repository: name, path, branch}}, history} = this.props;
+        const {match: {params: {username, repository: name, path, branch}}} = this.props;
         // 加载最后一次提交信息
         this.setState({loading: true});
-        const lastCommit = await RepositoryInfo.lastCommit(username, name, branch, path);
+        const lastCommit = await RepositoryInfo.lastCommit(username, name, branch!, path);
         this.setState({loading: false});
         if (lastCommit !== null)
         {
@@ -60,7 +51,7 @@ class FileReader extends PureComponent<Props, State>
             this.setState({loading: true});
 
             // 加载文件信息
-            const fileInfo = await RepositoryInfo.fileInfo(username, name, path, commitHash);
+            const fileInfo = await RepositoryInfo.fileInfo(username, name, path!, commitHash);
             this.setState({loading: false});
             if (fileInfo !== null)
             {
@@ -70,7 +61,13 @@ class FileReader extends PureComponent<Props, State>
                 {
                     if (type === ObjectType.TREE)    // 类型并不是文件，就重定向到目录视图
                     {
-                        history.replace(PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](username, name, 'tree', branch, path));
+                        RouterFunction.generateRepositoryRoute({
+                            username,
+                            repository: name,
+                            objectType: ObjectType.TREE,
+                            branch,
+                            path,
+                        });
                         return;
                     }
                     this.setState({isBinary: isBinary!});
@@ -81,7 +78,7 @@ class FileReader extends PureComponent<Props, State>
                     else    // 不是二进制文件，且大小小于 1M，就加载文件内容
                     {
                         this.setState({loading: true});
-                        const fileRawContent = await RepositoryInfo.rawFile(username, name, path, commitHash);
+                        const fileRawContent = await RepositoryInfo.rawFile(username, name, path!, commitHash);
                         this.setState({loading: false});
                         if (fileRawContent !== null)
                         {
@@ -107,7 +104,7 @@ class FileReader extends PureComponent<Props, State>
     {
         const {match: {params: {path}}} = this.props;
         const {isBinary, exists, isOversize, rawContent, lastCommit, loading} = this.state;
-        const pathSplit = path.split('/');
+        const pathSplit = path!.split('/');
         const fileName = pathSplit[pathSplit.length - 1];
         let html = '';
         if (exists && !isOversize)

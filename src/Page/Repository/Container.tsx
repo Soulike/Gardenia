@@ -3,17 +3,9 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Repository as RepositoryClass} from '../../Class';
 import {RepositoryInfo} from '../../Api';
+import {Interface as RouterInterface} from '../../Router';
 
-interface Match
-{
-    username: string,
-    repository: string,
-    objectType: string,
-    branch: string,
-    path: string,
-}
-
-interface Props extends RouteComponentProps<Match>
+interface Props extends RouteComponentProps<RouterInterface.Repository>
 {}
 
 interface State

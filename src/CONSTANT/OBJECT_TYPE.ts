@@ -1,5 +1,5 @@
 export enum ObjectType
 {
-    BLOB = 'BLOB',
-    TREE = 'TREE'
+    BLOB = 'blob',
+    TREE = 'tree'
 }

@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import LoginView from './View';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router';
+import {CONFIG as ROUTER_CONFIG} from '../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Account} from '../../Api';
 import {notification} from 'antd';
@@ -8,6 +8,8 @@ import {InputProps} from 'antd/lib/input';
 import {FormProps} from 'antd/lib/form';
 import {Crypto} from '../../Function';
 import validator from 'validator';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface Props extends RouteComponentProps {}
 

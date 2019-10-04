@@ -2,18 +2,10 @@ import React, {PureComponent} from 'react';
 import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
+import {ObjectType} from '../../../../CONSTANT';
 
-interface Match
-{
-    username: string,
-    repository: string,
-    objectType: string,
-    branch: string,
-    path: string,
-}
-
-interface Props extends RouteComponentProps<Match>
+interface Props extends RouteComponentProps<RouterInterface.Repository>
 {
     branches: Array<string>,
 }
@@ -26,12 +18,14 @@ class BranchButton extends PureComponent<Props>
         {
             const {history, match: {params: {username, repository, objectType, path}}, branches} = this.props;
             history.replace(
-                PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](
-                    username,
-                    repository,
-                    objectType ? objectType : 'tree',
-                    branch ? branch : branches[0],
-                    path));
+                RouterFunction.generateRepositoryRoute(
+                    {
+                        username,
+                        repository,
+                        objectType: objectType ? objectType : ObjectType.TREE,
+                        branch: branch ? branch : branches[0],
+                        path,
+                    }));
         };
     };
 

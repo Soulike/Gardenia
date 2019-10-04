@@ -4,17 +4,9 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {RepositoryInfo} from '../../../../../../Api/RepositoryInfo';
 import {join} from 'path';
 import {mdConverter} from '../../../../../../Singleton';
+import {Interface as RouterInterface} from '../../../../../../Router';
 
-interface Match
-{
-    username: string,
-    repository: string,
-    objectType: string,
-    branch: string,
-    path: string,
-}
-
-interface Props extends RouteComponentProps<Match>
+interface Props extends RouteComponentProps<RouterInterface.Repository>
 {
     commitHash: string,
 }

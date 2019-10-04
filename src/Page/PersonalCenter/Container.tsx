@@ -4,13 +4,9 @@ import {Profile, Repository} from '../../Class';
 import {Profile as ProfileApi} from '../../Api';
 import {Repository as RepositoryApi} from '../../Api/Repository';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {Interface as RouterInterface} from '../../Router';
 
-interface Match
-{
-    username: string,
-}
-
-interface Props extends RouteComponentProps<Match> {}
+interface Props extends RouteComponentProps<RouterInterface.PersonalCenter> {}
 
 
 interface State

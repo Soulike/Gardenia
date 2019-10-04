@@ -3,14 +3,9 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {notification} from 'antd';
+import {Interface as RouterInterface} from '../../../../Router';
 
-interface Match
-{
-    username: string,
-    repository: string,
-}
-
-interface Props extends RouteComponentProps<Match> {}
+interface Props extends RouteComponentProps<RouterInterface.Repository> {}
 
 interface State {}
 

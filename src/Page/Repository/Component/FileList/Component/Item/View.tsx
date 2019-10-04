@@ -4,18 +4,9 @@ import {ObjectType} from '../../../../../../CONSTANT';
 import {Commit} from '../../../../../../Class';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import Style from './Style.module.scss';
-import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 
-interface Match
-{
-    username: string,
-    repository: string,
-    objectType: string,
-    branch: string,
-    path: string,
-}
-
-interface Props extends RouteComponentProps<Match>
+interface Props extends RouteComponentProps<RouterInterface.Repository>
 {
     fileInfo: { type: ObjectType, path: string, commit: Commit }
 }
@@ -34,8 +25,13 @@ function Item(props: Props)
             }
             <div className={Style.fileName}>
                 <Link to={
-                    PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](username, repository, type, branch ? branch : 'HEAD', path)
-                }>
+                    RouterFunction.generateRepositoryRoute({
+                        username,
+                        repository,
+                        objectType: type,
+                        branch: branch ? branch : 'HEAD',
+                        path,
+                    })}>
                     {fileName}
                 </Link>
             </div>
