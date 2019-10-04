@@ -83,7 +83,7 @@ class Repository extends PureComponent<Props, State>
         if (preBranch !== branch)    // 分支切换，重新获取提交相关信息
         {
             const {match: {params: {username, repository: name, branch}}} = this.props;
-            const commitCountWrapper = await RepositoryInfo.commitCount(username, name, branch);
+            const commitCountWrapper = await RepositoryInfo.commitCount(username, name, branch ? branch : 'HEAD');
             if (commitCountWrapper !== null)
             {
                 const {commitCount} = commitCountWrapper;
