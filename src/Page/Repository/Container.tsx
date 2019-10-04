@@ -3,20 +3,18 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Repository as RepositoryClass} from '../../Class';
 import {RepositoryInfo} from '../../Api';
-import {setBranchAction} from './Action/Action';
-import {connect} from 'react-redux';
 
 interface Match
 {
     username: string,
     repository: string,
+    objectType: string,
+    branch: string,
+    path: string,
 }
 
 interface Props extends RouteComponentProps<Match>
-{
-    branch: string,
-    setBranch: (branch: string) => any
-}
+{}
 
 interface State
 {
@@ -40,7 +38,6 @@ class Repository extends PureComponent<Props, State>
             isEmpty: false, // 是否是空仓库
         };
     }
-
 
     async componentDidMount()
     {
@@ -74,21 +71,19 @@ class Repository extends PureComponent<Props, State>
         const branches = await RepositoryInfo.branch(username, name);
         if (branches !== null)
         {
-            const {setBranch} = this.props;
             this.setState({branches});
-            setBranch(branches[0]);
         }
         this.setState({loading: false});
     }
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
-        const {branch: preBranch} = prevProps;
-        const {branch} = this.props;
+        const {match: {params: {branch: preBranch}}} = prevProps;
+        const {match: {params: {branch}}} = this.props;
         if (preBranch !== branch)    // 分支切换，重新获取提交相关信息
         {
-            const {match: {params: {username, repository: name}}, branch} = this.props;
-            const commitCountWrapper = await RepositoryInfo.commitCount(username, name, branch);
+            const {match: {params: {username, repository: name, branch}}} = this.props;
+            const commitCountWrapper = await RepositoryInfo.commitCount(username, name, branch ? branch : 'HEAD');
             if (commitCountWrapper !== null)
             {
                 const {commitCount} = commitCountWrapper;
@@ -111,14 +106,4 @@ class Repository extends PureComponent<Props, State>
     }
 }
 
-const mapStateToProps = (state: any) =>
-{
-    const {Repository: {branch}} = state;
-    return {branch};
-};
-
-const mapDispatchToProps = {
-    setBranch: setBranchAction,
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Repository));
+export default withRouter(Repository);

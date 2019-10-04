@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import LoginView from './View';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG/PAGE';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Account} from '../../Api';
 import {notification} from 'antd';

@@ -4,22 +4,27 @@ import {ObjectType} from '../../../../../../CONSTANT';
 import {Commit} from '../../../../../../Class';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import Style from './Style.module.scss';
+import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../../../Router';
 
-interface Props extends RouteComponentProps
+interface Match
+{
+    username: string,
+    repository: string,
+    objectType: string,
+    branch: string,
+    path: string,
+}
+
+interface Props extends RouteComponentProps<Match>
 {
     fileInfo: { type: ObjectType, path: string, commit: Commit }
 }
 
 function Item(props: Props)
 {
-    const {fileInfo: {type, path, commit: {message, time}}} = props;
-    let {location: {pathname}} = props;
+    const {fileInfo: {type, path, commit: {message, time}}, match: {params: {username, repository, branch}}} = props;
     const pathSplit = path.split('/');
     const fileName = pathSplit[pathSplit.length - 1];
-    if (pathname[pathname.length - 1] === '/')
-    {
-        pathname = pathname.slice(0, -1);
-    }
     return (
         <List.Item className={Style.Item}>
             {
@@ -28,7 +33,9 @@ function Item(props: Props)
                     <Icon className={Style.icon} type="folder" />
             }
             <div className={Style.fileName}>
-                <Link to={type === ObjectType.BLOB ? `${pathname}/${fileName}` : `${pathname}/${fileName}/`}>
+                <Link to={
+                    PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](username, repository, type, branch ? branch : 'HEAD', path)
+                }>
                     {fileName}
                 </Link>
             </div>

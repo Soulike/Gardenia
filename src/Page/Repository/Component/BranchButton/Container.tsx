@@ -1,44 +1,50 @@
 import React, {PureComponent} from 'react';
-import {setBranchAction} from '../../Action/Action';
-import {connect} from 'react-redux';
 import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 import View from './View';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../Router';
 
-interface Props
+interface Match
+{
+    username: string,
+    repository: string,
+    objectType: string,
+    branch: string,
+    path: string,
+}
+
+interface Props extends RouteComponentProps<Match>
 {
     branches: Array<string>,
-    branch: string,
-    setBranch: (branch: string) => any;
 }
 
 class BranchButton extends PureComponent<Props>
 {
     onBranchClick: (branch: string) => MenuItemProps['onClick'] = branch =>
     {
-        const {setBranch} = this.props;
         return () =>
         {
-            setBranch(branch);
+            const {history, match: {params: {username, repository, objectType, path}}, branches} = this.props;
+            history.replace(
+                PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](
+                    username,
+                    repository,
+                    objectType ? objectType : 'tree',
+                    branch ? branch : branches[0],
+                    path));
         };
     };
 
     render()
     {
-        const {branch, branches} = this.props;
+
+        const {match: {params: {branch}}, branches} = this.props;
         return (
-            <View branches={branches} branch={branch} onBranchClick={this.onBranchClick} />
+            <View branches={branches}
+                  branch={branch === undefined || branch === 'HEAD' ? branches[0] : branch}
+                  onBranchClick={this.onBranchClick} />
         );
     }
 }
 
-const mapStateToProps = (state: any) =>
-{
-    const {Repository: {branch}} = state;
-    return {branch};
-};
-
-const mapDispatchToProps = {
-    setBranch: setBranchAction,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BranchButton);
+export default withRouter(BranchButton);

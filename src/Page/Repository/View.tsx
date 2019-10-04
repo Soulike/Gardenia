@@ -4,8 +4,9 @@ import {Repository as RepositoryClass} from '../../Class';
 import {Skeleton} from 'antd';
 import AccessibilityTag from '../../Component/AccessibilityTag';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG/PAGE';
+import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../Router';
 import InfoBar from './Component/InfoBar';
+import {ObjectType} from '../../CONSTANT';
 
 const BranchButton = React.lazy(() => import('./Component/BranchButton'));
 const FileList = React.lazy(() => import('./Component/FileList'));
@@ -17,6 +18,8 @@ interface Match
 {
     username: string,
     repository: string,
+    objectType: string,
+    branch: string,
     path: string,
 }
 
@@ -36,8 +39,7 @@ function RepositoryView(props: Props)
         loading,
         commitCount,
         branches,
-        location: {pathname},
-        match: {params: {path}},
+        match: {params: {objectType}},
         isEmpty,
     } = props;
     return (
@@ -47,13 +49,9 @@ function RepositoryView(props: Props)
                     <div className={Style.basicInfo}>
                         <AccessibilityTag isPublic={isPublic} />
                         <div className={Style.usernameAndName}>
-                            <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER]
-                                .replace(':username', username)}>
+                            <Link to={PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.PERSONAL_CENTER](username)}>
                                 {username}
-                            </Link> / <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY]
-                            .replace(':username', username)
-                            .replace(':repository', name)
-                            .replace(':path*', '')}>
+                            </Link> / <Link to={PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](username, name)}>
                             <b>{name}</b>
                         </Link>
                         </div>
@@ -72,7 +70,7 @@ function RepositoryView(props: Props)
                                 <CloneButton username={username} repository={name} />
                             </div>
                             {
-                                path === undefined || pathname.slice(-1) === '/' ?
+                                objectType === undefined || objectType.toUpperCase() === ObjectType.TREE ?
                                     <FileList /> :
                                     <FileReader />
                             }

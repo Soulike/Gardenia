@@ -6,5 +6,5 @@ export const PAGE_ID_TO_ROUTE = {
     [PAGE_ID.REGISTER]: '/register',
     [PAGE_ID.CREATE_REPOSITORY]: '/createRepository',
     [PAGE_ID.PERSONAL_CENTER]: '/:username',
-    [PAGE_ID.REPOSITORY]: '/:username/:repository/:path*',
+    [PAGE_ID.REPOSITORY]: '/:username/:repository/:objectType?/:branch?/:path*',
 };
