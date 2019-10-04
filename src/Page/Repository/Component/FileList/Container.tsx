@@ -1,8 +1,7 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import View from './View';
 import {RepositoryInfo} from '../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
 import {ObjectType} from '../../../../CONSTANT';
 import {Commit} from '../../../../Class';
 
@@ -10,13 +9,12 @@ interface Match
 {
     username: string,
     repository: string,
+    objectType: string,
+    branch: string,
     path: string,
 }
 
-interface Props extends RouteComponentProps<Match>
-{
-    branch: string,
-}
+interface Props extends RouteComponentProps<Match> {}
 
 interface State
 {
@@ -25,7 +23,7 @@ interface State
     loading: boolean,
 }
 
-class FileList extends PureComponent<Props, State>
+class FileList extends Component<Props, State>
 {
     constructor(props: Props)
     {
@@ -39,13 +37,14 @@ class FileList extends PureComponent<Props, State>
 
     async componentDidMount()
     {
-        const {match: {params: {username, repository: name, path}}, branch, location: {pathname}} = this.props;
+        const {match: {params: {username, repository: name, path, branch}}} = this.props;
         this.setState({loading: true});
         const [fileList, lastCommit] = await Promise.all([
             RepositoryInfo.directory(
-                username, name, branch,
-                path === undefined ? '' : pathname.slice(-1) === '/' ? path + '/' : path),
-            RepositoryInfo.lastCommit(username, name, branch),
+                username, name,
+                branch ? branch : 'HEAD',
+                path === undefined ? '' : path + '/'),
+            RepositoryInfo.lastCommit(username, name, branch ? branch : 'HEAD'),
         ]);
         this.setState({loading: false});
 
@@ -61,27 +60,11 @@ class FileList extends PureComponent<Props, State>
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
-        const {branch: prevBranch} = prevProps;
-        const {branch} = this.props;
-        const {match: {params: {path: prevPath}}} = prevProps;
-        const {match: {params: {path}}} = this.props;
-        if (branch !== prevBranch)
+        const {location: {pathname}} = this.props;
+        const {location: {pathname: prePathname}} = prevProps;
+        if (pathname !== prePathname)
         {
             await this.componentDidMount();
-        }
-        else if (prevPath !== path)
-        {
-            const {match: {params: {username, repository: name, path}}, branch, location: {pathname}} = this.props;
-            this.setState({loading: true});
-            const fileList = await RepositoryInfo.directory(
-                username, name, branch,
-                path === undefined ? '' : pathname.slice(-1) === '/' ? path + '/' : path);
-            this.setState({loading: false});
-
-            if (fileList !== null)
-            {
-                this.setState({fileList});
-            }
         }
     }
 
@@ -92,10 +75,4 @@ class FileList extends PureComponent<Props, State>
     }
 }
 
-const mapStateToProps = (state: any) =>
-{
-    const {Repository: {branch}} = state;
-    return {branch};
-};
-
-export default withRouter(connect(mapStateToProps)(FileList));
+export default withRouter(FileList);

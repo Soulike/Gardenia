@@ -3,23 +3,22 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Commit} from '../../../../Class';
 import {RepositoryInfo} from '../../../../Api';
-import {connect} from 'react-redux';
 import hljs from 'highlight.js';
 import {extname} from 'path';
 import {mdConverter} from '../../../../Singleton';
 import {ObjectType} from '../../../../CONSTANT';
+import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../../../Router/PAGE';
 
 interface Match
 {
     username: string,
     repository: string,
+    objectType: string,
+    branch: string,
     path: string,
 }
 
-interface Props extends RouteComponentProps<Match>
-{
-    branch: string,
-}
+interface Props extends RouteComponentProps<Match> {}
 
 interface State
 {
@@ -49,7 +48,7 @@ class FileReader extends PureComponent<Props, State>
 
     async componentDidMount()
     {
-        const {match: {params: {username, repository: name, path}}, branch} = this.props;
+        const {match: {params: {username, repository: name, path, branch}}, history} = this.props;
         // 加载最后一次提交信息
         this.setState({loading: true});
         const lastCommit = await RepositoryInfo.lastCommit(username, name, branch, path);
@@ -71,8 +70,7 @@ class FileReader extends PureComponent<Props, State>
                 {
                     if (type === ObjectType.TREE)    // 类型并不是文件，就重定向到目录视图
                     {
-                        const {location: {pathname}, history} = this.props;
-                        history.replace(pathname + '/');
+                        history.replace(PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](username, name, 'tree', branch, path));
                         return;
                     }
                     this.setState({isBinary: isBinary!});
@@ -97,9 +95,9 @@ class FileReader extends PureComponent<Props, State>
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
-        const {branch: preBranch} = prevProps;
-        const {branch} = this.props;
-        if (branch !== preBranch)   // 分支切换，就重新获取文件信息
+        const {location: {pathname}} = this.props;
+        const {location: {pathname: prePathname}} = prevProps;
+        if (pathname !== prePathname)
         {
             await this.componentDidMount();
         }
@@ -147,10 +145,4 @@ class FileReader extends PureComponent<Props, State>
     }
 }
 
-const mapStateToProps = (state: any) =>
-{
-    const {Repository: {branch}} = state;
-    return {branch};
-};
-
-export default withRouter(connect(mapStateToProps)(FileReader));
+export default withRouter(FileReader);

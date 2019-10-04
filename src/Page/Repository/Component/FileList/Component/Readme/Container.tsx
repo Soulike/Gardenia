@@ -9,7 +9,9 @@ interface Match
 {
     username: string,
     repository: string,
-    path?: string,
+    objectType: string,
+    branch: string,
+    path: string,
 }
 
 interface Props extends RouteComponentProps<Match>

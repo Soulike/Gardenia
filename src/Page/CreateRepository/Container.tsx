@@ -7,7 +7,7 @@ import {Profile} from '../../Api/Profile';
 import {Repository as RepositoryApi} from '../../Api';
 import {Repository as RepositoryClass} from '../../Class';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG/PAGE';
+import {PAGE_ID, PAGE_ID_TO_ROUTE_GENERATOR} from '../../Router/PAGE';
 
 interface Props extends RouteComponentProps {}
 
@@ -88,10 +88,7 @@ class CreateRepository extends PureComponent<Props, State>
         {
             const {history} = this.props;
             notification.success({message: '仓库创建成功'});
-            history.push(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY]
-                .replace(':username', username)
-                .replace(':repository', name)
-                .replace(':path*', ''));
+            history.push(PAGE_ID_TO_ROUTE_GENERATOR[PAGE_ID.REPOSITORY](username, name));
         }
     };
 
