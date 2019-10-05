@@ -172,15 +172,16 @@ export async function fileInfo(username: string, repositoryName: string, filePat
     }
 }
 
-export async function rawFile(username: string, repositoryName: string, filePath: string, commitHash: string): Promise<string | null>
+export async function rawFile(username: string, repositoryName: string, filePath: string, commitHash: string): Promise<Blob | null>
 {
     try
     {
-        const {data}: AxiosResponse<string> =
+        const {data}: AxiosResponse<Blob> =
             await axios.get(RAW_FILE, {
                 params: {
                     json: JSON.stringify({username, repositoryName, filePath, commitHash}),
                 },
+                responseType: 'blob',
                 transformResponse: data => data,    // 明确告知 axios 不要对返回的数据做任何处理
             });
         return data;

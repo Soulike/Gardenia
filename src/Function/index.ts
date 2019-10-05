@@ -1,3 +1,4 @@
 import * as Crypto from './Crypto';
+import * as File from './File';
 
-export {Crypto};
+export {Crypto, File};

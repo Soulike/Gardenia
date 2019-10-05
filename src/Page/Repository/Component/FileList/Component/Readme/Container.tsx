@@ -5,6 +5,7 @@ import {RepositoryInfo} from '../../../../../../Api/RepositoryInfo';
 import {join} from 'path';
 import {mdConverter} from '../../../../../../Singleton';
 import {Interface as RouterInterface} from '../../../../../../Router';
+import {File} from '../../../../../../Function';
 
 interface Props extends RouteComponentProps<RouterInterface.Repository>
 {
@@ -46,7 +47,7 @@ class Readme extends PureComponent<Props, State>
                 this.setState({loading: false});
                 if (raw !== null)
                 {
-                    this.setState({readme: raw, exists: true});
+                    this.setState({readme: await File.transformBlobToString(raw), exists: true});
                 }
             }
             else

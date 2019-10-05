@@ -4,10 +4,11 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Commit} from '../../../../Class';
 import {RepositoryInfo} from '../../../../Api';
 import hljs from 'highlight.js';
-import {extname} from 'path';
+import {basename, extname} from 'path';
 import {mdConverter} from '../../../../Singleton';
 import {ObjectType} from '../../../../CONSTANT';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
+import {File} from '../../../../Function';
 
 interface Props extends RouteComponentProps<RouterInterface.Repository> {}
 
@@ -82,7 +83,7 @@ class FileReader extends PureComponent<Props, State>
                         this.setState({loading: false});
                         if (fileRawContent !== null)
                         {
-                            this.setState({rawContent: fileRawContent});
+                            this.setState({rawContent: await File.transformBlobToString(fileRawContent)});
                         }
                     }
                 }
@@ -99,6 +100,16 @@ class FileReader extends PureComponent<Props, State>
             await this.componentDidMount();
         }
     }
+
+    onRawFileButtonClick = async () =>
+    {
+        const {match: {params: {username, repository, path}}} = this.props;
+        const {lastCommit: {commitHash}} = this.state;
+        const rawFile = await RepositoryInfo.rawFile(username, repository, path!, commitHash);
+        const url = URL.createObjectURL(rawFile);
+        File.startDownload(url, basename(path!));
+        URL.revokeObjectURL(url);
+    };
 
     render()
     {
@@ -136,7 +147,7 @@ class FileReader extends PureComponent<Props, State>
         }
         return (
             <View html={html} exists={exists} isBinary={isBinary} isOversize={isOversize} lastCommit={lastCommit}
-                  fileName={fileName} loading={loading} />
+                  fileName={fileName} loading={loading} onRawFileButtonClick={this.onRawFileButtonClick} />
         );
 
     }

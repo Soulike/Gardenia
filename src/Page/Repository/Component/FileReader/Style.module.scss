@@ -1,10 +1,10 @@
 .FileReader {
-    border: 1px solid #DDD;
-    border-radius: 3px;
 
-    .fileInfoBar {
+    .commitInfoBar {
         padding: 10px;
-        border-bottom: 1px solid #DDD;
+        border: 1px solid #DDD;
+        border-radius: 3px;
+        margin-bottom: 15px;
 
         & > * {
             display: inline-block;
@@ -23,8 +23,26 @@
         }
     }
 
-    .content {
-        margin: 10px 25px;
-        overflow: auto;
+    .contentWrapper {
+        border: 1px solid #DDD;
+        border-radius: 3px;
+
+        .fileInfoBar {
+            padding: 10px;
+            border-bottom: 1px solid #DDD;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .fileName {
+                margin: 0 3px;
+                font-weight: bold;
+            }
+        }
+
+        .content {
+            margin: 10px 25px;
+            overflow: auto;
+        }
     }
 }
