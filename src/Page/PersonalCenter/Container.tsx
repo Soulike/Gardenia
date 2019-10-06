@@ -47,6 +47,25 @@ class PersonalCenter extends PureComponent<Props, State>
         }
     }
 
+    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    {
+        const {match: {params: {username}}} = this.props;
+        const {match: {params: {username: prevUsername}}} = prevProps;
+        if (username !== prevUsername)
+        {
+            this.setState({
+                repositoryList: [],
+                profile: new Profile('', '', 'example@example.com', ''),
+                loading: true,
+                hasMore: true,
+                lastEnd: 0,
+            }, async () =>
+            {
+                await this.componentDidMount();
+            });
+        }
+    }
+
     loadMore = async () =>
     {
         const {repositoryList, lastEnd} = this.state;
