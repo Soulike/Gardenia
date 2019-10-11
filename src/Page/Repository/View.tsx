@@ -1,41 +1,35 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Repository as RepositoryClass} from '../../Class';
-import {Skeleton} from 'antd';
+import {Icon, Tabs} from 'antd';
 import AccessibilityTag from '../../Component/AccessibilityTag';
-import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
-import InfoBar from './Component/InfoBar';
-import {ObjectType} from '../../CONSTANT';
+import {Link} from 'react-router-dom';
+import {Function as RouterFunction} from '../../Router';
+import TAB_KEY from './TAB_KEY';
+import {TabsProps} from 'antd/lib/tabs';
 
-const BranchButton = React.lazy(() => import('./Component/BranchButton'));
-const FileList = React.lazy(() => import('./Component/FileList'));
-const CloneButton = React.lazy(() => import('./Component/CloneButton'));
-const Empty = React.lazy(() => import('./Component/Empty'));
-const FileReader = React.lazy(() => import('./Component/FileReader'));
+const Code = React.lazy(() => import('./Component/Code'));
 
-interface Props extends RouteComponentProps<RouterInterface.Repository>
+interface Props
 {
     repository: RepositoryClass,
-    branches: Array<string>,
-    commitCount: number,
     loading: boolean,
-    isEmpty: boolean,
+    tabActiveKey: TAB_KEY,
+    onTabChange: TabsProps['onChange'],
 }
 
 function RepositoryView(props: Props)
 {
     const {
-        repository: {username, name, description, isPublic},
+        repository: {username, name, isPublic},
+        repository,
         loading,
-        commitCount,
-        branches,
-        match: {params: {objectType}},
-        isEmpty,
+        onTabChange,
+        tabActiveKey,
     } = props;
     return (
-        <div className={Style.Repository}>
-            <Skeleton loading={loading} active={true} paragraph={{rows: 15}}>
+        loading ? null :
+            <div className={Style.Repository}>
                 <div className={Style.header}>
                     <div className={Style.basicInfo}>
                         <AccessibilityTag isPublic={isPublic} />
@@ -48,28 +42,41 @@ function RepositoryView(props: Props)
                         </div>
                     </div>
                 </div>
-                <div className={Style.description}>
-                    {description}
-                </div>
-                <InfoBar commitCount={commitCount} branchCount={branches.length} />
-                {
-                    isEmpty ?
-                        <Empty /> :
-                        <React.Fragment>
-                            <div className={Style.buttonWrapper}>
-                                <BranchButton branches={branches} />
-                                <CloneButton username={username} repository={name} />
-                            </div>
-                            {
-                                objectType === undefined || objectType === ObjectType.TREE ?
-                                    <FileList /> :
-                                    <FileReader />
-                            }
-                        </React.Fragment>
-                }
-            </Skeleton>
-        </div>
+                <Tabs defaultActiveKey={TAB_KEY.CODE} type={'card'} className={Style.tab} tabBarStyle={{
+                    padding: '0 calc(50% - 500px)',
+                    margin: '0',
+                }} onChange={onTabChange} activeKey={tabActiveKey}>
+                    <Tabs.TabPane tab={
+                        <><Icon type="code" />代码</>
+                    } key={TAB_KEY.CODE}>
+                        <div className={Style.tabContent}>
+                            <Code repository={repository} />
+                        </div>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab={
+                        <><Icon type="exclamation-circle" />Issues</>
+                    } key={TAB_KEY.ISSUES}>
+                        <div className={Style.tabContent}>
+
+                        </div>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab={
+                        <><Icon type="pull-request" />Pull Requests</>
+                    } key={TAB_KEY.PULL_REQUESTS}>
+                        <div className={Style.tabContent}>
+
+                        </div>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab={
+                        <><Icon type="setting" />设置</>
+                    } key={TAB_KEY.SETTINGS}>
+                        <div className={Style.tabContent}>
+
+                        </div>
+                    </Tabs.TabPane>
+                </Tabs>
+            </div>
     );
 }
 
-export default withRouter(React.memo(RepositoryView));
+export default React.memo(RepositoryView);

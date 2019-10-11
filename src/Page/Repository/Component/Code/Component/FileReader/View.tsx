@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import 'highlight.js/scss/github-gist.scss';
-import {Commit} from '../../../../Class';
+import {Commit} from '../../../../../../Class';
 import {Alert, Button, Spin} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 

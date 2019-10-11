@@ -1,5 +1,5 @@
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from './CONFIG';
-import {PersonalCenter, Repository} from './Interface';
+import {PersonalCenter, Repository, RepositoryIssues, RepositoryPullRequests, RepositorySettings} from './Interface';
 
 export function generatePersonalCenterRoute(parameter: PersonalCenter): string
 {
@@ -38,4 +38,46 @@ export function generateRepositoryRoute(parameter: Repository)
         url = url.replace('/:path*', '');
     }
     return url;
+}
+
+export function generateRepositoryIssuesRoute(parameter: RepositoryIssues)
+{
+    const {username, repository, number} = parameter;
+    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY_ISSUES]
+        .replace(':username', username)
+        .replace(':repository', repository);
+    if (number !== undefined)
+    {
+        url = url.replace(':number?', number);
+    }
+    else
+    {
+        url = url.replace('/:number?', '');
+    }
+    return url;
+}
+
+export function generateRepositoryPullRequestsRoute(parameter: RepositoryPullRequests)
+{
+    const {username, repository, number} = parameter;
+    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY_PULL_REQUESTS]
+        .replace(':username', username)
+        .replace(':repository', repository);
+    if (number !== undefined)
+    {
+        url = url.replace(':number?', number);
+    }
+    else
+    {
+        url = url.replace('/:number?', '');
+    }
+    return url;
+}
+
+export function generateRepositorySettingsRoute(parameter: RepositorySettings)
+{
+    const {username, repository} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY_SETTINGS]
+        .replace(':username', username)
+        .replace(':repository', repository);
 }

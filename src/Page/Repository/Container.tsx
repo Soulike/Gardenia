@@ -3,18 +3,18 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Repository as RepositoryClass} from '../../Class';
 import {RepositoryInfo} from '../../Api';
-import {Interface as RouterInterface} from '../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
+import {TabsProps} from 'antd/lib/tabs';
+import TAB_KEY from './TAB_KEY';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 
-interface Props extends RouteComponentProps<RouterInterface.Repository>
-{}
+interface Props extends RouteComponentProps<RouterInterface.Repository | RouterInterface.RepositoryIssues | RouterInterface.RepositoryPullRequests | RouterInterface.RepositorySettings> {}
 
 interface State
 {
     repository: RepositoryClass,
-    branches: Array<string>,
-    commitCount: number,
     loading: boolean,
-    isEmpty: boolean,
+    tabActiveKey: TAB_KEY
 }
 
 class Repository extends PureComponent<Props, State>
@@ -24,20 +24,18 @@ class Repository extends PureComponent<Props, State>
         super(props);
         this.state = {
             repository: new RepositoryClass('', '', '', true),
-            branches: [],
-            commitCount: 0,
             loading: true,
-            isEmpty: false, // 是否是空仓库
+            tabActiveKey: TAB_KEY.CODE,
         };
     }
 
     async componentDidMount()
     {
-        const {match: {params: {username, repository: name}}} = this.props;
-        const [commitCountWrapper, repository] = await Promise.all([
-            RepositoryInfo.commitCount(username, name, 'HEAD'),
-            RepositoryInfo.repository(username, name),
-        ]);
+        const {match: {params: {username, repository: name}, path}} = this.props;
+        this.setTabActiveKey(path);
+        this.setState({loading: true});
+        const repository = await RepositoryInfo.repository(username, name);
+        this.setState({loading: false});
         // 设置仓库基本信息
         if (repository !== null)
         {
@@ -45,55 +43,93 @@ class Repository extends PureComponent<Props, State>
             const {name, description} = repository;
             document.title = `${name} - ${description.length === 0 ? 'Git Demo' : description}`;
         }
-        // 查看 commit 次数是不是 0。如果是 0 就是空仓库，不再继续请求剩下的信息
-        if (commitCountWrapper !== null)
-        {
-            const {commitCount} = commitCountWrapper;
-            if (commitCount === 0)
-            {
-                this.setState({isEmpty: true, loading: false});
-                return;
-            }
-            else
-            {
-                this.setState({commitCount});
-            }
-        }
-        // 确定不是空仓库后再请求分支信息
-        const branches = await RepositoryInfo.branch(username, name);
-        if (branches !== null)
-        {
-            this.setState({branches});
-        }
-        this.setState({loading: false});
     }
 
-    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
-        const {match: {params: {branch: preBranch}}} = prevProps;
-        const {match: {params: {branch}}} = this.props;
-        if (preBranch !== branch)    // 分支切换，重新获取提交相关信息
+        const {location: {pathname}, match: {path}} = this.props;
+        const {location: {pathname: prevPathName}} = prevProps;
+        if (pathname !== prevPathName)
         {
-            const {match: {params: {username, repository: name, branch}}} = this.props;
-            const commitCountWrapper = await RepositoryInfo.commitCount(username, name, branch ? branch : 'HEAD');
-            if (commitCountWrapper !== null)
-            {
-                const {commitCount} = commitCountWrapper;
-                this.setState({commitCount});
-            }
-            this.setState({loading: false});
+            this.setTabActiveKey(path);
         }
     }
+
+    setTabActiveKey = (path: string) =>
+    {
+        const {REPOSITORY, REPOSITORY_ISSUES, REPOSITORY_PULL_REQUESTS, REPOSITORY_SETTINGS} = PAGE_ID;
+        switch (path)
+        {
+            case PAGE_ID_TO_ROUTE[REPOSITORY]:
+            {
+                this.setState({
+                    tabActiveKey: TAB_KEY.CODE,
+                });
+                break;
+            }
+            case PAGE_ID_TO_ROUTE[REPOSITORY_ISSUES]:
+            {
+                this.setState({
+                    tabActiveKey: TAB_KEY.ISSUES,
+                });
+                break;
+            }
+            case PAGE_ID_TO_ROUTE[REPOSITORY_PULL_REQUESTS]:
+            {
+                this.setState({
+                    tabActiveKey: TAB_KEY.PULL_REQUESTS,
+                });
+                break;
+            }
+            case PAGE_ID_TO_ROUTE[REPOSITORY_SETTINGS]:
+            {
+                this.setState({
+                    tabActiveKey: TAB_KEY.SETTINGS,
+                });
+                break;
+            }
+        }
+    };
+
+    onTabChange: TabsProps['onChange'] = activeKey =>
+    {
+        const {history} = this.props;
+        const {repository: {username, name}} = this.state;
+        switch (activeKey)
+        {
+            case TAB_KEY.CODE:
+            {
+                history.push(RouterFunction.generateRepositoryRoute({username, repository: name}));
+                break;
+            }
+            case TAB_KEY.ISSUES:
+            {
+                history.push(RouterFunction.generateRepositoryIssuesRoute({username, repository: name}));
+                break;
+            }
+            case TAB_KEY.PULL_REQUESTS:
+            {
+                history.push(RouterFunction.generateRepositoryPullRequestsRoute({username, repository: name}));
+                break;
+            }
+            case TAB_KEY.SETTINGS:
+            {
+                history.push(RouterFunction.generateRepositorySettingsRoute({username, repository: name}));
+                break;
+            }
+            default:
+            {
+                return;
+            }
+        }
+    };
 
     render()
     {
-        const {repository, commitCount, branches, loading, isEmpty} = this.state;
+        const {repository, loading, tabActiveKey} = this.state;
         return (
             <View repository={repository}
-                  commitCount={commitCount}
-                  loading={loading}
-                  branches={branches}
-                  isEmpty={isEmpty} />
+                  loading={loading} onTabChange={this.onTabChange} tabActiveKey={tabActiveKey} />
         );
     }
 }

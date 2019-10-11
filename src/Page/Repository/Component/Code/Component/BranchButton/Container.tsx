@@ -2,8 +2,8 @@ import React, {PureComponent} from 'react';
 import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
-import {ObjectType} from '../../../../CONSTANT';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
+import {ObjectType} from '../../../../../../CONSTANT';
 
 interface Props extends RouteComponentProps<RouterInterface.Repository>
 {

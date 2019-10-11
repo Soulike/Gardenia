@@ -3,7 +3,7 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {notification} from 'antd';
-import {Interface as RouterInterface} from '../../../../Router';
+import {Interface as RouterInterface} from '../../../../../../Router';
 
 interface Props extends RouteComponentProps<RouterInterface.Repository> {}
 
