@@ -1,5 +1,3 @@
-import validator from 'validator';
-
 /**
  * @class
  * @description 账号资料，对应数据库 profiles 表
@@ -9,7 +7,7 @@ export class Profile
     public username: string;
     public nickname: string;
     public avatar: string;
-    private _email: string = '';
+    public email: string;
 
     constructor(username: string, nickname: string, email: string, avatar: string)
     {
@@ -17,26 +15,6 @@ export class Profile
         this.nickname = nickname;
         this.email = email;
         this.avatar = avatar;
-    }
-
-    toJSON()
-    {
-        const {username, nickname, avatar, _email} = this;
-        return {username, nickname, email: _email, avatar};
-    }
-
-    get email(): string
-    {
-        return this._email;
-    }
-
-    set email(value: string)
-    {
-        if (!validator.isEmail(value))
-        {
-            throw new Error('Property "email" of a profile should be an email address');
-        }
-        this._email = value;
     }
 
     static from(obj: any)

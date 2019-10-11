@@ -85,7 +85,7 @@ class Register extends PureComponent<Props, State>
             return;
         }
         const hash = Crypto.sha256(Crypto.sha256(username) + Crypto.sha256(password));
-        const isSuccessful = await Account.register(username, hash, email);
+        const isSuccessful = await Account.register({username, hash}, {nickname: username, email, avatar: ''});
         if (isSuccessful)
         {
             notification.success({message: '注册成功'});

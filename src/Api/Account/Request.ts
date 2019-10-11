@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import {Account, ResponseBody} from '../../Class';
+import {Account, Profile, ResponseBody} from '../../Class';
 import {CHECK_SESSION, LOGIN, REGISTER} from './ROUTE';
 import {notification} from 'antd';
 
@@ -26,14 +26,12 @@ export async function login(account: Account): Promise<true | null>
     }
 }
 
-export async function register(username: string, hash: string, email: string): Promise<true | null>
+export async function register(account: Account, profile: Omit<Profile, 'username'>): Promise<true | null>
 {
     try
     {
         const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(REGISTER, {
-            username,
-            hash,
-            email,
+            account, profile,
         });
         if (isSuccessful)
         {
