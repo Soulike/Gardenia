@@ -2,13 +2,14 @@ import React, {PureComponent} from 'react';
 import LoginView from './View';
 import {CONFIG as ROUTER_CONFIG} from '../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Account} from '../../Api';
+import {Account as AccountApi} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {FormProps} from 'antd/lib/form';
 import {Crypto} from '../../Function';
 import {setLoggedInAction} from '../../Component/Root/Action/Action';
 import {connect} from 'react-redux';
+import {Account as AccountClass} from '../../Class';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -70,7 +71,7 @@ class Login extends PureComponent<Props, State>
             return;
         }
         const hash = Crypto.sha256(Crypto.sha256(username) + Crypto.sha256(password));
-        const isSuccessful = await Account.login(username, hash);
+        const isSuccessful = await AccountApi.login(new AccountClass(username, hash));
         if (isSuccessful)
         {
             const {setLoggedIn} = this.props;

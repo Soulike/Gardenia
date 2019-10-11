@@ -5,27 +5,12 @@
 export class Account
 {
     public username: string;
+    public hash: string;
 
     constructor(username: string, hash: string)
     {
         this.username = username;
         this.hash = hash;
-    }
-
-    private _hash: string = '';
-
-    get hash(): string
-    {
-        return this._hash;
-    }
-
-    set hash(value: string)
-    {
-        if (value.length !== 64)
-        {
-            throw new Error('Property "hash" should be 64 characters long');
-        }
-        this._hash = value;
     }
 
     static from(obj: any)

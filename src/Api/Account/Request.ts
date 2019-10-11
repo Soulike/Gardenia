@@ -1,16 +1,13 @@
 import axios, {AxiosResponse} from 'axios';
-import {ResponseBody} from '../../Class';
+import {Account, ResponseBody} from '../../Class';
 import {CHECK_SESSION, LOGIN, REGISTER} from './ROUTE';
 import {notification} from 'antd';
 
-export async function login(username: string, hash: string): Promise<true | null>
+export async function login(account: Account): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(LOGIN, {
-            username,
-            hash,
-        });
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(LOGIN, account);
         if (isSuccessful)
         {
             return true;
