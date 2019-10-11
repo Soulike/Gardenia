@@ -18,13 +18,26 @@ export class Repository
      * */
     constructor(username: string, name: string, description: string, isPublic: boolean)
     {
+        if (!Repository.validate({username, name, description, isPublic}))
+        {
+            throw new TypeError('Repository constructor parameter type is incorrect');
+        }
         this.username = username;
         this.name = name;
         this.description = description;
         this.isPublic = isPublic;
     }
 
-    static from(obj: any)
+    static validate(obj: Record<keyof Repository, any>): boolean
+    {
+        const {username, name, description, isPublic} = obj;
+        return typeof username === 'string'
+            && typeof name === 'string'
+            && typeof description === 'string'
+            && typeof isPublic === 'boolean';
+    }
+
+    static from(obj: Record<keyof Repository, any>)
     {
         const {username, name, description, isPublic} = obj;
         return new Repository(username, name, description, isPublic);

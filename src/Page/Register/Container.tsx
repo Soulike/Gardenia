@@ -6,8 +6,8 @@ import {Account} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {FormProps} from 'antd/lib/form';
-import {Crypto} from '../../Function';
 import validator from 'validator';
+import {Account as AccountClass} from '../../Class';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -84,7 +84,7 @@ class Register extends PureComponent<Props, State>
             notification.warn({message: '请输入正确的邮箱'});
             return;
         }
-        const hash = Crypto.sha256(Crypto.sha256(username) + Crypto.sha256(password));
+        const hash = AccountClass.calculateHash(username, password);
         const isSuccessful = await Account.register({username, hash}, {nickname: username, email, avatar: ''});
         if (isSuccessful)
         {

@@ -6,7 +6,6 @@ import {Account as AccountApi} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {FormProps} from 'antd/lib/form';
-import {Crypto} from '../../Function';
 import {setLoggedInAction} from '../../Component/Root/Action/Action';
 import {connect} from 'react-redux';
 import {Account as AccountClass} from '../../Class';
@@ -70,7 +69,7 @@ class Login extends PureComponent<Props, State>
             notification.warn({message: '密码不能为空'});
             return;
         }
-        const hash = Crypto.sha256(Crypto.sha256(username) + Crypto.sha256(password));
+        const hash = AccountClass.calculateHash(username, password);
         const isSuccessful = await AccountApi.login(new AccountClass(username, hash));
         if (isSuccessful)
         {
