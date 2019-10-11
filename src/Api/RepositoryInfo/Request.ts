@@ -60,14 +60,14 @@ export async function branch(username: string, repositoryName: string): Promise<
     }
 }
 
-export async function lastCommit(username: string, repositoryName: string, branch: string, filePath?: string): Promise<Commit | null>
+export async function lastCommit(username: string, repositoryName: string, commitHash: string, filePath?: string): Promise<Commit | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Commit>> =
             await axios.get(LAST_COMMIT, {
                 params: {
-                    json: JSON.stringify({username, repositoryName, branch, filePath}),
+                    json: JSON.stringify({username, repositoryName, commitHash, filePath}),
                 },
             });
         if (isSuccessful)
@@ -88,14 +88,14 @@ export async function lastCommit(username: string, repositoryName: string, branc
     }
 }
 
-export async function directory(username: string, repositoryName: string, branch: string, directoryPath: string): Promise<Array<{ type: ObjectType, path: string, commit: Commit }> | null>
+export async function directory(username: string, repositoryName: string, commitHash: string, directoryPath: string): Promise<Array<{ type: ObjectType, path: string, commit: Commit }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<{ type: ObjectType, path: string, commit: Commit }>>> =
             await axios.get(DIRECTORY, {
                 params: {
-                    json: JSON.stringify({username, repositoryName, branch, directoryPath}),
+                    json: JSON.stringify({username, repositoryName, commitHash, directoryPath}),
                 },
             });
         if (isSuccessful)
@@ -116,14 +116,14 @@ export async function directory(username: string, repositoryName: string, branch
     }
 }
 
-export async function commitCount(username: string, repositoryName: string, branch: string): Promise<{ commitCount: number } | null>
+export async function commitCount(username: string, repositoryName: string, commitHash: string): Promise<{ commitCount: number } | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commitCount: number }>> =
             await axios.get(COMMIT_COUNT, {
                 params: {
-                    json: JSON.stringify({username, repositoryName, branch}),
+                    json: JSON.stringify({username, repositoryName, commitHash}),
                 },
             });
         if (isSuccessful)
