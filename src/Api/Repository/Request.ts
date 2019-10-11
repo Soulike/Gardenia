@@ -54,11 +54,11 @@ export async function create(repository: RepositoryClass): Promise<true | null>
     }
 }
 
-export async function del(name: string): Promise<true | null>
+export async function del(repositoryName: string): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(DEL, {name});
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(DEL, {repositoryName});
         if (isSuccessful)
         {
             return true;

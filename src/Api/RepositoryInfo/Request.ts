@@ -4,14 +4,14 @@ import axios, {AxiosResponse} from 'axios';
 import {BRANCH, COMMIT_COUNT, DIRECTORY, FILE_INFO, LAST_COMMIT, RAW_FILE, REPOSITORY} from './ROUTE';
 import {ObjectType} from '../../CONSTANT';
 
-export async function repository(username: string, name: string): Promise<RepositoryClass | null>
+export async function repository(username: string, repositoryName: string): Promise<RepositoryClass | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<RepositoryClass>> =
             await axios.get(REPOSITORY, {
                 params: {
-                    json: JSON.stringify({username, name}),
+                    json: JSON.stringify({username, repositoryName}),
                 },
             });
         if (isSuccessful)
@@ -32,14 +32,14 @@ export async function repository(username: string, name: string): Promise<Reposi
     }
 }
 
-export async function branch(username: string, name: string): Promise<Array<string> | null>
+export async function branch(username: string, repositoryName: string): Promise<Array<string> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<string>>> =
             await axios.get(BRANCH, {
                 params: {
-                    json: JSON.stringify({username, name}),
+                    json: JSON.stringify({username, repositoryName}),
                 },
             });
         if (isSuccessful)
@@ -60,14 +60,14 @@ export async function branch(username: string, name: string): Promise<Array<stri
     }
 }
 
-export async function lastCommit(username: string, name: string, branch: string, file?: string): Promise<Commit | null>
+export async function lastCommit(username: string, repositoryName: string, branch: string, filePath?: string): Promise<Commit | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Commit>> =
             await axios.get(LAST_COMMIT, {
                 params: {
-                    json: JSON.stringify({username, name, branch, file}),
+                    json: JSON.stringify({username, repositoryName, branch, filePath}),
                 },
             });
         if (isSuccessful)
@@ -88,14 +88,14 @@ export async function lastCommit(username: string, name: string, branch: string,
     }
 }
 
-export async function directory(username: string, name: string, branch: string, path: string): Promise<Array<{ type: ObjectType, path: string, commit: Commit }> | null>
+export async function directory(username: string, repositoryName: string, branch: string, directoryPath: string): Promise<Array<{ type: ObjectType, path: string, commit: Commit }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<{ type: ObjectType, path: string, commit: Commit }>>> =
             await axios.get(DIRECTORY, {
                 params: {
-                    json: JSON.stringify({username, name, branch, path}),
+                    json: JSON.stringify({username, repositoryName, branch, directoryPath}),
                 },
             });
         if (isSuccessful)
@@ -116,14 +116,14 @@ export async function directory(username: string, name: string, branch: string, 
     }
 }
 
-export async function commitCount(username: string, name: string, branch: string): Promise<{ commitCount: number } | null>
+export async function commitCount(username: string, repositoryName: string, branch: string): Promise<{ commitCount: number } | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commitCount: number }>> =
             await axios.get(COMMIT_COUNT, {
                 params: {
-                    json: JSON.stringify({username, name, branch}),
+                    json: JSON.stringify({username, repositoryName, branch}),
                 },
             });
         if (isSuccessful)
