@@ -10,7 +10,7 @@ export function generatePersonalCenterRoute(parameter: PersonalCenter): string
 export function generateRepositoryRoute(parameter: Repository)
 {
     const {username, branch, objectType, path, repository} = parameter;
-    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY]
+    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE]
         .replace(':username', username)
         .replace(':repository', repository);
     if (objectType !== undefined)
@@ -43,7 +43,7 @@ export function generateRepositoryRoute(parameter: Repository)
 export function generateRepositoryIssuesRoute(parameter: RepositoryIssues)
 {
     const {username, repository, number} = parameter;
-    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY_ISSUES]
+    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUES]
         .replace(':username', username)
         .replace(':repository', repository);
     if (number !== undefined)
@@ -60,7 +60,7 @@ export function generateRepositoryIssuesRoute(parameter: RepositoryIssues)
 export function generateRepositoryPullRequestsRoute(parameter: RepositoryPullRequests)
 {
     const {username, repository, number} = parameter;
-    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY_PULL_REQUESTS]
+    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS]
         .replace(':username', username)
         .replace(':repository', repository);
     if (number !== undefined)
@@ -77,7 +77,7 @@ export function generateRepositoryPullRequestsRoute(parameter: RepositoryPullReq
 export function generateRepositorySettingsRoute(parameter: RepositorySettings)
 {
     const {username, repository} = parameter;
-    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY_SETTINGS]
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS]
         .replace(':username', username)
         .replace(':repository', repository);
 }

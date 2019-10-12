@@ -52,9 +52,9 @@ class FileList extends Component<Props, State>
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
-        const {location: {pathname}} = this.props;
-        const {location: {pathname: prePathname}} = prevProps;
-        if (pathname !== prePathname)
+        const {match: {params: {branch: preBranch, path: prePath}}} = prevProps;
+        const {match: {params: {branch, path}}} = this.props;
+        if (preBranch !== branch || prePath !== path)
         {
             await this.componentDidMount();
         }

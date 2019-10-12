@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Repository as RepositoryClass} from '../../Class';
-import {RepositoryInfo} from '../../Api';
+import {Profile, Repository as RepositoryClass} from '../../Class';
+import {Profile as ProfileApi, RepositoryInfo} from '../../Api';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {TabsProps} from 'antd/lib/tabs';
 import TAB_KEY from './TAB_KEY';
@@ -12,14 +12,15 @@ import {RootState, State as StoreState} from '../../Store';
 
 interface Props extends RouteComponentProps<RouterInterface.Repository | RouterInterface.RepositoryIssues | RouterInterface.RepositoryPullRequests | RouterInterface.RepositorySettings>
 {
-    isLoggedIn: RootState['isLoggedIn']
+    isLoggedIn: RootState['isLoggedIn'],
 }
 
 interface State
 {
     repository: RepositoryClass,
     loading: boolean,
-    tabActiveKey: TAB_KEY
+    tabActiveKey: TAB_KEY,
+    visitorProfile?: Profile
 }
 
 class Repository extends PureComponent<Props, State>
@@ -36,11 +37,19 @@ class Repository extends PureComponent<Props, State>
 
     async componentDidMount()
     {
-        const {match: {params: {username, repository: name}, path}} = this.props;
-        this.setTabActiveKey(path);
         this.setState({loading: true});
-        const repository = await RepositoryInfo.repository(username, name);
+        this.setTabActiveKey();
+        await Promise.all([
+            this.setRepository(),
+            this.setVisitorProfile(),
+        ]);
         this.setState({loading: false});
+    }
+
+    setRepository = async () =>
+    {
+        const {match: {params: {username, repository: name}}} = this.props;
+        const repository = await RepositoryInfo.repository(username, name);
         // 设置仓库基本信息
         if (repository !== null)
         {
@@ -48,23 +57,38 @@ class Repository extends PureComponent<Props, State>
             const {name, description} = repository;
             document.title = `${name} - ${description.length === 0 ? 'Git Demo' : description}`;
         }
-    }
+    };
+
+    setVisitorProfile = async () =>
+    {
+        const {isLoggedIn} = this.props;
+        if (isLoggedIn)
+        {
+            const visitorProfile = await ProfileApi.get();
+            if (visitorProfile !== null)
+            {
+                this.setState({visitorProfile});
+            }
+        }
+    };
 
     componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
-        const {location: {pathname}, match: {path}} = this.props;
+        const {location: {pathname}} = this.props;
         const {location: {pathname: prevPathName}} = prevProps;
         if (pathname !== prevPathName)
         {
-            this.setTabActiveKey(path);
+            this.setTabActiveKey();
         }
     }
 
-    setTabActiveKey = (path: string) =>
+    setTabActiveKey = () =>
     {
-        const {REPOSITORY, REPOSITORY_ISSUES, REPOSITORY_PULL_REQUESTS, REPOSITORY_SETTINGS} = PAGE_ID;
+        const {match: {path}} = this.props;
+        const {REPOSITORY: {REPOSITORY, CODE, ISSUES, PULL_REQUESTS, SETTINGS}} = PAGE_ID;
         switch (path)
         {
+            case PAGE_ID_TO_ROUTE[CODE]:
             case PAGE_ID_TO_ROUTE[REPOSITORY]:
             {
                 this.setState({
@@ -72,21 +96,21 @@ class Repository extends PureComponent<Props, State>
                 });
                 break;
             }
-            case PAGE_ID_TO_ROUTE[REPOSITORY_ISSUES]:
+            case PAGE_ID_TO_ROUTE[ISSUES]:
             {
                 this.setState({
                     tabActiveKey: TAB_KEY.ISSUES,
                 });
                 break;
             }
-            case PAGE_ID_TO_ROUTE[REPOSITORY_PULL_REQUESTS]:
+            case PAGE_ID_TO_ROUTE[PULL_REQUESTS]:
             {
                 this.setState({
                     tabActiveKey: TAB_KEY.PULL_REQUESTS,
                 });
                 break;
             }
-            case PAGE_ID_TO_ROUTE[REPOSITORY_SETTINGS]:
+            case PAGE_ID_TO_ROUTE[SETTINGS]:
             {
                 this.setState({
                     tabActiveKey: TAB_KEY.SETTINGS,
@@ -131,10 +155,12 @@ class Repository extends PureComponent<Props, State>
 
     render()
     {
-        const {repository, loading, tabActiveKey} = this.state;
+        const {repository, loading, tabActiveKey, visitorProfile} = this.state;
         const {isLoggedIn} = this.props;
+        // 显示设置的条件：登录，且仓库属于当前用户
+        const showSettings = isLoggedIn && visitorProfile !== undefined && visitorProfile.username === repository.username;
         return (
-            <View isLoggedIn={isLoggedIn} repository={repository}
+            <View showSettings={showSettings} repository={repository}
                   loading={loading} onTabChange={this.onTabChange} tabActiveKey={tabActiveKey} />
         );
     }

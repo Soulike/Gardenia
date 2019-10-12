@@ -5,14 +5,13 @@ import {Profile as ProfileClass} from '../../Class';
 import {Account, Profile as ProfileApi} from '../../Api';
 import {setLoggedInAction} from './Action/Action';
 import {RootState, State as StoreState} from '../../Store';
-import {Action} from 'redux';
-import ActionType from './Action/ACTION_TYPE';
+import {AnyAction} from 'redux';
 
 interface Props
 {
     children?: ReactNode,
     isLoggedIn: RootState['isLoggedIn']
-    setLoggedIn: () => Action<ActionType>;
+    setLoggedIn: () => AnyAction;
 }
 
 interface State

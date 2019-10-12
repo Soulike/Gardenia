@@ -10,14 +10,13 @@ import {setLoggedInAction} from '../../Component/Root/Action/Action';
 import {connect} from 'react-redux';
 import {Account as AccountClass} from '../../Class';
 import {RootState, State as StoreState} from '../../Store';
-import {Action} from 'redux';
-import {ActionType} from '../../Component/Root';
+import {AnyAction} from 'redux';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface Props extends RouteComponentProps
 {
-    setLoggedIn: () => Action<ActionType>,
+    setLoggedIn: () => AnyAction,
     isLoggedIn: RootState['isLoggedIn']
 }
 
@@ -62,25 +61,38 @@ class Login extends PureComponent<Props, State>
     {
         e.preventDefault();
         const {username, password} = this.state;
+        if (this.loginFormParameterCheck(username, password))
+        {
+            const hash = AccountClass.calculateHash(username, password);
+            const isSuccessful = await AccountApi.login(new AccountClass(username, hash));
+            if (isSuccessful)
+            {
+                await this.onLoginSuccess();
+            }
+        }
+    };
+
+    loginFormParameterCheck = (username: string, password: string): boolean =>
+    {
         if (username.length === 0)
         {
             notification.warn({message: '用户名不能为空'});
-            return;
+            return false;
         }
         if (password.length === 0)
         {
             notification.warn({message: '密码不能为空'});
-            return;
+            return false;
         }
-        const hash = AccountClass.calculateHash(username, password);
-        const isSuccessful = await AccountApi.login(new AccountClass(username, hash));
-        if (isSuccessful)
-        {
-            const {setLoggedIn} = this.props;
-            setLoggedIn();
-            notification.success({message: '登录成功'});
-            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
-        }
+        return true;
+    };
+
+    onLoginSuccess = async () =>
+    {
+        const {setLoggedIn} = this.props;
+        setLoggedIn();
+        notification.success({message: '登录成功'});
+        this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
     };
 
     render()

@@ -14,8 +14,5 @@ export const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.REGISTER]: Register,
     [PAGE_ID.CREATE_REPOSITORY]: CreateRepository,
     [PAGE_ID.PERSONAL_CENTER]: PersonalCenter,
-    [PAGE_ID.REPOSITORY_ISSUES]: Repository,
-    [PAGE_ID.REPOSITORY_PULL_REQUESTS]: Repository,
-    [PAGE_ID.REPOSITORY_SETTINGS]: Repository,
-    [PAGE_ID.REPOSITORY]: Repository,
+    [PAGE_ID.REPOSITORY.REPOSITORY]: Repository,
 };
