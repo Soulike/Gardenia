@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 import TAB_KEY from './TAB_KEY';
 import {TabsProps} from 'antd/lib/tabs';
+import {RootState} from '../../Store';
 
 const Code = React.lazy(() => import('./Component/Code'));
 
@@ -16,6 +17,7 @@ interface Props
     loading: boolean,
     tabActiveKey: TAB_KEY,
     onTabChange: TabsProps['onChange'],
+    isLoggedIn: RootState['isLoggedIn'],
 }
 
 function RepositoryView(props: Props)
@@ -26,6 +28,7 @@ function RepositoryView(props: Props)
         loading,
         onTabChange,
         tabActiveKey,
+        isLoggedIn,
     } = props;
     return (
         loading ? null :
@@ -67,13 +70,17 @@ function RepositoryView(props: Props)
 
                         </div>
                     </Tabs.TabPane>
-                    <Tabs.TabPane tab={
-                        <><Icon type="setting" />设置</>
-                    } key={TAB_KEY.SETTINGS}>
-                        <div className={Style.tabContent}>
+                    {
+                        isLoggedIn ? (
+                            <Tabs.TabPane tab={
+                                <><Icon type="setting" />设置</>
+                            } key={TAB_KEY.SETTINGS}>
+                                <div className={Style.tabContent}>
 
-                        </div>
-                    </Tabs.TabPane>
+                                </div>
+                            </Tabs.TabPane>
+                        ) : null
+                    }
                 </Tabs>
             </div>
     );

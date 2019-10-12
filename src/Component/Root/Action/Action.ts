@@ -1,16 +1,16 @@
 import {Action} from 'redux';
-import {SET_LOGGED_IN, SET_LOGGED_OUT} from './ACTION_TYPE';
+import ActionType from './ACTION_TYPE';
 
-export function setLoggedInAction(): Action
+export function setLoggedInAction(): Action<ActionType>
 {
     return {
-        type: SET_LOGGED_IN,
+        type: ActionType.SET_LOGGED_IN,
     };
 }
 
-export function setLoggedOutAction(): Action
+export function setLoggedOutAction(): Action<ActionType>
 {
     return {
-        type: SET_LOGGED_OUT,
+        type: ActionType.SET_LOGGED_OUT,
     };
 }

@@ -1,19 +1,20 @@
-import {Reducer} from 'redux';
-import {SET_LOGGED_IN, SET_LOGGED_OUT} from './Action/ACTION_TYPE';
+import {Action, Reducer} from 'redux';
+import ActionType from './Action/ACTION_TYPE';
+import {RootState} from '../../Store';
 
-const reducer: Reducer = (state, action) =>
+const reducer: Reducer<RootState, Action<ActionType>> = (state, action) =>
 {
     const {type} = action;
     switch (type)
     {
-        case SET_LOGGED_IN:
+        case ActionType.SET_LOGGED_IN:
         {
             return {
                 ...state,
                 isLoggedIn: true,
             };
         }
-        case SET_LOGGED_OUT:
+        case ActionType.SET_LOGGED_OUT:
         {
             return {
                 ...state,
@@ -24,6 +25,7 @@ const reducer: Reducer = (state, action) =>
         {
             return {
                 ...state,
+                isLoggedIn: false,
             };
         }
     }

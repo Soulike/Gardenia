@@ -4,12 +4,15 @@ import {connect} from 'react-redux';
 import {Profile as ProfileClass} from '../../Class';
 import {Account, Profile as ProfileApi} from '../../Api';
 import {setLoggedInAction} from './Action/Action';
+import {RootState, State as StoreState} from '../../Store';
+import {Action} from 'redux';
+import ActionType from './Action/ACTION_TYPE';
 
 interface Props
 {
     children?: ReactNode,
-    isLoggedIn: boolean,
-    setLoggedIn: () => any;
+    isLoggedIn: RootState['isLoggedIn']
+    setLoggedIn: () => Action<ActionType>;
 }
 
 interface State
@@ -69,7 +72,7 @@ class Root extends PureComponent<Props, State>
     }
 }
 
-const mapStateToProps = (state: any) =>
+const mapStateToProps = (state: StoreState) =>
 {
     const {Root: {isLoggedIn}} = state;
     return {

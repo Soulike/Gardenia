@@ -1,9 +1,10 @@
 import {applyMiddleware, combineReducers, compose, createStore, Middleware} from 'redux';
+import {State} from './Interface';
 // import 所有 Reducer
-import {Reducer as RootReducer} from './Component/Root';
+import {Reducer as RootReducer} from '../Component/Root';
 
 // Store 中的初始值，根据开发需要进行改变
-const initValues = {
+const initValues: State = {
     Root: {
         isLoggedIn: false,
     },

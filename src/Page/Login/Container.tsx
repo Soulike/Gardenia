@@ -9,13 +9,16 @@ import {FormProps} from 'antd/lib/form';
 import {setLoggedInAction} from '../../Component/Root/Action/Action';
 import {connect} from 'react-redux';
 import {Account as AccountClass} from '../../Class';
+import {RootState, State as StoreState} from '../../Store';
+import {Action} from 'redux';
+import {ActionType} from '../../Component/Root';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface Props extends RouteComponentProps
 {
-    setLoggedIn: () => any,
-    isLoggedIn: boolean
+    setLoggedIn: () => Action<ActionType>,
+    isLoggedIn: RootState['isLoggedIn']
 }
 
 interface State
@@ -92,12 +95,10 @@ class Login extends PureComponent<Props, State>
     }
 }
 
-const mapStateToProps = (state: any) =>
+const mapStateToProps = (state: StoreState) =>
 {
     const {Root: {isLoggedIn}} = state;
-    return {
-        isLoggedIn,
-    };
+    return {isLoggedIn};
 };
 
 const mapDispatchToProps = {

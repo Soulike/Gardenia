@@ -7,8 +7,13 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../Ro
 import {TabsProps} from 'antd/lib/tabs';
 import TAB_KEY from './TAB_KEY';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
+import {connect} from 'react-redux';
+import {RootState, State as StoreState} from '../../Store';
 
-interface Props extends RouteComponentProps<RouterInterface.Repository | RouterInterface.RepositoryIssues | RouterInterface.RepositoryPullRequests | RouterInterface.RepositorySettings> {}
+interface Props extends RouteComponentProps<RouterInterface.Repository | RouterInterface.RepositoryIssues | RouterInterface.RepositoryPullRequests | RouterInterface.RepositorySettings>
+{
+    isLoggedIn: RootState['isLoggedIn']
+}
 
 interface State
 {
@@ -127,11 +132,18 @@ class Repository extends PureComponent<Props, State>
     render()
     {
         const {repository, loading, tabActiveKey} = this.state;
+        const {isLoggedIn} = this.props;
         return (
-            <View repository={repository}
+            <View isLoggedIn={isLoggedIn} repository={repository}
                   loading={loading} onTabChange={this.onTabChange} tabActiveKey={tabActiveKey} />
         );
     }
 }
 
-export default withRouter(Repository);
+const mapStateToProps = (state: StoreState) =>
+{
+    const {Root: {isLoggedIn}} = state;
+    return {isLoggedIn};
+};
+
+export default withRouter(connect(mapStateToProps)(Repository));
