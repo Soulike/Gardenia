@@ -36,8 +36,13 @@ class Register extends PureComponent<Props, State>
 
     componentDidMount()
     {
-        document.title = '注册';
+        this.changeTitle();
     }
+
+    changeTitle = () =>
+    {
+        document.title = '注册 - Git Demo';
+    };
 
     onUsernameInputChange: InputProps['onChange'] = e =>
     {

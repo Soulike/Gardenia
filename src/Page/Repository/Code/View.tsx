@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {ObjectType} from '../../../../CONSTANT';
-import {Repository as RepositoryClass} from '../../../../Class';
+import {ObjectType} from '../../../CONSTANT';
+import {Repository as RepositoryClass} from '../../../Class';
 import {Skeleton} from 'antd';
 
 const BranchButton = React.lazy(() => import('./Component/BranchButton'));

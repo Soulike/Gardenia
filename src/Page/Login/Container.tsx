@@ -39,13 +39,18 @@ class Login extends PureComponent<Props, State>
 
     componentDidMount()
     {
-        document.title = '登录';
+        this.changeTitle();
         const {isLoggedIn} = this.props;
         if (isLoggedIn)
         {
             this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
         }
     }
+
+    changeTitle = () =>
+    {
+        document.title = '登录登录- Git Demo';
+    };
 
     onUsernameInputChange: InputProps['onChange'] = e =>
     {

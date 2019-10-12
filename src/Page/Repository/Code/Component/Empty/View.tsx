@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Card, Icon, Input} from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import svg from '../../../../../../Static/Repository/process_building.svg';
+import svg from '../../../../../Static/Repository/process_building.svg';
 
 interface Props
 {

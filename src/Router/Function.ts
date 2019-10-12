@@ -1,5 +1,11 @@
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from './CONFIG';
-import {PersonalCenter, Repository, RepositoryIssues, RepositoryPullRequests, RepositorySettings} from './Interface';
+import {
+    PersonalCenter,
+    RepositoryCode,
+    RepositoryIssues,
+    RepositoryPullRequests,
+    RepositorySettings,
+} from './Interface';
 
 export function generatePersonalCenterRoute(parameter: PersonalCenter): string
 {
@@ -7,7 +13,7 @@ export function generatePersonalCenterRoute(parameter: PersonalCenter): string
     return PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER].replace(':username', username);
 }
 
-export function generateRepositoryRoute(parameter: Repository)
+export function generateRepositoryRoute(parameter: RepositoryCode)
 {
     const {username, branch, objectType, path, repository} = parameter;
     let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE]
@@ -77,7 +83,7 @@ export function generateRepositoryPullRequestsRoute(parameter: RepositoryPullReq
 export function generateRepositorySettingsRoute(parameter: RepositorySettings)
 {
     const {username, repository} = parameter;
-    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS]
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS]
         .replace(':username', username)
         .replace(':repository', repository);
 }

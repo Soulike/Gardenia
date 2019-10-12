@@ -8,7 +8,9 @@ export const PAGE_ID = {
         REPOSITORY: 'REPOSITORY',
         ISSUES: 'ISSUES',
         PULL_REQUESTS: 'PULL_REQUESTS',
-        SETTINGS: 'SETTINGS',
+        SETTINGS: {
+            SETTINGS: 'SETTINGS',
+        },
         CODE: 'CODE',
     },
 };

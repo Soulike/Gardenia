@@ -1,14 +1,12 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import Style from './Style.module.scss';
 import {Repository as RepositoryClass} from '../../Class';
 import {Icon, Tabs} from 'antd';
-import AccessibilityTag from '../../Component/AccessibilityTag';
+import AccessibilityTag from '../AccessibilityTag';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 import TAB_KEY from './TAB_KEY';
 import {TabsProps} from 'antd/lib/tabs';
-
-const Code = React.lazy(() => import('./Component/Code'));
 
 interface Props
 {
@@ -17,17 +15,18 @@ interface Props
     tabActiveKey: TAB_KEY,
     onTabChange: TabsProps['onChange'],
     showSettings: boolean,
+    children: ReactNode
 }
 
 function RepositoryView(props: Props)
 {
     const {
         repository: {username, name, isPublic},
-        repository,
         loading,
         onTabChange,
         tabActiveKey,
         showSettings,
+        children,
     } = props;
     return (
         loading ? null :
@@ -52,23 +51,21 @@ function RepositoryView(props: Props)
                         <><Icon type="code" />代码</>
                     } key={TAB_KEY.CODE}>
                         <div className={Style.tabContent}>
-                            {
-                                tabActiveKey === TAB_KEY.CODE ? <Code repository={repository} /> : null
-                            }
+                            {children}
                         </div>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab={
                         <><Icon type="exclamation-circle" />Issues</>
                     } key={TAB_KEY.ISSUES}>
                         <div className={Style.tabContent}>
-
+                            {children}
                         </div>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab={
                         <><Icon type="pull-request" />Pull Requests</>
                     } key={TAB_KEY.PULL_REQUESTS}>
                         <div className={Style.tabContent}>
-
+                            {children}
                         </div>
                     </Tabs.TabPane>
                     {
@@ -77,7 +74,7 @@ function RepositoryView(props: Props)
                                 <><Icon type="setting" />设置</>
                             } key={TAB_KEY.SETTINGS}>
                                 <div className={Style.tabContent}>
-
+                                    {children}
                                 </div>
                             </Tabs.TabPane>
                         ) : null

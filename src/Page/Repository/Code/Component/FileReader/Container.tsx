@@ -1,16 +1,16 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Commit} from '../../../../../../Class';
-import {RepositoryInfo} from '../../../../../../Api';
+import {Commit} from '../../../../../Class';
+import {RepositoryInfo} from '../../../../../Api';
 import hljs from 'highlight.js';
 import {basename, extname} from 'path';
-import {mdConverter} from '../../../../../../Singleton';
-import {ObjectType} from '../../../../../../CONSTANT';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
-import {File} from '../../../../../../Function';
+import {mdConverter} from '../../../../../Singleton';
+import {ObjectType} from '../../../../../CONSTANT';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../Router';
+import {File} from '../../../../../Function';
 
-interface Props extends RouteComponentProps<RouterInterface.Repository> {}
+interface Props extends RouteComponentProps<RouterInterface.RepositoryCode> {}
 
 interface State
 {

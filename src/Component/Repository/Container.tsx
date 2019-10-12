@@ -1,6 +1,6 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {RouteComponentProps} from 'react-router-dom';
 import {Repository as RepositoryClass} from '../../Class';
 import {Profile as ProfileApi, RepositoryInfo} from '../../Api';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
@@ -10,9 +10,10 @@ import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {connect} from 'react-redux';
 import {RootState, State as StoreState} from '../../Store';
 
-interface Props extends RouteComponentProps<RouterInterface.Repository | RouterInterface.RepositoryIssues | RouterInterface.RepositoryPullRequests | RouterInterface.RepositorySettings>
+interface Props extends RouteComponentProps<RouterInterface.RepositoryCode | RouterInterface.RepositoryIssues | RouterInterface.RepositoryPullRequests | RouterInterface.RepositorySettings>
 {
     isLoggedIn: RootState['isLoggedIn'],
+    children: ReactNode
 }
 
 interface State
@@ -116,7 +117,7 @@ class Repository extends PureComponent<Props, State>
                 });
                 break;
             }
-            case PAGE_ID_TO_ROUTE[SETTINGS]:
+            case PAGE_ID_TO_ROUTE[SETTINGS.SETTINGS]:
             {
                 this.setState({
                     tabActiveKey: TAB_KEY.SETTINGS,
@@ -162,10 +163,13 @@ class Repository extends PureComponent<Props, State>
     render()
     {
         const {repository, loading, tabActiveKey, showSettings} = this.state;
+        const {children} = this.props;
         // 显示设置的条件：登录，且仓库属于当前用户
         return (
             <View showSettings={showSettings} repository={repository}
-                  loading={loading} onTabChange={this.onTabChange} tabActiveKey={tabActiveKey} />
+                  loading={loading} onTabChange={this.onTabChange} tabActiveKey={tabActiveKey}>
+                {children}
+            </View>
         );
     }
 }
@@ -176,4 +180,4 @@ const mapStateToProps = (state: StoreState) =>
     return {isLoggedIn};
 };
 
-export default withRouter(connect(mapStateToProps)(Repository));
+export default connect(mapStateToProps)(Repository);

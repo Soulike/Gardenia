@@ -1,4 +1,4 @@
-export * from './Repository';
+export * from './RepositoryCode';
 export * from './PersonalCenter';
 export * from './RepositorySettings';
 export * from './RepositoryPullRequests';

@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {ObjectType} from '../../../../../../CONSTANT';
-import {Commit} from '../../../../../../Class';
+import {ObjectType} from '../../../../../CONSTANT';
+import {Commit} from '../../../../../Class';
 import {Empty, List} from 'antd';
 import Item from './Component/Item';
 import Readme from './Component/Readme';

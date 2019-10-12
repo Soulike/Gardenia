@@ -38,6 +38,7 @@ class CreateRepository extends PureComponent<Props, State>
 
     async componentDidMount()
     {
+        this.changeTitle();
         const profile = await Profile.get();
         if (profile !== null)
         {
@@ -45,6 +46,11 @@ class CreateRepository extends PureComponent<Props, State>
             this.setState({loading: false, username});
         }
     }
+
+    changeTitle = () =>
+    {
+        document.title = '创建仓库 - Git Demo';
+    };
 
     onNameInputChange: InputProps['onChange'] = e =>
     {

@@ -1,13 +1,13 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
+import {RepositoryInfo} from '../../../../../../../Api/RepositoryInfo';
 import {join} from 'path';
-import {mdConverter} from '../../../../../../../../Singleton';
-import {Interface as RouterInterface} from '../../../../../../../../Router';
-import {File} from '../../../../../../../../Function';
+import {mdConverter} from '../../../../../../../Singleton';
+import {Interface as RouterInterface} from '../../../../../../../Router';
+import {File} from '../../../../../../../Function';
 
-interface Props extends RouteComponentProps<RouterInterface.Repository>
+interface Props extends RouteComponentProps<RouterInterface.RepositoryCode>
 {
     commitHash: string,
 }

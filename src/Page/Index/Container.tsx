@@ -30,8 +30,14 @@ class Index extends PureComponent<Props, State>
 
     async componentDidMount()
     {
+        this.changeTitle();
         await this.loadMore();
     }
+
+    changeTitle = () =>
+    {
+        document.title = 'Git Demo';
+    };
 
     loadMore = async () =>
     {

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import View from './View';
-import {RepositoryInfo} from '../../../../../../Api';
+import {RepositoryInfo} from '../../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {ObjectType} from '../../../../../../CONSTANT';
-import {Commit} from '../../../../../../Class';
-import {Interface as RouterInterface} from '../../../../../../Router';
+import {ObjectType} from '../../../../../CONSTANT';
+import {Commit} from '../../../../../Class';
+import {Interface as RouterInterface} from '../../../../../Router';
 
-interface Props extends RouteComponentProps<RouterInterface.Repository> {}
+interface Props extends RouteComponentProps<RouterInterface.RepositoryCode> {}
 
 interface State
 {

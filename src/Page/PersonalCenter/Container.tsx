@@ -36,6 +36,7 @@ class PersonalCenter extends PureComponent<Props, State>
 
     async componentDidMount()
     {
+        this.changeTitle();
         const {match: {params: {username}}} = this.props;
         const [profile] = await Promise.all([
             ProfileApi.get(username),
@@ -46,6 +47,12 @@ class PersonalCenter extends PureComponent<Props, State>
             this.setState({loading: false, profile});
         }
     }
+
+    changeTitle = () =>
+    {
+        const {match: {params: {username}}} = this.props;
+        document.title = `${username} - Git Demo`;
+    };
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {

@@ -1,12 +1,12 @@
 import React from 'react';
 import {Icon, List} from 'antd';
-import {ObjectType} from '../../../../../../../../CONSTANT';
-import {Commit} from '../../../../../../../../Class';
+import {ObjectType} from '../../../../../../../CONSTANT';
+import {Commit} from '../../../../../../../Class';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import Style from './Style.module.scss';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../Router';
 
-interface Props extends RouteComponentProps<RouterInterface.Repository>
+interface Props extends RouteComponentProps<RouterInterface.RepositoryCode>
 {
     fileInfo: { type: ObjectType, path: string, commit: Commit }
 }

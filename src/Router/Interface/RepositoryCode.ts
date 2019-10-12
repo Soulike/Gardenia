@@ -1,6 +1,6 @@
 import {ObjectType} from '../../CONSTANT';
 
-export interface Repository
+export interface RepositoryCode
 {
     username: string,
     repository: string,
