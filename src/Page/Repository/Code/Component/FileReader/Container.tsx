@@ -4,10 +4,10 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Commit} from '../../../../../Class';
 import {RepositoryInfo} from '../../../../../Api';
 import hljs from 'highlight.js';
-import {basename, extname} from 'path';
+import path, {basename} from 'path';
 import {mdConverter} from '../../../../../Singleton';
 import {ObjectType} from '../../../../../CONSTANT';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../Router';
+import {Interface as RouterInterface} from '../../../../../Router';
 import {File} from '../../../../../Function';
 
 interface Props extends RouteComponentProps<RouterInterface.RepositoryCode> {}
@@ -40,55 +40,9 @@ class FileReader extends PureComponent<Props, State>
 
     async componentDidMount()
     {
-        const {match: {params: {username, repository: name, path, branch}}} = this.props;
-        // 加载最后一次提交信息
         this.setState({loading: true});
-        const lastCommit = await RepositoryInfo.lastCommit(username, name, branch!, path);
+        await this.loadLastCommit();
         this.setState({loading: false});
-        if (lastCommit !== null)
-        {
-            this.setState({lastCommit});
-            const {commitHash} = lastCommit;
-            this.setState({loading: true});
-
-            // 加载文件信息
-            const fileInfo = await RepositoryInfo.fileInfo(username, name, path!, commitHash);
-            this.setState({loading: false});
-            if (fileInfo !== null)
-            {
-                const {exists, size, type, isBinary} = fileInfo;
-                this.setState({exists});
-                if (exists)
-                {
-                    if (type === ObjectType.TREE)    // 类型并不是文件，就重定向到目录视图
-                    {
-                        RouterFunction.generateRepositoryRoute({
-                            username,
-                            repository: name,
-                            objectType: ObjectType.TREE,
-                            branch,
-                            path,
-                        });
-                        return;
-                    }
-                    this.setState({isBinary: isBinary!});
-                    if (!isBinary && size! > 1024 * 1024)   // 不是二进制文件，但大小超过 1M
-                    {
-                        this.setState({isOversize: true});
-                    }
-                    else    // 不是二进制文件，且大小小于 1M，就加载文件内容
-                    {
-                        this.setState({loading: true});
-                        const fileRawContent = await RepositoryInfo.rawFile(username, name, path!, commitHash);
-                        this.setState({loading: false});
-                        if (fileRawContent !== null)
-                        {
-                            this.setState({rawContent: await File.transformBlobToString(fileRawContent)});
-                        }
-                    }
-                }
-            }
-        }
     }
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
@@ -101,48 +55,129 @@ class FileReader extends PureComponent<Props, State>
         }
     }
 
+    loadLastCommit = async () =>
+    {
+        const {match: {params: {username, repository: name, path, branch}}} = this.props;
+        const lastCommit = await RepositoryInfo.lastCommit(username, name, branch!, path);
+        if (lastCommit !== null)
+        {
+            await this.onLastCommitLoaded(lastCommit);
+        }
+    };
+
+    onLastCommitLoaded = async (lastCommit: Commit) =>
+    {
+        this.setState({lastCommit});
+        const {commitHash} = lastCommit;
+        await this.loadFileInfo(commitHash);
+    };
+
+    loadFileInfo = async (commitHash: string) =>
+    {
+        const {match: {params: {username, repository: name, path}}} = this.props;
+        const fileInfo = await RepositoryInfo.fileInfo(username, name, path!, commitHash);
+        if (fileInfo !== null)
+        {
+            await this.onFileInfoLoaded(fileInfo, commitHash);
+        }
+    };
+
+    onFileInfoLoaded = async (fileInfo: { exists: boolean, type?: ObjectType, size?: number, isBinary?: boolean }, commitHash: string) =>
+    {
+        const {exists, size, isBinary} = fileInfo;
+        this.setState({exists});
+        if (exists)
+        {
+            this.setState({isBinary: isBinary!});
+            if (!isBinary && size! > 1024 * 1024)   // 不是二进制文件，但大小超过 1M
+            {
+                this.setState({isOversize: true});
+            }
+            else    // 不是二进制文件，且大小小于 1M，就加载文件内容
+            {
+                await this.loadRawContent(commitHash);
+            }
+        }
+    };
+
+    loadRawContent = async (commitHash: string) =>
+    {
+        const {match: {params: {username, repository: name, path}}} = this.props;
+        const fileRawContent = await RepositoryInfo.rawFile(username, name, path!, commitHash);
+        if (fileRawContent !== null)
+        {
+            this.setState({rawContent: await File.transformBlobToString(fileRawContent)});
+        }
+    };
+
     onRawFileButtonClick = async () =>
     {
         const {match: {params: {username, repository, path}}} = this.props;
         const {lastCommit: {commitHash}} = this.state;
         const rawFile = await RepositoryInfo.rawFile(username, repository, path!, commitHash);
-        const url = URL.createObjectURL(rawFile);
+        if (rawFile !== null)
+        {
+            this.startDownload(rawFile);
+        }
+    };
+
+    startDownload = (blob: Blob) =>
+    {
+        const {match: {params: {path}}} = this.props;
+        const url = URL.createObjectURL(blob);
         File.startDownload(url, basename(path!));
         URL.revokeObjectURL(url);
+    };
+
+    getFileNameFromPath = (path: string) =>
+    {
+        const pathSplit = path.split('/');
+        return pathSplit[pathSplit.length - 1];
+    };
+
+    getHighlightedHtml = (): string =>
+    {
+        const {isBinary, rawContent} = this.state;
+        if (!isBinary)
+        {
+            const pre = document.createElement('pre');
+            const node = document.createElement('div');
+            node.append(pre);
+            pre.innerText = rawContent;
+            if (rawContent.length <= 50 * 1024)    // 小于 50K 执行高亮
+            {
+                hljs.highlightBlock(pre);
+                return node.innerHTML;
+            }
+            else    // 大于 50K 就不再高亮
+            {
+                return node.innerHTML;
+            }
+        }
+        return rawContent;
+    };
+
+    isMarkdown = (fileName: string) =>
+    {
+        const ext = path.extname(fileName);
+        return ext === '.md' || ext === '.markdown';
     };
 
     render()
     {
         const {match: {params: {path}}} = this.props;
         const {isBinary, exists, isOversize, rawContent, lastCommit, loading} = this.state;
-        const pathSplit = path!.split('/');
-        const fileName = pathSplit[pathSplit.length - 1];
+        const fileName = this.getFileNameFromPath(path!);
         let html = '';
-        if (exists && !isOversize)
+        if (exists && !isOversize && !isBinary)
         {
-            const ext = extname(fileName);
-            if (ext === '.md' || ext === '.markdown')   // 是 markdown，就渲染出来
+            if (this.isMarkdown(fileName))
             {
                 html = mdConverter.makeHtml(rawContent);
             }
-            else    // 是代码，就进行高亮
+            else // is code
             {
-                const pre = document.createElement('pre');
-                const node = document.createElement('div');
-                node.append(pre);
-                pre.innerText = rawContent;
-                if (!isBinary)
-                {
-                    if (rawContent.length <= 50 * 1024)    // 小于 50K 执行高亮
-                    {
-                        hljs.highlightBlock(pre);
-                        html = node.innerHTML;
-                    }
-                    else    // 大于 50K 就不再高亮
-                    {
-                        html = node.innerHTML;
-                    }
-                }
+                html = this.getHighlightedHtml();
             }
         }
         return (

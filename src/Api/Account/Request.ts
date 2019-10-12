@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from 'axios';
 import {Account, Profile, ResponseBody} from '../../Class';
 import {CHECK_SESSION, LOGIN, REGISTER} from './ROUTE';
 import {notification} from 'antd';
+import {errorHandler} from '../Function';
 
 export async function login(account: Account): Promise<true | null>
 {
@@ -20,8 +21,7 @@ export async function login(account: Account): Promise<true | null>
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -45,8 +45,7 @@ export async function register(account: Account, profile: Omit<Profile, 'usernam
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -67,8 +66,7 @@ export async function checkSession(): Promise<{ isValid: boolean } | null>
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }

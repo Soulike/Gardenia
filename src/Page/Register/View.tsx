@@ -15,7 +15,7 @@ interface Props
     onPasswordInputChange: InputProps['onChange'],
     onRepeatPasswordInputChange: InputProps['onChange'],
     onEmailInputChange: InputProps['onChange'],
-    onLoginFormSubmit: FormProps['onSubmit'],
+    onFormSubmit: FormProps['onSubmit'],
 }
 
 function RegisterView(props: Props)
@@ -29,11 +29,11 @@ function RegisterView(props: Props)
         onPasswordInputChange,
         onRepeatPasswordInputChange,
         onEmailInputChange,
-        onLoginFormSubmit,
+        onFormSubmit,
     } = props;
     return (
         <main className={Style.Register}>
-            <form action={'#'} className={Style.form} onSubmit={onLoginFormSubmit}>
+            <form action={'#'} className={Style.form} onSubmit={onFormSubmit}>
                 <img className={Style.logo} src={svg} alt="web_developer_logo" />
                 <Input type={'text'}
                        size={'large'}

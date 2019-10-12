@@ -39,7 +39,7 @@ class Login extends PureComponent<Props, State>
 
     componentDidMount()
     {
-        this.changeTitle();
+        this.setTitle();
         const {isLoggedIn} = this.props;
         if (isLoggedIn)
         {
@@ -47,7 +47,7 @@ class Login extends PureComponent<Props, State>
         }
     }
 
-    changeTitle = () =>
+    setTitle = () =>
     {
         document.title = '登录登录- Git Demo';
     };
@@ -65,20 +65,15 @@ class Login extends PureComponent<Props, State>
     onLoginFormSubmit: FormProps['onSubmit'] = async e =>
     {
         e.preventDefault();
-        const {username, password} = this.state;
-        if (this.loginFormParameterCheck(username, password))
+        if (this.loginFormInputCheck())
         {
-            const hash = AccountClass.calculateHash(username, password);
-            const isSuccessful = await AccountApi.login(new AccountClass(username, hash));
-            if (isSuccessful)
-            {
-                await this.onLoginSuccess();
-            }
+            await this.submitLoginForm();
         }
     };
 
-    loginFormParameterCheck = (username: string, password: string): boolean =>
+    loginFormInputCheck = (): boolean =>
     {
+        const {username, password} = this.state;
         if (username.length === 0)
         {
             notification.warn({message: '用户名不能为空'});
@@ -90,6 +85,17 @@ class Login extends PureComponent<Props, State>
             return false;
         }
         return true;
+    };
+
+    submitLoginForm = async () =>
+    {
+        const {username, password} = this.state;
+        const hash = AccountClass.calculateHash(username, password);
+        const isSuccessful = await AccountApi.login(new AccountClass(username, hash));
+        if (isSuccessful)
+        {
+            await this.onLoginSuccess();
+        }
     };
 
     onLoginSuccess = async () =>

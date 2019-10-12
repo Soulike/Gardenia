@@ -33,12 +33,14 @@ class Code extends PureComponent<Props, State>
     async componentDidMount()
     {
         this.setState({loading: true});
-        await this.setRepository();
-        await this.setCommitCount();
+        await Promise.all([
+            this.loadRepository(),
+            this.loadCommitCount(),
+        ]);
         const {isEmpty} = this.state;
         if (!isEmpty)
         {
-            await this.setBranches();
+            await this.loadBranches();
         }
         this.setState({loading: false});
     }
@@ -50,12 +52,12 @@ class Code extends PureComponent<Props, State>
         if (preBranch !== branch)    // 分支切换，重新获取提交相关信息
         {
             this.setState({loading: true});
-            await this.setCommitCount(branch);
+            await this.loadCommitCount(branch);
             this.setState({loading: false});
         }
     }
 
-    setRepository = async () =>
+    loadRepository = async () =>
     {
         const {match: {params: {username, repository: name}}} = this.props;
         const repository = await RepositoryInfo.repository(username, name);
@@ -66,16 +68,16 @@ class Code extends PureComponent<Props, State>
         }
     };
 
-    setCommitCount = async (branch: string = 'HEAD') =>
+    loadCommitCount = async (branch: string = 'HEAD') =>
     {
         const {match: {params: {username, repository: repositoryName}}} = this.props;
         const commitCountWrapper = await RepositoryInfo.commitCount(username, repositoryName, branch);
-        // 查看 commit 次数是不是 0。如果是 0 就是空仓库，不再继续请求剩下的信息
         if (commitCountWrapper !== null)
         {
             const {commitCount} = commitCountWrapper;
             if (commitCount === 0)
             {
+                // 查看 commit 次数是不是 0。如果是 0 就是空仓库，不再继续请求剩下的信息
                 this.setState({isEmpty: true});
             }
             else
@@ -85,7 +87,7 @@ class Code extends PureComponent<Props, State>
         }
     };
 
-    setBranches = async () =>
+    loadBranches = async () =>
     {
         const {match: {params: {username, repository: repositoryName}}} = this.props;
         const branches = await RepositoryInfo.branch(username, repositoryName);

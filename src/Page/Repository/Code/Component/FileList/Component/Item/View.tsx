@@ -14,8 +14,7 @@ interface Props extends RouteComponentProps<RouterInterface.RepositoryCode>
 function Item(props: Props)
 {
     const {fileInfo: {type, path, commit: {message, time}}, match: {params: {username, repository, branch}}} = props;
-    const pathSplit = path.split('/');
-    const fileName = pathSplit[pathSplit.length - 1];
+    const fileName = getFileNameFromPath(path);
     return (
         <List.Item className={Style.Item}>
             {
@@ -39,6 +38,12 @@ function Item(props: Props)
             <div className={Style.time}>{time}</div>
         </List.Item>
     );
+}
+
+function getFileNameFromPath(path: string): string
+{
+    const pathSplit = path.split('/');
+    return pathSplit[pathSplit.length - 1];
 }
 
 export default withRouter(React.memo(Item));

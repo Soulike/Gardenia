@@ -38,18 +38,25 @@ class CreateRepository extends PureComponent<Props, State>
 
     async componentDidMount()
     {
-        this.changeTitle();
+        this.setTitle();
+        this.setState({loading: true});
+        await this.loadUsername();
+        this.setState({loading: false});
+    }
+
+    setTitle = () =>
+    {
+        document.title = '创建仓库 - Git Demo';
+    };
+
+    loadUsername = async () =>
+    {
         const profile = await Profile.get();
         if (profile !== null)
         {
             const {username} = profile;
-            this.setState({loading: false, username});
+            this.setState({username});
         }
-    }
-
-    changeTitle = () =>
-    {
-        document.title = '创建仓库 - Git Demo';
     };
 
     onNameInputChange: InputProps['onChange'] = e =>
@@ -76,12 +83,25 @@ class CreateRepository extends PureComponent<Props, State>
     onSubmit: DOMAttributes<HTMLFormElement>['onSubmit'] = async e =>
     {
         e.preventDefault();
-        const {username, name, description, isPublic} = this.state;
+        if (this.validateFormInput())
+        {
+            await this.submitForm();
+        }
+    };
+
+    validateFormInput = () =>
+    {
+        const {name} = this.state;
         if (name.length === 0)
         {
             notification.warn({message: '请输入仓库名'});
-            return;
+            return false;
         }
+    };
+
+    submitForm = async () =>
+    {
+        const {username, name, description, isPublic} = this.state;
         this.setState({submitting: true});
         const result = await RepositoryApi.create(new RepositoryClass(
             username,

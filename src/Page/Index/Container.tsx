@@ -7,7 +7,7 @@ interface Props {}
 
 interface State
 {
-    repositoryList: Array<Repository>,
+    repositories: Array<Repository>,
     loading: boolean,
     hasMore: boolean,
     lastEnd: number,
@@ -21,7 +21,7 @@ class Index extends PureComponent<Props, State>
     {
         super(props);
         this.state = {
-            repositoryList: [],
+            repositories: [],
             loading: true,
             hasMore: true,
             lastEnd: 0,
@@ -30,25 +30,26 @@ class Index extends PureComponent<Props, State>
 
     async componentDidMount()
     {
-        this.changeTitle();
-        await this.loadMore();
+        this.setTitle();
+        await this.loadMoreRepositories();
     }
 
-    changeTitle = () =>
+    setTitle = () =>
     {
         document.title = 'Git Demo';
     };
 
-    loadMore = async () =>
+    loadMoreRepositories = async () =>
     {
-        const {repositoryList, lastEnd} = this.state;
-        const repositoryListFromServer = await RepositoryApi.getList(lastEnd, lastEnd + Index.PAGE_SIZE);
+        const {repositories, lastEnd} = this.state;
+        this.setState({loading: true});
+        const repositoriesFromServer = await RepositoryApi.getList(lastEnd, lastEnd + Index.PAGE_SIZE);
         this.setState({loading: false});
-        if (repositoryListFromServer !== null)
+        if (repositoriesFromServer !== null)
         {
-            repositoryList.push(...repositoryListFromServer);
+            repositories.push(...repositoriesFromServer);
             this.setState({lastEnd: lastEnd + Index.PAGE_SIZE - 1});
-            if (repositoryListFromServer.length < Index.PAGE_SIZE)
+            if (repositoriesFromServer.length < Index.PAGE_SIZE)
             {
                 this.setState({hasMore: false});
             }
@@ -58,10 +59,10 @@ class Index extends PureComponent<Props, State>
 
     render()
     {
-        const {repositoryList, hasMore, loading} = this.state;
+        const {repositories, hasMore, loading} = this.state;
         return (<View
-            repositoryList={repositoryList}
-            loadMore={this.loadMore}
+            repositoryList={repositories}
+            loadMore={this.loadMoreRepositories}
             hasMore={hasMore}
             loading={loading} />);
     }

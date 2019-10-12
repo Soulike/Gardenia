@@ -5,4 +5,4 @@ import axios from 'axios';
  * */
 
 axios.defaults.timeout = 5000;  // 请求超时时间
-axios.defaults.validateStatus = () => true; // 不会因为代码不是 2xx 就 Reject Promise
+axios.defaults.validateStatus = status => status >= 100 && status < 500; // 不会因为代码不是 2xx 就 Reject Promise

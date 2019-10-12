@@ -41,7 +41,7 @@ function CodeView(props: Props)
                 {
                     isEmpty ?
                         <Empty /> :
-                        <React.Fragment>
+                        <>
                             <div className={Style.buttonWrapper}>
                                 <BranchButton branches={branches} />
                                 <CloneButton username={username} repository={name} />
@@ -51,7 +51,7 @@ function CodeView(props: Props)
                                     <FileList /> :
                                     <FileReader />
                             }
-                        </React.Fragment>
+                        </>
                 }
             </Skeleton>
         </div>

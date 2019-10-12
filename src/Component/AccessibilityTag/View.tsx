@@ -10,15 +10,9 @@ interface Props extends TagProps
 function AccessibilityTag(props: Props)
 {
     const {isPublic, ...rest} = props;
-    return (
-        <React.Fragment>
-            {
-                isPublic ?
-                    <Tag color={'blue'} {...rest}>公共</Tag> :
-                    <Tag color={'gold'} {...rest}>私人</Tag>
-            }
-        </React.Fragment>
-    );
+    return isPublic ?
+        <Tag color={'blue'} {...rest}>公共</Tag> :
+        <Tag color={'gold'} {...rest}>私人</Tag>;
 }
 
 export default React.memo(AccessibilityTag);

@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from 'axios';
 import {Repository as RepositoryClass, ResponseBody} from '../../Class';
 import {notification} from 'antd';
 import {CREATE, DEL, GET_LIST} from './ROUTE';
+import {errorHandler} from '../Function';
 
 export async function getList(start: number, end: number, username?: string): Promise<Array<RepositoryClass> | null>
 {
@@ -25,8 +26,7 @@ export async function getList(start: number, end: number, username?: string): Pr
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -48,8 +48,7 @@ export async function create(repository: RepositoryClass): Promise<true | null>
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -71,8 +70,7 @@ export async function del(repositoryName: string): Promise<true | null>
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }

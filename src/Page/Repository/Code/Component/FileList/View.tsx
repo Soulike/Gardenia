@@ -17,7 +17,7 @@ function FileListView(props: Props)
 {
     const {fileList, lastCommit: {commitHash, committerName, message, time}, loading} = props;
     return (
-        <React.Fragment>
+        <>
             <div className={Style.FileList}>
                 <div className={Style.lastCommitInfoBar}>
                     <div className={Style.committerName}>{committerName}</div>
@@ -34,7 +34,7 @@ function FileListView(props: Props)
             <div className={Style.readmeWrapper}>
                 <Readme commitHash={commitHash} />
             </div>
-        </React.Fragment>
+        </>
     );
 }
 

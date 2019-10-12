@@ -12,7 +12,7 @@ interface Props extends RouteComponentProps<RouterInterface.PersonalCenter> {}
 interface State
 {
     profile: Profile,
-    repositoryList: Array<Repository>,
+    repositories: Array<Repository>,
     loading: boolean,
     hasMore: boolean,
     lastEnd: number,
@@ -26,7 +26,7 @@ class PersonalCenter extends PureComponent<Props, State>
     {
         super(props);
         this.state = {
-            repositoryList: [],
+            repositories: [],
             profile: new Profile('', '', 'example@example.com', ''),
             loading: true,
             hasMore: true,
@@ -36,23 +36,14 @@ class PersonalCenter extends PureComponent<Props, State>
 
     async componentDidMount()
     {
-        this.changeTitle();
-        const {match: {params: {username}}} = this.props;
-        const [profile] = await Promise.all([
-            ProfileApi.get(username),
-            this.loadMore(),
+        this.setTitle();
+        this.setState({loading: true});
+        await Promise.all([
+            this.loadProfile(),
+            this.loadMoreRepositories(),
         ]);
-        if (profile !== null)
-        {
-            this.setState({loading: false, profile});
-        }
+        this.setState({loading: false});
     }
-
-    changeTitle = () =>
-    {
-        const {match: {params: {username}}} = this.props;
-        document.title = `${username} - Git Demo`;
-    };
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
@@ -60,28 +51,50 @@ class PersonalCenter extends PureComponent<Props, State>
         const {match: {params: {username: prevUsername}}} = prevProps;
         if (username !== prevUsername)
         {
+            await this.initializeState();
+            await this.componentDidMount();
+        }
+    }
+
+    initializeState = async () =>
+    {
+        return new Promise(resolve =>
+        {
             this.setState({
-                repositoryList: [],
+                repositories: [],
                 profile: new Profile('', '', 'example@example.com', ''),
                 loading: true,
                 hasMore: true,
                 lastEnd: 0,
-            }, async () =>
-            {
-                await this.componentDidMount();
-            });
-        }
-    }
+            }, resolve);
+        });
+    };
 
-    loadMore = async () =>
+    loadProfile = async () =>
     {
-        const {repositoryList, lastEnd} = this.state;
+        const {match: {params: {username}}} = this.props;
+        const profile = await ProfileApi.get(username);
+        if (profile !== null)
+        {
+            this.setState({profile});
+        }
+    };
+
+    setTitle = () =>
+    {
+        const {match: {params: {username}}} = this.props;
+        document.title = `${username} - Git Demo`;
+    };
+
+    loadMoreRepositories = async () =>
+    {
+        const {repositories, lastEnd} = this.state;
         const {match: {params: {username}}} = this.props;
         const repositoryListFromServer = await RepositoryApi.getList(lastEnd, lastEnd + PersonalCenter.PAGE_SIZE, username);
         this.setState({loading: false});
         if (repositoryListFromServer !== null)
         {
-            repositoryList.push(...repositoryListFromServer);
+            repositories.push(...repositoryListFromServer);
             this.setState({lastEnd: lastEnd + PersonalCenter.PAGE_SIZE - 1});
             if (repositoryListFromServer.length < PersonalCenter.PAGE_SIZE)
             {
@@ -91,18 +104,17 @@ class PersonalCenter extends PureComponent<Props, State>
         }
     };
 
-
     render()
     {
-        const {profile, repositoryList, loading, hasMore} = this.state;
+        const {profile, repositories, loading, hasMore} = this.state;
         const {username, nickname} = profile;
         return (
             <View username={username}
                   nickname={nickname}
-                  repositoryList={repositoryList}
+                  repositoryList={repositories}
                   loading={loading}
                   hasMore={hasMore}
-                  loadMore={this.loadMore} />
+                  loadMore={this.loadMoreRepositories} />
         );
     }
 }

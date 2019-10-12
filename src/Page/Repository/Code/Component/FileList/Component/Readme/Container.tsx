@@ -33,29 +33,39 @@ class Readme extends PureComponent<Props, State>
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
-        const {match: {params: {username, repository, path}}, commitHash} = this.props;
+        const {match: {params: {path}}, commitHash} = this.props;
         const {match: {params: {path: prevPath}}, commitHash: prevCommitHash} = prevProps;
         if (commitHash.length !== 0 && (prevPath !== path || prevCommitHash !== commitHash))
         {
             this.setState({loading: true});
-            const info = await RepositoryInfo.fileInfo(username, repository, join(path ? path : '', 'README.md'), commitHash);
-            this.setState({loading: false});
-            if (info !== null && info.exists)
+            if (await this.readmeExists())
             {
-                this.setState({loading: true});
-                const raw = await RepositoryInfo.rawFile(username, repository, join(path ? path : '', 'README.md'), commitHash);
-                this.setState({loading: false});
-                if (raw !== null)
-                {
-                    this.setState({readme: await File.transformBlobToString(raw), exists: true});
-                }
+                await this.loadRawReadme();
             }
             else
             {
                 this.setState({exists: false});
             }
+            this.setState({loading: false});
         }
     }
+
+    readmeExists = async () =>
+    {
+        const {match: {params: {username, repository, path}}, commitHash} = this.props;
+        const info = await RepositoryInfo.fileInfo(username, repository, join(path ? path : '', 'README.md'), commitHash);
+        return info !== null && info.exists;
+    };
+
+    loadRawReadme = async () =>
+    {
+        const {match: {params: {username, repository, path}}, commitHash} = this.props;
+        const raw = await RepositoryInfo.rawFile(username, repository, join(path ? path : '', 'README.md'), commitHash);
+        if (raw !== null)
+        {
+            this.setState({readme: await File.transformBlobToString(raw), exists: true});
+        }
+    };
 
     render()
     {

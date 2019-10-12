@@ -29,25 +29,12 @@ class FileList extends Component<Props, State>
 
     async componentDidMount()
     {
-        const {match: {params: {username, repository: name, path, branch}}} = this.props;
         this.setState({loading: true});
-        const [fileList, lastCommit] = await Promise.all([
-            RepositoryInfo.directory(
-                username, name,
-                branch ? branch : 'HEAD',
-                path === undefined ? '' : path + '/'),
-            RepositoryInfo.lastCommit(username, name, branch ? branch : 'HEAD'),
+        await Promise.all([
+            this.loadDirectory(),
+            this.loadLastCommit(),
         ]);
         this.setState({loading: false});
-
-        if (fileList !== null)
-        {
-            this.setState({fileList});
-        }
-        if (lastCommit !== null)
-        {
-            this.setState({lastCommit});
-        }
     }
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
@@ -59,6 +46,29 @@ class FileList extends Component<Props, State>
             await this.componentDidMount();
         }
     }
+
+    loadDirectory = async () =>
+    {
+        const {match: {params: {username, repository: name, path, branch}}} = this.props;
+        const fileList = await RepositoryInfo.directory(
+            username, name,
+            branch ? branch : 'HEAD',
+            path === undefined ? '' : path + '/');
+        if (fileList !== null)
+        {
+            this.setState({fileList});
+        }
+    };
+
+    loadLastCommit = async () =>
+    {
+        const {match: {params: {username, repository: name, branch}}} = this.props;
+        const lastCommit = await RepositoryInfo.lastCommit(username, name, branch ? branch : 'HEAD');
+        if (lastCommit !== null)
+        {
+            this.setState({lastCommit});
+        }
+    };
 
     render()
     {

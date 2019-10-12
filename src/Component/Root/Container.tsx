@@ -31,17 +31,11 @@ class Root extends PureComponent<Props, State>
 
     async componentDidMount()
     {
-        // 检查是不是已经登录了
-        const result = await Account.checkSession();
-        if (result !== null && result.isValid)
+        await this.checkSession();
+        const {isLoggedIn} = this.props;
+        if (isLoggedIn)
         {
-            const {setLoggedIn} = this.props;
-            setLoggedIn();
-            const profile = await ProfileApi.get();
-            if (profile !== null)
-            {
-                this.setState({profile});
-            }
+            await this.loadProfile();
         }
     }
 
@@ -51,13 +45,28 @@ class Root extends PureComponent<Props, State>
         const {isLoggedIn: prevIsLoggedIn} = prevProps;
         if (!prevIsLoggedIn && isLoggedIn)   // 由未登录变为登录，就请求用户信息
         {
-            const profile = await ProfileApi.get();
-            if (profile !== null)
-            {
-                this.setState({profile});
-            }
+            await this.loadProfile();
         }
     }
+
+    checkSession = async () =>
+    {
+        const result = await Account.checkSession();
+        if (result !== null && result.isValid)
+        {
+            const {setLoggedIn} = this.props;
+            setLoggedIn();
+        }
+    };
+
+    loadProfile = async () =>
+    {
+        const profile = await ProfileApi.get();
+        if (profile !== null)
+        {
+            this.setState({profile});
+        }
+    };
 
     render()
     {

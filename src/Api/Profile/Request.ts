@@ -2,6 +2,7 @@ import {Profile, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
 import {notification} from 'antd';
 import {GET} from './ROUTE';
+import {errorHandler} from '../Function';
 
 export async function get(username?: string): Promise<Profile | null>
 {
@@ -25,8 +26,7 @@ export async function get(username?: string): Promise<Profile | null>
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }

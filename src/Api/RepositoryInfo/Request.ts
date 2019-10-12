@@ -3,6 +3,7 @@ import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
 import {BRANCH, COMMIT_COUNT, DIRECTORY, FILE_INFO, LAST_COMMIT, RAW_FILE, REPOSITORY} from './ROUTE';
 import {ObjectType} from '../../CONSTANT';
+import {errorHandler} from '../Function';
 
 export async function repository(username: string, repositoryName: string): Promise<RepositoryClass | null>
 {
@@ -26,8 +27,7 @@ export async function repository(username: string, repositoryName: string): Prom
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -54,8 +54,7 @@ export async function branch(username: string, repositoryName: string): Promise<
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -82,8 +81,7 @@ export async function lastCommit(username: string, repositoryName: string, commi
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -110,8 +108,7 @@ export async function directory(username: string, repositoryName: string, commit
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -138,8 +135,7 @@ export async function commitCount(username: string, repositoryName: string, comm
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -166,8 +162,7 @@ export async function fileInfo(username: string, repositoryName: string, filePat
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
@@ -188,8 +183,7 @@ export async function rawFile(username: string, repositoryName: string, filePath
     }
     catch (e)
     {
-        console.error(e);
-        notification.error({message: '网络异常'});
+        errorHandler(e);
         return null;
     }
 }
