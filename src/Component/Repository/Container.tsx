@@ -1,7 +1,7 @@
 import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {RouteComponentProps} from 'react-router-dom';
-import {Repository as RepositoryClass} from '../../Class';
+import {Profile, Repository as RepositoryClass} from '../../Class';
 import {Profile as ProfileApi, RepositoryInfo} from '../../Api';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {TabsProps} from 'antd/lib/tabs';
@@ -24,7 +24,7 @@ interface State
     repository: RepositoryClass,
     loading: boolean,
     tabActiveKey: TAB_KEY,
-    showSettings: boolean,
+    visitorProfile: Profile | null
 }
 
 class Repository extends PureComponent<Props, State>
@@ -36,7 +36,7 @@ class Repository extends PureComponent<Props, State>
             repository: new RepositoryClass('', '', '', true),
             loading: true,
             tabActiveKey: TAB_KEY.CODE,
-            showSettings: false,
+            visitorProfile: null,
         };
     }
 
@@ -49,7 +49,7 @@ class Repository extends PureComponent<Props, State>
         await this.loadRepository();
         if (isLoggedIn)
         {
-            await this.loadShowSettings();
+            await this.loadVisitorProfile();
         }
         this.setState({loading: false});
     }
@@ -64,7 +64,7 @@ class Repository extends PureComponent<Props, State>
         }
         if (isLoggedIn && !preIsLoggedIn)
         {
-            await this.loadShowSettings();
+            await this.loadVisitorProfile();
         }
     }
 
@@ -85,15 +85,13 @@ class Repository extends PureComponent<Props, State>
         }
     };
 
-    loadShowSettings = async () =>
+    loadVisitorProfile = async () =>
     {
-        // 显示"设置"的条件：已经登录，且仓库属于当前用户
-        const {repository} = this.state;
         const visitorProfile = await ProfileApi.get();
         if (visitorProfile !== null)
         {
             this.setState({
-                showSettings: visitorProfile.username === repository.username,
+                visitorProfile,
             });
         }
     };
@@ -171,11 +169,14 @@ class Repository extends PureComponent<Props, State>
 
     render()
     {
-        const {repository, loading, tabActiveKey, showSettings} = this.state;
-        const {children} = this.props;
+        const {repository, loading, tabActiveKey, visitorProfile} = this.state;
+        const {children, isLoggedIn} = this.props;
         return (
-            <View showSettings={showSettings} repository={repository}
-                  loading={loading} onTabChange={this.onTabChange} tabActiveKey={tabActiveKey}>
+            <View showSettings={isLoggedIn && visitorProfile !== null && repository.username === visitorProfile.username}
+                  repository={repository}
+                  loading={loading}
+                  onTabChange={this.onTabChange}
+                  tabActiveKey={tabActiveKey}>
                 {children}
             </View>
         );

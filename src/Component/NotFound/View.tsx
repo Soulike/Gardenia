@@ -5,7 +5,7 @@ export default function NotFound()
 {
     return (
         <div className={Style.NotFound}>
-
+            404
         </div>
     );
 }

@@ -27,14 +27,11 @@ export default () =>
                     <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER]}
                            component={PAGE_ID_TO_COMPONENT[PAGE_ID.PERSONAL_CENTER]}
                            exact={true} />
-                    <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER]}
-                           component={PAGE_ID_TO_COMPONENT[PAGE_ID.PERSONAL_CENTER]}
-                           exact={true} />
                     <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.REPOSITORY]}
                            component={RepositoryRouter} />
+                    <Route render={NotFound} />
                 </Switch>
             </Root>
-            <Route render={NotFound} />
         </BrowserRouter>
     );
 };
