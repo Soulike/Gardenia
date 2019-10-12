@@ -1,25 +1,21 @@
 import 'core-js';
-import React, {Suspense} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import {Provider} from 'react-redux';
 import Store from './Store';
-import Loading from './Component/Loading';
 import './ModuleConfig';
 import {ConfigProvider} from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import * as serviceWorker from './serviceWorker';
-
-const Router = React.lazy(() => import('./Router'));
+import Router from './Router';
 
 ReactDOM.render(
-    <Suspense fallback={<Loading />}>
-        <Provider store={Store}>
-            <ConfigProvider locale={zhCN}>
-                <Router />
-            </ConfigProvider>
-        </Provider>
-    </Suspense>, document.getElementById('root'));
+    <Provider store={Store}>
+        <ConfigProvider locale={zhCN}>
+            <Router />
+        </ConfigProvider>
+    </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
