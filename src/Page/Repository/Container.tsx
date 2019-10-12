@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Profile, Repository as RepositoryClass} from '../../Class';
+import {Repository as RepositoryClass} from '../../Class';
 import {Profile as ProfileApi, RepositoryInfo} from '../../Api';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {TabsProps} from 'antd/lib/tabs';
@@ -20,7 +20,7 @@ interface State
     repository: RepositoryClass,
     loading: boolean,
     tabActiveKey: TAB_KEY,
-    visitorProfile?: Profile
+    showSettings: boolean,
 }
 
 class Repository extends PureComponent<Props, State>
@@ -32,6 +32,7 @@ class Repository extends PureComponent<Props, State>
             repository: new RepositoryClass('', '', '', true),
             loading: true,
             tabActiveKey: TAB_KEY.CODE,
+            showSettings: false,
         };
     }
 
@@ -39,10 +40,12 @@ class Repository extends PureComponent<Props, State>
     {
         this.setState({loading: true});
         this.setTabActiveKey();
-        await Promise.all([
-            this.setRepository(),
-            this.setVisitorProfile(),
-        ]);
+        await this.setRepository();
+        const {isLoggedIn} = this.props;
+        if (isLoggedIn)
+        {
+            await this.setShowSettings();
+        }
         this.setState({loading: false});
     }
 
@@ -53,32 +56,35 @@ class Repository extends PureComponent<Props, State>
         // 设置仓库基本信息
         if (repository !== null)
         {
-            this.setState({repository});
             const {name, description} = repository;
             document.title = `${name} - ${description.length === 0 ? 'Git Demo' : description}`;
+            this.setState({repository});
         }
     };
 
-    setVisitorProfile = async () =>
+    setShowSettings = async () =>
     {
-        const {isLoggedIn} = this.props;
-        if (isLoggedIn)
+        const {repository} = this.state;
+        const visitorProfile = await ProfileApi.get();
+        if (visitorProfile !== null)
         {
-            const visitorProfile = await ProfileApi.get();
-            if (visitorProfile !== null)
-            {
-                this.setState({visitorProfile});
-            }
+            this.setState({
+                showSettings: visitorProfile.username === repository.username,
+            });
         }
     };
 
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
-        const {location: {pathname}} = this.props;
-        const {location: {pathname: prevPathName}} = prevProps;
+        const {location: {pathname}, isLoggedIn} = this.props;
+        const {location: {pathname: prevPathName}, isLoggedIn: preIsLoggedIn} = prevProps;
         if (pathname !== prevPathName)
         {
             this.setTabActiveKey();
+        }
+        if (isLoggedIn && !preIsLoggedIn)
+        {
+            await this.setShowSettings();
         }
     }
 
@@ -155,10 +161,8 @@ class Repository extends PureComponent<Props, State>
 
     render()
     {
-        const {repository, loading, tabActiveKey, visitorProfile} = this.state;
-        const {isLoggedIn} = this.props;
+        const {repository, loading, tabActiveKey, showSettings} = this.state;
         // 显示设置的条件：登录，且仓库属于当前用户
-        const showSettings = isLoggedIn && visitorProfile !== undefined && visitorProfile.username === repository.username;
         return (
             <View showSettings={showSettings} repository={repository}
                   loading={loading} onTabChange={this.onTabChange} tabActiveKey={tabActiveKey} />
