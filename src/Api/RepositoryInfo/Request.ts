@@ -1,7 +1,7 @@
 import {Commit, Repository as RepositoryClass, ResponseBody} from '../../Class';
 import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
-import {BRANCH, COMMIT_COUNT, DIRECTORY, FILE_INFO, LAST_COMMIT, RAW_FILE, REPOSITORY} from './ROUTE';
+import {BRANCH, COMMIT_COUNT, DIRECTORY, FILE_INFO, LAST_COMMIT, RAW_FILE, REPOSITORY, SET_NAME} from './ROUTE';
 import {ObjectType} from '../../CONSTANT';
 import {errorHandler} from '../Function';
 
@@ -180,6 +180,29 @@ export async function rawFile(username: string, repositoryName: string, filePath
                 transformResponse: data => data,    // 明确告知 axios 不要对返回的数据做任何处理
             });
         return data;
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function setName(repositoryName: string, newRepositoryName: string): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+            await axios.post(SET_NAME, {repositoryName, newRepositoryName});
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
     }
     catch (e)
     {

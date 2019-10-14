@@ -12,3 +12,4 @@ export const DIRECTORY = repositoryInfoPrefix('/directory');
 export const COMMIT_COUNT = repositoryInfoPrefix('/commitCount');
 export const FILE_INFO = repositoryInfoPrefix('/fileInfo');
 export const RAW_FILE = repositoryInfoPrefix('/rawFile');
+export const SET_NAME = repositoryInfoPrefix('/setName');

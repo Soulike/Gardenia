@@ -56,8 +56,20 @@ class Repository extends PureComponent<Props, State>
 
     async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
     {
-        const {location: {pathname}, isLoggedIn} = this.props;
-        const {location: {pathname: prevPathName}, isLoggedIn: preIsLoggedIn} = prevProps;
+        const {
+            location: {pathname},
+            isLoggedIn, match:
+                {params: {repository, username}},
+        } = this.props;
+        const {
+            location: {pathname: prevPathName},
+            isLoggedIn: preIsLoggedIn,
+            match: {params: {repository: prevRepository, username: prevUsername}},
+        } = prevProps;
+        if (repository !== prevRepository || username !== prevUsername)
+        {
+            await this.componentDidMount();
+        }
         if (pathname !== prevPathName)
         {
             this.setTabActiveKey();
