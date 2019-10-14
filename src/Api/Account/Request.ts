@@ -75,7 +75,7 @@ export async function logout(): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful}}: AxiosResponse<ResponseBody<void>> = await axios.get(LOGOUT);
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody<void>> = await axios.post(LOGOUT);
         return isSuccessful ? true : null;
     }
     catch (e)

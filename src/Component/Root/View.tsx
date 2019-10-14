@@ -1,9 +1,10 @@
 import React, {ReactNode} from 'react';
-import {Icon, Menu} from 'antd';
+import {Icon, Menu, Popconfirm} from 'antd';
 import Style from './Style.module.scss';
 import {Link} from 'react-router-dom';
 import {CONFIG as ROUTER_CONFIG} from '../../Router';
 import {Profile} from '../../Class';
+import {PopconfirmProps} from 'antd/lib/popconfirm';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -11,12 +12,13 @@ interface Props
 {
     children?: ReactNode,
     isLoggedIn: boolean,
-    username: Profile['username']
+    username: Profile['username'],
+    onLogoutClick: PopconfirmProps['onConfirm'],
 }
 
 function RootView(props: Props)
 {
-    const {children, isLoggedIn, username} = props;
+    const {children, isLoggedIn, username, onLogoutClick} = props;
     return (
         <div className={Style.Root}>
             <Menu mode={'horizontal'} theme={'dark'} className={Style.menu} selectable={false}>
@@ -36,6 +38,11 @@ function RootView(props: Props)
                                     <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER].replace(':username', username)}>
                                         <Icon type="user" />个人中心
                                     </Link>
+                                </Menu.Item>
+                                <Menu.Item>
+                                    <Popconfirm title={'确定退出登录？'} placement={'bottomLeft'} onConfirm={onLogoutClick}>
+                                        <Icon type="logout" />退出登录
+                                    </Popconfirm>
                                 </Menu.Item>
                             </Menu> :
                             <Menu mode={'horizontal'} theme={'dark'} selectable={false}>
