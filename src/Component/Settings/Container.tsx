@@ -7,7 +7,7 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../Ro
 
 interface Props extends RouteComponentProps<RouterInterface.RepositorySettings>
 {
-    children: ReactNode
+    children: ReactNode,
 }
 
 interface State
@@ -29,6 +29,21 @@ class Settings extends PureComponent<Props, State>
 
     componentDidMount()
     {
+        this.initMenuItems();
+    }
+
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    {
+        const {match: {path: prePath}} = prevProps;
+        const {match: {path}} = this.props;
+        if (prePath !== path)
+        {
+            this.setActiveMenuItemKey();
+        }
+    }
+
+    initMenuItems = () =>
+    {
         const {match: {params: {username, repository}}} = this.props;
         this.setState({
             menuItems: [
@@ -49,17 +64,7 @@ class Settings extends PureComponent<Props, State>
                 },
             ],
         });
-    }
-
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
-    {
-        const {match: {path: prePath}} = prevProps;
-        const {match: {path}} = this.props;
-        if (prePath !== path)
-        {
-            this.setActiveMenuItemKey();
-        }
-    }
+    };
 
     setActiveMenuItemKey = () =>
     {
