@@ -80,10 +80,30 @@ export function generateRepositoryPullRequestsRoute(parameter: RepositoryPullReq
     return url;
 }
 
-export function generateRepositorySettingsRoute(parameter: RepositorySettings)
+function generateRepositorySettingsRouteHelper(route: string, parameter: RepositorySettings)
 {
     const {username, repository} = parameter;
-    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS]
+    return route
         .replace(':username', username)
         .replace(':repository', repository);
+}
+
+export function generateRepositorySettingsRoute(parameter: RepositorySettings)
+{
+    return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS], parameter);
+}
+
+export function generateRepositorySettingsOptionsRoute(parameter: RepositorySettings)
+{
+    return generateRepositorySettingsRoute(parameter);
+}
+
+export function generateRepositoryBranchesRoute(parameter: RepositorySettings)
+{
+    return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.BRANCHES], parameter);
+}
+
+export function generateRepositoryCollaboratorsRoute(parameter: RepositorySettings)
+{
+    return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS], parameter);
 }

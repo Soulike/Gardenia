@@ -1,0 +1,21 @@
+.Settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 0;
+
+    .menuWrapper {
+        width: 20%;
+
+        .menu {
+
+            .item {
+
+            }
+        }
+    }
+
+    .contentWrapper {
+        width: 80%;
+    }
+}

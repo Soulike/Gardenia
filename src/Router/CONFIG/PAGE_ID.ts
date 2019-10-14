@@ -10,6 +10,9 @@ export const PAGE_ID = {
         PULL_REQUESTS: 'PULL_REQUESTS',
         SETTINGS: {
             SETTINGS: 'SETTINGS',
+            OPTIONS: 'OPTIONS',
+            COLLABORATORS: 'COLLABORATORS',
+            BRANCHES: 'BRANCHES',
         },
         CODE: 'CODE',
     },
