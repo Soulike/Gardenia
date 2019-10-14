@@ -40,7 +40,7 @@ function RootView(props: Props)
                             </Menu> :
                             <Menu mode={'horizontal'} theme={'dark'} selectable={false}>
                                 <Menu.Item>
-                                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]}>
+                                    <Link to={`${PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]}?prev=${window.location.pathname}`}>
                                         <Icon type="login" />登录
                                     </Link>
                                 </Menu.Item>

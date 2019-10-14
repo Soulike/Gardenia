@@ -11,6 +11,7 @@ import {connect} from 'react-redux';
 import {Account as AccountClass} from '../../Class';
 import {RootState, State as StoreState} from '../../Store';
 import {AnyAction} from 'redux';
+import qs from 'querystring';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -103,7 +104,21 @@ class Login extends PureComponent<Props, State>
         const {setLoggedIn} = this.props;
         setLoggedIn();
         notification.success({message: '登录成功'});
-        this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
+        this.returnToPreviousPage();
+    };
+
+    returnToPreviousPage = () =>
+    {
+        const {location: {search}} = this.props;
+        const {prev} = qs.parse(search.slice(1));
+        if (typeof prev === 'string')
+        {
+            this.props.history.push(prev);
+        }
+        else
+        {
+            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
+        }
     };
 
     render()
