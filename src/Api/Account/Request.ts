@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {Account, Profile, ResponseBody} from '../../Class';
-import {CHECK_SESSION, LOGIN, REGISTER} from './ROUTE';
+import {CHECK_SESSION, LOGIN, LOGOUT, REGISTER} from './ROUTE';
 import {notification} from 'antd';
 import {errorHandler} from '../Function';
 
@@ -63,6 +63,20 @@ export async function checkSession(): Promise<{ isValid: boolean } | null>
         {
             return null;
         }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function logout(): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody<void>> = await axios.get(LOGOUT);
+        return isSuccessful ? true : null;
     }
     catch (e)
     {
