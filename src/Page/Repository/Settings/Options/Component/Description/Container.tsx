@@ -13,6 +13,7 @@ interface State
 {
     description: string,
     loading: boolean,
+    submitting: boolean,
 }
 
 class Description extends PureComponent<Props, State>
@@ -23,6 +24,7 @@ class Description extends PureComponent<Props, State>
         this.state = {
             description: '',
             loading: true,
+            submitting: false,
         };
     }
 
@@ -53,9 +55,9 @@ class Description extends PureComponent<Props, State>
     {
         const {description} = this.state;
         const {match: {params: {repository: repositoryName}}} = this.props;
-        this.setState({loading: true});
+        this.setState({submitting: true});
         const result = await RepositoryInfo.setDescription(repositoryName, description);
-        this.setState({loading: false});
+        this.setState({submitting: false});
         if (result !== null)
         {
             notification.success({message: '仓库描述修改成功'});
@@ -64,8 +66,8 @@ class Description extends PureComponent<Props, State>
 
     render()
     {
-        const {description, loading} = this.state;
-        return (<View loading={loading}
+        const {description, loading, submitting} = this.state;
+        return (<View submitting={submitting} loading={loading}
                       description={description}
                       onTextareaChange={this.onTextareaChange}
                       onSubmit={this.onSubmit} />);
