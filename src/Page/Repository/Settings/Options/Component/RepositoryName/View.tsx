@@ -3,6 +3,7 @@ import Style from './Style.module.scss';
 import {Button, Input, Popconfirm} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
+import SettingLabel from '../../../../../../Component/SettingLabel';
 
 interface Props
 {
@@ -23,7 +24,7 @@ function RepositoryNameView(props: Props)
     return (
         <div className={Style.RepositoryName}>
             <label className={Style.label}>
-                <div className={Style.labelText}>仓库名</div>
+                <SettingLabel>仓库名</SettingLabel>
                 <Input className={Style.input}
                        value={repositoryName}
                        onChange={onRepositoryNameInputChange}

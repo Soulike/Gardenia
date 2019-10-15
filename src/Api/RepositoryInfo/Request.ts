@@ -1,7 +1,17 @@
 import {Commit, Repository as RepositoryClass, ResponseBody} from '../../Class';
 import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
-import {BRANCH, COMMIT_COUNT, DIRECTORY, FILE_INFO, LAST_COMMIT, RAW_FILE, REPOSITORY, SET_NAME} from './ROUTE';
+import {
+    BRANCH,
+    COMMIT_COUNT,
+    DIRECTORY,
+    FILE_INFO,
+    LAST_COMMIT,
+    RAW_FILE,
+    REPOSITORY,
+    SET_DESCRIPTION,
+    SET_NAME,
+} from './ROUTE';
 import {ObjectType} from '../../CONSTANT';
 import {errorHandler} from '../Function';
 
@@ -194,6 +204,29 @@ export async function setName(repositoryName: string, newRepositoryName: string)
     {
         const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
             await axios.post(SET_NAME, {repositoryName, newRepositoryName});
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function setDescription(repositoryName: string, description: string): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+            await axios.post(SET_DESCRIPTION, {repositoryName, description});
         if (isSuccessful)
         {
             return true;
