@@ -3,9 +3,7 @@ import Style from './Style.module.scss';
 import SettingsTitle from '../../../Component/SettingsTitle';
 import RepositoryName from './Component/RepositoryName';
 
-interface Props {}
-
-function OptionsView({}: Props)
+function OptionsView()
 {
     return (
         <div className={Style.Options}>
