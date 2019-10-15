@@ -21,10 +21,10 @@ function SettingsView(props: Props)
                     {
                         menuItems.map(menuItem =>
                         {
-                            const {key, to, title} = menuItem;
+                            const {key, to, title, icon} = menuItem;
                             return (
                                 <Menu.Item key={key} className={Style.item}>
-                                    <Link to={to}>{title}</Link>
+                                    <Link to={to}>{icon}{title}</Link>
                                 </Menu.Item>);
                         })
                     }

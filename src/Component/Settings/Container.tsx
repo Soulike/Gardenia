@@ -4,6 +4,7 @@ import {MenuItem} from './Interface';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {RouteComponentProps} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
+import {Icon} from 'antd';
 
 interface Props extends RouteComponentProps<RouterInterface.RepositorySettings>
 {
@@ -48,16 +49,19 @@ class Settings extends PureComponent<Props, State>
         this.setState({
             menuItems: [
                 {
+                    icon: <Icon type="setting" />,
                     title: '选项',
                     key: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS,
                     to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repository}),
                 },
                 {
+                    icon: <Icon type="team" />,
                     title: '团队',
                     key: PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS,
                     to: RouterFunction.generateRepositoryCollaboratorsRoute({username, repository}),
                 },
                 {
+                    icon: <Icon type="branches" />,
                     title: '分支',
                     key: PAGE_ID.REPOSITORY.SETTINGS.BRANCHES,
                     to: RouterFunction.generateRepositoryBranchesRoute({username, repository}),
