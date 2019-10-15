@@ -2,9 +2,9 @@ import React, {PureComponent} from 'react';
 import View from './View';
 import {InputProps} from 'antd/lib/input';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import {notification} from 'antd';
-import {RepositoryInfo} from '../../../../../Api/RepositoryInfo';
+import {RepositoryInfo} from '../../../../../../Api/RepositoryInfo';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 
 interface Props extends RouteComponentProps<RouterInterface.RepositorySettings> {}
