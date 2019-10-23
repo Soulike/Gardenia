@@ -89,13 +89,16 @@ class FileReader extends PureComponent<Props, State>
         if (exists)
         {
             this.setState({isBinary: isBinary!});
-            if (!isBinary && size! > 1024 * 1024)   // 不是二进制文件，但大小超过 1M
+            if (!isBinary)   // 不是二进制文件，但大小超过 1M
             {
-                this.setState({isOversize: true});
-            }
-            else    // 不是二进制文件，且大小小于 1M，就加载文件内容
-            {
-                await this.loadRawContent(commitHash);
+                if (size! > 1024 * 1024)
+                {
+                    this.setState({isOversize: true});
+                }
+                else    // 不是二进制文件，且大小小于 1M，就加载文件内容
+                {
+                    await this.loadRawContent(commitHash);
+                }
             }
         }
     };
