@@ -62,8 +62,8 @@ class FileList extends Component<Props, State>
 
     loadLastCommit = async () =>
     {
-        const {match: {params: {username, repository: name, branch}}} = this.props;
-        const lastCommit = await RepositoryInfo.lastCommit(username, name, branch ? branch : 'HEAD');
+        const {match: {params: {username, repository: name, branch, path}}} = this.props;
+        const lastCommit = await RepositoryInfo.lastCommit(username, name, branch ? branch : 'HEAD', path);
         if (lastCommit !== null)
         {
             this.setState({lastCommit});
