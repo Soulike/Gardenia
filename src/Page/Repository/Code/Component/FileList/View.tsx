@@ -6,16 +6,19 @@ import {Empty, List} from 'antd';
 import Item from './Component/Item';
 import Readme from './Component/Readme';
 
+const PreviousFolderItem = React.lazy(() => import('./Component/PreviousFolderItem'));
+
 interface Props
 {
     fileList: Array<{ type: ObjectType, path: string, commit: Commit }>,
     lastCommit: Commit,
     loading: boolean,
+    showPreviousFolderItem: boolean,
 }
 
 function FileListView(props: Props)
 {
-    const {fileList, lastCommit: {commitHash, committerName, message, time}, loading} = props;
+    const {fileList, lastCommit: {commitHash, committerName, message, time}, loading, showPreviousFolderItem} = props;
     return (
         <>
             <div className={Style.FileList}>
@@ -26,6 +29,9 @@ function FileListView(props: Props)
                     <div className={Style.commitHash}>最后提交：{commitHash.slice(0, 7)}</div>
                 </div>
                 <List locale={{emptyText: <Empty description={'没有文件'} />}} loading={loading} className={Style.fileList}>
+                    {
+                        showPreviousFolderItem ? <PreviousFolderItem /> : null
+                    }
                     {
                         fileList.map(fileInfo => <Item fileInfo={fileInfo} key={fileInfo.path} />)
                     }

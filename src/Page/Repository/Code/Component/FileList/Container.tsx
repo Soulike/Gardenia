@@ -73,7 +73,11 @@ class FileList extends Component<Props, State>
     render()
     {
         const {fileList, lastCommit, loading} = this.state;
-        return (<View fileList={fileList} lastCommit={lastCommit} loading={loading} />);
+        const {match: {params: {path}}} = this.props;
+        return (<View fileList={fileList}
+                      lastCommit={lastCommit}
+                      loading={loading}
+                      showPreviousFolderItem={path !== undefined} />);
     }
 }
 
