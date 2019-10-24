@@ -1,19 +1,19 @@
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from './CONFIG';
 import {
-    PersonalCenter,
-    RepositoryCode,
-    RepositoryIssues,
-    RepositoryPullRequests,
-    RepositorySettings,
+    IPersonalCenter,
+    IRepositoryCode,
+    IRepositoryIssues,
+    IRepositoryPullRequests,
+    IRepositorySettings,
 } from './Interface';
 
-export function generatePersonalCenterRoute(parameter: PersonalCenter): string
+export function generatePersonalCenterRoute(parameter: IPersonalCenter): string
 {
     const {username} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER].replace(':username', username);
 }
 
-export function generateRepositoryRoute(parameter: RepositoryCode)
+export function generateRepositoryRoute(parameter: IRepositoryCode)
 {
     const {username, branch, objectType, path, repository} = parameter;
     let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE]
@@ -46,7 +46,7 @@ export function generateRepositoryRoute(parameter: RepositoryCode)
     return url;
 }
 
-export function generateRepositoryIssuesRoute(parameter: RepositoryIssues)
+export function generateRepositoryIssuesRoute(parameter: IRepositoryIssues)
 {
     const {username, repository, number} = parameter;
     let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUES]
@@ -63,7 +63,7 @@ export function generateRepositoryIssuesRoute(parameter: RepositoryIssues)
     return url;
 }
 
-export function generateRepositoryPullRequestsRoute(parameter: RepositoryPullRequests)
+export function generateRepositoryPullRequestsRoute(parameter: IRepositoryPullRequests)
 {
     const {username, repository, number} = parameter;
     let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS]
@@ -80,7 +80,7 @@ export function generateRepositoryPullRequestsRoute(parameter: RepositoryPullReq
     return url;
 }
 
-function generateRepositorySettingsRouteHelper(route: string, parameter: RepositorySettings)
+function generateRepositorySettingsRouteHelper(route: string, parameter: IRepositorySettings)
 {
     const {username, repository} = parameter;
     return route
@@ -88,22 +88,22 @@ function generateRepositorySettingsRouteHelper(route: string, parameter: Reposit
         .replace(':repository', repository);
 }
 
-export function generateRepositorySettingsRoute(parameter: RepositorySettings)
+export function generateRepositorySettingsRoute(parameter: IRepositorySettings)
 {
     return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS], parameter);
 }
 
-export function generateRepositorySettingsOptionsRoute(parameter: RepositorySettings)
+export function generateRepositorySettingsOptionsRoute(parameter: IRepositorySettings)
 {
     return generateRepositorySettingsRoute(parameter);
 }
 
-export function generateRepositoryBranchesRoute(parameter: RepositorySettings)
+export function generateRepositoryBranchesRoute(parameter: IRepositorySettings)
 {
     return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.BRANCHES], parameter);
 }
 
-export function generateRepositoryCollaboratorsRoute(parameter: RepositorySettings)
+export function generateRepositoryCollaboratorsRoute(parameter: IRepositorySettings)
 {
     return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS], parameter);
 }

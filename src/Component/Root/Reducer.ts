@@ -1,8 +1,8 @@
 import {AnyAction, Reducer} from 'redux';
 import ActionType from './Action/ACTION_TYPE';
-import {RootState} from '../../Store';
+import {IRootState} from '../../Store';
 
-const reducer: Reducer<RootState, AnyAction> = (state, action) =>
+const reducer: Reducer<IRootState, AnyAction> = (state, action) =>
 {
     const {type} = action;
     switch (type)

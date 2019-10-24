@@ -4,7 +4,7 @@ import {Repository} from '../../Class';
 import InfiniteScroll from 'react-infinite-scroller';
 import RepositoryList from '../../Component/RepositoryList';
 
-interface Props
+interface IProps
 {
     repositoryList: Array<Repository>,
     loadMore: () => any,
@@ -12,7 +12,7 @@ interface Props
     hasMore: boolean,
 }
 
-function IndexView(props: Props)
+function IndexView(props: IProps)
 {
     const {repositoryList, loadMore, loading, hasMore} = props;
     return (

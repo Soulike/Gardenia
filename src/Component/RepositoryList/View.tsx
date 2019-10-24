@@ -6,13 +6,13 @@ import {Function as RouterFunction} from '../../Router';
 import {Repository} from '../../Class';
 import AccessibilityTag from '../AccessibilityTag';
 
-interface Props
+interface IProps
 {
     repositoryList: Array<Repository>,
     loading: boolean
 }
 
-function RepositoryList(props: Props)
+function RepositoryList(props: IProps)
 {
     const {repositoryList, loading} = props;
     return (

@@ -4,27 +4,27 @@ import {connect} from 'react-redux';
 import {Profile as ProfileClass} from '../../Class';
 import {Account, Profile as ProfileApi} from '../../Api';
 import {setLoggedInAction, setLoggedOutAction} from './Action/Action';
-import {RootState, State as StoreState} from '../../Store';
+import {IRootState, IState as StoreState} from '../../Store';
 import {AnyAction} from 'redux';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import {notification} from 'antd';
 
-interface Props
+interface IProps
 {
     children?: ReactNode,
-    isLoggedIn: RootState['isLoggedIn']
+    isLoggedIn: IRootState['isLoggedIn']
     setLoggedIn: () => AnyAction;
     setLoggedOut: () => AnyAction;
 }
 
-interface State
+interface IState
 {
     profile: ProfileClass
 }
 
-class Root extends PureComponent<Props, State>
+class Root extends PureComponent<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {
@@ -42,7 +42,7 @@ class Root extends PureComponent<Props, State>
         }
     }
 
-    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {isLoggedIn} = this.props;
         const {isLoggedIn: prevIsLoggedIn} = prevProps;

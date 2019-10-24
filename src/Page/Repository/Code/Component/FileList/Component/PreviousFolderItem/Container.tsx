@@ -8,7 +8,7 @@ interface IState
     to: string
 }
 
-interface IProps extends RouteComponentProps<RouterInterface.RepositoryCode> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 
 class PreviousFolderItem extends PureComponent<IProps, IState>
 {

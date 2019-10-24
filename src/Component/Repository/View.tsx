@@ -8,7 +8,7 @@ import {Function as RouterFunction} from '../../Router';
 import TAB_KEY from './TAB_KEY';
 import {TabsProps} from 'antd/lib/tabs';
 
-interface Props
+interface IProps
 {
     repository: RepositoryClass,
     loading: boolean,
@@ -18,7 +18,7 @@ interface Props
     children: ReactNode
 }
 
-function RepositoryView(props: Props)
+function RepositoryView(props: IProps)
 {
     const {
         repository: {username, name, isPublic},

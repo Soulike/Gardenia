@@ -5,11 +5,11 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import {notification} from 'antd';
 import {Interface as RouterInterface} from '../../../../../Router';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositoryCode> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 
-interface State {}
+interface IState {}
 
-class Empty extends PureComponent<Props, State>
+class Empty extends PureComponent<IProps, IState>
 {
     onCopy: CopyToClipboard.Props['onCopy'] = (_text, result) =>
     {

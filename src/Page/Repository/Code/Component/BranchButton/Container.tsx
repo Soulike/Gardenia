@@ -5,12 +5,12 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../Router';
 import {ObjectType} from '../../../../../CONSTANT';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositoryCode>
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
     branches: Array<string>,
 }
 
-class BranchButton extends PureComponent<Props>
+class BranchButton extends PureComponent<IProps>
 {
     onBranchClick: (branch: string) => MenuItemProps['onClick'] = branch =>
     {

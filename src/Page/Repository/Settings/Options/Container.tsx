@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 
-interface Props {}
+interface IProps {}
 
-interface State {}
+interface IState {}
 
-class Options extends PureComponent<Props, State>
+class Options extends PureComponent<IProps, IState>
 {
     render()
     {

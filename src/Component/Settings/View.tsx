@@ -1,17 +1,17 @@
 import React, {ReactNode} from 'react';
 import Style from './Style.module.scss';
 import {Menu} from 'antd';
-import {MenuItem} from './Interface';
+import {IMenuItem} from './Interface';
 import {Link} from 'react-router-dom';
 
-interface Props
+interface IProps
 {
     children: ReactNode,
-    menuItems: MenuItem[],
+    menuItems: IMenuItem[],
     activeItemKey: string,
 }
 
-function SettingsView(props: Props)
+function SettingsView(props: IProps)
 {
     const {children, menuItems, activeItemKey} = props;
     return (

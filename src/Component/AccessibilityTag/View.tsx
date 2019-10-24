@@ -2,12 +2,12 @@ import React from 'react';
 import {TagProps} from 'antd/lib/tag';
 import {Tag} from 'antd';
 
-interface Props extends TagProps
+interface IProps extends TagProps
 {
     isPublic: boolean
 }
 
-function AccessibilityTag(props: Props)
+function AccessibilityTag(props: IProps)
 {
     const {isPublic, ...rest} = props;
     return isPublic ?

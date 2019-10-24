@@ -1,9 +1,9 @@
-export interface State
+export interface IState
 {
-    Root: RootState
+    Root: IRootState
 }
 
-export interface RootState
+export interface IRootState
 {
     isLoggedIn: boolean
 }

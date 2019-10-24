@@ -2,14 +2,14 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Spin} from 'antd';
 
-interface Props
+interface IProps
 {
     exists: boolean,
     html: string,
     loading: boolean,
 }
 
-function ReadmeView(props: Props)
+function ReadmeView(props: IProps)
 {
     const {html, exists, loading} = props;
     return exists ?

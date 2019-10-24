@@ -1,12 +1,12 @@
 import React, {ReactNode} from 'react';
 import Style from './Style.module.scss';
 
-interface Props
+interface IProps
 {
     children: ReactNode
 }
 
-function SettingsTitle(props: Props)
+function SettingsTitle(props: IProps)
 {
     const {children} = props;
     return (

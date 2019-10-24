@@ -1,25 +1,25 @@
 import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
-import {MenuItem} from './Interface';
+import {IMenuItem} from './Interface';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {RouteComponentProps} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {Icon} from 'antd';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositorySettings>
+interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings>
 {
     children: ReactNode,
 }
 
-interface State
+interface IState
 {
     activeItemKey: string,
-    menuItems: MenuItem[],
+    menuItems: IMenuItem[],
 }
 
-class Settings extends PureComponent<Props, State>
+class Settings extends PureComponent<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {
@@ -33,7 +33,7 @@ class Settings extends PureComponent<Props, State>
         this.initMenuItems();
     }
 
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {match: {path: prePath}} = prevProps;
         const {match: {path}} = this.props;

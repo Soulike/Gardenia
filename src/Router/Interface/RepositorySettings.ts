@@ -1,4 +1,4 @@
-export interface RepositorySettings
+export interface IRepositorySettings
 {
     username: string,
     repository: string,

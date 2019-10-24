@@ -10,9 +10,9 @@ import {ObjectType} from '../../../../../CONSTANT';
 import {Interface as RouterInterface} from '../../../../../Router';
 import {File} from '../../../../../Function';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositoryCode> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 
-interface State
+interface IState
 {
     exists: boolean,
     isBinary: boolean,
@@ -22,10 +22,10 @@ interface State
     rawContent: string,
 }
 
-class FileReader extends PureComponent<Props, State>
+class FileReader extends PureComponent<IProps, IState>
 {
 
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {
@@ -45,7 +45,7 @@ class FileReader extends PureComponent<Props, State>
         this.setState({loading: false});
     }
 
-    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {location: {pathname}} = this.props;
         const {location: {pathname: prePathname}} = prevProps;

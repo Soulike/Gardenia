@@ -5,7 +5,7 @@ import {Button, Input, Spin} from 'antd';
 import {TextAreaProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 
-interface Props
+interface IProps
 {
     description: string,
     onTextareaChange: TextAreaProps['onChange'],
@@ -14,7 +14,7 @@ interface Props
     submitting: boolean
 }
 
-function DescriptionView(props: Props)
+function DescriptionView(props: IProps)
 {
     const {description, onSubmit, onTextareaChange, loading, submitting} = props;
     return (

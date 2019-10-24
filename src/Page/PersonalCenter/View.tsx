@@ -4,7 +4,7 @@ import {Repository} from '../../Class';
 import InfiniteScroll from 'react-infinite-scroller';
 import RepositoryList from '../../Component/RepositoryList';
 
-interface Props
+interface IProps
 {
     username: string,
     nickname: string,
@@ -15,7 +15,7 @@ interface Props
 }
 
 
-function PersonalCenterView(props: Props)
+function PersonalCenterView(props: IProps)
 {
     const {username, nickname, repositoryList, loading, hasMore, loadMore} = props;
     return (

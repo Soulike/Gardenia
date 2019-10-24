@@ -11,7 +11,7 @@ const Empty = React.lazy(() => import('./Component/Empty'));
 const FileReader = React.lazy(() => import('./Component/FileReader'));
 const InfoBar = React.lazy(() => import('./Component/InfoBar'));
 
-interface Props
+interface IProps
 {
     repository: RepositoryClass,
     branches: Array<string>,
@@ -21,7 +21,7 @@ interface Props
     loading: boolean,
 }
 
-function CodeView(props: Props)
+function CodeView(props: IProps)
 {
     const {
         repository: {username, name, description},

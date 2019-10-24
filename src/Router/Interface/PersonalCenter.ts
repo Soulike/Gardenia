@@ -1,4 +1,4 @@
-export interface PersonalCenter
+export interface IPersonalCenter
 {
     username: string,
 }

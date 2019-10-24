@@ -6,18 +6,18 @@ import {ObjectType} from '../../../../../CONSTANT';
 import {Commit} from '../../../../../Class';
 import {Interface as RouterInterface} from '../../../../../Router';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositoryCode> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 
-interface State
+interface IState
 {
     fileList: Array<{ type: ObjectType, path: string, commit: Commit }>,
     lastCommit: Commit,
     loading: boolean,
 }
 
-class FileList extends Component<Props, State>
+class FileList extends Component<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {
@@ -37,7 +37,7 @@ class FileList extends Component<Props, State>
         this.setState({loading: false});
     }
 
-    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {match: {params: {branch: preBranch, path: prePath}}} = prevProps;
         const {match: {params: {branch, path}}} = this.props;

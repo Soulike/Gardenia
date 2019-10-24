@@ -7,21 +7,21 @@ import {mdConverter} from '../../../../../../../Singleton';
 import {Interface as RouterInterface} from '../../../../../../../Router';
 import {File} from '../../../../../../../Function';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositoryCode>
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
     commitHash: string,
 }
 
-interface State
+interface IState
 {
     exists: boolean,
     readme: string,
     loading: boolean,
 }
 
-class Readme extends PureComponent<Props, State>
+class Readme extends PureComponent<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {
@@ -31,7 +31,7 @@ class Readme extends PureComponent<Props, State>
         };
     }
 
-    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {match: {params: {path}}, commitHash} = this.props;
         const {match: {params: {path: prevPath}}, commitHash: prevCommitHash} = prevProps;

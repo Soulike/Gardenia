@@ -5,7 +5,7 @@ import svg from '../../Static/Login/developing_code.svg';
 import {InputProps} from 'antd/lib/input';
 import {FormProps} from 'antd/lib/form';
 
-interface Props
+interface IProps
 {
     username: string,
     password: string,
@@ -18,7 +18,7 @@ interface Props
     onFormSubmit: FormProps['onSubmit'],
 }
 
-function RegisterView(props: Props)
+function RegisterView(props: IProps)
 {
     const {
         username,

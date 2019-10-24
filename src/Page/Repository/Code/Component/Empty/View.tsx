@@ -4,14 +4,14 @@ import {Card, Icon, Input} from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import svg from '../../../../../Static/Repository/process_building.svg';
 
-interface Props
+interface IProps
 {
     username: string,
     repository: string,
     onCopy: CopyToClipboard.Props['onCopy']
 }
 
-function EmptyView(props: Props)
+function EmptyView(props: IProps)
 {
     const {username, repository, onCopy} = props;
     return (

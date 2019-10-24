@@ -7,17 +7,17 @@ import {notification} from 'antd';
 import {RepositoryInfo} from '../../../../../../Api/RepositoryInfo';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositorySettings> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings> {}
 
-interface State
+interface IState
 {
     repositoryName: string,
     submitting: boolean,
 }
 
-class RepositoryName extends PureComponent<Props, State>
+class RepositoryName extends PureComponent<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         const {match: {params: {repository}}} = props;

@@ -11,9 +11,9 @@ import {Account as AccountClass} from '../../Class';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
-interface Props extends RouteComponentProps {}
+interface IProps extends RouteComponentProps {}
 
-interface State
+interface IState
 {
     username: string,
     password: string,
@@ -21,9 +21,9 @@ interface State
     email: string,
 }
 
-class Register extends PureComponent<Props, State>
+class Register extends PureComponent<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {

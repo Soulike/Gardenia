@@ -2,14 +2,14 @@ import React from 'react';
 import {Button, Dropdown, Icon, Menu} from 'antd';
 import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 
-interface Props
+interface IProps
 {
     branches: Array<string>,
     branch: string,
     onBranchClick: (branch: string) => MenuItemProps['onClick'],
 }
 
-function BranchButtonView(props: Props)
+function BranchButtonView(props: IProps)
 {
     const {branches, branch, onBranchClick} = props;
     return (

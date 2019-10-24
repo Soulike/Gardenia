@@ -9,9 +9,9 @@ import {Repository as RepositoryClass} from '../../Class';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 
-interface Props extends RouteComponentProps {}
+interface IProps extends RouteComponentProps {}
 
-interface State
+interface IState
 {
     username: string,
     name: string,
@@ -21,9 +21,9 @@ interface State
     loading: boolean,
 }
 
-class CreateRepository extends PureComponent<Props, State>
+class CreateRepository extends PureComponent<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {

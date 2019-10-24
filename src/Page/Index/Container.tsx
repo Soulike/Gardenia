@@ -3,9 +3,9 @@ import {Repository as RepositoryApi} from '../../Api';
 import {Repository} from '../../Class';
 import View from './View';
 
-interface Props {}
+interface IProps {}
 
-interface State
+interface IState
 {
     repositories: Array<Repository>,
     loading: boolean,
@@ -13,11 +13,11 @@ interface State
     lastEnd: number,
 }
 
-class Index extends PureComponent<Props, State>
+class Index extends PureComponent<IProps, IState>
 {
     private static PAGE_SIZE = 10;  // 每一页有几条
 
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {

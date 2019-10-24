@@ -2,14 +2,14 @@ import React from 'react';
 import {Button, Icon, Input, Popover} from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-interface Props
+interface IProps
 {
     username: string,
     repository: string,
     onCopy: CopyToClipboard.Props['onCopy']
 }
 
-function CloneButtonView(props: Props)
+function CloneButtonView(props: IProps)
 {
     const {username, repository, onCopy} = props;
     return (

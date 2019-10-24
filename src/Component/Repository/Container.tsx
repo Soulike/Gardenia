@@ -8,18 +8,18 @@ import {TabsProps} from 'antd/lib/tabs';
 import TAB_KEY from './TAB_KEY';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {connect} from 'react-redux';
-import {RootState, State as StoreState} from '../../Store';
+import {IRootState, IState as StoreState} from '../../Store';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositoryCode
-    | RouterInterface.RepositoryIssues
-    | RouterInterface.RepositoryPullRequests
-    | RouterInterface.RepositorySettings>
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode
+    | RouterInterface.IRepositoryIssues
+    | RouterInterface.IRepositoryPullRequests
+    | RouterInterface.IRepositorySettings>
 {
-    isLoggedIn: RootState['isLoggedIn'],
+    isLoggedIn: IRootState['isLoggedIn'],
     children: ReactNode
 }
 
-interface State
+interface IState
 {
     repository: RepositoryClass,
     loading: boolean,
@@ -27,9 +27,9 @@ interface State
     visitorProfile: Profile | null
 }
 
-class Repository extends PureComponent<Props, State>
+class Repository extends PureComponent<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {
@@ -54,7 +54,7 @@ class Repository extends PureComponent<Props, State>
         this.setState({loading: false});
     }
 
-    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {
             location: {pathname},

@@ -3,13 +3,13 @@ import View from './View';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {notification} from 'antd';
 
-interface Props
+interface IProps
 {
     username: string,
     repository: string,
 }
 
-class CloneButton extends PureComponent<Props>
+class CloneButton extends PureComponent<IProps>
 {
     onCopy: CopyToClipboard.Props['onCopy'] = (_text, result) =>
     {

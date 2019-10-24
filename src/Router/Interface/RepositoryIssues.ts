@@ -1,4 +1,4 @@
-export interface RepositoryIssues
+export interface IRepositoryIssues
 {
     username: string,
     repository: string,

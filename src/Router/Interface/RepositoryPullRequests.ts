@@ -1,3 +1,3 @@
-import {RepositoryIssues} from './RepositoryIssues';
+import {IRepositoryIssues} from './RepositoryIssues';
 
-export interface RepositoryPullRequests extends RepositoryIssues {}
+export interface IRepositoryPullRequests extends IRepositoryIssues {}

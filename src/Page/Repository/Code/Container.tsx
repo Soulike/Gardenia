@@ -5,9 +5,9 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../Router';
 import {RepositoryInfo} from '../../../Api/RepositoryInfo';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositoryCode> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 
-interface State
+interface IState
 {
     repository: RepositoryClass,
     branches: Array<string>,
@@ -16,9 +16,9 @@ interface State
     loading: boolean,
 }
 
-class Code extends PureComponent<Props, State>
+class Code extends PureComponent<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {
@@ -45,7 +45,7 @@ class Code extends PureComponent<Props, State>
         this.setState({loading: false});
     }
 
-    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {match: {params: {branch: preBranch}}} = prevProps;
         const {match: {params: {branch}}} = this.props;

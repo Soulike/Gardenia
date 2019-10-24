@@ -5,7 +5,7 @@ import {InputProps} from 'antd/lib/input';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import SettingLabel from '../../../../../../Component/SettingLabel';
 
-interface Props
+interface IProps
 {
     repositoryName: string,
     onRepositoryNameInputChange: InputProps['onChange'],
@@ -18,7 +18,7 @@ function shouldRenameButtonBeDisabled(repositoryName: string, submitting: boolea
     return repositoryName.length === 0 || submitting;
 }
 
-function RepositoryNameView(props: Props)
+function RepositoryNameView(props: IProps)
 {
     const {repositoryName, onRenameConfirm, onRepositoryNameInputChange, submitting} = props;
     return (

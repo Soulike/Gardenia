@@ -8,7 +8,7 @@ import {PopconfirmProps} from 'antd/lib/popconfirm';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
-interface Props
+interface IProps
 {
     children?: ReactNode,
     isLoggedIn: boolean,
@@ -16,7 +16,7 @@ interface Props
     onLogoutClick: PopconfirmProps['onConfirm'],
 }
 
-function RootView(props: Props)
+function RootView(props: IProps)
 {
     const {children, isLoggedIn, username, onLogoutClick} = props;
     return (

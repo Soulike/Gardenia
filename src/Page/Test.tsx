@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 
-interface Props extends RouteComponentProps {}
+interface IProps extends RouteComponentProps {}
 
-class Test extends Component<Props>
+class Test extends Component<IProps>
 {
     render()
     {

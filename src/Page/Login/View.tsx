@@ -5,7 +5,7 @@ import svg from '../../Static/Login/developing_code.svg';
 import {InputProps} from 'antd/lib/input';
 import {FormProps} from 'antd/lib/form';
 
-interface Props
+interface IProps
 {
     username: string,
     password: string,
@@ -14,7 +14,7 @@ interface Props
     onLoginFormSubmit: FormProps['onSubmit'],
 }
 
-function LoginView(props: Props)
+function LoginView(props: IProps)
 {
     const {username, password, onUsernameInputChange, onPasswordInputChange, onLoginFormSubmit} = props;
     return (

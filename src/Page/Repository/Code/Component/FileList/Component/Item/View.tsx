@@ -6,12 +6,12 @@ import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import Style from './Style.module.scss';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../Router';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositoryCode>
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
     fileInfo: { type: ObjectType, path: string, commit: Commit }
 }
 
-function Item(props: Props)
+function Item(props: IProps)
 {
     const {fileInfo: {type, path, commit: {message, time}}, match: {params: {username, repository, branch}}} = props;
     const fileName = getFileNameFromPath(path);

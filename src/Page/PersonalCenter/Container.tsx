@@ -6,10 +6,10 @@ import {Repository as RepositoryApi} from '../../Api/Repository';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../Router';
 
-interface Props extends RouteComponentProps<RouterInterface.PersonalCenter> {}
+interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
 
 
-interface State
+interface IState
 {
     profile: Profile,
     repositories: Array<Repository>,
@@ -18,11 +18,11 @@ interface State
     lastEnd: number,
 }
 
-class PersonalCenter extends PureComponent<Props, State>
+class PersonalCenter extends PureComponent<IProps, IState>
 {
     private static PAGE_SIZE = 10;  // 每一页有几条
 
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {
@@ -45,7 +45,7 @@ class PersonalCenter extends PureComponent<Props, State>
         this.setState({loading: false});
     }
 
-    async componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {match: {params: {username}}} = this.props;
         const {match: {params: {username: prevUsername}}} = prevProps;

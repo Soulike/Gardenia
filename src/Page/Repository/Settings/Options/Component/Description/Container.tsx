@@ -7,18 +7,18 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {RepositoryInfo} from '../../../../../../Api/RepositoryInfo';
 import {notification} from 'antd';
 
-interface Props extends RouteComponentProps<RouterInterface.RepositorySettings> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings> {}
 
-interface State
+interface IState
 {
     description: string,
     loading: boolean,
     submitting: boolean,
 }
 
-class Description extends PureComponent<Props, State>
+class Description extends PureComponent<IProps, IState>
 {
-    constructor(props: Props)
+    constructor(props: IProps)
     {
         super(props);
         this.state = {

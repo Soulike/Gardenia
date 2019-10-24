@@ -5,7 +5,7 @@ import {Commit} from '../../../../../Class';
 import {Alert, Button, Spin} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 
-interface Props
+interface IProps
 {
     isBinary: boolean,
     isOversize: boolean,
@@ -17,7 +17,7 @@ interface Props
     onRawFileButtonClick: ButtonProps['onClick'],
 }
 
-function FileReader(props: Props)
+function FileReader(props: IProps)
 {
     const {
         isBinary,

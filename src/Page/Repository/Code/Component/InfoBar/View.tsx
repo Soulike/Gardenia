@@ -2,13 +2,13 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Icon} from 'antd';
 
-interface Props
+interface IProps
 {
     commitCount: number,
     branchCount: number,
 }
 
-function InfoBar(props: Props)
+function InfoBar(props: IProps)
 {
     const {commitCount, branchCount} = props;
     return (

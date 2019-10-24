@@ -8,7 +8,7 @@ import Readme from './Component/Readme';
 
 const PreviousFolderItem = React.lazy(() => import('./Component/PreviousFolderItem'));
 
-interface Props
+interface IProps
 {
     fileList: Array<{ type: ObjectType, path: string, commit: Commit }>,
     lastCommit: Commit,
@@ -16,7 +16,7 @@ interface Props
     showPreviousFolderItem: boolean,
 }
 
-function FileListView(props: Props)
+function FileListView(props: IProps)
 {
     const {fileList, lastCommit: {commitHash, committerName, message, time}, loading, showPreviousFolderItem} = props;
     return (

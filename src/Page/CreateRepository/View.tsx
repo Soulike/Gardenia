@@ -4,7 +4,7 @@ import {Button, Input, Switch} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {SwitchProps} from 'antd/lib/switch';
 
-interface Props
+interface IProps
 {
     username: string,
     name: string,
@@ -20,7 +20,7 @@ interface Props
     loading: boolean,
 }
 
-function CreateRepositoryView(props: Props)
+function CreateRepositoryView(props: IProps)
 {
     const {
         username,
