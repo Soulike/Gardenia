@@ -72,26 +72,15 @@ class Settings extends PureComponent<IProps, IState>
 
     setActiveMenuItemKey = () =>
     {
-        const {match: {path}} = this.props;
-        switch (path)
+        const {location: {pathname}} = this.props;
+        const {menuItems} = this.state;
+        for (const {to, key} of menuItems)
         {
-            case PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]:
+            if (to === pathname)
             {
-                this.setState({activeItemKey: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS});
-                break;
-            }
-            case PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]:
-            {
-                this.setState({activeItemKey: PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS});
-                break;
-            }
-            case PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]:
-            {
-                this.setState({activeItemKey: PAGE_ID.REPOSITORY.SETTINGS.BRANCHES});
-                break;
-            }
-            default:
-            {
+                this.setState({
+                    activeItemKey: key,
+                });
                 break;
             }
         }
