@@ -1,7 +1,7 @@
 import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {IMenuItem} from './Interface';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
+import {PAGE_ID} from '../../Router/CONFIG';
 import {RouteComponentProps} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {Icon} from 'antd';
@@ -56,7 +56,7 @@ class Settings extends PureComponent<IProps, IState>
                 },
                 {
                     icon: <Icon type="team" />,
-                    title: '团队',
+                    title: '合作者',
                     key: PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS,
                     to: RouterFunction.generateRepositoryCollaboratorsRoute({username, repository}),
                 },
@@ -65,6 +65,12 @@ class Settings extends PureComponent<IProps, IState>
                     title: '分支',
                     key: PAGE_ID.REPOSITORY.SETTINGS.BRANCHES,
                     to: RouterFunction.generateRepositoryBranchesRoute({username, repository}),
+                },
+                {
+                    icon: <Icon type="project" />,
+                    title: '小组',
+                    key: PAGE_ID.REPOSITORY.SETTINGS.GROUPS,
+                    to: RouterFunction.generateRepositoryGroupsRoute({username, repository}),
                 },
             ],
         });

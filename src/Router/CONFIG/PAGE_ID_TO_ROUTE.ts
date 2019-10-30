@@ -16,4 +16,5 @@ export const PAGE_ID_TO_ROUTE = {
     [PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]: '/:username/:repository/settings',
     [PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]: '/:username/:repository/settings/collaborators',
     [PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]: '/:username/:repository/settings/branches',
+    [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: '/:username/:repository/settings/groups',
 };

@@ -13,6 +13,7 @@ export const PAGE_ID = {
             OPTIONS: 'OPTIONS',
             COLLABORATORS: 'COLLABORATORS',
             BRANCHES: 'BRANCHES',
+            GROUPS: 'GROUPS',
         },
         CODE: 'CODE',
     },

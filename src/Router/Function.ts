@@ -107,3 +107,8 @@ export function generateRepositoryCollaboratorsRoute(parameter: IRepositorySetti
 {
     return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS], parameter);
 }
+
+export function generateRepositoryGroupsRoute(parameter: IRepositorySettings)
+{
+    return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.GROUPS], parameter);
+}

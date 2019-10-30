@@ -7,16 +7,21 @@ const Settings = React.lazy(() => import('../../../../../Component/Settings'));
 
 export default () =>
 {
+    // 注意：OPTIONS 必须在最下面，否则会被优先匹配
     return (
         <Switch>
             <Suspense fallback={<Loading />}>
                 <Route path={[
+                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.GROUPS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.BRANCHES],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.OPTIONS],
                 ]} render={props => (
                     <Settings {...props}>
                         <Switch>
+                            <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.GROUPS]}
+                                   component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.SETTINGS.GROUPS]}
+                                   exact={true} />
                             <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]}
                                    component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]}
                                    exact={true} />
