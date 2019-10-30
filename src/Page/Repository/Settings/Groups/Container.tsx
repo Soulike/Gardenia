@@ -4,6 +4,8 @@ import {Group} from '../../../../Class';
 import {Interface as RouterInterface} from '../../../../Router';
 import {RepositoryInfo as RepositoryInfoApi} from '../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import eventEmitter from './EventEmitter';
+import {GROUP_LIST_UPDATED} from './EVENT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings> {}
 
@@ -27,6 +29,12 @@ class Groups extends PureComponent<IProps, IState>
     async componentDidMount()
     {
         await this.loadGroups();
+        eventEmitter.on(GROUP_LIST_UPDATED, this.loadGroups);
+    }
+
+    componentWillUnmount()
+    {
+        eventEmitter.removeListener(GROUP_LIST_UPDATED, this.loadGroups);
     }
 
     loadGroups = async () =>

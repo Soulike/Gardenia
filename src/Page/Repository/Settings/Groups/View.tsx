@@ -1,9 +1,9 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import SettingsTitle from '../../../../Component/SettingsTitle';
-import {Button, Icon} from 'antd';
 import GroupList from '../../../../Component/GroupList';
 import {Group} from '../../../../Class';
+import JoinGroupButton from './Component/JoinGroupButton';
 
 interface IProps
 {
@@ -19,9 +19,7 @@ function GroupsView(props: IProps)
             <SettingsTitle>
                 <div className={Style.title}>
                     小组
-                    <Button type={'primary'} className={Style.joinButton} disabled={loading}>
-                        <Icon type={'plus'} />加入
-                    </Button>
+                    <JoinGroupButton />
                 </div>
             </SettingsTitle>
             <div className={Style.groupListWrapper}>

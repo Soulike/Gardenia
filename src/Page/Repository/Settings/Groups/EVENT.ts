@@ -1,0 +1,1 @@
+export const GROUP_LIST_UPDATED = Symbol();
