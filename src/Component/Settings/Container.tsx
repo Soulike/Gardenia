@@ -58,7 +58,7 @@ class Settings extends PureComponent<IProps, IState>
                         to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repository}),
                     },
                     {
-                        icon: <Icon type="team" />,
+                        icon: <Icon type="project" />,
                         title: '合作者',
                         key: PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS,
                         to: RouterFunction.generateRepositoryCollaboratorsRoute({username, repository}),
@@ -70,7 +70,7 @@ class Settings extends PureComponent<IProps, IState>
                         to: RouterFunction.generateRepositoryBranchesRoute({username, repository}),
                     },
                     {
-                        icon: <Icon type="project" />,
+                        icon: <Icon type="team" />,
                         title: '小组',
                         key: PAGE_ID.REPOSITORY.SETTINGS.GROUPS,
                         to: RouterFunction.generateRepositoryGroupsRoute({username, repository}),
