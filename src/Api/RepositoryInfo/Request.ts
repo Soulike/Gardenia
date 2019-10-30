@@ -1,11 +1,13 @@
-import {Commit, Repository as RepositoryClass, ResponseBody} from '../../Class';
+import {Commit, Group, Repository as RepositoryClass, Repository, ResponseBody} from '../../Class';
 import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
 import {
+    ADD_TO_GROUP,
     BRANCH,
     COMMIT_COUNT,
     DIRECTORY,
     FILE_INFO,
+    GROUPS,
     LAST_COMMIT,
     RAW_FILE,
     REPOSITORY,
@@ -227,6 +229,55 @@ export async function setDescription(repositoryName: string, description: string
     {
         const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
             await axios.post(SET_DESCRIPTION, {repositoryName, description});
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function groups(repository: Pick<Repository, 'username' | 'name'>): Promise<Group[] | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Group[]>> = await axios.get(GROUPS, {
+            params: {
+                json: {repository},
+            },
+        });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function addToGroup(repository: Pick<Repository, 'username' | 'name'>, group: Pick<Group, 'id'>): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+            await axios.post(ADD_TO_GROUP, {repository, group});
         if (isSuccessful)
         {
             return true;
