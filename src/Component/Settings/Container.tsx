@@ -28,9 +28,10 @@ class Settings extends PureComponent<IProps, IState>
         };
     }
 
-    componentDidMount()
+    async componentDidMount()
     {
-        this.initMenuItems();
+        await this.initMenuItems();
+        this.setActiveMenuItemKey();
     }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
@@ -43,36 +44,39 @@ class Settings extends PureComponent<IProps, IState>
         }
     }
 
-    initMenuItems = () =>
+    initMenuItems = async () =>
     {
-        const {match: {params: {username, repository}}} = this.props;
-        this.setState({
-            menuItems: [
-                {
-                    icon: <Icon type="setting" />,
-                    title: '选项',
-                    key: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS,
-                    to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repository}),
-                },
-                {
-                    icon: <Icon type="team" />,
-                    title: '合作者',
-                    key: PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS,
-                    to: RouterFunction.generateRepositoryCollaboratorsRoute({username, repository}),
-                },
-                {
-                    icon: <Icon type="branches" />,
-                    title: '分支',
-                    key: PAGE_ID.REPOSITORY.SETTINGS.BRANCHES,
-                    to: RouterFunction.generateRepositoryBranchesRoute({username, repository}),
-                },
-                {
-                    icon: <Icon type="project" />,
-                    title: '小组',
-                    key: PAGE_ID.REPOSITORY.SETTINGS.GROUPS,
-                    to: RouterFunction.generateRepositoryGroupsRoute({username, repository}),
-                },
-            ],
+        return new Promise(resolve =>
+        {
+            const {match: {params: {username, repository}}} = this.props;
+            this.setState({
+                menuItems: [
+                    {
+                        icon: <Icon type="setting" />,
+                        title: '选项',
+                        key: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS,
+                        to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repository}),
+                    },
+                    {
+                        icon: <Icon type="team" />,
+                        title: '合作者',
+                        key: PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS,
+                        to: RouterFunction.generateRepositoryCollaboratorsRoute({username, repository}),
+                    },
+                    {
+                        icon: <Icon type="branches" />,
+                        title: '分支',
+                        key: PAGE_ID.REPOSITORY.SETTINGS.BRANCHES,
+                        to: RouterFunction.generateRepositoryBranchesRoute({username, repository}),
+                    },
+                    {
+                        icon: <Icon type="project" />,
+                        title: '小组',
+                        key: PAGE_ID.REPOSITORY.SETTINGS.GROUPS,
+                        to: RouterFunction.generateRepositoryGroupsRoute({username, repository}),
+                    },
+                ],
+            }, resolve);
         });
     };
 
@@ -80,6 +84,7 @@ class Settings extends PureComponent<IProps, IState>
     {
         const {location: {pathname}} = this.props;
         const {menuItems} = this.state;
+        console.log(menuItems);
         for (const {to, key} of menuItems)
         {
             if (to === pathname)
