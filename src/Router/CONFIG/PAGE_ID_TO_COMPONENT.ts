@@ -9,6 +9,7 @@ const PersonalCenter = React.lazy(() => import('../../Page/PersonalCenter'));
 
 const Code = React.lazy(() => import('../../Page/Repository/Code'));
 const Options = React.lazy(() => import('../../Page/Repository/Settings/Options'));
+const Groups = React.lazy(() => import('../../Page/Repository/Settings/Groups'));
 
 export const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.INDEX]: Index,
@@ -24,6 +25,6 @@ export const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]: Options,
     [PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]: undefined,
     [PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]: undefined,
-    [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: undefined,
+    [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: Groups,
 
 };

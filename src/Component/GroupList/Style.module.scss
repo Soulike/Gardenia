@@ -1,0 +1,14 @@
+.GroupList {
+    .groupWrapper {
+        display: block;
+        margin: 1vh 0;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
