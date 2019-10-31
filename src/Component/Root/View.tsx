@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import {Icon, Menu, Popconfirm} from 'antd';
 import Style from './Style.module.scss';
 import {Link} from 'react-router-dom';
-import {CONFIG as ROUTER_CONFIG} from '../../Router';
+import {CONFIG as ROUTER_CONFIG, Function as RouterFunction} from '../../Router';
 import {Profile} from '../../Class';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 
@@ -35,7 +35,7 @@ function RootView(props: IProps)
                                     </Link>
                                 </Menu.Item>
                                 <Menu.Item>
-                                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER].replace(':username', username)}>
+                                    <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
                                         <Icon type="user" />个人中心
                                     </Link>
                                 </Menu.Item>
