@@ -4,14 +4,12 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../Router';
 import {Tab} from './Interface';
 import qs from 'querystring';
-import Repositories from './Component/Repositories';
-import Groups from './Component/Groups';
 import {TabsProps} from 'antd/lib/tabs';
 
-interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter>
-{
+const Repositories = React.lazy(() => import('./Component/Repositories'));
+const Groups = React.lazy(() => import('./Component/Groups'));
 
-}
+interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
 
 interface IState
 {
@@ -24,12 +22,12 @@ class PersonalCenter extends PureComponent<IProps, IState>
         {
             key: 'repositories',
             title: '仓库',
-            component: Repositories,
+            component: <Repositories />,
         },
         {
             key: 'groups',
             title: '小组',
-            component: Groups,
+            component: <Groups />,
         },
     ];
 
