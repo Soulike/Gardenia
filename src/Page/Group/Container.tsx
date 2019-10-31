@@ -64,7 +64,6 @@ class Group extends PureComponent<IProps, IState>
         const {match: {path}} = this.props;
         switch (path)
         {
-            case PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.GROUP]:
             case PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.REPOSITORIES]:
             {
                 this.setState({tabActiveKey: PAGE_ID.GROUP.REPOSITORIES});

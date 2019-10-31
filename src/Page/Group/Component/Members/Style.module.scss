@@ -1,0 +1,23 @@
+.Members {
+    margin-top: 15px;
+
+    .cardContent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .titleWrapper {
+            display: inline-flex;
+            align-items: center;
+
+            .title {
+                font-size: 1rem;
+                margin-left: 5px;
+            }
+        }
+
+        .buttonWrapper {
+
+        }
+    }
+}

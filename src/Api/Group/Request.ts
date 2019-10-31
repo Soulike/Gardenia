@@ -1,4 +1,4 @@
-import {Group, Repository, ResponseBody} from '../../Class';
+import {Account, Group, Repository, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
 import {notification} from 'antd';
 import {errorHandler} from '../Function';

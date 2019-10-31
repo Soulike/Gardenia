@@ -21,7 +21,7 @@ export const PAGE_ID_TO_COMPONENT = {
 
     [PAGE_ID.GROUP.GROUP]: React.lazy(() => import('../../Page/Group/Component/Repositories')),
     [PAGE_ID.GROUP.REPOSITORIES]: React.lazy(() => import('../../Page/Group/Component/Repositories')),
-    [PAGE_ID.GROUP.MEMBERS]: undefined,
+    [PAGE_ID.GROUP.MEMBERS]: React.lazy(() => import('../../Page/Group/Component/Members')),
 
     [PAGE_ID.GROUP.SETTINGS.SETTINGS]: React.lazy(() => import('../../Page/Group/Component/Settings/Component/Options')),
     [PAGE_ID.GROUP.SETTINGS.OPTIONS]: React.lazy(() => import('../../Page/Group/Component/Settings/Component/Options')),

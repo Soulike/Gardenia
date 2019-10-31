@@ -20,7 +20,7 @@ export const PAGE_ID_TO_ROUTE = {
     [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: '/repository/:username/:repository/settings/groups',
 
     [PAGE_ID.GROUP.GROUP]: '/group/:id',
-    [PAGE_ID.GROUP.REPOSITORIES]: '/group/:id',
+    [PAGE_ID.GROUP.REPOSITORIES]: '/group/:id/repositories',
     [PAGE_ID.GROUP.MEMBERS]: '/group/:id/members',
 
     [PAGE_ID.GROUP.SETTINGS.SETTINGS]: '/group/:id/settings',
