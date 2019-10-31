@@ -19,8 +19,8 @@ export const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]: undefined,
     [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Groups')),
 
-    [PAGE_ID.GROUP.GROUP]: undefined,
-    [PAGE_ID.GROUP.REPOSITORIES]: undefined,
+    [PAGE_ID.GROUP.GROUP]: React.lazy(() => import('../../Page/Group/Component/Repositories')),
+    [PAGE_ID.GROUP.REPOSITORIES]: React.lazy(() => import('../../Page/Group/Component/Repositories')),
     [PAGE_ID.GROUP.MEMBERS]: undefined,
 
     [PAGE_ID.GROUP.SETTINGS.SETTINGS]: React.lazy(() => import('../../Page/Group/Component/Settings/Component/Options')),
