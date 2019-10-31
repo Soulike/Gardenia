@@ -3,6 +3,11 @@
         display: block;
         margin: 1vh 0;
 
+        .groupName {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
         &:first-child {
             margin-top: 0;
         }
