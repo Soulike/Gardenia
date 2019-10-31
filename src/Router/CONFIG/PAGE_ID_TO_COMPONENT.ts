@@ -7,9 +7,9 @@ const Index = React.lazy(() => import('../../Page/Index'));
 const CreateRepository = React.lazy(() => import('../../Page/CreateRepository'));
 const PersonalCenter = React.lazy(() => import('../../Page/PersonalCenter'));
 
-const Code = React.lazy(() => import('../../Page/Repository/Code'));
-const Options = React.lazy(() => import('../../Page/Repository/Settings/Options'));
-const Groups = React.lazy(() => import('../../Page/Repository/Settings/Groups'));
+const Code = React.lazy(() => import('../../Page/Repository/Component/Code'));
+const Options = React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Options'));
+const Groups = React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Groups'));
 
 export const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.INDEX]: Index,

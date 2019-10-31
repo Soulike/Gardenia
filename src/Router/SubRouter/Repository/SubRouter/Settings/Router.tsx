@@ -3,7 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import Loading from '../../../../../Component/Loading';
 
-const Settings = React.lazy(() => import('../../../../../Component/Settings'));
+const Settings = React.lazy(() => import('../../../../../Page/Repository/Component/Settings'));
 
 export default () =>
 {

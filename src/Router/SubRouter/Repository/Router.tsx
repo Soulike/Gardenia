@@ -4,7 +4,7 @@ import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import SettingsRouter from './SubRouter/Settings';
 import Loading from '../../../Component/Loading';
 
-const Repository = React.lazy(() => import('../../../Component/Repository'));
+const Repository = React.lazy(() => import('../../../Page/Repository'));
 
 export default () =>
 {
