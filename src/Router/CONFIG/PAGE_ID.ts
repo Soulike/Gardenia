@@ -18,13 +18,13 @@ export const PAGE_ID = {
         },
         CODE: 'REPOSITORY_CODE',
     },
-    GROUPS: {
-        GROUPS: 'GROUPS',
-        REPOSITORIES: 'GROUPS_REPOSITORIES',
-        MEMBERS: 'GROUPS_MEMBERS',
+    GROUP: {
+        GROUP: 'GROUP',
+        REPOSITORIES: 'GROUP_REPOSITORIES',
+        MEMBERS: 'GROUP_MEMBERS',
         SETTINGS: {
-            SETTINGS: 'GROUPS_SETTINGS',
-            OPTIONS: 'GROUPS_SETTINGS_OPTIONS',
+            SETTINGS: 'GROUP_SETTINGS',
+            OPTIONS: 'GROUP_SETTINGS_OPTIONS',
         },
     },
 };

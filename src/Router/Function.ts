@@ -122,25 +122,25 @@ export function generateGroupRouteHelper(route: string, parameter: IGroup)
 
 export function generateGroupRoute(parameter: IGroup)
 {
-    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUPS.GROUPS], parameter);
+    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.GROUP], parameter);
 }
 
 export function generateGroupRepositoriesRoute(parameter: IGroup)
 {
-    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUPS.REPOSITORIES], parameter);
+    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.REPOSITORIES], parameter);
 }
 
 export function generateGroupMembersRoute(parameter: IGroup)
 {
-    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUPS.MEMBERS], parameter);
+    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.MEMBERS], parameter);
 }
 
 export function generateGroupSettingsRoute(parameter: IGroup)
 {
-    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUPS.SETTINGS.SETTINGS], parameter);
+    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.SETTINGS], parameter);
 }
 
 export function generateGroupSettingsOptionsRoute(parameter: IGroup)
 {
-    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUPS.SETTINGS.OPTIONS], parameter);
+    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.OPTIONS], parameter);
 }
