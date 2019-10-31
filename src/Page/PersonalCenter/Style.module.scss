@@ -1,8 +1,16 @@
 .PersonalCenter {
-    width: 600px;
-    margin: 5vh auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 30px 20px;
 
-    .title {
-        border-bottom: 1px solid #DDD;
+    .profileWrapper {
+        width: 25%;
+        padding: 0 25px;
+    }
+
+    .tabWrapper {
+        width: 75%;
+        padding: 0 25px;
     }
 }

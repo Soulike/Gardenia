@@ -1,0 +1,52 @@
+.Profile {
+
+    .avatarWrapper {
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        position: relative;
+        border: 1px solid #DDD;
+        border-radius: 5px;
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+    }
+
+    .nameWrapper {
+        margin: 20px 0;
+
+        .username {
+            font-size: 26px;
+            line-height: 30px;
+            font-weight: bold;
+        }
+
+        .nickname {
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: 24px;
+            color: #666;
+        }
+    }
+
+    .divideLine {
+        border-top: 1px solid #EEE;
+    }
+
+    .infoWrapper {
+        margin-top: 20px;
+
+        .info {
+            font-size: 14px;
+
+            .icon {
+                margin-right: 5px;
+            }
+        }
+    }
+
+}

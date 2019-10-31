@@ -1,121 +1,90 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {Profile, Repository} from '../../Class';
-import {Profile as ProfileApi} from '../../Api';
-import {Repository as RepositoryApi} from '../../Api/Repository';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../Router';
+import {Tab} from './Interface';
+import qs from 'querystring';
+import Repositories from './Component/Repositories';
+import Groups from './Component/Groups';
+import {TabsProps} from 'antd/lib/tabs';
 
-interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
+interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter>
+{
 
+}
 
 interface IState
 {
-    profile: Profile,
-    repositories: Array<Repository>,
-    loading: boolean,
-    hasMore: boolean,
-    lastEnd: number,
+    activeTabKey: string,
 }
 
 class PersonalCenter extends PureComponent<IProps, IState>
 {
-    private static PAGE_SIZE = 10;  // 每一页有几条
+    private static TABS: Tab[] = [
+        {
+            key: 'repositories',
+            title: '仓库',
+            component: Repositories,
+        },
+        {
+            key: 'groups',
+            title: '小组',
+            component: Groups,
+        },
+    ];
 
     constructor(props: IProps)
     {
         super(props);
         this.state = {
-            repositories: [],
-            profile: new Profile('', '', 'example@example.com', ''),
-            loading: true,
-            hasMore: true,
-            lastEnd: 0,
+            activeTabKey: '',
         };
     }
 
-    async componentDidMount()
+    componentDidMount()
     {
-        this.setTitle();
-        this.setState({loading: true});
-        await Promise.all([
-            this.loadProfile(),
-            this.loadMoreRepositories(),
-        ]);
-        this.setState({loading: false});
+        this.setActiveTabKey();
     }
 
-    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username}}} = this.props;
-        const {match: {params: {username: prevUsername}}} = prevProps;
-        if (username !== prevUsername)
+        const {location: {search}} = this.props;
+        const {location: {search: prevSearch}} = prevProps;
+        if (search !== prevSearch)
         {
-            await this.initializeState();
-            await this.componentDidMount();
+            this.setActiveTabKey();
         }
     }
 
-    initializeState = async () =>
+    setActiveTabKey = () =>
     {
-        return new Promise(resolve =>
+        const {location: {search}} = this.props;
+        const {tab} = qs.decode(search.slice(1));
+        if (typeof tab === 'undefined')
         {
-            this.setState({
-                repositories: [],
-                profile: new Profile('', '', 'example@example.com', ''),
-                loading: true,
-                hasMore: true,
-                lastEnd: 0,
-            }, resolve);
-        });
-    };
-
-    loadProfile = async () =>
-    {
-        const {match: {params: {username}}} = this.props;
-        const profile = await ProfileApi.get(username);
-        if (profile !== null)
+            this.setState({activeTabKey: PersonalCenter.TABS[0].key});
+        }
+        else if (Array.isArray(tab))
         {
-            this.setState({profile});
+            this.setState({activeTabKey: tab[0]});
+        }
+        else
+        {
+            this.setState({activeTabKey: tab});
         }
     };
 
-    setTitle = () =>
+    onTabChange: TabsProps['onChange'] = activeKey =>
     {
-        const {match: {params: {username}}} = this.props;
-        document.title = `${username} - Git Demo`;
-    };
-
-    loadMoreRepositories = async () =>
-    {
-        const {repositories, lastEnd} = this.state;
-        const {match: {params: {username}}} = this.props;
-        const repositoryListFromServer = await RepositoryApi.getList(lastEnd, lastEnd + PersonalCenter.PAGE_SIZE, username);
-        this.setState({loading: false});
-        if (repositoryListFromServer !== null)
-        {
-            repositories.push(...repositoryListFromServer);
-            this.setState({lastEnd: lastEnd + PersonalCenter.PAGE_SIZE - 1});
-            if (repositoryListFromServer.length < PersonalCenter.PAGE_SIZE)
-            {
-                this.setState({hasMore: false});
-            }
-            this.forceUpdate();
-        }
+        const {history} = this.props;
+        history.push(`?tab=${activeKey}`);
+        this.setState({activeTabKey: activeKey});
     };
 
     render()
     {
-        const {profile, repositories, loading, hasMore} = this.state;
-        const {username, nickname} = profile;
-        return (
-            <View username={username}
-                  nickname={nickname}
-                  repositoryList={repositories}
-                  loading={loading}
-                  hasMore={hasMore}
-                  loadMore={this.loadMoreRepositories} />
-        );
+        const {activeTabKey} = this.state;
+        return (<View tabs={PersonalCenter.TABS} activeTabKey={activeTabKey} onTabChange={this.onTabChange} />);
     }
 }
 

@@ -1,29 +1,34 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Repository} from '../../Class';
-import InfiniteScroll from 'react-infinite-scroller';
-import RepositoryList from '../../Component/RepositoryList';
+import Profile from './Component/Profile';
+import {Tabs} from 'antd';
+import {Tab} from './Interface';
+import {TabsProps} from 'antd/lib/tabs';
 
 interface IProps
 {
-    username: string,
-    nickname: string,
-    repositoryList: Array<Repository>,
-    loading: boolean,
-    hasMore: boolean,
-    loadMore: () => any,
+    tabs: Tab[],
+    activeTabKey: string,
+    onTabChange: TabsProps['onChange']
 }
-
 
 function PersonalCenterView(props: IProps)
 {
-    const {username, nickname, repositoryList, loading, hasMore, loadMore} = props;
+    const {tabs, activeTabKey, onTabChange} = props;
     return (
         <div className={Style.PersonalCenter}>
-            <h1 className={Style.title}>{nickname} ({username}) 的仓库列表</h1>
-            <InfiniteScroll loadMore={loadMore} initialLoad={false} hasMore={hasMore}>
-                <RepositoryList repositoryList={repositoryList} loading={loading} />
-            </InfiniteScroll>
+            <div className={Style.profileWrapper}>
+                <Profile />
+            </div>
+            <div className={Style.tabWrapper}>
+                <Tabs animated={false} activeKey={activeTabKey} onChange={onTabChange}>
+                    {
+                        tabs.map(({key, title, component}) =>
+                            <Tabs.TabPane key={key}
+                                          tab={title}>{component}</Tabs.TabPane>)
+                    }
+                </Tabs>
+            </div>
         </div>
     );
 }
