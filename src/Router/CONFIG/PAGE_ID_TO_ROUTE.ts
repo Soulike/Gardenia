@@ -18,4 +18,11 @@ export const PAGE_ID_TO_ROUTE = {
     [PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]: '/:username/repository/:repository/settings/collaborators',
     [PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]: '/:username/repository/:repository/settings/branches',
     [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: '/:username/repository/:repository/settings/groups',
+
+    [PAGE_ID.GROUPS.GROUPS]: '/:username/group/:id',
+    [PAGE_ID.GROUPS.REPOSITORIES]: '/:username/group/:id',
+    [PAGE_ID.GROUPS.MEMBERS]: '/:username/group/:id/members',
+
+    [PAGE_ID.GROUPS.SETTINGS.SETTINGS]: '/:username/group/:id/settings',
+    [PAGE_ID.GROUPS.SETTINGS.OPTIONS]: '/:username/group/:id/settings',
 };
