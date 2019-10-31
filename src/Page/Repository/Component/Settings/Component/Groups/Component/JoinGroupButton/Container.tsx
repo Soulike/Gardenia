@@ -32,7 +32,7 @@ class JoinGroupButton extends PureComponent<IProps, IState>
 
     onClick: ButtonProps['onClick'] = () =>
     {
-        this.setState({modalVisible: true});
+        this.setState({modalVisible: true, groupId: ''});
     };
 
     onGroupIdInputChange: InputProps['onChange'] = e =>
