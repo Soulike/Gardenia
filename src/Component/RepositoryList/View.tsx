@@ -9,12 +9,13 @@ import AccessibilityTag from '../AccessibilityTag';
 interface IProps
 {
     repositoryList: Array<Repository>,
-    loading: boolean
+    loading: boolean,
+    showUsername: boolean,
 }
 
 function RepositoryList(props: IProps)
 {
-    const {repositoryList, loading} = props;
+    const {repositoryList, loading, showUsername} = props;
     return (
         <List className={Style.RepositoryList} dataSource={repositoryList}
               loading={loading}
@@ -30,7 +31,10 @@ function RepositoryList(props: IProps)
                               <Card.Meta title={
                                   <React.Fragment>
                                       <AccessibilityTag isPublic={isPublic} />
-                                      {username}/{name}
+                                      {
+                                          showUsername ? `${username}/` : ''
+                                      }
+                                      {name}
                                   </React.Fragment>
                               } description={
                                   <div>

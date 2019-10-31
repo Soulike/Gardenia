@@ -18,7 +18,7 @@ function IndexView(props: IProps)
     return (
         <div className={Style.Index}>
             <InfiniteScroll loadMore={loadMore} initialLoad={false} hasMore={hasMore}>
-                <RepositoryList repositoryList={repositoryList} loading={loading} />
+                <RepositoryList repositoryList={repositoryList} loading={loading} showUsername={true} />
             </InfiniteScroll>
         </div>);
 }
