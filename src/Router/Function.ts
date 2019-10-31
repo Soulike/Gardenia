@@ -116,8 +116,8 @@ export function generateRepositoryGroupsRoute(parameter: IRepositorySettings)
 
 export function generateGroupRouteHelper(route: string, parameter: IGroup)
 {
-    const {id, username} = parameter;
-    return route.replace(':username', username).replace(':id', id);
+    const {id} = parameter;
+    return route.replace(':id', id);
 }
 
 export function generateGroupRoute(parameter: IGroup)

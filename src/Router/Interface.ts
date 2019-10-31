@@ -31,6 +31,5 @@ export interface IRepositorySettings
 
 export interface IGroup
 {
-    username: string,
     id: string,
 }

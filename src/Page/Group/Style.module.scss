@@ -1,0 +1,23 @@
+.Group {
+    width: 100%;
+    margin: 5vh auto;
+
+    .header, .tabContent {
+        width: 1000px;
+        margin: 0 auto;
+    }
+
+    .header {
+        padding-bottom: 15px;
+
+        .basicInfo {
+            display: flex;
+            align-items: center;
+
+            .groupName {
+                display: inline-block;
+                font-size: 1rem;
+            }
+        }
+    }
+}

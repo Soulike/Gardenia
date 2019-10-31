@@ -3,6 +3,7 @@ import Style from './Style.module.scss';
 import {Group} from '../../Class';
 import {Card, Empty, Icon, List, Tag} from 'antd';
 import {Link} from 'react-router-dom';
+import {Function as RouterFunction} from '../../Router';
 
 interface IProps
 {
@@ -15,7 +16,6 @@ function GroupList(props: IProps)
 {
     const {groups, loading, administratingGroups} = props;
     const idsInAdministratingGroups = administratingGroups ? administratingGroups.map(({id}) => id) : [];
-    // TODO: 到小组页面的链接
     return (
         <List className={Style.GroupList}
               loading={loading}
@@ -23,7 +23,7 @@ function GroupList(props: IProps)
               renderItem={({id, name}) => (
                   <Link className={Style.groupWrapper}
                         target={'_blank'} rel={'noreferrer noopener'}
-                        to={''}>
+                        to={RouterFunction.generateGroupRoute({id: id.toString()})}>
                       <Card className={Style.group} hoverable={true} size={'small'}>
                           <Card.Meta avatar={
                               <>

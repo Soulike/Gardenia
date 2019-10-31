@@ -16,15 +16,15 @@ import {
     REPOSITORIES,
 } from './ROUTE';
 
-export async function add(group: Omit<Group, 'id'>): Promise<true | null>
+export async function add(group: Omit<Group, 'id'>): Promise<Pick<Group, 'id'> | null>
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(ADD,
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Pick<Group, 'id'>>> = await axios.post(ADD,
             {group});
         if (isSuccessful)
         {
-            return true;
+            return data!;
         }
         else
         {

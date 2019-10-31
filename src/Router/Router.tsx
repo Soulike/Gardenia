@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import NotFound from '../Component/NotFound';
 import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from './CONFIG';
 import RepositoryRouter from './SubRouter/Repository';
+import GroupRouter from './SubRouter/Group';
 import Loading from '../Component/Loading';
 
 const Root = React.lazy(() => import('../Component/Root'));
@@ -33,7 +34,9 @@ export default () =>
                                component={PAGE_ID_TO_COMPONENT[PAGE_ID.PERSONAL_CENTER]}
                                exact={true} />
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.REPOSITORY]}
-                               component={RepositoryRouter} />
+                               render={RepositoryRouter} />
+                        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.GROUP]}
+                               render={GroupRouter} />
                         <Route render={NotFound} />
                     </Switch>
                 </Root>

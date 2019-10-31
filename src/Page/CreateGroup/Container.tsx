@@ -3,8 +3,10 @@ import View from './View';
 import {InputProps} from 'antd/lib/input';
 import {notification} from 'antd';
 import {Group as GroupApi} from '../../Api';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {Function as RouterFunction} from '../../Router';
 
-interface IProps
+interface IProps extends RouteComponentProps<void>
 {
 
 }
@@ -67,13 +69,15 @@ class CreateGroup extends PureComponent<IProps, IState>
     submitForm = async () =>
     {
         const {name} = this.state;
+        const {history} = this.props;
         this.setState({submitting: true});
         const result = await GroupApi.add({name});
         this.setState({submitting: false});
         if (result !== null)
         {
-            // TODO: 跳转到新建仓库的页面
+            const {id} = result;
             notification.success({message: '仓库创建成功'});
+            history.push(RouterFunction.generateGroupRoute({id: id.toString()}));
         }
     };
 
@@ -87,4 +91,4 @@ class CreateGroup extends PureComponent<IProps, IState>
     }
 }
 
-export default CreateGroup;
+export default withRouter(CreateGroup);
