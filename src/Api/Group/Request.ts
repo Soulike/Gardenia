@@ -4,15 +4,63 @@ import {notification} from 'antd';
 import {errorHandler} from '../Function';
 import {
     ACCOUNTS,
+    ADD,
     ADD_ACCOUNTS,
     ADD_ADMINS,
     ADMINS,
+    DISMISS,
     INFO,
     REMOVE_ACCOUNTS,
     REMOVE_ADMINS,
     REMOVE_REPOSITORIES,
     REPOSITORIES,
 } from './ROUTE';
+
+export async function add(group: Omit<Group, 'id'>): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(ADD,
+            {group});
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function dismiss(group: Pick<Group, 'id'>): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(DISMISS,
+            {group});
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
 
 export async function info(group: Pick<Group, 'id'>): Promise<Group | null>
 {

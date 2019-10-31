@@ -97,6 +97,7 @@ class CreateRepository extends PureComponent<IProps, IState>
             notification.warn({message: '请输入仓库名'});
             return false;
         }
+        return true;
     };
 
     submitForm = async () =>
