@@ -5,9 +5,8 @@ import {Interface as RouterInterface} from '../../Router';
 import {Tab} from './Interface';
 import qs from 'querystring';
 import {TabsProps} from 'antd/lib/tabs';
-
-const Repositories = React.lazy(() => import('./Component/Repositories'));
-const Groups = React.lazy(() => import('./Component/Groups'));
+import Repositories from './Component/Repositories';
+import Groups from './Component/Groups';
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
 
