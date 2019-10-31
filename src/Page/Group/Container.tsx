@@ -17,6 +17,7 @@ interface IState
     tabActiveKey: string,
     group: GroupClass,
     loading: boolean,
+    isAdmin: boolean,
 }
 
 class Group extends PureComponent<IProps, IState>
@@ -28,13 +29,19 @@ class Group extends PureComponent<IProps, IState>
             tabActiveKey: PAGE_ID.GROUP.REPOSITORIES,
             group: new GroupClass(0, ''),
             loading: true,
+            isAdmin: false,
         };
     }
 
     async componentDidMount()
     {
         this.setTabActiveKey();
-        await this.loadGroup();
+        this.setState({loading: true});
+        await Promise.all([
+            this.loadGroup(),
+            this.loadIsAdmin(),
+        ]);
+        this.setState({loading: false});
     }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
@@ -50,13 +57,22 @@ class Group extends PureComponent<IProps, IState>
     loadGroup = async () =>
     {
         const {match: {params: {id}}} = this.props;
-        this.setState({loading: true});
         const group = await GroupApi.info({id: Number.parseInt(id)});
         if (group !== null)
         {
             this.setState({group});
         }
-        this.setState({loading: false});
+    };
+
+    loadIsAdmin = async () =>
+    {
+        const {match: {params: {id}}} = this.props;
+        const isAdminWrapper = await GroupApi.isAdmin({id: Number.parseInt(id)});
+        if (isAdminWrapper !== null)
+        {
+            const {isAdmin} = isAdminWrapper;
+            this.setState({isAdmin});
+        }
     };
 
     setTabActiveKey = () =>
@@ -108,12 +124,12 @@ class Group extends PureComponent<IProps, IState>
 
     render()
     {
-        const {tabActiveKey, group, loading} = this.state;
+        const {tabActiveKey, group, loading, isAdmin} = this.state;
         const {children} = this.props;
         return (<View onTabChange={this.onTabChange}
                       tabActiveKey={tabActiveKey}
                       group={group}
-                      loading={loading}>{children}</View>);
+                      loading={loading} isAdmin={isAdmin}>{children}</View>);
     }
 }
 

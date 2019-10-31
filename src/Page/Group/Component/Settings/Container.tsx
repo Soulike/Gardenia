@@ -66,7 +66,6 @@ class Settings extends PureComponent<IProps, IState>
     {
         const {location: {pathname}} = this.props;
         const {menuItems} = this.state;
-        console.log(menuItems);
         for (const {to, key} of menuItems)
         {
             if (to === pathname)

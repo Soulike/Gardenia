@@ -12,11 +12,12 @@ interface IProps
     onTabChange: TabsProps['onChange'],
     tabActiveKey: string,
     loading: boolean,
+    isAdmin: boolean,
 }
 
 function GroupView(props: IProps)
 {
-    const {children, onTabChange, tabActiveKey, group: {name}, loading} = props;
+    const {children, onTabChange, tabActiveKey, group: {name}, loading, isAdmin} = props;
     return (
         loading ? null : (
             <div className={Style.Group}>
@@ -36,10 +37,14 @@ function GroupView(props: IProps)
                     <Tabs.TabPane tab={<><Icon type="smile" />成员</>} key={PAGE_ID.GROUP.MEMBERS}>
                         <div className={Style.tabContent}>{children}</div>
                     </Tabs.TabPane>
-                    <Tabs.TabPane tab={<><Icon type="setting" />设置</>}
-                                  key={PAGE_ID.GROUP.SETTINGS.SETTINGS}>
-                        <div className={Style.tabContent}>{children}</div>
-                    </Tabs.TabPane>
+                    {
+                        isAdmin ? (
+                            <Tabs.TabPane tab={<><Icon type="setting" />设置</>}
+                                          key={PAGE_ID.GROUP.SETTINGS.SETTINGS}>
+                                <div className={Style.tabContent}>{children}</div>
+                            </Tabs.TabPane>
+                        ) : null
+                    }
                 </Tabs>
             </div>
         )

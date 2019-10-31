@@ -16,6 +16,7 @@ interface IState
 {
     profiles: (Profile | null)[],
     loading: boolean,
+    isAdmin: boolean,
 }
 
 class Members extends PureComponent<IProps, IState>
@@ -26,25 +27,40 @@ class Members extends PureComponent<IProps, IState>
         this.state = {
             profiles: [],
             loading: true,
+            isAdmin: false,
         };
     }
 
     async componentDidMount()
     {
-        await this.loadMemberProfiles();
+        this.setState({loading: true});
+        await Promise.all([
+            this.loadMemberProfiles(),
+            this.loadIsAdmin(),
+        ]);
+        this.setState({loading: false});
     }
 
     loadMemberProfiles = async () =>
     {
         const {match: {params: {id}}} = this.props;
-        this.setState({loading: true});
         const accounts = await GroupApi.accounts({id: Number.parseInt(id)});
         if (accounts !== null)
         {
             const profiles = await Promise.all(accounts.map(({username}) => ProfileApi.get(username)));
             this.setState({profiles});
         }
-        this.setState({loading: false});
+    };
+
+    loadIsAdmin = async () =>
+    {
+        const {match: {params: {id}}} = this.props;
+        const isAdminWrapper = await GroupApi.isAdmin({id: Number.parseInt(id)});
+        if (isAdminWrapper !== null)
+        {
+            const {isAdmin} = isAdminWrapper;
+            this.setState({isAdmin});
+        }
     };
 
     onRemoveAccountConfirm: (username: string) => PopconfirmProps['onConfirm'] = username =>
@@ -63,8 +79,11 @@ class Members extends PureComponent<IProps, IState>
 
     render()
     {
-        const {profiles, loading} = this.state;
-        return (<View profiles={profiles} loading={loading} onRemoveAccountConfirm={this.onRemoveAccountConfirm} />);
+        const {profiles, loading, isAdmin} = this.state;
+        return (<View profiles={profiles}
+                      loading={loading}
+                      isAdmin={isAdmin}
+                      onRemoveAccountConfirm={this.onRemoveAccountConfirm} />);
     }
 }
 

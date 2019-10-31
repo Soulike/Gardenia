@@ -10,12 +10,13 @@ interface IProps
 {
     profiles: (Profile | null)[],
     loading: boolean,
-    onRemoveAccountConfirm: (username: string) => PopconfirmProps['onConfirm']
+    onRemoveAccountConfirm: (username: string) => PopconfirmProps['onConfirm'],
+    isAdmin: boolean,
 }
 
 function MembersView(props: IProps)
 {
-    const {profiles, loading, onRemoveAccountConfirm} = props;
+    const {profiles, loading, onRemoveAccountConfirm, isAdmin} = props;
     return (
         <div className={Style.Members}>
             <List loading={loading}
@@ -35,12 +36,16 @@ function MembersView(props: IProps)
                                                 target={'_blank'}
                                                 className={Style.title}>{nickname}({username})</Link>
                                       </div>
-                                      <div className={Style.buttonWrapper}>
-                                          <Popconfirm title={`确认移除成员 ${nickname}？`}
-                                                      onConfirm={onRemoveAccountConfirm(username)}>
-                                              <Button type={'danger'}>移除</Button>
-                                          </Popconfirm>
-                                      </div>
+                                      {
+                                          isAdmin ? (
+                                              <div className={Style.buttonWrapper}>
+                                                  <Popconfirm title={`确认移除成员 ${nickname}？`}
+                                                              onConfirm={onRemoveAccountConfirm(username)}>
+                                                      <Button type={'danger'}>移除</Button>
+                                                  </Popconfirm>
+                                              </div>
+                                          ) : null
+                                      }
                                   </div>
                               </Card>);
                       }

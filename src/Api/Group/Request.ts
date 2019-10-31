@@ -10,6 +10,7 @@ import {
     ADMINS,
     DISMISS,
     INFO,
+    IS_ADMIN,
     REMOVE_ACCOUNTS,
     REMOVE_ADMINS,
     REMOVE_REPOSITORIES,
@@ -271,6 +272,33 @@ export async function removeRepositories(group: Pick<Group, 'id'>, repositories:
         if (isSuccessful)
         {
             return true;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function isAdmin(group: Pick<Group, 'id'>): Promise<{ isAdmin: boolean } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ isAdmin: boolean }>> = await axios.get(IS_ADMIN,
+            {
+                params: {
+                    json: {group},
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
         }
         else
         {
