@@ -115,8 +115,14 @@ export async function getAdministratingGroups(username: string): Promise<Group[]
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Group[]>> = await axios.post(GET_ADMINISTRATING_GROUPS,
-            {username});
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Group[]>> = await axios.get(GET_ADMINISTRATING_GROUPS,
+            {
+                params: {
+                    json: {
+                        username,
+                    },
+                },
+            });
         if (isSuccessful)
         {
             return data!;
