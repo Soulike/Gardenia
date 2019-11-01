@@ -17,12 +17,16 @@ interface IProps
 
 function GroupView(props: IProps)
 {
-    const {children, onTabChange, tabActiveKey, group: {name}, loading, isAdmin} = props;
+    const {children, onTabChange, tabActiveKey, group: {id, name}, loading, isAdmin} = props;
     return (
         loading ? null : (
             <div className={Style.Group}>
                 <div className={Style.header}>
                     <div className={Style.basicInfo}>
+                        <div className={Style.groupId}>
+                            <Icon type={'team'} />
+                            {id}
+                        </div>
                         <div className={Style.groupName}>{name}</div>
                     </div>
                 </div>
