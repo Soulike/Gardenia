@@ -4,9 +4,17 @@ import SettingsTitle from '../SettingsTitle';
 import RepositoryName from './Component/RepositoryName';
 import Description from './Component/Description';
 import AccessibilitySwitch from './Component/AccessibilitySwitch';
+import {Repository} from '../../../../../../Class';
 
-function OptionsView()
+interface IProps
 {
+    repository: Repository,
+    loading: boolean,
+}
+
+function OptionsView(props: IProps)
+{
+    const {repository, loading} = props;
     return (
         <div className={Style.Options}>
             <SettingsTitle>设置</SettingsTitle>
@@ -14,10 +22,10 @@ function OptionsView()
                 <RepositoryName />
             </div>
             <div className={Style.itemWrapper}>
-                <AccessibilitySwitch />
+                <AccessibilitySwitch repository={repository} loading={loading} />
             </div>
             <div className={Style.itemWrapper}>
-                <Description />
+                <Description repository={repository} loading={loading} />
             </div>
         </div>
     );

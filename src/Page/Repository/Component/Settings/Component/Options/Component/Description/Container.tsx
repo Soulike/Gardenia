@@ -6,13 +6,17 @@ import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
 import {notification} from 'antd';
+import {Repository} from '../../../../../../../../Class';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings>
+{
+    repository: Repository,
+    loading: boolean,
+}
 
 interface IState
 {
     description: string,
-    loading: boolean,
     submitting: boolean,
 }
 
@@ -23,28 +27,19 @@ class Description extends PureComponent<IProps, IState>
         super(props);
         this.state = {
             description: '',
-            loading: true,
             submitting: false,
         };
     }
 
-    async componentDidMount()
+    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        this.setState({loading: true});
-        await this.loadDescription();
-        this.setState({loading: false});
-    }
-
-    loadDescription = async () =>
-    {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
-        const repository = await RepositoryInfo.repository(username, repositoryName);
-        if (repository !== null)
+        const {repository: {description}, loading} = this.props;
+        const {loading: prevLoading} = prevProps;
+        if (prevLoading && loading)
         {
-            const {description} = repository;
             this.setState({description});
         }
-    };
+    }
 
     onTextareaChange: TextAreaProps['onChange'] = e =>
     {
@@ -66,7 +61,8 @@ class Description extends PureComponent<IProps, IState>
 
     render()
     {
-        const {description, loading, submitting} = this.state;
+        const {loading} = this.props;
+        const {description, submitting} = this.state;
         return (<View submitting={submitting} loading={loading}
                       description={description}
                       onTextareaChange={this.onTextareaChange}

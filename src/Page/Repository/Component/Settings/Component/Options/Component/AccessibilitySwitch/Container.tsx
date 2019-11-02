@@ -7,13 +7,17 @@ import {SwitchProps} from 'antd/lib/switch';
 import {InputProps} from 'antd/lib/input';
 import {Account as AccountApi, RepositoryInfo as RepositoryInfoApi} from '../../../../../../../../Api';
 import {notification} from 'antd';
-import {Account as AccountClass} from '../../../../../../../../Class';
+import {Account as AccountClass, Repository} from '../../../../../../../../Class';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings>
+{
+    repository: Repository,
+    loading: boolean,
+}
 
 interface IState
 {
-    loading: boolean,
+    submitting: boolean,
     isPublic: boolean,
 
     modalRepositoryName: string,
@@ -27,7 +31,7 @@ class AccessibilitySwitch extends PureComponent<IProps, IState>
     {
         super(props);
         this.state = {
-            loading: true,
+            submitting: false,
             isPublic: true,
             modalRepositoryName: '',
             modalPassword: '',
@@ -35,11 +39,14 @@ class AccessibilitySwitch extends PureComponent<IProps, IState>
         };
     }
 
-    async componentDidMount()
+    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        this.setState({loading: true});
-        await this.loadIsPublic();
-        this.setState({loading: false});
+        const {repository: {isPublic}, loading} = this.props;
+        const {loading: prevLoading} = prevProps;
+        if (prevLoading && loading)
+        {
+            this.setState({isPublic});
+        }
     }
 
     onSwitchChange: SwitchProps['onChange'] = async checked =>
@@ -98,43 +105,33 @@ class AccessibilitySwitch extends PureComponent<IProps, IState>
         this.setState({modalVisible: false, modalRepositoryName: '', modalPassword: ''});
     };
 
-    loadIsPublic = async () =>
-    {
-        const {match: {params: {repository, username}}} = this.props;
-        const repositoryInfo = await RepositoryInfoApi.repository(username, repository);
-        if (repositoryInfo !== null)
-        {
-            const {isPublic} = repositoryInfo;
-            this.setState({isPublic});
-        }
-    };
-
     setIsPublic = async (isPublic: boolean) =>
     {
         const {match: {params: {repository}}} = this.props;
         const {isPublic: prevIsPublic} = this.state;
         if (prevIsPublic !== isPublic)
         {
-            this.setState({loading: true});
+            this.setState({submitting: true});
             const result = await RepositoryInfoApi.setIsPublic({name: repository, isPublic});
             if (result !== null)
             {
                 window.location.reload();
             }
-            this.setState({loading: false});
+            this.setState({submitting: false});
         }
     };
 
     render()
     {
         const {
-            loading,
+            submitting,
             isPublic,
             modalRepositoryName,
             modalPassword,
             modalVisible,
         } = this.state;
-        return (<View loading={loading}
+        const {loading: loadingInitValues} = this.props;
+        return (<View loading={submitting || loadingInitValues}
                       isPublic={isPublic}
                       modalRepositoryName={modalRepositoryName}
                       modalPassword={modalPassword}
