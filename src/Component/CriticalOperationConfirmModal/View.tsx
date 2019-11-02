@@ -18,7 +18,9 @@ interface IProps
 
     visible: ModalProps['visible'],
     onOk: ModalProps['onOk'],
-    onCancel: ModalProps['onCancel']
+    onCancel: ModalProps['onCancel'],
+    title: ModalProps['title'],
+    confirmLoading: ModalProps['confirmLoading']
 }
 
 function CriticalOperationConfirmModal(props: IProps)
@@ -33,16 +35,27 @@ function CriticalOperationConfirmModal(props: IProps)
         visible,
         onOk,
         onCancel,
+        title,
+        confirmLoading,
     } = props;
     return (
-        <Modal className={Style.CriticalOperationConfirmModal} visible={visible} onOk={onOk} onCancel={onCancel}>
+        <Modal confirmLoading={confirmLoading}
+               title={title}
+               className={Style.CriticalOperationConfirmModal}
+               visible={visible}
+               onOk={onOk}
+               onCancel={onCancel}>
             <div className={Style.content}>
-                {warning}
-                <Input value={validateText}
+                <div className={Style.warningWrapper}>{warning}</div>
+                <Input className={Style.input} value={validateText}
                        onChange={onValidateInputChange}
                        placeholder={validateInputPlaceholder}
                        autoFocus={true} />
-                <Input value={password} onChange={onPasswordInputChange} />
+                <Input className={Style.input}
+                       placeholder={'账户密码'}
+                       type={'password'}
+                       value={password}
+                       onChange={onPasswordInputChange} />
             </div>
         </Modal>
     );

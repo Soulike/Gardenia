@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {Account, Group, Profile, ResponseBody} from '../../Class';
-import {CHECK_SESSION, GET_ADMINISTRATING_GROUPS, GET_GROUPS, LOGIN, LOGOUT, REGISTER} from './ROUTE';
+import {CHECK_PASSWORD, CHECK_SESSION, GET_ADMINISTRATING_GROUPS, GET_GROUPS, LOGIN, LOGOUT, REGISTER} from './ROUTE';
 import {notification} from 'antd';
 import {errorHandler} from '../Function';
 
@@ -55,6 +55,31 @@ export async function checkSession(): Promise<{ isValid: boolean } | null>
     try
     {
         const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isValid: boolean }>> = await axios.get(CHECK_SESSION);
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function checkPassword(account: Pick<Account, 'hash'>): Promise<{ isCorrect: boolean } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isCorrect: boolean }>> = await axios.get(CHECK_PASSWORD, {
+            params: {
+                json: account,
+            },
+        });
         if (isSuccessful)
         {
             return data!;

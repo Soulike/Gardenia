@@ -28,10 +28,12 @@ function DescriptionView(props: IProps)
                                     onChange={onTextareaChange} />
                 </Spin>
             </label>
-            <Button loading={submitting}
-                    disabled={loading || submitting}
-                    className={Style.button}
-                    onClick={onSubmit}>确定</Button>
+            <div className={Style.buttonWrapper}>
+                <Button loading={submitting}
+                        disabled={loading || submitting}
+                        className={Style.button}
+                        onClick={onSubmit}>确定</Button>
+            </div>
         </div>
     );
 }

@@ -4,8 +4,9 @@
         resize: none;
     }
 
-    .button {
+    .buttonWrapper {
         margin-top: 10px;
-        float: right;
+        display: flex;
+        justify-content: flex-end;
     }
 }

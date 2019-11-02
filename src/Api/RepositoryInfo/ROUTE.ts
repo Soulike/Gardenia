@@ -14,5 +14,6 @@ export const FILE_INFO = repositoryInfoPrefix('/fileInfo');
 export const RAW_FILE = repositoryInfoPrefix('/rawFile');
 export const SET_NAME = repositoryInfoPrefix('/setName');
 export const SET_DESCRIPTION = repositoryInfoPrefix('/setDescription');
+export const SET_IS_PUBLIC = repositoryInfoPrefix('/setIsPublic');
 export const GROUPS = repositoryInfoPrefix('/groups');
 export const ADD_TO_GROUP = repositoryInfoPrefix('/addToGroup');

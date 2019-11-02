@@ -12,6 +12,7 @@ import {
     RAW_FILE,
     REPOSITORY,
     SET_DESCRIPTION,
+    SET_IS_PUBLIC,
     SET_NAME,
 } from './ROUTE';
 import {ObjectType} from '../../CONSTANT';
@@ -229,6 +230,29 @@ export async function setDescription(repositoryName: string, description: string
     {
         const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
             await axios.post(SET_DESCRIPTION, {repositoryName, description});
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function setIsPublic(repository: Pick<Repository, 'name' | 'isPublic'>): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+            await axios.post(SET_IS_PUBLIC, {repository});
         if (isSuccessful)
         {
             return true;
