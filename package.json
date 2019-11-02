@@ -34,7 +34,7 @@
     "redux": "^4.0.4",
     "showdown": "^1.9.0",
     "typescript": "^3.6.3",
-    "validator": "^11.1.0"
+    "validator": "^12.0.0"
   },
   "devDependencies": {
     "@types/faker": "^4.1.5",
