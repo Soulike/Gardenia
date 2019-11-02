@@ -5,6 +5,7 @@ import RepositoryName from './Component/RepositoryName';
 import Description from './Component/Description';
 import AccessibilitySwitch from './Component/AccessibilitySwitch';
 import {Repository} from '../../../../../../Class';
+import DangerZoneList from './Component/DangerZoneList';
 
 interface IProps
 {
@@ -17,7 +18,7 @@ function OptionsView(props: IProps)
     const {repository, loading} = props;
     return (
         <div className={Style.Options}>
-            <SettingsTitle>设置</SettingsTitle>
+            <SettingsTitle>选项</SettingsTitle>
             <div className={Style.itemWrapper}>
                 <RepositoryName />
             </div>
@@ -27,6 +28,8 @@ function OptionsView(props: IProps)
             <div className={Style.itemWrapper}>
                 <Description repository={repository} loading={loading} />
             </div>
+            <SettingsTitle><span style={{color: 'red'}}>危险区</span></SettingsTitle>
+            <DangerZoneList />
         </div>
     );
 }
