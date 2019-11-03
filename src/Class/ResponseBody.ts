@@ -4,9 +4,9 @@
  * */
 export class ResponseBody<TBody = void>
 {
-    public isSuccessful: Readonly<boolean>;
-    public message?: string;
-    public data?: Readonly<TBody>;
+    public readonly isSuccessful: boolean;
+    public readonly message?: string;
+    public readonly data?: Readonly<TBody>;
 
     /**
      * @constructor
