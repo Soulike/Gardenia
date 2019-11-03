@@ -25,14 +25,14 @@ export class Account
         return sha256(sha256(username) + sha256(password));
     }
 
-    public static validate(obj: Record<keyof Account, any>): boolean
+    public static validate(obj: Readonly<Record<keyof Account, any>>): boolean
     {
         const {username, hash} = obj;
         return typeof username === 'string'
             && typeof hash === 'string';
     }
 
-    public static from(obj: Record<keyof Account, any>)
+    public static from(obj: Readonly<Record<keyof Account, any>>)
     {
         const {username, hash} = obj;
         return new Account(username, hash);

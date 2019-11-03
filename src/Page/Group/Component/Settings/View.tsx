@@ -7,11 +7,11 @@ import {Link} from 'react-router-dom';
 interface IProps
 {
     children: ReactNode,
-    menuItems: IMenuItem[],
+    menuItems: Readonly<Readonly<IMenuItem>[]>,
     activeItemKey: string,
 }
 
-function SettingsView(props: IProps)
+function SettingsView(props: Readonly<IProps>)
 {
     const {children, menuItems, activeItemKey} = props;
     return (

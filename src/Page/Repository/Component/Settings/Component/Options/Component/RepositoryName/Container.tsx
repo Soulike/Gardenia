@@ -15,9 +15,9 @@ interface IState
     submitting: boolean,
 }
 
-class RepositoryName extends PureComponent<IProps, IState>
+class RepositoryName extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         const {match: {params: {repository}}} = props;

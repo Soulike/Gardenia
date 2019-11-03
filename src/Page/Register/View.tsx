@@ -18,7 +18,7 @@ interface IProps
     onFormSubmit: FormProps['onSubmit'],
 }
 
-function RegisterView(props: IProps)
+function RegisterView(props: Readonly<IProps>)
 {
     const {
         username,

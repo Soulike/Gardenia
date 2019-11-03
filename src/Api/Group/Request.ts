@@ -17,7 +17,7 @@ import {
     REPOSITORIES,
 } from './ROUTE';
 
-export async function add(group: Omit<Group, 'id'>): Promise<Pick<Group, 'id'> | null>
+export async function add(group: Readonly<Omit<Group, 'id'>>): Promise<Readonly<Pick<Group, 'id'>> | null>
 {
     try
     {
@@ -40,7 +40,7 @@ export async function add(group: Omit<Group, 'id'>): Promise<Pick<Group, 'id'> |
     }
 }
 
-export async function dismiss(group: Pick<Group, 'id'>): Promise<true | null>
+export async function dismiss(group: Readonly<Pick<Group, 'id'>>): Promise<true | null>
 {
     try
     {
@@ -63,7 +63,7 @@ export async function dismiss(group: Pick<Group, 'id'>): Promise<true | null>
     }
 }
 
-export async function info(group: Pick<Group, 'id'>): Promise<Group | null>
+export async function info(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly<Group> | null>
 {
     try
     {
@@ -90,11 +90,11 @@ export async function info(group: Pick<Group, 'id'>): Promise<Group | null>
     }
 }
 
-export async function accounts(group: Pick<Group, 'id'>): Promise<Account[] | null>
+export async function accounts(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly<Readonly<Account>[]> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Account[]>> = await axios.get(ACCOUNTS,
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Account>[]>> = await axios.get(ACCOUNTS,
             {
                 params: {
                     json: {group},
@@ -117,7 +117,7 @@ export async function accounts(group: Pick<Group, 'id'>): Promise<Account[] | nu
     }
 }
 
-export async function addAccounts(group: Pick<Group, 'id'>, usernames: string[]): Promise<true | null>
+export async function addAccounts(group: Readonly<Pick<Group, 'id'>>, usernames: Readonly<string[]>): Promise<true | null>
 {
     try
     {
@@ -140,7 +140,7 @@ export async function addAccounts(group: Pick<Group, 'id'>, usernames: string[])
     }
 }
 
-export async function removeAccounts(group: Pick<Group, 'id'>, usernames: string[]): Promise<true | null>
+export async function removeAccounts(group: Readonly<Pick<Group, 'id'>>, usernames: Readonly<string[]>): Promise<true | null>
 {
     try
     {
@@ -163,11 +163,11 @@ export async function removeAccounts(group: Pick<Group, 'id'>, usernames: string
     }
 }
 
-export async function admins(group: Pick<Group, 'id'>): Promise<Account[] | null>
+export async function admins(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly<Readonly<Account>[]> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Account[]>> = await axios.get(ADMINS,
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Account>[]>> = await axios.get(ADMINS,
             {
                 params: {
                     json: {group},
@@ -190,7 +190,7 @@ export async function admins(group: Pick<Group, 'id'>): Promise<Account[] | null
     }
 }
 
-export async function addAdmins(group: Pick<Group, 'id'>, usernames: string[]): Promise<true | null>
+export async function addAdmins(group: Readonly<Pick<Group, 'id'>>, usernames: Readonly<string[]>): Promise<true | null>
 {
     try
     {
@@ -213,7 +213,7 @@ export async function addAdmins(group: Pick<Group, 'id'>, usernames: string[]): 
     }
 }
 
-export async function removeAdmins(group: Pick<Group, 'id'>, usernames: string[]): Promise<true | null>
+export async function removeAdmins(group: Readonly<Pick<Group, 'id'>>, usernames: Readonly<string[]>): Promise<true | null>
 {
     try
     {
@@ -236,11 +236,11 @@ export async function removeAdmins(group: Pick<Group, 'id'>, usernames: string[]
     }
 }
 
-export async function repositories(group: Pick<Group, 'id'>): Promise<Repository[] | null>
+export async function repositories(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly<Readonly<Repository>[]> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Repository[]>> = await axios.get(REPOSITORIES,
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Repository>[]>> = await axios.get(REPOSITORIES,
             {
                 params: {
                     json: {group},
@@ -263,7 +263,7 @@ export async function repositories(group: Pick<Group, 'id'>): Promise<Repository
     }
 }
 
-export async function removeRepositories(group: Pick<Group, 'id'>, repositories: Pick<Repository, 'username' | 'name'>[]): Promise<true | null>
+export async function removeRepositories(group: Readonly<Pick<Group, 'id'>>, repositories: Readonly<Pick<Repository, 'username' | 'name'>[]>): Promise<true | null>
 {
     try
     {
@@ -286,7 +286,7 @@ export async function removeRepositories(group: Pick<Group, 'id'>, repositories:
     }
 }
 
-export async function isAdmin(group: Pick<Group, 'id'>): Promise<{ isAdmin: boolean } | null>
+export async function isAdmin(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly<{ isAdmin: boolean }> | null>
 {
     try
     {

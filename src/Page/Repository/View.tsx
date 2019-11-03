@@ -10,7 +10,7 @@ import {TabsProps} from 'antd/lib/tabs';
 
 interface IProps
 {
-    repository: RepositoryClass,
+    repository: Readonly<RepositoryClass>,
     loading: boolean,
     tabActiveKey: TAB_KEY,
     onTabChange: TabsProps['onChange'],
@@ -18,7 +18,7 @@ interface IProps
     children: ReactNode
 }
 
-function RepositoryView(props: IProps)
+function RepositoryView(props: Readonly<IProps>)
 {
     const {
         repository: {username, name, isPublic},

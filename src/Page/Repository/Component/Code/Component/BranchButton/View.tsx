@@ -4,12 +4,12 @@ import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 
 interface IProps
 {
-    branches: Array<string>,
+    branches: Readonly<Array<Readonly<string>>>,
     branch: string,
     onBranchClick: (branch: string) => MenuItemProps['onClick'],
 }
 
-function BranchButtonView(props: IProps)
+function BranchButtonView(props: Readonly<IProps>)
 {
     const {branches, branch, onBranchClick} = props;
     return (

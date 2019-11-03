@@ -18,7 +18,7 @@ import {
 import {ObjectType} from '../../CONSTANT';
 import {errorHandler} from '../Function';
 
-export async function repository(username: string, repositoryName: string): Promise<RepositoryClass | null>
+export async function repository(username: Readonly<string>, repositoryName: Readonly<string>): Promise<Readonly<RepositoryClass> | null>
 {
     try
     {
@@ -45,7 +45,7 @@ export async function repository(username: string, repositoryName: string): Prom
     }
 }
 
-export async function branch(username: string, repositoryName: string): Promise<Array<string> | null>
+export async function branch(username: Readonly<string>, repositoryName: Readonly<string>): Promise<Readonly<Array<string>> | null>
 {
     try
     {
@@ -72,7 +72,7 @@ export async function branch(username: string, repositoryName: string): Promise<
     }
 }
 
-export async function lastCommit(username: string, repositoryName: string, commitHash: string, filePath?: string): Promise<Commit | null>
+export async function lastCommit(username: Readonly<string>, repositoryName: Readonly<string>, commitHash: Readonly<string>, filePath?: Readonly<string>): Promise<Readonly<Commit> | null>
 {
     try
     {
@@ -99,11 +99,11 @@ export async function lastCommit(username: string, repositoryName: string, commi
     }
 }
 
-export async function directory(username: string, repositoryName: string, commitHash: string, directoryPath: string): Promise<Array<{ type: ObjectType, path: string, commit: Commit }> | null>
+export async function directory(username: Readonly<string>, repositoryName: Readonly<string>, commitHash: Readonly<string>, directoryPath: Readonly<string>): Promise<Readonly<Array<Readonly<{ type: ObjectType, path: Readonly<string>, commit: Commit }>>> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<{ type: ObjectType, path: string, commit: Commit }>>> =
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<Readonly<{ type: ObjectType, path: Readonly<string>, commit: Commit }>>>> =
             await axios.get(DIRECTORY, {
                 params: {
                     json: JSON.stringify({username, repositoryName, commitHash, directoryPath}),
@@ -126,7 +126,7 @@ export async function directory(username: string, repositoryName: string, commit
     }
 }
 
-export async function commitCount(username: string, repositoryName: string, commitHash: string): Promise<{ commitCount: number } | null>
+export async function commitCount(username: Readonly<string>, repositoryName: Readonly<string>, commitHash: Readonly<string>): Promise<Readonly<{ commitCount: number }> | null>
 {
     try
     {
@@ -153,7 +153,7 @@ export async function commitCount(username: string, repositoryName: string, comm
     }
 }
 
-export async function fileInfo(username: string, repositoryName: string, filePath: string, commitHash: string): Promise<{ exists: boolean, type?: ObjectType, size?: number, isBinary?: boolean } | null>
+export async function fileInfo(username: Readonly<string>, repositoryName: Readonly<string>, filePath: Readonly<string>, commitHash: Readonly<string>): Promise<Readonly<{ exists: boolean, type?: ObjectType, size?: number, isBinary?: boolean }> | null>
 {
     try
     {
@@ -180,7 +180,7 @@ export async function fileInfo(username: string, repositoryName: string, filePat
     }
 }
 
-export async function rawFile(username: string, repositoryName: string, filePath: string, commitHash: string): Promise<Blob | null>
+export async function rawFile(username: Readonly<string>, repositoryName: Readonly<string>, filePath: Readonly<string>, commitHash: Readonly<string>): Promise<Readonly<Blob> | null>
 {
     try
     {
@@ -201,7 +201,7 @@ export async function rawFile(username: string, repositoryName: string, filePath
     }
 }
 
-export async function setName(repositoryName: string, newRepositoryName: string): Promise<true | null>
+export async function setName(repositoryName: Readonly<string>, newRepositoryName: Readonly<string>): Promise<true | null>
 {
     try
     {
@@ -224,7 +224,7 @@ export async function setName(repositoryName: string, newRepositoryName: string)
     }
 }
 
-export async function setDescription(repositoryName: string, description: string): Promise<true | null>
+export async function setDescription(repositoryName: Readonly<string>, description: Readonly<string>): Promise<true | null>
 {
     try
     {
@@ -247,7 +247,7 @@ export async function setDescription(repositoryName: string, description: string
     }
 }
 
-export async function setIsPublic(repository: Pick<Repository, 'name' | 'isPublic'>): Promise<true | null>
+export async function setIsPublic(repository: Readonly<Pick<Repository, 'name' | 'isPublic'>>): Promise<true | null>
 {
     try
     {
@@ -270,7 +270,7 @@ export async function setIsPublic(repository: Pick<Repository, 'name' | 'isPubli
     }
 }
 
-export async function groups(repository: Pick<Repository, 'username' | 'name'>): Promise<Group[] | null>
+export async function groups(repository: Readonly<Pick<Repository, 'username' | 'name'>>): Promise<Readonly<Group[]> | null>
 {
     try
     {
@@ -296,7 +296,7 @@ export async function groups(repository: Pick<Repository, 'username' | 'name'>):
     }
 }
 
-export async function addToGroup(repository: Pick<Repository, 'username' | 'name'>, group: Pick<Group, 'id'>): Promise<true | null>
+export async function addToGroup(repository: Readonly<Pick<Repository, 'username' | 'name'>>, group: Readonly<Pick<Group, 'id'>>): Promise<true | null>
 {
     try
     {

@@ -5,7 +5,7 @@ interface IProps {}
 
 interface IState {}
 
-class Options extends PureComponent<IProps, IState>
+class Options extends PureComponent<Readonly<IProps>, IState>
 {
     render()
     {

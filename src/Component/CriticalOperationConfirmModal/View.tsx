@@ -23,7 +23,7 @@ interface IProps
     confirmLoading: ModalProps['confirmLoading']
 }
 
-function CriticalOperationConfirmModal(props: IProps)
+function CriticalOperationConfirmModal(props: Readonly<IProps>)
 {
     const {
         warning,

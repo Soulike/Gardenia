@@ -8,7 +8,7 @@ interface IProps
     to: string,
 }
 
-function PreviousFolderItemView(props: IProps)
+function PreviousFolderItemView(props: Readonly<IProps>)
 {
     const {to} = props;
     return (

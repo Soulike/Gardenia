@@ -19,9 +19,9 @@ interface IState
     loading: boolean,
 }
 
-class Readme extends PureComponent<IProps, IState>
+class Readme extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

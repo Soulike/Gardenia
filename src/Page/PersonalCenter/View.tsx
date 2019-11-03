@@ -7,12 +7,12 @@ import {TabsProps} from 'antd/lib/tabs';
 
 interface IProps
 {
-    tabs: Tab[],
+    tabs: Readonly<Readonly<Tab>[]>,
     activeTabKey: string,
     onTabChange: TabsProps['onChange']
 }
 
-function PersonalCenterView(props: IProps)
+function PersonalCenterView(props: Readonly<IProps>)
 {
     const {tabs, activeTabKey, onTabChange} = props;
     return (

@@ -1,6 +1,6 @@
 import {PAGE_ID} from './PAGE_ID';
 
-export const PAGE_ID_TO_ROUTE = {
+export const PAGE_ID_TO_ROUTE = Object.freeze({
     [PAGE_ID.INDEX]: '/',
     [PAGE_ID.LOGIN]: '/login',
     [PAGE_ID.REGISTER]: '/register',
@@ -25,4 +25,4 @@ export const PAGE_ID_TO_ROUTE = {
 
     [PAGE_ID.GROUP.SETTINGS.SETTINGS]: '/group/:id/settings',
     [PAGE_ID.GROUP.SETTINGS.OPTIONS]: '/group/:id/settings',
-};
+});

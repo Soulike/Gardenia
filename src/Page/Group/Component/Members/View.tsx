@@ -8,20 +8,20 @@ import {PopconfirmProps} from 'antd/lib/popconfirm';
 
 interface IProps
 {
-    profiles: (Profile | null)[],
+    profiles: Readonly<(Readonly<Profile> | null)[]>,
     loading: boolean,
     onRemoveAccountConfirm: (username: string) => PopconfirmProps['onConfirm'],
     isAdmin: boolean,
 }
 
-function MembersView(props: IProps)
+function MembersView(props: Readonly<IProps>)
 {
     const {profiles, loading, onRemoveAccountConfirm, isAdmin} = props;
     return (
         <div className={Style.Members}>
             <List loading={loading}
                   locale={{emptyText: <Empty description={'没有成员'} />}}
-                  dataSource={profiles}
+                  dataSource={[...profiles]}
                   renderItem={profile =>
                   {
                       if (profile !== null)

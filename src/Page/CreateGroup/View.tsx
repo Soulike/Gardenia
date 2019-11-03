@@ -13,7 +13,7 @@ interface IProps
     submitting: boolean,
 }
 
-function CreateGroupView(props: IProps)
+function CreateGroupView(props: Readonly<IProps>)
 {
     const {
         name,

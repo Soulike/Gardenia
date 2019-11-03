@@ -11,7 +11,7 @@ interface IProps
     onCopy: CopyToClipboard.Props['onCopy']
 }
 
-function EmptyView(props: IProps)
+function EmptyView(props: Readonly<IProps>)
 {
     const {username, repository, onCopy} = props;
     return (

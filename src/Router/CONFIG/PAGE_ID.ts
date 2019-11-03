@@ -1,11 +1,11 @@
-export const PAGE_ID = {
+export const PAGE_ID = Object.freeze({
     INDEX: 'INDEX',
     LOGIN: 'LOGIN',
     REGISTER: 'REGISTER',
     CREATE_REPOSITORY: 'CREATE_REPOSITORY',
     CREATE_GROUP: 'CREATE_GROUP',
     PERSONAL_CENTER: 'PERSONAL_CENTER',
-    REPOSITORY: {
+    REPOSITORY: Object.freeze({
         REPOSITORY: 'REPOSITORY',
         ISSUES: 'REPOSITORY_ISSUES',
         PULL_REQUESTS: 'REPOSITORY_PULL_REQUESTS',
@@ -17,8 +17,8 @@ export const PAGE_ID = {
             GROUPS: 'REPOSITORY_SETTINGS_GROUPS',
         },
         CODE: 'REPOSITORY_CODE',
-    },
-    GROUP: {
+    }),
+    GROUP: Object.freeze({
         GROUP: 'GROUP',
         REPOSITORIES: 'GROUP_REPOSITORIES',
         MEMBERS: 'GROUP_MEMBERS',
@@ -26,5 +26,5 @@ export const PAGE_ID = {
             SETTINGS: 'GROUP_SETTINGS',
             OPTIONS: 'GROUP_SETTINGS_OPTIONS',
         },
-    },
-};
+    }),
+});

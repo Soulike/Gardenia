@@ -20,9 +20,9 @@ interface IState
     isAdmin: boolean,
 }
 
-class Group extends PureComponent<IProps, IState>
+class Group extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

@@ -24,7 +24,7 @@ interface IProps
     onModalCancel: ModalProps['onCancel']
 }
 
-function AccessibilitySwitchView(props: IProps)
+function AccessibilitySwitchView(props: Readonly<IProps>)
 {
     const {
         loading,

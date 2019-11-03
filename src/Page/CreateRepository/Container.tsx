@@ -21,9 +21,9 @@ interface IState
     loading: boolean,
 }
 
-class CreateRepository extends PureComponent<IProps, IState>
+class CreateRepository extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

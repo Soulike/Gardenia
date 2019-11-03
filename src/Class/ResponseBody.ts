@@ -2,11 +2,11 @@
  * @class
  * @description HTTP 响应体的标准格式对象
  * */
-export class ResponseBody<TBody>
+export class ResponseBody<TBody = void>
 {
-    public isSuccessful: boolean;
+    public isSuccessful: Readonly<boolean>;
     public message?: string;
-    public data?: TBody;
+    public data?: Readonly<TBody>;
 
     /**
      * @constructor
@@ -18,6 +18,6 @@ export class ResponseBody<TBody>
     {
         this.isSuccessful = isSuccessful;
         this.message = message;
-        this.data = data;
+        this.data = Object.freeze(data);
     }
 }

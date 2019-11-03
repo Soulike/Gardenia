@@ -7,7 +7,7 @@ import {Group} from '../../Class';
 
 interface IProps
 {
-    group: Group,
+    group: Readonly<Group>,
     children: ReactNode,
     onTabChange: TabsProps['onChange'],
     tabActiveKey: string,
@@ -15,7 +15,7 @@ interface IProps
     isAdmin: boolean,
 }
 
-function GroupView(props: IProps)
+function GroupView(props: Readonly<IProps>)
 {
     const {children, onTabChange, tabActiveKey, group: {id, name}, loading, isAdmin} = props;
     return (

@@ -8,7 +8,7 @@ interface IProps
     branchCount: number,
 }
 
-function InfoBar(props: IProps)
+function InfoBar(props: Readonly<IProps>)
 {
     const {commitCount, branchCount} = props;
     return (

@@ -6,19 +6,19 @@ import RepositoryList from '../../Component/RepositoryList';
 
 interface IProps
 {
-    repositoryList: Array<Repository>,
+    repositoryList: Readonly<Array<Readonly<Repository>>>,
     loadMore: () => any,
     loading: boolean,
     hasMore: boolean,
 }
 
-function IndexView(props: IProps)
+function IndexView(props: Readonly<IProps>)
 {
     const {repositoryList, loadMore, loading, hasMore} = props;
     return (
         <div className={Style.Index}>
             <InfiniteScroll loadMore={loadMore} initialLoad={false} hasMore={hasMore}>
-                <RepositoryList repositoryList={repositoryList} loading={loading} showUsername={true} />
+                <RepositoryList repositories={repositoryList} loading={loading} showUsername={true} />
             </InfiniteScroll>
         </div>);
 }

@@ -9,7 +9,7 @@ export class Group
         this.name = name;
     }
 
-    public static from(obj: Record<keyof Group, any>): Group
+    public static from(obj: Readonly<Record<keyof Group, any>>): Group
     {
         if (!Group.validate(obj))
         {
@@ -19,7 +19,7 @@ export class Group
         return new Group(id, name);
     }
 
-    private static validate(obj: Record<keyof Group, any>): boolean
+    public static validate(obj: Readonly<Record<keyof Group, any>>): boolean
     {
         const {id, name} = obj;
         return typeof id === 'number' && typeof name === 'string';

@@ -28,7 +28,7 @@ export class Repository
         this.isPublic = isPublic;
     }
 
-    static validate(obj: Record<keyof Repository, any>): boolean
+    public static validate(obj: Readonly<Record<keyof Repository, any>>): boolean
     {
         const {username, name, description, isPublic} = obj;
         return typeof username === 'string'
@@ -37,7 +37,7 @@ export class Repository
             && typeof isPublic === 'boolean';
     }
 
-    static from(obj: Record<keyof Repository, any>)
+    public static from(obj: Readonly<Record<keyof Repository, any>>)
     {
         const {username, name, description, isPublic} = obj;
         return new Repository(username, name, description, isPublic);

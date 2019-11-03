@@ -9,7 +9,7 @@ interface IProps
     loading: boolean,
 }
 
-function ReadmeView(props: IProps)
+function ReadmeView(props: Readonly<IProps>)
 {
     const {html, exists, loading} = props;
     return exists ?

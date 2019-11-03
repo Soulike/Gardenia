@@ -5,16 +5,16 @@ import Style from './Style.module.scss';
 
 interface IProps
 {
-    repositories: Repository[],
+    repositories: Readonly<Readonly<Repository>[]>,
     loading: boolean,
 }
 
-function RepositoriesView(props: IProps)
+function RepositoriesView(props: Readonly<IProps>)
 {
     const {repositories, loading} = props;
     return (
         <div className={Style.Repositories}>
-            <RepositoryList repositoryList={repositories} loading={loading} showUsername={true} />
+            <RepositoryList repositories={repositories} loading={loading} showUsername={true} />
         </div>
     );
 }

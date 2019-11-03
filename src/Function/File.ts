@@ -1,4 +1,4 @@
-export async function transformBlobToString(blob: Blob): Promise<string>
+export async function transformBlobToString(blob: Readonly<Blob>): Promise<string>
 {
     return new Promise((resolve, reject) =>
     {

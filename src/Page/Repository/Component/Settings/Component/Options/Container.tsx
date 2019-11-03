@@ -13,9 +13,9 @@ interface IState
     loading: boolean,
 }
 
-class Options extends PureComponent<IProps, IState>
+class Options extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

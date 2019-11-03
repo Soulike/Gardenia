@@ -2,34 +2,34 @@ import {ObjectType} from '../CONSTANT';
 
 export interface IPersonalCenter
 {
-    username: string,
+    readonly username: string,
 }
 
 export interface IRepositoryCode
 {
-    username: string,
-    repository: string,
-    objectType?: ObjectType,
-    branch?: string,
-    path?: string,
+    readonly username: string,
+    readonly repository: string,
+    readonly objectType?: ObjectType,
+    readonly branch?: string,
+    readonly path?: string,
 }
 
 export interface IRepositoryIssues
 {
-    username: string,
-    repository: string,
-    number?: string,
+    readonly username: string,
+    readonly repository: string,
+    readonly number?: string,
 }
 
 export interface IRepositoryPullRequests extends IRepositoryIssues {}
 
 export interface IRepositorySettings
 {
-    username: string,
-    repository: string,
+    readonly username: string,
+    readonly repository: string,
 }
 
 export interface IGroup
 {
-    id: string,
+    readonly id: string,
 }

@@ -9,7 +9,7 @@ interface IProps
     onCopy: CopyToClipboard.Props['onCopy']
 }
 
-function CloneButtonView(props: IProps)
+function CloneButtonView(props: Readonly<IProps>)
 {
     const {username, repository, onCopy} = props;
     return (

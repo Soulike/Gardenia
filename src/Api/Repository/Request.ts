@@ -4,11 +4,11 @@ import {notification} from 'antd';
 import {CREATE, DEL, GET_LIST} from './ROUTE';
 import {errorHandler} from '../Function';
 
-export async function getList(start: number, end: number, username?: string): Promise<Array<RepositoryClass> | null>
+export async function getList(start: number, end: number, username?: Readonly<string>): Promise<Readonly<Array<Readonly<RepositoryClass>>> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<RepositoryClass>>> =
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<Readonly<RepositoryClass>>>> =
             await axios.get(GET_LIST, {
                 params: {
                     json: JSON.stringify({start, end, username}),
@@ -31,7 +31,7 @@ export async function getList(start: number, end: number, username?: string): Pr
     }
 }
 
-export async function create(repository: RepositoryClass): Promise<true | null>
+export async function create(repository: Readonly<RepositoryClass>): Promise<true | null>
 {
     try
     {
@@ -53,7 +53,7 @@ export async function create(repository: RepositoryClass): Promise<true | null>
     }
 }
 
-export async function del(repositoryName: string): Promise<true | null>
+export async function del(repositoryName: Readonly<string>): Promise<true | null>
 {
     try
     {

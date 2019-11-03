@@ -17,7 +17,7 @@ interface IState
 
 class FileList extends Component<IProps, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {
@@ -56,7 +56,7 @@ class FileList extends Component<IProps, IState>
             path === undefined ? '' : path + '/');
         if (fileList !== null)
         {
-            this.setState({fileList});
+            this.setState({fileList: [...fileList]});
         }
     };
 

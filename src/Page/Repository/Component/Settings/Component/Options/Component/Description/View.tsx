@@ -14,7 +14,7 @@ interface IProps
     submitting: boolean
 }
 
-function DescriptionView(props: IProps)
+function DescriptionView(props: Readonly<IProps>)
 {
     const {description, onSubmit, onTextareaChange, loading, submitting} = props;
     return (

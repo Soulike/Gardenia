@@ -7,7 +7,7 @@ interface IProps
     onButtonClick: ButtonProps['onClick']
 }
 
-function DeleteRepositoryItemView(props: IProps)
+function DeleteRepositoryItemView(props: Readonly<IProps>)
 {
     const {onButtonClick} = props;
     return (<Item title={'删除仓库'} description={'删除仓库的操作不可恢复，请慎重。'} onButtonClick={onButtonClick} />);

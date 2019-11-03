@@ -16,7 +16,7 @@ interface IProps
     onGroupIdInputChange: InputProps['onChange'],
 }
 
-function JoinGroupButtonView(props: IProps)
+function JoinGroupButtonView(props: Readonly<IProps>)
 {
     const {modalVisible, onModalCancel, onModalOk, onClick, onGroupIdInputChange, groupId} = props;
     return (

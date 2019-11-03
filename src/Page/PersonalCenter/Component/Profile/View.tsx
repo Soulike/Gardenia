@@ -6,10 +6,10 @@ import {Icon} from 'antd';
 
 interface IProps
 {
-    profile: ProfileClass
+    profile: Readonly<ProfileClass>
 }
 
-function ProfileView(props: IProps)
+function ProfileView(props: Readonly<IProps>)
 {
     const {profile: {username, nickname, email}} = props;
     return (

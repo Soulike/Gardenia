@@ -16,9 +16,9 @@ interface IState
     loading: boolean,
 }
 
-class Code extends PureComponent<IProps, IState>
+class Code extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {
@@ -93,7 +93,7 @@ class Code extends PureComponent<IProps, IState>
         const branches = await RepositoryInfo.branch(username, repositoryName);
         if (branches !== null)
         {
-            this.setState({branches});
+            this.setState({branches: [...branches]});
         }
     };
 

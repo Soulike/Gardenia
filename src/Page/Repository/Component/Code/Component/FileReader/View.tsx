@@ -12,12 +12,12 @@ interface IProps
     exists: boolean,
     fileName: string,
     html: string,
-    lastCommit: Commit,
+    lastCommit: Readonly<Commit>,
     loading: boolean,
     onRawFileButtonClick: ButtonProps['onClick'],
 }
 
-function FileReader(props: IProps)
+function FileReader(props: Readonly<IProps>)
 {
     const {
         isBinary,

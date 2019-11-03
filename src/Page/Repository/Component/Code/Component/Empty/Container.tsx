@@ -9,7 +9,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 
 interface IState {}
 
-class Empty extends PureComponent<IProps, IState>
+class Empty extends PureComponent<Readonly<IProps>, IState>
 {
     onCopy: CopyToClipboard.Props['onCopy'] = (_text, result) =>
     {

@@ -23,7 +23,7 @@ export class Profile
         this.avatar = avatar;
     }
 
-    static validate(obj: Record<keyof Profile, any>): boolean
+    public static validate(obj: Readonly<Record<keyof Profile, any>>): boolean
     {
         const {username, nickname, email, avatar} = obj;
         return typeof username === 'string'
@@ -32,7 +32,7 @@ export class Profile
             && typeof avatar === 'string';
     }
 
-    static from(obj: Record<keyof Profile, any>)
+    public static from(obj: Readonly<Record<keyof Profile, any>>)
     {
         const {username, nickname, email, avatar} = obj;
         return new Profile(username, nickname, email, avatar);

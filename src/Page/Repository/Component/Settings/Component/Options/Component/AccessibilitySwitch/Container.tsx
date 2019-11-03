@@ -11,7 +11,7 @@ import {Account as AccountClass, Repository} from '../../../../../../../../Class
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings>
 {
-    repository: Repository,
+    repository: Readonly<Repository>,
     loading: boolean,
 }
 
@@ -25,9 +25,9 @@ interface IState
     modalVisible: ModalProps['visible'],
 }
 
-class AccessibilitySwitch extends PureComponent<IProps, IState>
+class AccessibilitySwitch extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

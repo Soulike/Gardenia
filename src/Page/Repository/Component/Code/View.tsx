@@ -13,15 +13,15 @@ const InfoBar = React.lazy(() => import('./Component/InfoBar'));
 
 interface IProps
 {
-    repository: RepositoryClass,
-    branches: Array<string>,
+    repository: Readonly<RepositoryClass>,
+    branches: Readonly<Array<string>>,
     commitCount: number,
     isEmpty: boolean,
     objectType: ObjectType,
     loading: boolean,
 }
 
-function CodeView(props: IProps)
+function CodeView(props: Readonly<IProps>)
 {
     const {
         repository: {username, name, description},

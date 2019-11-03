@@ -9,7 +9,7 @@ import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 
 interface IProps
 {
-    repositories: Repository[],
+    repositories: Readonly<Readonly<Repository>[]>,
     loading: boolean,
     onNextPageButtonClick: ButtonProps['onClick'],
     onPrevPageButtonClick: ButtonProps['onClick'],
@@ -17,7 +17,7 @@ interface IProps
     hasPrevPage: boolean,
 }
 
-function RepositoriesView(props: IProps)
+function RepositoriesView(props: Readonly<IProps>)
 {
     const {repositories, loading, onNextPageButtonClick, onPrevPageButtonClick, hasNextPage, hasPrevPage} = props;
     return (
@@ -27,7 +27,7 @@ function RepositoriesView(props: IProps)
                     <Button type={'primary'}><Icon type={'plus'} />添加仓库</Button>
                 </Link>
             </div>
-            <RepositoryList repositoryList={repositories} loading={loading} showUsername={false} />
+            <RepositoryList repositories={repositories} loading={loading} showUsername={false} />
             <div className={Style.buttonWrapper}>
                 {
                     hasNextPage || hasPrevPage ? (

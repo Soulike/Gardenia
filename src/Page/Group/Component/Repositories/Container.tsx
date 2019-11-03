@@ -16,9 +16,9 @@ interface IState
     loading: boolean
 }
 
-class Repositories extends PureComponent<IProps, IState>
+class Repositories extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {
@@ -39,7 +39,7 @@ class Repositories extends PureComponent<IProps, IState>
         const repositories = await GroupApi.repositories({id: Number.parseInt(id)});
         if (repositories !== null)
         {
-            this.setState({repositories});
+            this.setState({repositories: [...repositories]});
         }
         this.setState({loading: false});
     };

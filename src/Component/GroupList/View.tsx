@@ -7,19 +7,19 @@ import {Function as RouterFunction} from '../../Router';
 
 interface IProps
 {
-    groups: Group[],
+    groups: Readonly<Readonly<Group>[]>,
+    administratingGroups?: Readonly<Readonly<Group>[]>,
     loading: boolean,
-    administratingGroups?: Group[],
 }
 
-function GroupList(props: IProps)
+function GroupList(props: Readonly<IProps>)
 {
     const {groups, loading, administratingGroups} = props;
     const idsInAdministratingGroups = administratingGroups ? administratingGroups.map(({id}) => id) : [];
     return (
         <List className={Style.GroupList}
               loading={loading}
-              locale={{emptyText: <Empty description={'没有小组'} />}} dataSource={groups}
+              locale={{emptyText: <Empty description={'没有小组'} />}} dataSource={[...groups]}
               renderItem={({id, name}) => (
                   <Link className={Style.groupWrapper}
                         target={'_blank'} rel={'noreferrer noopener'}

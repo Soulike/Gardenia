@@ -8,10 +8,10 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../..
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
-    fileInfo: { type: ObjectType, path: string, commit: Commit }
+    fileInfo: Readonly<{ type: ObjectType, path: string, commit: Commit }>
 }
 
-function Item(props: IProps)
+function Item(props: Readonly<IProps>)
 {
     const {fileInfo: {type, path, commit: {message, time}}, match: {params: {username, repository, branch}}} = props;
     const fileName = getFileNameFromPath(path);

@@ -7,7 +7,7 @@ import {ObjectType} from '../../../../../../CONSTANT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
-    branches: Array<string>,
+    branches: Readonly<Array<Readonly<string>>>,
 }
 
 class BranchButton extends PureComponent<IProps>

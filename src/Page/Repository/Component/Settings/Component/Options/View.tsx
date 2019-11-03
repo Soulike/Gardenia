@@ -9,11 +9,11 @@ import DangerZoneList from './Component/DangerZoneList';
 
 interface IProps
 {
-    repository: Repository,
+    repository: Readonly<Repository>,
     loading: boolean,
 }
 
-function OptionsView(props: IProps)
+function OptionsView(props: Readonly<IProps>)
 {
     const {repository, loading} = props;
     return (

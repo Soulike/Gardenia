@@ -10,13 +10,13 @@ const PreviousFolderItem = React.lazy(() => import('./Component/PreviousFolderIt
 
 interface IProps
 {
-    fileList: Array<{ type: ObjectType, path: string, commit: Commit }>,
-    lastCommit: Commit,
+    fileList: Readonly<Array<Readonly<{ type: ObjectType, path: string, commit: Commit }>>>,
+    lastCommit: Readonly<Commit>,
     loading: boolean,
     showPreviousFolderItem: boolean,
 }
 
-function FileListView(props: IProps)
+function FileListView(props: Readonly<IProps>)
 {
     const {fileList, lastCommit: {commitHash, committerName, message, time}, loading, showPreviousFolderItem} = props;
     return (

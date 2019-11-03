@@ -17,9 +17,9 @@ interface IState
     submitting: boolean,
 }
 
-class CreateGroup extends PureComponent<IProps, IState>
+class CreateGroup extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

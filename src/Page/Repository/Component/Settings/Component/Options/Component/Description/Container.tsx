@@ -10,7 +10,7 @@ import {Repository} from '../../../../../../../../Class';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings>
 {
-    repository: Repository,
+    repository: Readonly<Repository>,
     loading: boolean,
 }
 
@@ -20,9 +20,9 @@ interface IState
     submitting: boolean,
 }
 
-class Description extends PureComponent<IProps, IState>
+class Description extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

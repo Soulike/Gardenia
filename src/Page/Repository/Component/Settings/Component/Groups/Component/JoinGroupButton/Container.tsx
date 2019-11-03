@@ -19,9 +19,9 @@ interface IState
     groupId: string,
 }
 
-class JoinGroupButton extends PureComponent<IProps, IState>
+class JoinGroupButton extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

@@ -17,11 +17,11 @@ interface IState
     hasPrevPage: boolean,
 }
 
-class Repositories extends PureComponent<IProps, IState>
+class Repositories extends PureComponent<Readonly<IProps>, IState>
 {
     private static PAGE_SIZE = 10;
 
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {
@@ -54,7 +54,7 @@ class Repositories extends PureComponent<IProps, IState>
             username);
         if (repositories !== null)
         {
-            this.setState({repositories});
+            this.setState({repositories: [...repositories]});
         }
         this.setState({loading: false});
     };

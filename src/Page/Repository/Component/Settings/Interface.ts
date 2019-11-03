@@ -2,8 +2,8 @@ import {ReactNode} from 'react';
 
 export interface IMenuItem
 {
-    icon?: ReactNode,
-    key: string,
-    to: string,
-    title: string,
+    readonly icon?: ReactNode,
+    readonly key: string,
+    readonly to: string,
+    readonly title: string,
 }

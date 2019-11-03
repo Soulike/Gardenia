@@ -1,9 +1,9 @@
 export interface IState
 {
-    Root: IRootState
+    readonly Root: IRootState
 }
 
 export interface IRootState
 {
-    isLoggedIn: boolean
+    readonly isLoggedIn: boolean
 }

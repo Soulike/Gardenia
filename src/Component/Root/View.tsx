@@ -17,7 +17,7 @@ interface IProps extends RouteComponentProps<{}>
     onLogoutClick: PopconfirmProps['onConfirm'],
 }
 
-function RootView(props: IProps)
+function RootView(props: Readonly<IProps>)
 {
     const {children, isLoggedIn, username, onLogoutClick, location} = props;
     const prevQueryString = qs.encode({prev: location.pathname});

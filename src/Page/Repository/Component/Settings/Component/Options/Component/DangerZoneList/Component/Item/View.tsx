@@ -9,7 +9,7 @@ interface IProps
     onButtonClick: ButtonProps['onClick']
 }
 
-function Item(props: IProps)
+function Item(props: Readonly<IProps>)
 {
     const {title, description, onButtonClick} = props;
     return (

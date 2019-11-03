@@ -10,9 +10,9 @@ interface IState
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 
-class PreviousFolderItem extends PureComponent<IProps, IState>
+class PreviousFolderItem extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

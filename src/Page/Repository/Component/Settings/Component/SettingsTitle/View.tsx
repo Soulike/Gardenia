@@ -6,7 +6,7 @@ interface IProps
     children: ReactNode
 }
 
-function SettingsTitle(props: IProps)
+function SettingsTitle(props: Readonly<IProps>)
 {
     const {children} = props;
     return (

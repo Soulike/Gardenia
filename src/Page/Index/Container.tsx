@@ -13,11 +13,11 @@ interface IState
     lastEnd: number,
 }
 
-class Index extends PureComponent<IProps, IState>
+class Index extends PureComponent<Readonly<IProps>, IState>
 {
     private static PAGE_SIZE = 10;  // 每一页有几条
 
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

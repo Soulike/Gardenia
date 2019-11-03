@@ -13,7 +13,7 @@ interface IProps
     onGroupIdInputChange: InputProps['onChange']
 }
 
-function JoinGroupModal(props: IProps)
+function JoinGroupModal(props: Readonly<IProps>)
 {
     const {visible, onCancel, onOk, groupId, onGroupIdInputChange} = props;
     return (

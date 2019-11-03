@@ -2,7 +2,7 @@ import {ReactNode} from 'react';
 
 export interface Tab
 {
-    key: string,
-    title: string,
-    component: ReactNode
+    readonly key: string,
+    readonly title: string,
+    readonly component: ReactNode
 }

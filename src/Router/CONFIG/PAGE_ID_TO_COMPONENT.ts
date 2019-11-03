@@ -1,7 +1,7 @@
 import {PAGE_ID} from './PAGE_ID';
 import React from 'react';
 
-export const PAGE_ID_TO_COMPONENT = {
+export const PAGE_ID_TO_COMPONENT = Object.freeze({
     [PAGE_ID.INDEX]: React.lazy(() => import('../../Page/Index')),
     [PAGE_ID.LOGIN]: React.lazy(() => import('../../Page/Login')),
     [PAGE_ID.REGISTER]: React.lazy(() => import('../../Page/Register')),
@@ -25,4 +25,4 @@ export const PAGE_ID_TO_COMPONENT = {
 
     [PAGE_ID.GROUP.SETTINGS.SETTINGS]: React.lazy(() => import('../../Page/Group/Component/Settings/Component/Options')),
     [PAGE_ID.GROUP.SETTINGS.OPTIONS]: React.lazy(() => import('../../Page/Group/Component/Settings/Component/Options')),
-};
+});

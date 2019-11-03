@@ -20,7 +20,7 @@ interface IProps
     loading: boolean,
 }
 
-function CreateRepositoryView(props: IProps)
+function CreateRepositoryView(props: Readonly<IProps>)
 {
     const {
         username,

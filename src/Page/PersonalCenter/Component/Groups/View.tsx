@@ -8,12 +8,12 @@ import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 
 interface IProps
 {
-    groups: Group[],
+    groups: Readonly<Readonly<Group>[]>,
+    administratingGroups?: Readonly<Readonly<Group>[]>,
     loading: boolean,
-    administratingGroups?: Group[],
 }
 
-function GroupsView(props: IProps)
+function GroupsView(props: Readonly<IProps>)
 {
     const {groups, loading, administratingGroups} = props;
     return (

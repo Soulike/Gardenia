@@ -7,7 +7,7 @@ interface IProps extends TagProps
     isPublic: boolean
 }
 
-function AccessibilityTag(props: IProps)
+function AccessibilityTag(props: Readonly<IProps>)
 {
     const {isPublic, ...rest} = props;
     return isPublic ?

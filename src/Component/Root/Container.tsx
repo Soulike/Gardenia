@@ -22,9 +22,9 @@ interface IState
     profile: ProfileClass
 }
 
-class Root extends PureComponent<IProps, IState>
+class Root extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

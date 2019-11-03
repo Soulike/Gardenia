@@ -8,16 +8,16 @@ import AccessibilityTag from '../AccessibilityTag';
 
 interface IProps
 {
-    repositoryList: Array<Repository>,
+    repositories: Readonly<Readonly<Repository>[]>,
     loading: boolean,
     showUsername: boolean,
 }
 
-function RepositoryList(props: IProps)
+function RepositoryList(props: Readonly<IProps>)
 {
-    const {repositoryList, loading, showUsername} = props;
+    const {repositories, loading, showUsername} = props;
     return (
-        <List className={Style.RepositoryList} dataSource={repositoryList}
+        <List className={Style.RepositoryList} dataSource={[...repositories]}
               loading={loading}
               locale={{emptyText: <Empty description={'没有仓库'} />}}
               renderItem={repository =>

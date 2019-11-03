@@ -18,7 +18,7 @@ function shouldRenameButtonBeDisabled(repositoryName: string, submitting: boolea
     return repositoryName.length === 0 || submitting;
 }
 
-function RepositoryNameView(props: IProps)
+function RepositoryNameView(props: Readonly<IProps>)
 {
     const {repositoryName, onRenameConfirm, onRepositoryNameInputChange, submitting} = props;
     return (

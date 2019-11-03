@@ -6,7 +6,7 @@ interface IProps
     children: ReactNode
 }
 
-function SettingLabel(props: IProps)
+function SettingLabel(props: Readonly<IProps>)
 {
     const {children} = props;
     return (

@@ -15,9 +15,9 @@ interface IState
     profile: ProfileClass
 }
 
-class Profile extends PureComponent<IProps, IState>
+class Profile extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

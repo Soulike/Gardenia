@@ -27,9 +27,9 @@ interface IState
     password: string,
 }
 
-class Login extends PureComponent<IProps, IState>
+class Login extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

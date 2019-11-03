@@ -4,7 +4,7 @@ import {CHECK_PASSWORD, CHECK_SESSION, GET_ADMINISTRATING_GROUPS, GET_GROUPS, LO
 import {notification} from 'antd';
 import {errorHandler} from '../Function';
 
-export async function login(account: Account): Promise<true | null>
+export async function login(account: Readonly<Account>): Promise<true | null>
 {
     try
     {
@@ -26,7 +26,7 @@ export async function login(account: Account): Promise<true | null>
     }
 }
 
-export async function register(account: Account, profile: Omit<Profile, 'username'>): Promise<true | null>
+export async function register(account: Readonly<Account>, profile: Readonly<Omit<Profile, 'username'>>): Promise<true | null>
 {
     try
     {
@@ -50,7 +50,7 @@ export async function register(account: Account, profile: Omit<Profile, 'usernam
     }
 }
 
-export async function checkSession(): Promise<{ isValid: boolean } | null>
+export async function checkSession(): Promise<Readonly<{ isValid: boolean }> | null>
 {
     try
     {
@@ -71,7 +71,7 @@ export async function checkSession(): Promise<{ isValid: boolean } | null>
     }
 }
 
-export async function checkPassword(account: Pick<Account, 'hash'>): Promise<{ isCorrect: boolean } | null>
+export async function checkPassword(account: Readonly<Pick<Account, 'hash'>>): Promise<Readonly<{ isCorrect: boolean }> | null>
 {
     try
     {
@@ -110,11 +110,11 @@ export async function logout(): Promise<true | null>
     }
 }
 
-export async function getGroups(username: string): Promise<Group[] | null>
+export async function getGroups(username: Readonly<string>): Promise<Readonly<Readonly<Group>[]> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Group[]>> = await axios.get(GET_GROUPS, {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_GROUPS, {
             params: {
                 json: {username},
             },
@@ -136,11 +136,11 @@ export async function getGroups(username: string): Promise<Group[] | null>
     }
 }
 
-export async function getAdministratingGroups(username: string): Promise<Group[] | null>
+export async function getAdministratingGroups(username: Readonly<string>): Promise<Readonly<Readonly<Group>[]> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Group[]>> = await axios.get(GET_ADMINISTRATING_GROUPS,
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_ADMINISTRATING_GROUPS,
             {
                 params: {
                     json: {

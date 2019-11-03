@@ -11,7 +11,7 @@ interface IState
 
 }
 
-class DeleteRepositoryItem extends PureComponent<IProps, IState>
+class DeleteRepositoryItem extends PureComponent<Readonly<IProps>, IState>
 {
     onButtonClick: ButtonProps['onClick'] = async () =>
     {

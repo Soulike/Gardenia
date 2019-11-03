@@ -4,7 +4,7 @@ import {notification} from 'antd';
 import {GET} from './ROUTE';
 import {errorHandler} from '../Function';
 
-export async function get(username?: string): Promise<Profile | null>
+export async function get(username?: Readonly<string>): Promise<Readonly<Profile> | null>
 {
     try
     {

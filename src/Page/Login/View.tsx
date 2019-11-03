@@ -14,7 +14,7 @@ interface IProps
     onLoginFormSubmit: FormProps['onSubmit'],
 }
 
-function LoginView(props: IProps)
+function LoginView(props: Readonly<IProps>)
 {
     const {username, password, onUsernameInputChange, onPasswordInputChange, onLoginFormSubmit} = props;
     return (

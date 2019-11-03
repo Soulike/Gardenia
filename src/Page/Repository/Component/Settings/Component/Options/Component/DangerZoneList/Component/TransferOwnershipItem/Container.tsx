@@ -11,7 +11,7 @@ interface IState
 
 }
 
-class TransferOwnershipItem extends PureComponent<IProps, IState>
+class TransferOwnershipItem extends PureComponent<Readonly<IProps>, IState>
 {
     onButtonClick: ButtonProps['onClick'] = async () =>
     {

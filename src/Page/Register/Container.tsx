@@ -21,9 +21,9 @@ interface IState
     email: string,
 }
 
-class Register extends PureComponent<IProps, IState>
+class Register extends PureComponent<Readonly<IProps>, IState>
 {
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {

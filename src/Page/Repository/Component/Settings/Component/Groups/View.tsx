@@ -7,11 +7,11 @@ import JoinGroupButton from './Component/JoinGroupButton';
 
 interface IProps
 {
-    groups: Group[],
+    groups: Readonly<Readonly<Group>[]>,
     loading: boolean,
 }
 
-function GroupsView(props: IProps)
+function GroupsView(props: Readonly<IProps>)
 {
     const {groups, loading} = props;
     return (

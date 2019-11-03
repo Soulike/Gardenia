@@ -15,7 +15,7 @@ interface IState
     activeTabKey: string,
 }
 
-class PersonalCenter extends PureComponent<IProps, IState>
+class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
 {
     private static TABS: Tab[] = [
         {
@@ -30,7 +30,7 @@ class PersonalCenter extends PureComponent<IProps, IState>
         },
     ];
 
-    constructor(props: IProps)
+    constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {
