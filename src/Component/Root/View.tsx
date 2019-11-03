@@ -1,14 +1,15 @@
 import React, {ReactNode} from 'react';
 import {Icon, Menu, Popconfirm} from 'antd';
 import Style from './Style.module.scss';
-import {Link} from 'react-router-dom';
+import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG as ROUTER_CONFIG, Function as RouterFunction} from '../../Router';
 import {Profile} from '../../Class';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
+import qs from 'querystring';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
-interface IProps
+interface IProps extends RouteComponentProps<{}>
 {
     children?: ReactNode,
     isLoggedIn: boolean,
@@ -18,7 +19,8 @@ interface IProps
 
 function RootView(props: IProps)
 {
-    const {children, isLoggedIn, username, onLogoutClick} = props;
+    const {children, isLoggedIn, username, onLogoutClick, location} = props;
+    const prevQueryString = qs.encode({prev: location.pathname});
     return (
         <div className={Style.Root}>
             <Menu mode={'horizontal'} theme={'dark'} className={Style.menu} selectable={false}>
@@ -47,7 +49,7 @@ function RootView(props: IProps)
                             </Menu> :
                             <Menu mode={'horizontal'} theme={'dark'} selectable={false}>
                                 <Menu.Item>
-                                    <Link to={`${PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]}?prev=${window.location.pathname}`}>
+                                    <Link to={`${PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]}?${prevQueryString}`}>
                                         <Icon type="login" />登录
                                     </Link>
                                 </Menu.Item>
@@ -65,4 +67,4 @@ function RootView(props: IProps)
     );
 }
 
-export default React.memo(RootView);
+export default withRouter(React.memo(RootView));
