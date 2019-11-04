@@ -47,7 +47,7 @@ class Members extends PureComponent<Readonly<IProps>, IState>
         const accounts = await GroupApi.accounts({id: Number.parseInt(id)});
         if (accounts !== null)
         {
-            const profiles = await Promise.all(accounts.map(({username}) => ProfileApi.get(username)));
+            const profiles = await Promise.all(accounts.map(({username}) => ProfileApi.get({username})));
             this.setState({profiles});
         }
     };

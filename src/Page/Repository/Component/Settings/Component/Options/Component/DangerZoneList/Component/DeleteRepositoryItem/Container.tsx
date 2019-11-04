@@ -69,7 +69,7 @@ class DeleteRepositoryItem extends PureComponent<Readonly<IProps>, IState>
                 const {isCorrect} = result;
                 if (isCorrect)
                 {
-                    const result = await RepositoryApi.del(repository);
+                    const result = await RepositoryApi.del({name: repository});
                     if (result !== null)
                     {
                         notification.success({message: '仓库删除成功'});

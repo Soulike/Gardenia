@@ -48,7 +48,7 @@ class Repositories extends PureComponent<Readonly<IProps>, IState>
         const {match: {params: {username}}} = this.props;
         const {pageNumber} = this.state;
         this.setState({loading: true});
-        const repositories = await RepositoryApi.getList(
+        const repositories = await RepositoryApi.getRepositories(
             (pageNumber - 1) * Repositories.PAGE_SIZE,
             pageNumber * Repositories.PAGE_SIZE,
             username);

@@ -51,7 +51,7 @@ class FileList extends Component<IProps, IState>
     {
         const {match: {params: {username, repository: name, path, branch}}} = this.props;
         const fileList = await RepositoryInfo.directory(
-            username, name,
+            {username}, {name},
             branch ? branch : 'HEAD',
             path === undefined ? '' : path + '/');
         if (fileList !== null)
@@ -63,7 +63,7 @@ class FileList extends Component<IProps, IState>
     loadLastCommit = async () =>
     {
         const {match: {params: {username, repository: name, branch, path}}} = this.props;
-        const lastCommit = await RepositoryInfo.lastCommit(username, name, branch ? branch : 'HEAD', path);
+        const lastCommit = await RepositoryInfo.lastCommit({username}, {name}, branch ? branch : 'HEAD', path);
         if (lastCommit !== null)
         {
             this.setState({lastCommit});

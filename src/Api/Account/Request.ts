@@ -77,7 +77,7 @@ export async function checkPassword(account: Readonly<Pick<Account, 'hash'>>): P
     {
         const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isCorrect: boolean }>> = await axios.get(CHECK_PASSWORD, {
             params: {
-                json: account,
+                json: JSON.stringify(account),
             },
         });
         if (isSuccessful)
@@ -110,13 +110,13 @@ export async function logout(): Promise<true | null>
     }
 }
 
-export async function getGroups(username: Readonly<string>): Promise<Readonly<Readonly<Group>[]> | null>
+export async function getGroups(account: Pick<Account, 'username'>): Promise<Readonly<Readonly<Group>[]> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_GROUPS, {
             params: {
-                json: {username},
+                json: JSON.stringify(account),
             },
         });
         if (isSuccessful)
@@ -136,16 +136,14 @@ export async function getGroups(username: Readonly<string>): Promise<Readonly<Re
     }
 }
 
-export async function getAdministratingGroups(username: Readonly<string>): Promise<Readonly<Readonly<Group>[]> | null>
+export async function getAdministratingGroups(account: Pick<Account, 'username'>): Promise<Readonly<Readonly<Group>[]> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_ADMINISTRATING_GROUPS,
             {
                 params: {
-                    json: {
-                        username,
-                    },
+                    json: JSON.stringify(account),
                 },
             });
         if (isSuccessful)

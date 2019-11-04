@@ -58,7 +58,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
     loadLastCommit = async () =>
     {
         const {match: {params: {username, repository: name, path, branch}}} = this.props;
-        const lastCommit = await RepositoryInfo.lastCommit(username, name, branch!, path);
+        const lastCommit = await RepositoryInfo.lastCommit({username}, {name}, branch!, path);
         if (lastCommit !== null)
         {
             await this.onLastCommitLoaded(lastCommit);
@@ -75,7 +75,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
     loadFileInfo = async (commitHash: string) =>
     {
         const {match: {params: {username, repository: name, path}}} = this.props;
-        const fileInfo = await RepositoryInfo.fileInfo(username, name, path!, commitHash);
+        const fileInfo = await RepositoryInfo.fileInfo({username}, {name}, path!, commitHash);
         if (fileInfo !== null)
         {
             await this.onFileInfoLoaded(fileInfo, commitHash);
@@ -106,7 +106,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
     loadRawContent = async (commitHash: string) =>
     {
         const {match: {params: {username, repository: name, path}}} = this.props;
-        const fileRawContent = await RepositoryInfo.rawFile(username, name, path!, commitHash);
+        const fileRawContent = await RepositoryInfo.rawFile({username}, {name}, path!, commitHash);
         if (fileRawContent !== null)
         {
             this.setState({rawContent: await File.transformBlobToString(fileRawContent)});
@@ -117,7 +117,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
     {
         const {match: {params: {username, repository, path}}} = this.props;
         const {lastCommit: {commitHash}} = this.state;
-        const rawFile = await RepositoryInfo.rawFile(username, repository, path!, commitHash);
+        const rawFile = await RepositoryInfo.rawFile({username}, {name: repository}, path!, commitHash);
         if (rawFile !== null)
         {
             this.startDownload(rawFile);

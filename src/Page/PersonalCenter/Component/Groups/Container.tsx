@@ -38,7 +38,7 @@ class Groups extends PureComponent<Readonly<IProps>, IState>
     {
         const {match: {params: {username}}} = this.props;
         this.setState({loading: true});
-        const groups = await AccountApi.getGroups(username);
+        const groups = await AccountApi.getGroups({username});
         if (groups !== null)
         {
             this.setState({groups: [...groups]});
@@ -50,7 +50,7 @@ class Groups extends PureComponent<Readonly<IProps>, IState>
     {
         const {match: {params: {username}}} = this.props;
         this.setState({loading: true});
-        const groups = await AccountApi.getAdministratingGroups(username);
+        const groups = await AccountApi.getAdministratingGroups({username});
         if (groups !== null)
         {
             this.setState({administratingGroups: [...groups]});

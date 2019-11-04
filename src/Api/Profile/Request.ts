@@ -1,17 +1,17 @@
-import {Profile, ResponseBody} from '../../Class';
+import {Account, Profile, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
 import {notification} from 'antd';
 import {GET} from './ROUTE';
 import {errorHandler} from '../Function';
 
-export async function get(username?: Readonly<string>): Promise<Readonly<Profile> | null>
+export async function get(account?: Readonly<Pick<Account, 'username'>>): Promise<Readonly<Profile> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Profile>> =
             await axios.get(GET, {
                 params: {
-                    json: JSON.stringify({username}),
+                    json: JSON.stringify({account}),
                 },
             });
         if (isSuccessful)

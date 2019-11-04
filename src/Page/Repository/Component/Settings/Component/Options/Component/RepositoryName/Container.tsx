@@ -57,7 +57,7 @@ class RepositoryName extends PureComponent<Readonly<IProps>, IState>
     {
         const {repositoryName: newRepositoryName} = this.state;
         const {match: {params: {repository: repositoryName}}} = this.props;
-        const result = await RepositoryInfo.setName(repositoryName, newRepositoryName);
+        const result = await RepositoryInfo.setName({name: repositoryName}, {name: newRepositoryName});
         if (result !== null)
         {
             this.onSubmitSuccess();

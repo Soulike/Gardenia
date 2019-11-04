@@ -53,14 +53,14 @@ class Readme extends PureComponent<Readonly<IProps>, IState>
     readmeExists = async () =>
     {
         const {match: {params: {username, repository, path}}, commitHash} = this.props;
-        const info = await RepositoryInfo.fileInfo(username, repository, join(path ? path : '', 'README.md'), commitHash);
+        const info = await RepositoryInfo.fileInfo({username}, {name: repository}, join(path ? path : '', 'README.md'), commitHash);
         return info !== null && info.exists;
     };
 
     loadRawReadme = async () =>
     {
         const {match: {params: {username, repository, path}}, commitHash} = this.props;
-        const raw = await RepositoryInfo.rawFile(username, repository, join(path ? path : '', 'README.md'), commitHash);
+        const raw = await RepositoryInfo.rawFile({username}, {name: repository}, join(path ? path : '', 'README.md'), commitHash);
         if (raw !== null)
         {
             this.setState({readme: await File.transformBlobToString(raw), exists: true});

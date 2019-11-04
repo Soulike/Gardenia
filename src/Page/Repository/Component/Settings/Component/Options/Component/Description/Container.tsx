@@ -51,7 +51,7 @@ class Description extends PureComponent<Readonly<IProps>, IState>
         const {description} = this.state;
         const {match: {params: {repository: repositoryName}}} = this.props;
         this.setState({submitting: true});
-        const result = await RepositoryInfo.setDescription(repositoryName, description);
+        const result = await RepositoryInfo.setDescription({name: repositoryName, description});
         this.setState({submitting: false});
         if (result !== null)
         {

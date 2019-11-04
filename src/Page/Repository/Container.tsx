@@ -89,7 +89,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
     loadRepository = async () =>
     {
         const {match: {params: {username, repository: repositoryName}}} = this.props;
-        const repository = await RepositoryInfo.repository(username, repositoryName);
+        const repository = await RepositoryInfo.repository({username}, {name: repositoryName});
         // 设置仓库基本信息
         if (repository !== null)
         {

@@ -43,7 +43,7 @@ class Index extends PureComponent<Readonly<IProps>, IState>
     {
         const {repositories, lastEnd} = this.state;
         this.setState({loading: true});
-        const repositoriesFromServer = await RepositoryApi.getList(lastEnd, lastEnd + Index.PAGE_SIZE);
+        const repositoriesFromServer = await RepositoryApi.getRepositories(lastEnd, lastEnd + Index.PAGE_SIZE);
         this.setState({loading: false});
         if (repositoriesFromServer !== null)
         {

@@ -60,7 +60,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
     loadRepository = async () =>
     {
         const {match: {params: {username, repository: name}}} = this.props;
-        const repository = await RepositoryInfo.repository(username, name);
+        const repository = await RepositoryInfo.repository({username}, {name});
         // 设置仓库基本信息
         if (repository !== null)
         {
@@ -71,7 +71,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
     loadCommitCount = async (branch: string = 'HEAD') =>
     {
         const {match: {params: {username, repository: repositoryName}}} = this.props;
-        const commitCountWrapper = await RepositoryInfo.commitCount(username, repositoryName, branch);
+        const commitCountWrapper = await RepositoryInfo.commitCount({username}, {name: repositoryName}, branch);
         if (commitCountWrapper !== null)
         {
             const {commitCount} = commitCountWrapper;
@@ -90,7 +90,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
     loadBranches = async () =>
     {
         const {match: {params: {username, repository: repositoryName}}} = this.props;
-        const branches = await RepositoryInfo.branch(username, repositoryName);
+        const branches = await RepositoryInfo.branch({username}, {name: repositoryName});
         if (branches !== null)
         {
             this.setState({branches: [...branches]});

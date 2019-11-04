@@ -1,15 +1,15 @@
 import axios, {AxiosResponse} from 'axios';
 import {Repository as RepositoryClass, ResponseBody} from '../../Class';
 import {notification} from 'antd';
-import {CREATE, DEL, GET_LIST} from './ROUTE';
+import {CREATE, DEL, GET_REPOSITORIES} from './ROUTE';
 import {errorHandler} from '../Function';
 
-export async function getList(start: number, end: number, username?: Readonly<string>): Promise<Readonly<Array<Readonly<RepositoryClass>>> | null>
+export async function getRepositories(start: number, end: number, username?: Readonly<string>): Promise<Readonly<Array<Readonly<RepositoryClass>>> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<Readonly<RepositoryClass>>>> =
-            await axios.get(GET_LIST, {
+            await axios.get(GET_REPOSITORIES, {
                 params: {
                     json: JSON.stringify({start, end, username}),
                 },
@@ -53,11 +53,11 @@ export async function create(repository: Readonly<RepositoryClass>): Promise<tru
     }
 }
 
-export async function del(repositoryName: Readonly<string>): Promise<true | null>
+export async function del(repository: Readonly<Pick<RepositoryClass, 'name'>>): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(DEL, {repositoryName});
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(DEL, repository);
         if (isSuccessful)
         {
             return true;

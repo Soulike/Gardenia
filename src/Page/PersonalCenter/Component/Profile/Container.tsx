@@ -34,7 +34,7 @@ class Profile extends PureComponent<Readonly<IProps>, IState>
     loadProfile = async () =>
     {
         const {match: {params: {username}}} = this.props;
-        const profile = await ProfileApi.get(username);
+        const profile = await ProfileApi.get({username});
         if (profile !== null)
         {
             this.setState({profile});
