@@ -5,7 +5,6 @@ import {SwitchProps} from 'antd/lib/switch';
 import {notification} from 'antd';
 import {Profile} from '../../Api/Profile';
 import {Repository as RepositoryApi} from '../../Api';
-import {Repository as RepositoryClass} from '../../Class';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 
@@ -104,12 +103,11 @@ class CreateRepository extends PureComponent<Readonly<IProps>, IState>
     {
         const {username, name, description, isPublic} = this.state;
         this.setState({submitting: true});
-        const result = await RepositoryApi.create(new RepositoryClass(
-            username,
+        const result = await RepositoryApi.create({
             name,
             description,
             isPublic,
-        ));
+        });
         this.setState({submitting: false});
         if (result !== null)
         {

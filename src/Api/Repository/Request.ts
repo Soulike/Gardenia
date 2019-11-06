@@ -31,7 +31,7 @@ export async function getRepositories(start: number, end: number, username?: Rea
     }
 }
 
-export async function create(repository: Readonly<RepositoryClass>): Promise<true | null>
+export async function create(repository: Readonly<Omit<RepositoryClass, 'username'>>): Promise<true | null>
 {
     try
     {
