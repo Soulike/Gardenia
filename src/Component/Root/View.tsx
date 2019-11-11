@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {Icon, Menu, Popconfirm} from 'antd';
+import {Icon, Menu, Modal} from 'antd';
 import Style from './Style.module.scss';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG as ROUTER_CONFIG, Function as RouterFunction} from '../../Router';
@@ -36,21 +36,49 @@ function RootView(props: Readonly<IProps>)
                     {
                         isLoggedIn ?
                             <Menu mode={'horizontal'} theme={'dark'} selectable={false}>
-                                <Menu.Item>
-                                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}>
-                                        <Icon type="plus" />创建仓库
-                                    </Link>
-                                </Menu.Item>
-                                <Menu.Item>
-                                    <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
-                                        <Icon type="user" />个人中心
-                                    </Link>
-                                </Menu.Item>
-                                <Menu.Item>
-                                    <Popconfirm title={'确定退出登录？'} placement={'bottomLeft'} onConfirm={onLogoutClick}>
+                                <Menu.SubMenu title={
+                                    <>
+                                        <Icon type="plus" />
+                                        <Icon type="caret-down" />
+                                    </>
+                                }>
+                                    <Menu.Item>
+                                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}>
+                                            <Icon type="plus" />创建仓库
+                                        </Link>
+                                    </Menu.Item>
+                                    <Menu.Item>
+                                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}>
+                                            <Icon type="plus" />创建小组
+                                        </Link>
+                                    </Menu.Item>
+                                </Menu.SubMenu>
+                                <Menu.SubMenu title={
+                                    <>
+                                        <Icon type="user" />
+                                        <Icon type="caret-down" />
+                                    </>
+                                }>
+                                    <Menu.Item>
+                                        <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
+                                            <Icon type="user" />个人中心
+                                        </Link>
+                                    </Menu.Item>
+                                    <Menu.Item>
+                                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}>
+                                            <Icon type="setting" />设置
+                                        </Link>
+                                    </Menu.Item>
+                                    <Menu.Item onClick={() =>
+                                    {
+                                        Modal.confirm({
+                                            title: '确定退出登录？',
+                                            onOk: onLogoutClick,
+                                        });
+                                    }}>
                                         <Icon type="logout" />退出登录
-                                    </Popconfirm>
-                                </Menu.Item>
+                                    </Menu.Item>
+                                </Menu.SubMenu>
                             </Menu> :
                             <Menu mode={'horizontal'} theme={'dark'} selectable={false}>
                                 <Menu.Item>
