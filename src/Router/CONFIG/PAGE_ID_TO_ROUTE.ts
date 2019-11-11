@@ -25,4 +25,7 @@ export const PAGE_ID_TO_ROUTE = Object.freeze({
 
     [PAGE_ID.GROUP.SETTINGS.SETTINGS]: '/group/:id/settings',
     [PAGE_ID.GROUP.SETTINGS.OPTIONS]: '/group/:id/settings',
+
+    [PAGE_ID.SETTING.SETTING]: '/setting',
+    [PAGE_ID.SETTING.PROFILE]: '/setting/profile',
 });

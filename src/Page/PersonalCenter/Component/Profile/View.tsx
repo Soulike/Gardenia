@@ -1,8 +1,12 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import avatar from '../../../../Static/PersonalCenter/user_group.svg';
+import defaultAvatar from '../../../../Static/PersonalCenter/user_group.svg';
 import {Profile as ProfileClass} from '../../../../Class';
-import {Icon} from 'antd';
+import {Button, Icon} from 'antd';
+import {CONFIG} from '../../../../Router';
+import {Link} from 'react-router-dom';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps
 {
@@ -11,17 +15,22 @@ interface IProps
 
 function ProfileView(props: Readonly<IProps>)
 {
-    const {profile: {username, nickname, email}} = props;
+    const {profile: {username, nickname, email, avatar}} = props;
     return (
         <div className={Style.Profile}>
             <div className={Style.avatarWrapper}>
-                <img src={avatar} alt={'avatar'} className={Style.avatar} />
+                <img src={avatar.length === 0 ? defaultAvatar : avatar} alt={'avatar'} className={Style.avatar} />
             </div>
             <div className={Style.nameWrapper}>
                 <div className={Style.username}>{username}</div>
                 <div className={Style.nickname}>{nickname}</div>
             </div>
             <div className={Style.divideLine} />
+            <div className={Style.editButtonWrapper}>
+                <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]} target={'_blank'}>
+                    <Button block={true}>编辑</Button>
+                </Link>
+            </div>
             <div className={Style.infoWrapper}>
                 <div className={Style.info}>
                     <Icon type={'mail'} className={Style.icon} />

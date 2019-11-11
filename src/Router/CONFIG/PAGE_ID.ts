@@ -27,4 +27,8 @@ export const PAGE_ID = Object.freeze({
             OPTIONS: 'GROUP_SETTINGS_OPTIONS',
         },
     }),
+    SETTING: Object.freeze({
+        SETTING: 'SETTING',
+        PROFILE: 'SETTING_PROFILE',
+    }),
 });

@@ -4,6 +4,7 @@ import NotFound from '../Component/NotFound';
 import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from './CONFIG';
 import RepositoryRouter from './SubRouter/Repository';
 import GroupRouter from './SubRouter/Group';
+import SettingRouter from './SubRouter/Setting';
 import Loading from '../Component/Loading';
 
 const Root = React.lazy(() => import('../Component/Root'));
@@ -37,6 +38,8 @@ export default () =>
                                render={RepositoryRouter} />
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.GROUP]}
                                render={GroupRouter} />
+                        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}
+                               render={SettingRouter} />
                         <Route render={NotFound} />
                     </Switch>
                 </Root>
