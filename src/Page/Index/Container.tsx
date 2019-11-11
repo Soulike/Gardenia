@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {Repository as RepositoryApi} from '../../Api';
 import {Repository} from '../../Class';
 import View from './View';
+import CONFIG from '../../CONFIG';
 
 interface IProps {}
 
@@ -36,7 +37,7 @@ class Index extends PureComponent<Readonly<IProps>, IState>
 
     setTitle = () =>
     {
-        document.title = 'Git Demo';
+        document.title = CONFIG.NAME;
     };
 
     loadMoreRepositories = async () =>

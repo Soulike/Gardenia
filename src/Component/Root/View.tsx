@@ -6,6 +6,8 @@ import {CONFIG as ROUTER_CONFIG, Function as RouterFunction} from '../../Router'
 import {Profile} from '../../Class';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import qs from 'querystring';
+import CONFIG from '../../CONFIG';
+import logo from '../../Static/logo.svg';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -24,8 +26,11 @@ function RootView(props: Readonly<IProps>)
     return (
         <div className={Style.Root}>
             <Menu mode={'horizontal'} theme={'dark'} className={Style.menu} selectable={false}>
-                <Menu.Item className={Style.title}>
-                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]}>Git Demo</Link>
+                <Menu.Item>
+                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]} className={Style.titleWrapper}>
+                        <div className={Style.logoWrapper}><img src={logo} alt={'icon'} className={Style.logo} /></div>
+                        <span className={Style.title}>{CONFIG.NAME}</span>
+                    </Link>
                 </Menu.Item>
                 <Menu.Item className={Style.accountMenu}>
                     {

@@ -6,6 +6,7 @@ import {TabsProps} from 'antd/lib/tabs';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {Group as GroupClass} from '../../Class';
 import {Group as GroupApi} from '../../Api';
+import CONFIG from '../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IGroup>
 {
@@ -42,6 +43,7 @@ class Group extends PureComponent<Readonly<IProps>, IState>
             this.loadIsAdmin(),
         ]);
         this.setState({loading: false});
+        this.setTitle();
     }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
@@ -53,6 +55,12 @@ class Group extends PureComponent<Readonly<IProps>, IState>
             this.setTabActiveKey();
         }
     }
+
+    setTitle = () =>
+    {
+        const {group: {name}} = this.state;
+        document.title = `${name} - ${CONFIG.NAME}`;
+    };
 
     loadGroup = async () =>
     {

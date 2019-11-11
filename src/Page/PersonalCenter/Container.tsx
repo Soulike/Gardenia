@@ -7,6 +7,7 @@ import qs from 'querystring';
 import {TabsProps} from 'antd/lib/tabs';
 import Repositories from './Component/Repositories';
 import Groups from './Component/Groups';
+import CONFIG from '../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
 
@@ -41,6 +42,7 @@ class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
     componentDidMount()
     {
         this.setActiveTabKey();
+        this.setTitle();
     }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
@@ -52,6 +54,12 @@ class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
             this.setActiveTabKey();
         }
     }
+
+    setTitle = () =>
+    {
+        const {match: {params: {username}}} = this.props;
+        document.title = `${username} - ${CONFIG.NAME}`;
+    };
 
     setActiveTabKey = () =>
     {

@@ -9,6 +9,7 @@ import TAB_KEY from './TAB_KEY';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {connect} from 'react-redux';
 import {IRootState, IState as StoreState} from '../../Store';
+import CONFIG from '../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode
     | RouterInterface.IRepositoryIssues
@@ -83,7 +84,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
     setTitle = () =>
     {
         const {match: {params: {username, repository: name}}} = this.props;
-        document.title = `${name} - ${username}`;
+        document.title = `${username}/${name} - ${CONFIG.NAME}`;
     };
 
     loadRepository = async () =>

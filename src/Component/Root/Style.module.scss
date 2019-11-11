@@ -3,9 +3,25 @@
 
     .menu {
 
-        .title {
-            font-size: 1.5rem;
-            font-weight: bolder;
+        .titleWrapper {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+
+            .title {
+                font-size: 25px;
+                font-weight: bolder;
+                font-family: serif;
+            }
+
+            .logoWrapper {
+                margin-right: 5px;
+
+                .logo {
+                    height: 35px;
+                    display: inline-block;
+                }
+            }
         }
 
         .accountMenu {

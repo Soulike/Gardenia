@@ -12,6 +12,7 @@ import {Account as AccountClass} from '../../Class';
 import {IRootState, IState as StoreState} from '../../Store';
 import {AnyAction} from 'redux';
 import qs from 'querystring';
+import CONFIG from '../../CONFIG';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -50,7 +51,7 @@ class Login extends PureComponent<Readonly<IProps>, IState>
 
     setTitle = () =>
     {
-        document.title = '登录登录- Git Demo';
+        document.title = `登录 - ${CONFIG.NAME}`;
     };
 
     onUsernameInputChange: InputProps['onChange'] = e =>

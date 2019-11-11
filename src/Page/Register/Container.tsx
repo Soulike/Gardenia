@@ -8,6 +8,7 @@ import {InputProps} from 'antd/lib/input';
 import {FormProps} from 'antd/lib/form';
 import validator from 'validator';
 import {Account as AccountClass} from '../../Class';
+import CONFIG from '../../CONFIG';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -41,7 +42,7 @@ class Register extends PureComponent<Readonly<IProps>, IState>
 
     setTitle = () =>
     {
-        document.title = '注册 - Git Demo';
+        document.title = `注册 - ${CONFIG.NAME}`;
     };
 
     onUsernameInputChange: InputProps['onChange'] = e =>

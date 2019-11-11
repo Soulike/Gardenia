@@ -7,6 +7,7 @@ import {Profile} from '../../Api/Profile';
 import {Repository as RepositoryApi} from '../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
+import CONFIG from '../../CONFIG';
 
 interface IProps extends RouteComponentProps {}
 
@@ -45,7 +46,7 @@ class CreateRepository extends PureComponent<Readonly<IProps>, IState>
 
     setTitle = () =>
     {
-        document.title = '创建仓库 - Git Demo';
+        document.title = `创建仓库 - ${CONFIG.NAME}`;
     };
 
     loadUsername = async () =>

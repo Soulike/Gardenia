@@ -5,6 +5,7 @@ import {notification} from 'antd';
 import {Group as GroupApi} from '../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
+import CONFIG from '../../CONFIG';
 
 interface IProps extends RouteComponentProps<void>
 {
@@ -36,7 +37,7 @@ class CreateGroup extends PureComponent<Readonly<IProps>, IState>
 
     setTitle = () =>
     {
-        document.title = '创建小组 - Git Demo';
+        document.title = `创建小组 - ${CONFIG.NAME}`;
     };
 
     onNameInputChange: InputProps['onChange'] = e =>
