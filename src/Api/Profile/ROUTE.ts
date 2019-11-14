@@ -6,3 +6,5 @@ function profilePrefix(url: string): string
 }
 
 export const GET = profilePrefix('/get');
+export const SET = profilePrefix('/set');
+export const UPLOAD_AVATAR = profilePrefix('/uploadAvatar');
