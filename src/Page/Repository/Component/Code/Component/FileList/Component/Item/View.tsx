@@ -28,7 +28,7 @@ function Item(props: Readonly<IProps>)
                         username,
                         repository,
                         objectType: type,
-                        branch: branch ? branch : 'HEAD',
+                        branch: branch ? branch : 'master',
                         path,
                     })}>
                     {fileName}

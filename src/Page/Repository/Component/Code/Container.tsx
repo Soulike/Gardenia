@@ -68,7 +68,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
         }
     };
 
-    loadCommitCount = async (branch: string = 'HEAD') =>
+    loadCommitCount = async (branch: string = 'master') =>
     {
         const {match: {params: {username, repository: repositoryName}}} = this.props;
         const commitCountWrapper = await RepositoryInfo.commitCount({username}, {name: repositoryName}, branch);
