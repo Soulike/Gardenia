@@ -75,11 +75,9 @@ export async function checkPassword(account: Readonly<Pick<Account, 'hash'>>): P
 {
     try
     {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isCorrect: boolean }>> = await axios.get(CHECK_PASSWORD, {
-            params: {
-                json: JSON.stringify(account),
-            },
-        });
+        const {hash} = account;
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isCorrect: boolean }>> =
+            await axios.post(CHECK_PASSWORD, {hash});
         if (isSuccessful)
         {
             return data!;
