@@ -71,9 +71,9 @@ class Root extends PureComponent<Readonly<IProps>, IState>
     render()
     {
         const {children, isLoggedIn} = this.props;
-        const {profile: {username}} = this.state;
+        const {profile: {username, avatar}} = this.state;
         return (
-            <View isLoggedIn={isLoggedIn} username={username}>
+            <View isLoggedIn={isLoggedIn} username={username} avatar={avatar}>
                 {children}
             </View>
         );

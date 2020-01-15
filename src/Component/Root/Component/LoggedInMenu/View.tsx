@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon, Menu, Modal} from 'antd';
+import {Avatar, Icon, Menu, Modal} from 'antd';
 import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 import {Function as RouterFunction} from '../../../../Router';
@@ -8,12 +8,13 @@ import {PopconfirmProps} from 'antd/lib/popconfirm';
 interface IProps
 {
     username: string,
+    avatar: string,
     onLogoutClick: PopconfirmProps['onConfirm'],
 }
 
 function LoggedInMenu(props: IProps)
 {
-    const {username, onLogoutClick} = props;
+    const {username, avatar, onLogoutClick} = props;
     return (
         <Menu mode={'horizontal'} theme={'dark'} selectable={false}>
             <Menu.SubMenu title={
@@ -35,7 +36,12 @@ function LoggedInMenu(props: IProps)
             </Menu.SubMenu>
             <Menu.SubMenu title={
                 <>
-                    <Icon type="user" />
+                    {avatar ?
+                        <Avatar shape={'square'} src={avatar} size={'small'} /> :
+                        <Avatar shape={'square'} size={'small'}
+                                style={{backgroundColor: '#1890FF'}}>
+                            {username.slice(0, 1)}
+                        </Avatar>}
                     <Icon type="caret-down" />
                 </>
             }>

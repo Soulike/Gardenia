@@ -12,6 +12,7 @@ interface IState {}
 interface IProps
 {
     username: string,
+    avatar: string,
     setLoggedOut: () => AnyAction;
 }
 
@@ -30,9 +31,12 @@ class LoggedInMenu extends PureComponent<IProps, IState>
 
     render()
     {
-        const {username} = this.props;
+        const {username, avatar} = this.props;
         return (
-            <View username={username} onLogoutClick={this.onLogoutClick} />
+            <View
+                username={username}
+                avatar={avatar}
+                onLogoutClick={this.onLogoutClick} />
         );
     }
 }
