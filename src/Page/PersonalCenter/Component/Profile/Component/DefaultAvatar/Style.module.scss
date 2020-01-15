@@ -1,0 +1,17 @@
+.DefaultAvatar {
+    background-color: #1890FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-clip: border-box;
+    border-radius: 5px;
+
+    .char {
+        color: #FFF;
+        font-size: 250px;
+        user-select: none;
+    }
+}
