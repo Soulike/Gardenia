@@ -3,18 +3,15 @@ import View from './View';
 import {connect} from 'react-redux';
 import {Profile as ProfileClass} from '../../Class';
 import {Account, Profile as ProfileApi} from '../../Api';
-import {setLoggedInAction, setLoggedOutAction} from './Action/Action';
+import {setLoggedInAction} from './Action/Action';
 import {IRootState, IState as StoreState} from '../../Store';
 import {AnyAction} from 'redux';
-import {PopconfirmProps} from 'antd/lib/popconfirm';
-import {notification} from 'antd';
 
 interface IProps
 {
     children?: ReactNode,
     isLoggedIn: IRootState['isLoggedIn']
     setLoggedIn: () => AnyAction;
-    setLoggedOut: () => AnyAction;
 }
 
 interface IState
@@ -71,23 +68,12 @@ class Root extends PureComponent<Readonly<IProps>, IState>
         }
     };
 
-    onLogoutClick: PopconfirmProps['onConfirm'] = async () =>
-    {
-        const {setLoggedOut} = this.props;
-        const result = await Account.logout();
-        if (result !== null)
-        {
-            setLoggedOut();
-            notification.success({message: '退出登录成功'});
-        }
-    };
-
     render()
     {
         const {children, isLoggedIn} = this.props;
         const {profile: {username}} = this.state;
         return (
-            <View isLoggedIn={isLoggedIn} username={username} onLogoutClick={this.onLogoutClick}>
+            <View isLoggedIn={isLoggedIn} username={username}>
                 {children}
             </View>
         );
@@ -104,7 +90,6 @@ const mapStateToProps = (state: StoreState) =>
 
 const mapDispatchToProps = {
     setLoggedIn: setLoggedInAction,
-    setLoggedOut: setLoggedOutAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);
