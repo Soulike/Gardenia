@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
+import MenuDivider from './Component/MenuDivider';
 
 interface IProps
 {
@@ -47,6 +48,12 @@ function LoggedInMenu(props: IProps)
             }>
                 <Menu.Item>
                     <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
+                        以 <strong>{username}</strong> 身份登录
+                    </Link>
+                </Menu.Item>
+                <MenuDivider />
+                <Menu.Item>
+                    <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
                         <Icon type="user" />个人中心
                     </Link>
                 </Menu.Item>
@@ -55,6 +62,7 @@ function LoggedInMenu(props: IProps)
                         <Icon type="setting" />设置
                     </Link>
                 </Menu.Item>
+                <MenuDivider />
                 <Menu.Item onClick={() =>
                 {
                     Modal.confirm({
