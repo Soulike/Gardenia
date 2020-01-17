@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import SettingsTitle from '../SettingsTitle';
+import SettingsTitle from '../../../../../../Component/SettingsTitle';
 import RepositoryName from './Component/RepositoryName';
 import Description from './Component/Description';
 import AccessibilitySwitch from './Component/AccessibilitySwitch';

@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Icon, Switch} from 'antd';
-import SettingLabel from '../../../SettingLabel';
+import SettingLabel from '../../../../../../../../Component/SettingLabel';
 import {SwitchProps} from 'antd/lib/switch';
 import CriticalOperationConfirmModal from '../../../../../../../../Component/CriticalOperationConfirmModal';
 import {InputProps} from 'antd/lib/input';

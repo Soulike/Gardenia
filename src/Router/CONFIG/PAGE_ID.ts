@@ -31,5 +31,6 @@ export const PAGE_ID = Object.freeze({
     SETTING: Object.freeze({
         SETTING: 'SETTING',
         PROFILE: 'SETTING_PROFILE',
+        AVATAR: 'SETTING_AVATAR',
     }),
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import SettingLabel from '../../../SettingLabel';
+import SettingLabel from '../../../../../../../../Component/SettingLabel';
 import {Button, Input, Spin} from 'antd';
 import {TextAreaProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';

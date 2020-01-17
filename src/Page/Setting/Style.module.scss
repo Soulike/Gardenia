@@ -1,3 +1,16 @@
 .Setting {
+    width: 1000px;
+    margin: 30px auto;
+    display: flex;
+    justify-content: space-between;
 
+    .menuWrapper {
+        display: inline-block;
+        width: 200px;
+    }
+
+    .childrenWrapper {
+        display: inline-block;
+        width: 780px;
+    }
 }

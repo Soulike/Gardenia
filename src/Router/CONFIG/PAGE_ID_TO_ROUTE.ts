@@ -29,4 +29,5 @@ export const PAGE_ID_TO_ROUTE = Object.freeze({
 
     [PAGE_ID.SETTING.SETTING]: '/setting',
     [PAGE_ID.SETTING.PROFILE]: '/setting/profile',
+    [PAGE_ID.SETTING.AVATAR]: '/setting/avatar',
 });

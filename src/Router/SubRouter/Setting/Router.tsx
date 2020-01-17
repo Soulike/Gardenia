@@ -16,6 +16,7 @@ export default () =>
                 <Route path={[
                     PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING],
                     PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.PROFILE],
+                    PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.AVATAR],
                 ]} render={props =>
                 {
                     return (
@@ -26,6 +27,9 @@ export default () =>
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.PROFILE]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.SETTING.PROFILE]}
+                                       exact={true} />
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.AVATAR]}
+                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.SETTING.AVATAR]}
                                        exact={true} />
                             </Switch>
                         </Setting>);

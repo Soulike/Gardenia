@@ -3,7 +3,7 @@ import Style from './Style.module.scss';
 import {Button, Input, Popconfirm} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
-import SettingLabel from '../../../SettingLabel';
+import SettingLabel from '../../../../../../../../Component/SettingLabel';
 
 interface IProps
 {

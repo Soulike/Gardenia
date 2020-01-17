@@ -1,0 +1,28 @@
+.Profile {
+
+    .item {
+        margin: 20px 0;
+
+        .form {
+            display: flex;
+            justify-content: space-between;
+
+            .inputWrapper {
+                width: 100%;
+            }
+
+            .saveButtonWrapper {
+                margin-left: 10px;
+            }
+        }
+
+        .emailForm {
+            display: flex;
+            justify-content: flex-start;
+
+            .inputWrapper {
+                width: 250px;
+            }
+        }
+    }
+}

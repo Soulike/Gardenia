@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import SettingsTitle from '../SettingsTitle';
+import SettingsTitle from '../../../../../../Component/SettingsTitle';
 import GroupList from '../../../../../../Component/GroupList';
 import {Group} from '../../../../../../Class';
 import JoinGroupButton from './Component/JoinGroupButton';
