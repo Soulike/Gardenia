@@ -16,6 +16,9 @@ export default () =>
             <Suspense fallback={<Loading />}>
                 <Root>
                     <Switch>
+                        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]}
+                               component={PAGE_ID_TO_COMPONENT[PAGE_ID.NOT_FOUND]}
+                               exact={true} />
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]}
                                component={PAGE_ID_TO_COMPONENT[PAGE_ID.INDEX]}
                                exact={true} />
@@ -40,7 +43,7 @@ export default () =>
                                render={GroupRouter} />
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}
                                render={SettingRouter} />
-                        <Route render={NotFound} />
+                        <Route component={NotFound} />
                     </Switch>
                 </Root>
             </Suspense>

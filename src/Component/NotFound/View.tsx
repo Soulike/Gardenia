@@ -1,11 +1,16 @@
 import React from 'react';
 import Style from './Style.module.scss';
+import svg from '../../Static/404.svg';
 
-export default function NotFound()
+function NotFound()
 {
     return (
         <div className={Style.NotFound}>
-            404
+            <img src={svg} alt="boom" className={Style.img} />
+            <div className={Style.title}>404</div>
+            <div className={Style.text}>请求的页面不存在</div>
         </div>
     );
 }
+
+export default React.memo(NotFound);

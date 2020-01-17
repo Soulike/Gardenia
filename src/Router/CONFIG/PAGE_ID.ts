@@ -1,4 +1,5 @@
 export const PAGE_ID = Object.freeze({
+    NOT_FOUND: 'NOT_FOUND',
     INDEX: 'INDEX',
     LOGIN: 'LOGIN',
     REGISTER: 'REGISTER',
