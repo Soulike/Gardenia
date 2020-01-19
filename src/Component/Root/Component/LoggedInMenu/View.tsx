@@ -5,6 +5,7 @@ import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import MenuDivider from './Component/MenuDivider';
+import svg from '../../../../Static/PersonalCenter/default.svg';
 
 interface IProps
 {
@@ -39,10 +40,7 @@ function LoggedInMenu(props: IProps)
                 <>
                     {avatar ?
                         <Avatar shape={'square'} src={avatar} size={'small'} /> :
-                        <Avatar shape={'square'} size={'small'}
-                                style={{backgroundColor: '#1890FF'}}>
-                            {username.slice(0, 1)}
-                        </Avatar>}
+                        <Avatar shape={'square'} size={'small'} src={svg} />}
                     <Icon type="caret-down" />
                 </>
             }>

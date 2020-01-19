@@ -1,17 +1,12 @@
 import React from 'react';
 import Style from './Style.module.scss';
+import svg from '../../Static/PersonalCenter/default.svg';
 
-interface IProps
+function DefaultAvatar()
 {
-    username: string,
-}
-
-function DefaultAvatar(props: IProps)
-{
-    const {username} = props;
     return (
         <div className={Style.DefaultAvatar}>
-            <div className={Style.char}>{username.slice(0, 1)}</div>
+            <img src={svg} alt={'default_avatar'} className={Style.img} />
         </div>
     );
 }

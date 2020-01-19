@@ -4,7 +4,7 @@ import {Profile as ProfileClass} from '../../../../Class';
 import {Button, Icon} from 'antd';
 import {CONFIG} from '../../../../Router';
 import {Link} from 'react-router-dom';
-import DefaultAvatar from './Component/DefaultAvatar';
+import DefaultAvatar from '../../../../Component/DefaultAvatar';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
@@ -19,8 +19,10 @@ function ProfileView(props: Readonly<IProps>)
     return (
         <div className={Style.Profile}>
             <div className={Style.avatarWrapper}>
-                {avatar ? <img src={avatar} alt={'avatar'} className={Style.avatar} />
-                    : <DefaultAvatar username={username} />}
+                <div className={Style.avatar}>
+                    {avatar ? <img src={avatar} alt={'avatar'} />
+                        : <DefaultAvatar />}
+                </div>
             </div>
             <div className={Style.nameWrapper}>
                 <div className={Style.username}>{username}</div>
