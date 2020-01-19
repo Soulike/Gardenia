@@ -5,6 +5,7 @@ import CONFIG from '../../CONFIG';
 import {IState as StoreState} from '../../Store';
 import {connect} from 'react-redux';
 import {CONFIG as ROUTER_CONFIG} from '../../Router';
+import {Account} from '../../Api';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -29,12 +30,20 @@ class Setting extends PureComponent<IProps, IState>
         document.title = `设置 - ${CONFIG.NAME}`;
     };
 
-    checkWhetherLoggedIn = () =>
+    checkWhetherLoggedIn = async () =>
     {
         const {isLoggedIn, history} = this.props;
         if (!isLoggedIn)
         {
-            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+            const result = await Account.checkSession();
+            if (result !== null)
+            {
+                const {isValid} = result;
+                if (!isValid)
+                {
+                    history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+                }
+            }
         }
     };
 
