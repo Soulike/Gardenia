@@ -20,7 +20,7 @@ function ProfileView(props: Readonly<IProps>)
         <div className={Style.Profile}>
             <div className={Style.avatarWrapper}>
                 <div className={Style.avatar}>
-                    {avatar ? <img src={avatar} alt={'avatar'} />
+                    {avatar ? <img src={avatar} alt={'avatar'} className={Style.avatarImg} />
                         : <DefaultAvatar />}
                 </div>
             </div>
@@ -30,7 +30,7 @@ function ProfileView(props: Readonly<IProps>)
             </div>
             <div className={Style.divideLine} />
             <div className={Style.editButtonWrapper}>
-                <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]} target={'_blank'}>
+                <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}>
                     <Button block={true}>编辑</Button>
                 </Link>
             </div>
