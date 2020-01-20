@@ -1,0 +1,1 @@
+export const NAME = /^\S{1,20}$/;
