@@ -6,6 +6,7 @@ import RepositoryRouter from './SubRouter/Repository';
 import GroupRouter from './SubRouter/Group';
 import SettingRouter from './SubRouter/Setting';
 import Loading from '../Component/Loading';
+import RequireLogin from '../Component/RequireLogin';
 
 const Root = React.lazy(() => import('../Component/Root'));
 
@@ -28,12 +29,16 @@ export default () =>
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REGISTER]}
                                component={PAGE_ID_TO_COMPONENT[PAGE_ID.REGISTER]}
                                exact={true} />
-                        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}
-                               component={PAGE_ID_TO_COMPONENT[PAGE_ID.CREATE_REPOSITORY]}
-                               exact={true} />
-                        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}
-                               component={PAGE_ID_TO_COMPONENT[PAGE_ID.CREATE_GROUP]}
-                               exact={true} />
+                        <RequireLogin>
+                            <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}
+                                   component={PAGE_ID_TO_COMPONENT[PAGE_ID.CREATE_REPOSITORY]}
+                                   exact={true} />
+                            <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}
+                                   component={PAGE_ID_TO_COMPONENT[PAGE_ID.CREATE_GROUP]}
+                                   exact={true} />
+                            <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}
+                                   render={SettingRouter} />
+                        </RequireLogin>
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER]}
                                component={PAGE_ID_TO_COMPONENT[PAGE_ID.PERSONAL_CENTER]}
                                exact={true} />
@@ -41,8 +46,6 @@ export default () =>
                                render={RepositoryRouter} />
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.GROUP]}
                                render={GroupRouter} />
-                        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}
-                               render={SettingRouter} />
                         <Route component={NotFound} />
                     </Switch>
                 </Root>

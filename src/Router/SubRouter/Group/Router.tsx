@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import SettingsRouter from './SubRouter/Settings';
 import Loading from '../../../Component/Loading';
+import RequireLogin from '../../../Component/RequireLogin';
 
 const Group = React.lazy(() => import('../../../Page/Group'));
 
@@ -30,9 +31,11 @@ export default () =>
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.MEMBERS]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.GROUP.MEMBERS]}
                                        exact={true} />
-                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.SETTINGS]}
-                                       render={SettingsRouter}
-                                       exact={true} />
+                                <RequireLogin>
+                                    <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.SETTINGS]}
+                                           render={SettingsRouter}
+                                           exact={true} />
+                                </RequireLogin>
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.GROUP]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.GROUP.GROUP]}
                                        exact={true} />
