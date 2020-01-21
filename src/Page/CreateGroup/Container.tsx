@@ -8,10 +8,7 @@ import {Function as RouterFunction} from '../../Router';
 import CONFIG from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 
-interface IProps extends RouteComponentProps<void>
-{
-
-}
+interface IProps extends RouteComponentProps<void> {}
 
 interface IState
 {

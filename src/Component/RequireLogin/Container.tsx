@@ -1,6 +1,6 @@
 import React, {PureComponent, ReactNode} from 'react';
 import {Account} from '../../Api/Account';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {Route, RouteComponentProps, withRouter} from 'react-router-dom';
 import {IState as StoreState} from '../../Store';
 import {connect} from 'react-redux';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
@@ -40,7 +40,7 @@ class RequireLogin extends PureComponent<IProps>
     render()
     {
         const {children} = this.props;
-        return children;
+        return <Route>{children}</Route>;
     }
 }
 

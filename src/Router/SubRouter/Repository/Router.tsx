@@ -3,7 +3,6 @@ import {Route, Switch} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import SettingsRouter from './SubRouter/Settings';
 import Loading from '../../../Component/Loading';
-import RequireLogin from '../../../Component/RequireLogin';
 
 const Repository = React.lazy(() => import('../../../Page/Repository'));
 
@@ -32,10 +31,8 @@ export default () =>
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.PULL_REQUESTS]}
                                        exact={true} />
-                                <RequireLogin>
-                                    <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS]}
-                                           component={SettingsRouter} />
-                                </RequireLogin>
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS]}
+                                       component={SettingsRouter} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.CODE]}
                                        exact={true} />

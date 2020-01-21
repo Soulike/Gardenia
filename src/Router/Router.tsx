@@ -29,23 +29,19 @@ export default () =>
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REGISTER]}
                                component={PAGE_ID_TO_COMPONENT[PAGE_ID.REGISTER]}
                                exact={true} />
-                        <RequireLogin>
-                            <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}
-                                   component={PAGE_ID_TO_COMPONENT[PAGE_ID.CREATE_REPOSITORY]}
-                                   exact={true} />
-                            <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}
-                                   component={PAGE_ID_TO_COMPONENT[PAGE_ID.CREATE_GROUP]}
-                                   exact={true} />
-                            <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}
-                                   render={SettingRouter} />
-                        </RequireLogin>
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER]}
                                component={PAGE_ID_TO_COMPONENT[PAGE_ID.PERSONAL_CENTER]}
                                exact={true} />
+                        <Route path={[
+                            PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY],
+                            PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP],
+                        ]} render={RequireLoginRoute} />
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.REPOSITORY]}
                                render={RepositoryRouter} />
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.GROUP]}
                                render={GroupRouter} />
+                        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}
+                               render={SettingRouter} />
                         <Route component={NotFound} />
                     </Switch>
                 </Root>
@@ -53,3 +49,19 @@ export default () =>
         </BrowserRouter>
     );
 };
+
+function RequireLoginRoute()
+{
+    return (
+        <RequireLogin>
+            <Switch>
+                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}
+                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.CREATE_REPOSITORY]}
+                       exact={true} />
+                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}
+                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.CREATE_GROUP]}
+                       exact={true} />
+            </Switch>
+        </RequireLogin>
+    );
+}
