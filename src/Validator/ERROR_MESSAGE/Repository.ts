@@ -1,0 +1,1 @@
+export const NAME = '仓库名不符合要求，请重新输入';

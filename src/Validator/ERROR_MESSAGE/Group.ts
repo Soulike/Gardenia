@@ -1,0 +1,1 @@
+export const NAME = '小组名不符合要求，请重新输入';

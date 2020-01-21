@@ -1,0 +1,1 @@
+export const NICKNAME = '1~20 位';

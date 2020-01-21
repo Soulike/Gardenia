@@ -1,1 +1,1 @@
-export const NAME = /^\S{1,20}$/;
+export const NAME = /^\w{1,20}$/;
