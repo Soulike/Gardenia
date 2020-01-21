@@ -6,6 +6,7 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../..
 import {notification} from 'antd';
 import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
+import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../../../../../../../Validator';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings> {}
 
@@ -45,9 +46,12 @@ class RepositoryName extends PureComponent<Readonly<IProps>, IState>
     validateParameters = () =>
     {
         const {repositoryName} = this.state;
-        if (repositoryName.length === 0)
+        if (!ValidatorFunction.Repository.name(repositoryName))
         {
-            notification.warn({message: '仓库名不能为空'});
+            notification.warn({
+                message: ERROR_MESSAGE.Repository.NAME,
+                description: HINT.Repository.NAME,
+            });
             return false;
         }
         return true;

@@ -1,9 +1,10 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Input, Popconfirm} from 'antd';
+import {Button, Input, Popconfirm, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import SettingLabel from '../../../../../../../../Component/SettingLabel';
+import {HINT} from '../../../../../../../../Validator';
 
 interface IProps
 {
@@ -25,11 +26,15 @@ function RepositoryNameView(props: Readonly<IProps>)
         <div className={Style.RepositoryName}>
             <label className={Style.label}>
                 <SettingLabel>仓库名</SettingLabel>
-                <Input className={Style.input}
-                       value={repositoryName}
-                       onChange={onRepositoryNameInputChange}
-                       disabled={submitting} />
-                <Popconfirm title={'重命名仓库会导致原仓库网址与克隆路径失效，确定继续？'} onConfirm={onRenameConfirm}>
+                <Tooltip trigger={'focus'} title={HINT.Repository.NAME}>
+                    <Input className={Style.input}
+                           value={repositoryName}
+                           onChange={onRepositoryNameInputChange}
+                           disabled={submitting} />
+                </Tooltip>
+                <Popconfirm title={'重命名仓库会导致原仓库网址与克隆路径失效，确定继续？'}
+                            onConfirm={onRenameConfirm}
+                            disabled={shouldRenameButtonBeDisabled(repositoryName, submitting)}>
                     <Button className={Style.button} loading={submitting}
                             disabled={shouldRenameButtonBeDisabled(repositoryName, submitting)}>重命名</Button>
                 </Popconfirm>

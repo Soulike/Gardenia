@@ -8,6 +8,7 @@ import {Repository as RepositoryApi} from '../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 import CONFIG from '../../CONFIG';
+import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 
 interface IProps extends RouteComponentProps {}
 
@@ -92,9 +93,12 @@ class CreateRepository extends PureComponent<Readonly<IProps>, IState>
     validateFormInput = () =>
     {
         const {name} = this.state;
-        if (name.length === 0)
+        if (!ValidatorFunction.Repository.name(name))
         {
-            notification.warn({message: '请输入仓库名'});
+            notification.warn({
+                message: ERROR_MESSAGE.Repository.NAME,
+                description: HINT.Repository.NAME,
+            });
             return false;
         }
         return true;

@@ -1,7 +1,8 @@
 import React, {DOMAttributes} from 'react';
 import Style from './Style.module.scss';
-import {Button, Input} from 'antd';
+import {Button, Input, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
+import {HINT} from '../../Validator';
 
 interface IProps
 {
@@ -27,9 +28,11 @@ function CreateGroupView(props: Readonly<IProps>)
             <form action="#" className={Style.form} onSubmit={onSubmit}>
                 <label className={Style.label}>
                     <div className={Style.text}>小组名</div>
-                    <Input autoFocus={true}
-                           value={name}
-                           onChange={onNameInputChange} />
+                    <Tooltip title={HINT.Group.NAME} trigger={'focus'}>
+                        <Input autoFocus={true}
+                               value={name}
+                               onChange={onNameInputChange} />
+                    </Tooltip>
                 </label>
                 <Button htmlType={'submit'}
                         type={'primary'}

@@ -4,6 +4,7 @@ import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {Profile as ProfileApi} from '../../../../Api';
 import {notification} from 'antd';
+import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../../../Validator';
 
 interface IProps {}
 
@@ -55,25 +56,44 @@ class Profile extends PureComponent<IProps, IState>
     onNicknameSubmit: ButtonProps['onClick'] = async () =>
     {
         const {nickname} = this.state;
-        this.setState({loading: true});
-        const result = await ProfileApi.set({nickname});
-        if (result !== null)
+        if (ValidatorFunction.Profile.nickname(nickname))
         {
-            notification.success({message: '昵称修改成功'});
+            this.setState({loading: true});
+            const result = await ProfileApi.set({nickname});
+            if (result !== null)
+            {
+                notification.success({message: '昵称修改成功'});
+            }
+            this.setState({loading: false});
         }
-        this.setState({loading: false});
+        else
+        {
+            notification.warn({
+                message: ERROR_MESSAGE.Profile.NICKNAME,
+                description: HINT.Profile.NICKNAME,
+            });
+        }
     };
 
     onEmailSubmit: ButtonProps['onClick'] = async () =>
     {
         const {email} = this.state;
-        this.setState({loading: true});
-        const result = await ProfileApi.set({email});
-        if (result !== null)
+        if (ValidatorFunction.Profile.email(email))
         {
-            notification.success({message: '邮箱修改成功'});
+            this.setState({loading: true});
+            const result = await ProfileApi.set({email});
+            if (result !== null)
+            {
+                notification.success({message: '邮箱修改成功'});
+            }
+            this.setState({loading: false});
         }
-        this.setState({loading: false});
+        else
+        {
+            notification.warn({
+                message: ERROR_MESSAGE.Profile.EMAIL,
+            });
+        }
     };
 
     render()

@@ -6,11 +6,12 @@ import {Account} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {FormProps} from 'antd/lib/form';
-import validator from 'validator';
 import {Account as AccountClass} from '../../Class';
 import CONFIG from '../../CONFIG';
+import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
+const {Account: AccountValidator, Profile: ProfileValidator} = ValidatorFunction;
 
 interface IProps extends RouteComponentProps {}
 
@@ -78,14 +79,20 @@ class Register extends PureComponent<Readonly<IProps>, IState>
     {
         // 讲道理这里应该有邮箱验证码的
         const {username, password, repeatPassword, email} = this.state;
-        if (username.length === 0)
+        if (!AccountValidator.username(username))
         {
-            notification.warn({message: '用户名不能为空'});
+            notification.warn({
+                message: ERROR_MESSAGE.Account.USERNAME,
+                description: HINT.Account.USERNAME,
+            });
             return false;
         }
-        if (password.length === 0)
+        if (!AccountValidator.password(password))
         {
-            notification.warn({message: '密码不能为空'});
+            notification.warn({
+                message: ERROR_MESSAGE.Account.PASSWORD,
+                description: HINT.Account.PASSWORD,
+            });
             return false;
         }
         if (password !== repeatPassword)
@@ -93,9 +100,9 @@ class Register extends PureComponent<Readonly<IProps>, IState>
             notification.warn({message: '两次输入密码不相同'});
             return false;
         }
-        if (!validator.isEmail(email))
+        if (!ProfileValidator.email(email))
         {
-            notification.warn({message: '请输入正确的邮箱'});
+            notification.warn({message: ERROR_MESSAGE.Profile.EMAIL});
             return false;
         }
         return true;

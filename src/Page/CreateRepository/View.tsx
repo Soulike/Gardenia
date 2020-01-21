@@ -1,8 +1,9 @@
 import React, {DOMAttributes} from 'react';
 import Style from './Style.module.scss';
-import {Button, Input, Switch} from 'antd';
+import {Button, Input, Switch, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {SwitchProps} from 'antd/lib/switch';
+import {HINT} from '../../Validator';
 
 interface IProps
 {
@@ -40,11 +41,13 @@ function CreateRepositoryView(props: Readonly<IProps>)
             <form action="#" className={Style.form} onSubmit={onSubmit}>
                 <label className={Style.label}>
                     <div className={Style.text}>仓库名</div>
-                    <Input addonBefore={<div>{username} /</div>}
-                           autoFocus={true}
-                           value={name}
-                           onChange={onNameInputChange}
-                           disabled={loading} />
+                    <Tooltip trigger={'focus'} title={HINT.Repository.NAME}>
+                        <Input addonBefore={<div>{username} /</div>}
+                               autoFocus={true}
+                               value={name}
+                               onChange={onNameInputChange}
+                               disabled={loading} />
+                    </Tooltip>
                 </label>
                 <label className={Style.label}>
                     <div className={Style.text}>描述（可选）</div>
@@ -57,7 +60,7 @@ function CreateRepositoryView(props: Readonly<IProps>)
                         {
                             isPublic ?
                                 '所有人都能看到该仓库' :
-                                '只有你能看到该仓库'
+                                '只有指定的人能看到该仓库'
                         }
                     </div>
                 </label>

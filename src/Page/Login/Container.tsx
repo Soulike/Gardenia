@@ -13,8 +13,11 @@ import {IRootState, IState as StoreState} from '../../Store';
 import {AnyAction} from 'redux';
 import qs from 'querystring';
 import CONFIG from '../../CONFIG';
+import {Function as ValidatorFunction} from '../../Validator';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
+
+const {Account: AccountValidator} = ValidatorFunction;
 
 interface IProps extends RouteComponentProps
 {
@@ -76,14 +79,9 @@ class Login extends PureComponent<Readonly<IProps>, IState>
     loginFormInputCheck = (): boolean =>
     {
         const {username, password} = this.state;
-        if (username.length === 0)
+        if (!AccountValidator.username(username) || !AccountValidator.password(password))
         {
-            notification.warn({message: '用户名不能为空'});
-            return false;
-        }
-        if (password.length === 0)
-        {
-            notification.warn({message: '密码不能为空'});
+            notification.warn({message: '用户名或密码错误'});
             return false;
         }
         return true;

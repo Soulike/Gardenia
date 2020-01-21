@@ -2,9 +2,10 @@ import React from 'react';
 import Style from './Style.module.scss';
 import SettingsTitle from '../../../../Component/SettingsTitle';
 import SettingLabel from '../../../../Component/SettingLabel';
-import {Button, Input} from 'antd';
+import {Button, Input, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
+import {HINT} from '../../../../Validator';
 
 interface IProps
 {
@@ -33,7 +34,11 @@ function Profile(props: IProps)
                 <SettingLabel>昵称</SettingLabel>
                 <div className={Style.form}>
                     <div className={Style.inputWrapper}>
-                        <Input onChange={onNicknameInputChange} value={nickname} disabled={loading} />
+                        <Tooltip title={HINT.Profile.NICKNAME} trigger={'focus'}>
+                            <Input onChange={onNicknameInputChange}
+                                   value={nickname}
+                                   disabled={loading} />
+                        </Tooltip>
                     </div>
                     <div className={Style.saveButtonWrapper}>
                         <Button type={'primary'}
