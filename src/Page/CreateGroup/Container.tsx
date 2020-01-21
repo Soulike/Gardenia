@@ -77,7 +77,10 @@ class CreateGroup extends PureComponent<Readonly<IProps>, IState>
         if (result !== null)
         {
             const {id} = result;
-            notification.success({message: '仓库创建成功'});
+            notification.success({
+                message: '小组创建成功',
+                description: '您已自动成为小组管理员，邀请更多成员进行协作吧！',
+            });
             history.push(RouterFunction.generateGroupRoute({id: id.toString()}));
         }
     };
