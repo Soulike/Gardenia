@@ -6,6 +6,7 @@ import {Group as GroupApi} from '../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 import CONFIG from '../../CONFIG';
+import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 
 interface IProps extends RouteComponentProps<void>
 {
@@ -59,9 +60,12 @@ class CreateGroup extends PureComponent<Readonly<IProps>, IState>
     validateFormInput = () =>
     {
         const {name} = this.state;
-        if (name.length === 0)
+        if (!ValidatorFunction.Group.name(name))
         {
-            notification.warn({message: '请输入小组名'});
+            notification.warn({
+                message: ERROR_MESSAGE.Group.NAME,
+                description: HINT.Group.NAME,
+            });
             return false;
         }
         return true;
