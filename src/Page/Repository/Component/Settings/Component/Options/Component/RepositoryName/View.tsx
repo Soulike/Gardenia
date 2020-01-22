@@ -3,7 +3,7 @@ import Style from './Style.module.scss';
 import {Button, Input, Popconfirm, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
-import SettingLabel from '../../../../../../../../Component/SettingLabel';
+import InputLabel from '../../../../../../../../Component/InputLabel';
 import {HINT} from '../../../../../../../../Validator';
 
 interface IProps
@@ -25,7 +25,7 @@ function RepositoryNameView(props: Readonly<IProps>)
     return (
         <div className={Style.RepositoryName}>
             <label className={Style.label}>
-                <SettingLabel>仓库名</SettingLabel>
+                <InputLabel>仓库名</InputLabel>
                 <Tooltip trigger={'focus'} title={HINT.Repository.NAME}>
                     <Input className={Style.input}
                            value={repositoryName}

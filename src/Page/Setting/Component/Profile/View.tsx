@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import SettingsTitle from '../../../../Component/SettingsTitle';
-import SettingLabel from '../../../../Component/SettingLabel';
+import InputLabel from '../../../../Component/InputLabel';
 import {Button, Input, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
@@ -31,7 +31,7 @@ function Profile(props: IProps)
         <div className={Style.Profile}>
             <SettingsTitle>个人资料</SettingsTitle>
             <div className={Style.item}>
-                <SettingLabel>昵称</SettingLabel>
+                <InputLabel>昵称</InputLabel>
                 <div className={Style.form}>
                     <div className={Style.inputWrapper}>
                         <Tooltip title={HINT.Profile.NICKNAME} trigger={'focus'}>
@@ -49,7 +49,7 @@ function Profile(props: IProps)
                 </div>
             </div>
             <div className={Style.item}>
-                <SettingLabel>邮箱</SettingLabel>
+                <InputLabel>邮箱</InputLabel>
                 <div className={`${Style.form} ${Style.emailForm}`}>
                     <div className={`${Style.inputWrapper} ${Style.emailInputWrapper}`}>
                         <Input type={'email'} onChange={onEmailInputChange} value={email} disabled={loading} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Icon, Switch} from 'antd';
-import SettingLabel from '../../../../../../../../Component/SettingLabel';
+import InputLabel from '../../../../../../../../Component/InputLabel';
 import {SwitchProps} from 'antd/lib/switch';
 import CriticalOperationConfirmModal from '../../../../../../../../Component/CriticalOperationConfirmModal';
 import {InputProps} from 'antd/lib/input';
@@ -41,7 +41,7 @@ function AccessibilitySwitchView(props: Readonly<IProps>)
     return (
         <>
             <div className={Style.AccessibilitySwitch}>
-                <SettingLabel>是否公开</SettingLabel>
+                <InputLabel>是否公开</InputLabel>
                 <Switch loading={loading}
                         checked={isPublic}
                         disabled={loading}

@@ -1,16 +1,16 @@
 .Login {
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 10vh;
+    padding: 5vh 0;
+
+    .registerTip {
+        text-align: center;
+    }
 
     .form {
         width: 25vw;
         height: 400px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
 
         @media all and (max-width: 1000px) {
             width: 75vw;
@@ -20,10 +20,17 @@
             width: 90vw;
         }
 
+        .inputWrapper {
+            width: 100%;
+            margin: 10px 0;
+        }
+
         .logo {
             display: block;
-            height: 200px;
+            height: 175px;
             margin-bottom: 25px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .button {

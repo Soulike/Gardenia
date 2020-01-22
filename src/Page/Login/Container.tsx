@@ -110,8 +110,10 @@ class Login extends PureComponent<Readonly<IProps>, IState>
     {
         const {location: {search}} = this.props;
         const {prev} = qs.parse(search.slice(1));
-        // 不能自己返回自己
-        if (typeof prev === 'string' && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN])
+        if (typeof prev === 'string'
+            && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]
+            && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.REGISTER]
+            && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND])
         {
             this.props.history.push(prev);
         }

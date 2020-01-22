@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import SettingLabel from '../../../../../../../../Component/SettingLabel';
+import InputLabel from '../../../../../../../../Component/InputLabel';
 import {Button, Input, Spin} from 'antd';
 import {TextAreaProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
@@ -20,7 +20,7 @@ function DescriptionView(props: Readonly<IProps>)
     return (
         <div className={Style.Description}>
             <label>
-                <SettingLabel>仓库描述</SettingLabel>
+                <InputLabel>仓库描述</InputLabel>
                 <Spin spinning={loading}>
                     <Input.TextArea disabled={loading || submitting}
                                     value={description}
