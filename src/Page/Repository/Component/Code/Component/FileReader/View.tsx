@@ -4,6 +4,7 @@ import 'highlight.js/scss/github-gist.scss';
 import {Commit} from '../../../../../../Class';
 import {Alert, Button, Spin} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
+import CommitInfoBar from '../CommitInfoBar';
 
 interface IProps
 {
@@ -25,7 +26,7 @@ function FileReader(props: Readonly<IProps>)
         exists,
         fileName,
         html,
-        lastCommit: {committerName, message, time, commitHash},
+        lastCommit,
         loading,
         onRawFileButtonClick,
     } = props;
@@ -33,10 +34,7 @@ function FileReader(props: Readonly<IProps>)
         <div className={Style.FileReader}>
             <Spin spinning={loading}>
                 <div className={Style.commitInfoBar}>
-                    <div className={Style.committerName}>{committerName}</div>
-                    <div className={Style.message}>{message}</div>
-                    <div className={Style.time}>{time}</div>
-                    <div className={Style.commitHash}>最后提交：{commitHash.slice(0, 7)}</div>
+                    <CommitInfoBar lastCommit={lastCommit} />
                 </div>
                 <div className={Style.contentWrapper}>
                     <div className={Style.fileInfoBar}>

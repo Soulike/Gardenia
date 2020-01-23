@@ -1,26 +1,9 @@
 .FileReader {
 
     .commitInfoBar {
-        padding: 10px;
+        margin-bottom: 15px;
         border: 1px solid #DDD;
         border-radius: 3px;
-        margin-bottom: 15px;
-
-        & > * {
-            display: inline-block;
-        }
-
-        .committerName, .fileName, .message, .commitHash, .time {
-            margin: 0 3px;
-        }
-
-        .committerName, .fileName {
-            font-weight: bold;
-        }
-
-        .commitHash, .time {
-            float: right;
-        }
     }
 
     .contentWrapper {

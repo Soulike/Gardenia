@@ -1,0 +1,29 @@
+.CommitInfoBar {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .left, .right {
+        display: flex;
+        align-items: center;
+    }
+
+    .left > *, .right > * {
+        margin: 0 3px;
+    }
+
+    .left {
+        display: inline-flex;
+        align-items: center;
+
+        .avatar {
+            width: 25px;
+            height: 25px;
+        }
+
+        .name {
+            font-weight: bold;
+        }
+    }
+}
