@@ -3,7 +3,7 @@ import View from './View';
 import {ModalProps} from 'antd/lib/modal';
 import {ButtonProps} from 'antd/lib/button';
 import {InputProps} from 'antd/lib/input';
-import validator from 'validator';
+import isNumber from 'is-number';
 import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
@@ -38,7 +38,7 @@ class JoinGroupButton extends PureComponent<Readonly<IProps>, IState>
     onGroupIdInputChange: InputProps['onChange'] = e =>
     {
         const {value} = e.target;
-        if (value === '' || validator.isNumeric(value))
+        if (value === '' || isNumber(value))
         {
             this.setState({groupId: value});
         }
@@ -47,7 +47,7 @@ class JoinGroupButton extends PureComponent<Readonly<IProps>, IState>
     onModalOk: ModalProps['onOk'] = async () =>
     {
         const {groupId} = this.state;
-        if (!validator.isNumeric(groupId))
+        if (!isNumber(groupId))
         {
             notification.warn({message: '小组 ID 必须是数字'});
         }

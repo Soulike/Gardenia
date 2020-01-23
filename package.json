@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/core-js": "^2.5.2",
     "@types/highlight.js": "^9.12.3",
+    "@types/is-number": "^7.0.0",
     "@types/jest": "^24.0.18",
     "@types/node": "^13.1.6",
     "@types/react": "^16.9.2",
@@ -22,6 +23,7 @@
     "core-js": "^3.2.1",
     "customize-cra": "^0.9.1",
     "highlight.js": "^9.15.10",
+    "is-number": "^7.0.0",
     "jest-extended": "^0.11.2",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
@@ -34,8 +36,7 @@
     "react-scripts": "3.3.0",
     "redux": "^4.0.4",
     "showdown": "^1.9.0",
-    "typescript": "^3.6.3",
-    "validator": "^12.0.0"
+    "typescript": "^3.6.3"
   },
   "devDependencies": {
     "@types/faker": "^4.1.5",

@@ -1,5 +1,3 @@
-import validator from 'validator';
-
 /**
  * @class
  * @description 账号资料，对应数据库 profiles 表
@@ -28,7 +26,7 @@ export class Profile
         const {username, nickname, email, avatar} = obj;
         return typeof username === 'string'
             && typeof nickname === 'string'
-            && typeof email === 'string' && validator.isEmail(email)
+            && typeof email === 'string'
             && typeof avatar === 'string';
     }
 

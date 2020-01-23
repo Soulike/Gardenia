@@ -6,7 +6,7 @@ function Loading()
 {
     return (
         <div className={Style.Loading}>
-
+            Loading...
         </div>
     );
 }
