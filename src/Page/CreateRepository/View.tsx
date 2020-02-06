@@ -4,6 +4,8 @@ import {Button, Input, Switch, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {SwitchProps} from 'antd/lib/switch';
 import {HINT} from '../../Validator';
+import PageTitle from '../../Component/PageTitle';
+import InputLabel from '../../Component/InputLabel/View';
 
 interface IProps
 {
@@ -37,10 +39,10 @@ function CreateRepositoryView(props: Readonly<IProps>)
     } = props;
     return (
         <div className={Style.CreateRepository}>
-            <h1 className={Style.title}>创建新仓库</h1>
+            <PageTitle>创建新仓库</PageTitle>
             <form action="#" className={Style.form} onSubmit={onSubmit}>
                 <label className={Style.label}>
-                    <div className={Style.text}>仓库名</div>
+                    <InputLabel required={true}>仓库名</InputLabel>
                     <Tooltip trigger={'focus'} title={HINT.Repository.NAME}>
                         <Input addonBefore={<div>{username} /</div>}
                                autoFocus={true}
@@ -50,17 +52,17 @@ function CreateRepositoryView(props: Readonly<IProps>)
                     </Tooltip>
                 </label>
                 <label className={Style.label}>
-                    <div className={Style.text}>描述（可选）</div>
+                    <InputLabel>描述</InputLabel>
                     <Input value={description} onChange={onDescriptionInputChange} disabled={loading} />
                 </label>
                 <label className={Style.label}>
-                    <div className={Style.inlineText}>公开</div>
+                    <InputLabel>公开</InputLabel>
                     <Switch checked={isPublic} onChange={onIsPublicSwitchChange} disabled={loading} />
                     <div className={Style.inlineDescription}>
                         {
                             isPublic ?
                                 '所有人都能看到该仓库' :
-                                '只有指定的人能看到该仓库'
+                                '只有你和仓库合作者能看到该仓库'
                         }
                     </div>
                 </label>

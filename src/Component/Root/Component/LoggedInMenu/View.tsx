@@ -35,6 +35,11 @@ function LoggedInMenu(props: IProps)
                         <Icon type="plus" />创建小组
                     </Link>
                 </Menu.Item>
+                <Menu.Item>
+                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION]}>
+                        <Icon type="plus" />成为仓库合作者
+                    </Link>
+                </Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu title={
                 <>

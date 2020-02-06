@@ -1,0 +1,12 @@
+.AddCollaboration {
+    width: 600px;
+    margin: 5vh auto;
+
+    .inputWrapper {
+        margin: 20px 0;
+    }
+
+    .buttonWrapper {
+        @extend .inputWrapper;
+    }
+}

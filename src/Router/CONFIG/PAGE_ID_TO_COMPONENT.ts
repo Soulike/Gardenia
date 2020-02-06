@@ -8,6 +8,7 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
     [PAGE_ID.REGISTER]: React.lazy(() => import('../../Page/Register')),
     [PAGE_ID.CREATE_REPOSITORY]: React.lazy(() => import('../../Page/CreateRepository')),
     [PAGE_ID.CREATE_GROUP]: React.lazy(() => import('../../Page/CreateGroup')),
+    [PAGE_ID.ADD_COLLABORATION]: React.lazy(() => import('../../Page/AddCollaboration')),
 
     [PAGE_ID.PERSONAL_CENTER]: React.lazy(() => import('../../Page/PersonalCenter')),
 
@@ -16,7 +17,7 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
     [PAGE_ID.REPOSITORY.PULL_REQUESTS]: undefined,
 
     [PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]: React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Options')),
-    [PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]: undefined,
+    [PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]: React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Collaborators')),
     [PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]: undefined,
     [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Groups')),
 

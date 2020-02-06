@@ -35,6 +35,7 @@ export default () =>
                         <Route path={[
                             PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY],
                             PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP],
+                            PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION],
                         ]} render={RequireLoginRoute} />
                         <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.REPOSITORY]}
                                render={RepositoryRouter} />
@@ -60,6 +61,9 @@ function RequireLoginRoute()
                        exact={true} />
                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}
                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.CREATE_GROUP]}
+                       exact={true} />
+                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION]}
+                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.ADD_COLLABORATION]}
                        exact={true} />
             </Switch>
         </RequireLogin>

@@ -1,0 +1,1 @@
+export const CODE = /^\w+_\w+_\d+$/;

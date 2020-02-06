@@ -3,6 +3,8 @@ import Style from './Style.module.scss';
 import {Button, Input, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {HINT} from '../../Validator';
+import PageTitle from '../../Component/PageTitle';
+import InputLabel from '../../Component/InputLabel';
 
 interface IProps
 {
@@ -24,10 +26,10 @@ function CreateGroupView(props: Readonly<IProps>)
     } = props;
     return (
         <div className={Style.CreateNewGroup}>
-            <h1 className={Style.title}>创建新小组</h1>
+            <PageTitle>创建新小组</PageTitle>
             <form action="#" className={Style.form} onSubmit={onSubmit}>
                 <label className={Style.label}>
-                    <div className={Style.text}>小组名</div>
+                    <InputLabel required={true}>小组名</InputLabel>
                     <Tooltip title={HINT.Group.NAME} trigger={'focus'}>
                         <Input autoFocus={true}
                                value={name}

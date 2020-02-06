@@ -2,27 +2,9 @@
     width: 600px;
     margin: 5vh auto;
 
-    .title {
-        border-bottom: 1px solid #DDD;
-    }
-
     .label {
         display: block;
         margin: 20px 0;
-
-        .text {
-            font-weight: bold;
-            font-size: 1rem;
-            margin-bottom: 5px;
-        }
-
-        .inlineText {
-            display: inline-block;
-            vertical-align: middle;
-            font-weight: bold;
-            font-size: 1rem;
-            margin-right: 15px;
-        }
 
         .inlineDescription {
             display: inline-block;

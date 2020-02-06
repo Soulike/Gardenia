@@ -7,6 +7,7 @@ export const PAGE_ID_TO_ROUTE = Object.freeze({
     [PAGE_ID.REGISTER]: '/register',
     [PAGE_ID.CREATE_REPOSITORY]: '/createRepository',
     [PAGE_ID.CREATE_GROUP]: '/createGroup',
+    [PAGE_ID.ADD_COLLABORATION]: '/addCollaboration',
     [PAGE_ID.PERSONAL_CENTER]: '/personalCenter/:username',
 
     [PAGE_ID.REPOSITORY.REPOSITORY]: '/repository/:username/:repository',

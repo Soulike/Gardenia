@@ -1,0 +1,1 @@
+export const CODE = '邀请码无效，请重新输入';
