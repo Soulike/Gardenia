@@ -18,7 +18,7 @@ export async function generateCode(repository: Readonly<Pick<Repository, 'userna
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ code: string }>> =
             await axios.get(GENERATE_CODE, {
-                params: {repository},
+                params: {json: JSON.stringify({repository})},
             });
         if (isSuccessful)
         {
@@ -89,7 +89,7 @@ export async function getCollaborators(repository: Readonly<Pick<Repository, 'us
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ collaborators: Profile[] }>> =
             await axios.get(GET_COLLABORATORS, {
-                params: {repository},
+                params: {json: JSON.stringify({repository})},
             });
         if (isSuccessful)
         {
@@ -114,7 +114,7 @@ export async function getCollaboratorsAmount(repository: Readonly<Pick<Repositor
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
             await axios.get(GET_COLLABORATORS_AMOUNT, {
-                params: {repository},
+                params: {json: JSON.stringify({repository})},
             });
         if (isSuccessful)
         {
@@ -139,7 +139,7 @@ export async function getCollaboratingRepositories(account?: Pick<Account, 'user
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ repositories: Repository[] }>> =
             await axios.get(GET_COLLABORATING_REPOSITORIES, {
-                params: {account},
+                params: {json: JSON.stringify({account})},
             });
         if (isSuccessful)
         {
@@ -164,7 +164,7 @@ export async function getCollaboratingRepositoriesAmount(account?: Pick<Account,
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
             await axios.get(GET_COLLABORATING_REPOSITORIES_AMOUNT, {
-                params: {account},
+                params: {json: JSON.stringify({account})},
             });
         if (isSuccessful)
         {
