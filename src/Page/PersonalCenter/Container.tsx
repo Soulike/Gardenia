@@ -5,9 +5,10 @@ import {Interface as RouterInterface} from '../../Router';
 import {Tab} from './Interface';
 import qs from 'querystring';
 import {TabsProps} from 'antd/lib/tabs';
+import CONFIG from '../../CONFIG';
 import Repositories from './Component/Repositories';
 import Groups from './Component/Groups';
-import CONFIG from '../../CONFIG';
+import Collaborations from './Component/Collaborations';
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
 
@@ -28,6 +29,11 @@ class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
             key: 'groups',
             title: '小组',
             component: <Groups />,
+        },
+        {
+            key: 'collaborations',
+            title: '合作仓库',
+            component: <Collaborations />,
         },
     ];
 
