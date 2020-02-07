@@ -1,0 +1,43 @@
+.CollaboratorCard {
+    border-top: 1px solid #DDD;
+
+    &:last-child {
+        border-bottom: 1px solid #DDD;
+    }
+
+    .cardContent {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .basicInfo {
+            display: flex;
+            align-items: center;
+
+            .avatarWrapper, .username, .nickname {
+                color: #000;
+            }
+
+            .avatarWrapper {
+                width: 48px;
+                height: 48px;
+            }
+
+            .avatarWrapper {
+                margin-right: 10px;
+            }
+
+            .username {
+                font-size: 18px;
+                font-weight: lighter;
+                color: #666;
+            }
+
+            .nickname {
+                font-size: 18px;
+                margin-right: 5px;
+                font-weight: bolder;
+            }
+        }
+    }
+}

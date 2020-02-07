@@ -2,13 +2,10 @@ import React from 'react';
 import Style from './Style.module.scss';
 import SettingsTitle from '../../../../../Group/Component/Settings/Component/SettingsTitle';
 import AddCollaborationButton from './Component/AddCollaborationButton';
+import CollaboratorList from './Component/CollaboratorList';
+import {Alert} from 'antd';
 
-interface IProps
-{
-
-}
-
-function Collaborators(props: IProps)
+function Collaborators()
 {
     return (
         <div className={Style.Collaborators}>
@@ -18,6 +15,11 @@ function Collaborators(props: IProps)
                     <AddCollaborationButton />
                 </div>
             </SettingsTitle>
+            <div className={Style.alertWrapper}>
+                <Alert type={'info'}
+                       message={'仓库合作者可取得和创建者相同的仓库访问权限。'} showIcon={true} />
+            </div>
+            <CollaboratorList />
         </div>
     );
 }
