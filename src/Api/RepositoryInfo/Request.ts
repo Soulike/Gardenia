@@ -1,11 +1,17 @@
-import {Account, Commit, Group, Repository as RepositoryClass, Repository, ResponseBody} from '../../Class';
+import {Account, Commit, FileDiff, Group, Repository as RepositoryClass, Repository, ResponseBody} from '../../Class';
 import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
 import {
     ADD_TO_GROUP,
     BRANCH,
     COMMIT_COUNT,
+    COMMIT_HISTORY,
+    COMMIT_HISTORY_BETWEEN_COMMITS,
+    DIFF,
     DIRECTORY,
+    FILE_COMMIT_HISTORY,
+    FILE_COMMIT_HISTORY_BETWEEN_COMMITS,
+    FILE_DIFF,
     FILE_INFO,
     GROUPS,
     LAST_COMMIT,
@@ -305,6 +311,168 @@ export async function addToGroup(repository: Readonly<Pick<Repository, 'username
         if (isSuccessful)
         {
             return true;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function commitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
+            await axios.get(COMMIT_HISTORY_BETWEEN_COMMITS, {
+                params: {
+                    json: JSON.stringify({repository, baseCommitHash, targetCommitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function commitHistory(repository: Pick<Repository, 'username' | 'name'>, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
+            await axios.get(COMMIT_HISTORY, {
+                params: {
+                    json: JSON.stringify({repository, targetCommitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function fileCommitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
+            await axios.get(FILE_COMMIT_HISTORY_BETWEEN_COMMITS, {
+                params: {
+                    json: JSON.stringify({repository, filePath, baseCommitHash, targetCommitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function fileCommitHistory(repository: Pick<Repository, 'username' | 'name'>, filePath: string, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
+            await axios.get(FILE_COMMIT_HISTORY, {
+                params: {
+                    json: JSON.stringify({repository, filePath, targetCommitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function diff(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ diff: FileDiff[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ diff: FileDiff[], }>> =
+            await axios.get(DIFF, {
+                params: {
+                    json: JSON.stringify({repository, baseCommitHash, targetCommitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function fileDiff(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ diff: FileDiff }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ diff: FileDiff, }>> =
+            await axios.get(FILE_DIFF, {
+                params: {
+                    json: JSON.stringify({repository, filePath, baseCommitHash, targetCommitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
         }
         else
         {
