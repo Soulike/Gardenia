@@ -4,14 +4,14 @@ import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 
 interface IProps
 {
-    branches: Readonly<Array<Readonly<string>>>,
-    branch: string,
-    onBranchClick: (branch: string) => MenuItemProps['onClick'],
+    branches: Readonly<string[]>;
+    currentBranch: string;
+    onBranchClick: (branch: string) => MenuItemProps['onClick'];
 }
 
-function BranchButtonView(props: Readonly<IProps>)
+function BranchMenu(props: IProps)
 {
-    const {branches, branch, onBranchClick} = props;
+    const {branches, currentBranch, onBranchClick} = props;
     return (
         <Dropdown trigger={['click']} overlay={
             <Menu>
@@ -21,9 +21,8 @@ function BranchButtonView(props: Readonly<IProps>)
                 }
             </Menu>
         }>
-            <Button>分支：{branch}<Icon type="caret-down" /></Button>
-        </Dropdown>
-    );
+            <Button>{currentBranch}<Icon type="caret-down" /></Button>
+        </Dropdown>);
 }
 
-export default React.memo(BranchButtonView);
+export default React.memo(BranchMenu);

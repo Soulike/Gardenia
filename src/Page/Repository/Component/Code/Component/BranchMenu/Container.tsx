@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
-import {MenuItemProps} from 'antd/lib/menu/MenuItem';
-import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import {ObjectType} from '../../../../../../CONSTANT';
+import BranchMenu from '../../../BranchMenu';
+import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -12,13 +12,13 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 
 class BranchButton extends PureComponent<IProps>
 {
-    onBranchClick: (branch: string) => MenuItemProps['onClick'] = branch =>
+    onBranchClick: (branch: string) => MenuItemProps['onClick'] = (branch: string) =>
     {
         return () =>
         {
             const {history, match: {params: {username, repository, objectType, path}}, branches} = this.props;
             history.replace(
-                RouterFunction.generateRepositoryRoute(
+                RouterFunction.generateRepositoryCodeRoute(
                     {
                         username,
                         repository,
@@ -26,7 +26,7 @@ class BranchButton extends PureComponent<IProps>
                         branch: branch ? branch : branches[0],
                         path,
                     }));
-        };
+        }
     };
 
     render()
@@ -34,9 +34,9 @@ class BranchButton extends PureComponent<IProps>
 
         const {match: {params: {branch}}, branches} = this.props;
         return (
-            <View branches={branches}
-                  branch={branch === undefined || branch === 'master' ? branches[0] : branch}
-                  onBranchClick={this.onBranchClick} />
+            <BranchMenu branches={branches}
+                        currentBranch={branch === undefined || branch === 'master' ? branches[0] : branch}
+                        onBranchClick={this.onBranchClick} />
         );
     }
 }

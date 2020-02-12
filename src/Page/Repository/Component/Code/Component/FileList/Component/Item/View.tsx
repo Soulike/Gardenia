@@ -24,7 +24,7 @@ function Item(props: Readonly<IProps>)
             }
             <div className={Style.fileName}>
                 <Link to={
-                    RouterFunction.generateRepositoryRoute({
+                    RouterFunction.generateRepositoryCodeRoute({
                         username,
                         repository,
                         objectType: type,

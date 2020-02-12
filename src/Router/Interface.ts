@@ -5,29 +5,32 @@ export interface IPersonalCenter
     readonly username: string,
 }
 
-export interface IRepositoryCode
+export interface IRepository
 {
     readonly username: string,
     readonly repository: string,
+}
+
+export interface IRepositoryCode extends IRepository
+{
     readonly objectType?: ObjectType,
     readonly branch?: string,
     readonly path?: string,
 }
 
-export interface IRepositoryIssues
+export interface IRepositoryIssues extends IRepository
 {
-    readonly username: string,
-    readonly repository: string,
     readonly number?: string,
 }
 
 export interface IRepositoryPullRequests extends IRepositoryIssues {}
 
-export interface IRepositorySettings
+export interface IRepositoryCommits extends IRepository
 {
-    readonly username: string,
-    readonly repository: string,
+    readonly branch: string,
 }
+
+export interface IRepositorySettings extends IRepository {}
 
 export interface IGroup
 {

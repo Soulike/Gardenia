@@ -1,0 +1,51 @@
+.TimelineItemContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border: 1px solid #DDD;
+    border-radius: 2px;
+    transform: translateY(-12px);
+
+    .left {
+        .messageWrapper {
+            font-weight: bolder;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+
+            .message {
+                display: inline-block;
+                margin-right: 5px;
+                max-width: 600px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        .body {
+            width: 600px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 14px;
+            color: #666;
+            margin: 10px 0 0;
+        }
+
+        .committer, .commitTime {
+            display: inline-block;
+        }
+
+        .committer {
+            font-weight: bolder;
+            margin-right: 0.5em;
+        }
+    }
+
+    .right {
+        .commitHash {
+            margin-right: 10px;
+        }
+    }
+}

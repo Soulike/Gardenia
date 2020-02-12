@@ -26,7 +26,7 @@ function RepositoryList(props: Readonly<IProps>)
                   return (
                       <Link className={Style.repositoryWrapper}
                             target={'_blank'} rel={'noreferrer noopener'}
-                            to={RouterFunction.generateRepositoryRoute({username, repository: name})}>
+                            to={RouterFunction.generateRepositoryCodeRoute({username, repository: name})}>
                           <Card className={Style.repository} hoverable={true}>
                               <Card.Meta title={
                                   <React.Fragment>

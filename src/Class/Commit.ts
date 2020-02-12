@@ -9,6 +9,7 @@ export class Commit
     public committerEmail: string;
     public time: string;
     public message: string;
+    public body: string;
 
     /**
      * @constructor
@@ -17,13 +18,15 @@ export class Commit
      * @param committerEmail - 提交人 email
      * @param time - 提交距现在的时间
      * @param message - 提交信息
+     * @param body - 提交详细信息
      * */
-    constructor(commitHash: string, committerName: string, committerEmail: string, time: string, message: string)
+    constructor(commitHash: string, committerName: string, committerEmail: string, time: string, message: string, body: string)
     {
         this.commitHash = commitHash;
         this.committerName = committerName;
         this.committerEmail = committerEmail;
         this.time = time;
         this.message = message;
+        this.body = body;
     }
 }

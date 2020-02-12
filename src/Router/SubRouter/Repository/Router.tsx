@@ -17,6 +17,7 @@ export default () =>
                 <Route path={[
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUES],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS],
+                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMITS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.REPOSITORY],
@@ -30,6 +31,9 @@ export default () =>
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.PULL_REQUESTS]}
+                                       exact={true} />
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMITS]}
+                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.COMMITS]}
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS]}
                                        component={SettingsRouter} />

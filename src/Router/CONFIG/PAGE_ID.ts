@@ -19,6 +19,8 @@ export const PAGE_ID = Object.freeze({
             GROUPS: 'REPOSITORY_SETTINGS_GROUPS',
         },
         CODE: 'REPOSITORY_CODE',
+        COMMITS: 'REPOSITORY_COMMITS',
+        COMMIT: 'REPOSITORY_COMMIT',
     }),
     GROUP: Object.freeze({
         GROUP: 'GROUP',

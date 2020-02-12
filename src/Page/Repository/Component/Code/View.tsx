@@ -4,7 +4,7 @@ import {ObjectType} from '../../../../CONSTANT';
 import {Repository as RepositoryClass} from '../../../../Class';
 import {Skeleton} from 'antd';
 
-const BranchButton = React.lazy(() => import('./Component/BranchButton'));
+const BranchMenu = React.lazy(() => import('./Component/BranchMenu'));
 const FileList = React.lazy(() => import('./Component/FileList'));
 const CloneButton = React.lazy(() => import('./Component/CloneButton'));
 const Empty = React.lazy(() => import('./Component/Empty'));
@@ -43,7 +43,7 @@ function CodeView(props: Readonly<IProps>)
                         <Empty /> :
                         <>
                             <div className={Style.buttonWrapper}>
-                                <BranchButton branches={branches} />
+                                <BranchMenu branches={branches} />
                                 <CloneButton username={username} repository={name} />
                             </div>
                             {

@@ -37,7 +37,10 @@ function RepositoryView(props: Readonly<IProps>)
                         <div className={Style.usernameAndName}>
                             <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
                                 {username}
-                            </Link> / <Link to={RouterFunction.generateRepositoryRoute({username, repository: name})}>
+                            </Link> / <Link to={RouterFunction.generateRepositoryCodeRoute({
+                            username,
+                            repository: name,
+                        })}>
                             <b>{name}</b>
                         </Link>
                         </div>

@@ -3,6 +3,7 @@ import {
     IGroup,
     IPersonalCenter,
     IRepositoryCode,
+    IRepositoryCommits,
     IRepositoryIssues,
     IRepositoryPullRequests,
     IRepositorySettings,
@@ -14,7 +15,7 @@ export function generatePersonalCenterRoute(parameter: IPersonalCenter): string
     return PAGE_ID_TO_ROUTE[PAGE_ID.PERSONAL_CENTER].replace(':username', username);
 }
 
-export function generateRepositoryRoute(parameter: IRepositoryCode)
+export function generateRepositoryCodeRoute(parameter: IRepositoryCode)
 {
     const {username, branch, objectType, path, repository} = parameter;
     let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE]
@@ -79,6 +80,15 @@ export function generateRepositoryPullRequestsRoute(parameter: IRepositoryPullRe
         url = url.replace('/:number?', '');
     }
     return url;
+}
+
+export function generateRepositoryCommitsRoute(parameter: IRepositoryCommits)
+{
+    const {username, repository, branch} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMITS]
+        .replace(':username', username)
+        .replace(':repository', repository)
+        .replace(':branch', branch);
 }
 
 function generateRepositorySettingsRouteHelper(route: string, parameter: IRepositorySettings)

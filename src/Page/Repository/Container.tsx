@@ -155,7 +155,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         {
             case TAB_KEY.CODE:
             {
-                history.push(RouterFunction.generateRepositoryRoute({username, repository: name}));
+                history.push(RouterFunction.generateRepositoryCodeRoute({username, repository: name}));
                 break;
             }
             case TAB_KEY.ISSUES:
