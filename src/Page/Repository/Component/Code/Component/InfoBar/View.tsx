@@ -15,14 +15,18 @@ function InfoBar(props: Readonly<IProps>)
     const {commitCount, branchCount, match: {params: {username, repository, branch}}} = props;
     return (
         <div className={Style.InfoBar}>
-            <Link to={RouterFunction.generateRepositoryCommitsRoute({
-                username,
-                repository,
-                branch: branch ? branch : 'master',
-            })}
-                  className={Style.info}>
-                <Icon type="clock-circle" /> {commitCount} 次提交
-            </Link>
+            {
+                commitCount > 0 ?
+                    (<Link to={RouterFunction.generateRepositoryCommitsRoute({
+                        username,
+                        repository,
+                        branch: branch ? branch : 'master',
+                    })}
+                           className={Style.info}>
+                        <Icon type="clock-circle" /> {commitCount} 次提交
+                    </Link>)
+                    : (<><Icon type="clock-circle" /> {commitCount} 次提交</>)
+            }
             <div className={Style.info}>
                 <Icon type="branches" /> {branchCount} 个分支
             </div>
