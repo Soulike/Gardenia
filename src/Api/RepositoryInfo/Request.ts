@@ -4,11 +4,13 @@ import axios, {AxiosResponse} from 'axios';
 import {
     ADD_TO_GROUP,
     BRANCH,
+    COMMIT,
     COMMIT_COUNT,
     COMMIT_HISTORY,
     COMMIT_HISTORY_BETWEEN_COMMITS,
     DIFF_BETWEEN_COMMITS,
     DIRECTORY,
+    FILE_COMMIT,
     FILE_COMMIT_HISTORY,
     FILE_COMMIT_HISTORY_BETWEEN_COMMITS,
     FILE_DIFF_BETWEEN_COMMITS,
@@ -468,6 +470,66 @@ export async function fileDiffBetweenCommits(repository: Pick<Repository, 'usern
             await axios.get(FILE_DIFF_BETWEEN_COMMITS, {
                 params: {
                     json: JSON.stringify({repository, filePath, baseCommitHash, targetCommitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function commit(repository: Pick<Repository, 'username' | 'name'>, commitHash: string): Promise<Readonly<{ commit: Commit, diff: FileDiff[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{
+            commit: Commit,
+            diff: FileDiff[]
+        }>> =
+            await axios.get(COMMIT, {
+                params: {
+                    json: JSON.stringify({repository, commitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function fileCommit(repository: Pick<Repository, 'username' | 'name'>, filePath: string, commitHash: string): Promise<Readonly<{ commit: Commit, diff: FileDiff }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{
+            commit: Commit,
+            diff: FileDiff
+        }>> =
+            await axios.get(FILE_COMMIT, {
+                params: {
+                    json: JSON.stringify({repository, filePath, commitHash}),
                 },
             });
         if (isSuccessful)
