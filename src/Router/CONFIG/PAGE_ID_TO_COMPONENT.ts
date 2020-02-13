@@ -16,6 +16,7 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
     [PAGE_ID.REPOSITORY.ISSUES]: undefined,
     [PAGE_ID.REPOSITORY.PULL_REQUESTS]: undefined,
     [PAGE_ID.REPOSITORY.COMMITS]: React.lazy(() => import('../../Page/Repository/Component/Commits')),
+    [PAGE_ID.REPOSITORY.COMMIT]: React.lazy(() => import('../../Page/Repository/Component/Commit')),
 
     [PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]: React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Options')),
     [PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]: React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Collaborators')),

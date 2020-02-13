@@ -7,6 +7,9 @@
 
     .icon {
         width: 2%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .fileName {
@@ -15,6 +18,10 @@
 
     .message {
         width: 60%;
+        color: #666;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .time {

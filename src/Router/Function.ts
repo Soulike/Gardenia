@@ -3,6 +3,7 @@ import {
     IGroup,
     IPersonalCenter,
     IRepositoryCode,
+    IRepositoryCommit,
     IRepositoryCommits,
     IRepositoryIssues,
     IRepositoryPullRequests,
@@ -89,6 +90,15 @@ export function generateRepositoryCommitsRoute(parameter: IRepositoryCommits)
         .replace(':username', username)
         .replace(':repository', repository)
         .replace(':branch', branch);
+}
+
+export function generateRepositoryCommitRoute(parameter: IRepositoryCommit)
+{
+    const {username, repository, commitHash} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMIT]
+        .replace(':username', username)
+        .replace(':repository', repository)
+        .replace(':commitHash', commitHash);
 }
 
 function generateRepositorySettingsRouteHelper(route: string, parameter: IRepositorySettings)

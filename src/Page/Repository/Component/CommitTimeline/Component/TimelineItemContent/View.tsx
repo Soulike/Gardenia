@@ -43,7 +43,15 @@ function TimelineItemContent(props: IProps)
                     <CopyToClipboard text={commitHash}>
                         <Button><Icon type="copy" /></Button>
                     </CopyToClipboard>
-                    <Button><code>{commitHash.slice(0, 7)}</code></Button>
+                    <Button>
+                        <Link to={RouterFunction.generateRepositoryCommitRoute({
+                            username,
+                            repository: repositoryName,
+                            commitHash,
+                        })}>
+                            <code>{commitHash.slice(0, 7)}</code>
+                        </Link>
+                    </Button>
                 </Button.Group>
                 <Link to={RouterFunction.generateRepositoryCodeRoute({
                     username,
