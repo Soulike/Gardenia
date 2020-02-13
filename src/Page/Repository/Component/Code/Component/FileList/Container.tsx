@@ -22,7 +22,7 @@ class FileList extends Component<IProps, IState>
         super(props);
         this.state = {
             fileList: [],
-            lastCommit: new Commit('', '', '', '', '', ''),
+            lastCommit: new Commit('', '', '', 0, '', ''),
             loading: true,
         };
     }

@@ -32,7 +32,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             exists: true,
             isBinary: false,
             isOversize: false,
-            lastCommit: new Commit('', '', '', '', '', ''),
+            lastCommit: new Commit('', '', '', 0, '', ''),
             loading: true,
             rawContent: '',
         };

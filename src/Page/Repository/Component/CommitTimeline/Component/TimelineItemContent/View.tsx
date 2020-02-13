@@ -7,6 +7,7 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../..
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {ObjectType} from '../../../../../../CONSTANT';
 import {ButtonProps} from 'antd/lib/button';
+import {Date} from '../../../../../../Function';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
 {
@@ -17,8 +18,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
 
 function TimelineItemContent(props: IProps)
 {
-    const {showBody, onShowBodyButtonClick, commit: {commitHash, committerName, message, body, time}, match: {params: {username, repository: repositoryName}}} = props;
-    const date = new Date(time);
+    const {showBody, onShowBodyButtonClick, commit: {commitHash, committerName, message, body, timestamp}, match: {params: {username, repository: repositoryName}}} = props;
     return (
         <div className={Style.TimelineItemContent}>
             <div className={Style.left}>
@@ -31,7 +31,7 @@ function TimelineItemContent(props: IProps)
                         <Link to={RouterFunction.generatePersonalCenterRoute({username: committerName})}>{committerName}</Link>
                     </div>
                     <div className={Style.commitTime}>
-                        在 {`${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}`} 提交
+                        在 {Date.parseTimestampToDate(timestamp)} 提交
                     </div>
                 </div>
                 <pre className={Style.body} style={{display: showBody ? 'block' : 'none'}}>

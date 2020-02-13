@@ -5,6 +5,7 @@ import {Commit} from '../../../../../../../../Class';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import Style from './Style.module.scss';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../../Router';
+import {Date} from '../../../../../../../../Function';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -13,7 +14,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 
 function Item(props: Readonly<IProps>)
 {
-    const {fileInfo: {type, path, commit: {message, time}}, match: {params: {username, repository, branch}}} = props;
+    const {fileInfo: {type, path, commit: {message, timestamp}}, match: {params: {username, repository, branch}}} = props;
     const fileName = getFileNameFromPath(path);
     return (
         <List.Item className={Style.Item}>
@@ -35,7 +36,7 @@ function Item(props: Readonly<IProps>)
                 </Link>
             </div>
             <div className={Style.message}>{message}</div>
-            <div className={Style.time}>{time}</div>
+            <div className={Style.time}>{Date.parseTimestampToDifference(timestamp)}</div>
         </List.Item>
     );
 }
