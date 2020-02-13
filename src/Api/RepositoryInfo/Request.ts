@@ -7,11 +7,11 @@ import {
     COMMIT_COUNT,
     COMMIT_HISTORY,
     COMMIT_HISTORY_BETWEEN_COMMITS,
-    DIFF,
+    DIFF_BETWEEN_COMMITS,
     DIRECTORY,
     FILE_COMMIT_HISTORY,
     FILE_COMMIT_HISTORY_BETWEEN_COMMITS,
-    FILE_DIFF,
+    FILE_DIFF_BETWEEN_COMMITS,
     FILE_INFO,
     GROUPS,
     LAST_COMMIT,
@@ -433,12 +433,12 @@ export async function fileCommitHistory(repository: Pick<Repository, 'username' 
     }
 }
 
-export async function diff(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ diff: FileDiff[] }> | null>
+export async function diffBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ diff: FileDiff[] }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ diff: FileDiff[], }>> =
-            await axios.get(DIFF, {
+            await axios.get(DIFF_BETWEEN_COMMITS, {
                 params: {
                     json: JSON.stringify({repository, baseCommitHash, targetCommitHash}),
                 },
@@ -460,12 +460,12 @@ export async function diff(repository: Pick<Repository, 'username' | 'name'>, ba
     }
 }
 
-export async function fileDiff(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ diff: FileDiff }> | null>
+export async function fileDiffBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ diff: FileDiff }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ diff: FileDiff, }>> =
-            await axios.get(FILE_DIFF, {
+            await axios.get(FILE_DIFF_BETWEEN_COMMITS, {
                 params: {
                     json: JSON.stringify({repository, filePath, baseCommitHash, targetCommitHash}),
                 },

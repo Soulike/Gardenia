@@ -21,5 +21,5 @@ export const COMMIT_HISTORY_BETWEEN_COMMITS = repositoryInfoPrefix('/commitHisto
 export const COMMIT_HISTORY = repositoryInfoPrefix('/commitHistory');
 export const FILE_COMMIT_HISTORY_BETWEEN_COMMITS = repositoryInfoPrefix('/fileCommitHistoryBetweenCommits');
 export const FILE_COMMIT_HISTORY = repositoryInfoPrefix('/fileCommitHistory');
-export const DIFF = repositoryInfoPrefix('/diff');
-export const FILE_DIFF = repositoryInfoPrefix('/fileDiff');
+export const DIFF_BETWEEN_COMMITS = repositoryInfoPrefix('/diffBetweenCommits');
+export const FILE_DIFF_BETWEEN_COMMITS = repositoryInfoPrefix('/fileDiffBetweenCommits');
