@@ -28,7 +28,7 @@ function CommitInfoCard(props: IProps)
             </div>
             <div className={Style.infoWrapper}>
                 <div className={Style.info}>
-                    <Link to={RouterFunction.generatePersonalCenterRoute({username})}
+                    <Link to={RouterFunction.generatePersonalCenterRoute({username: committerName})}
                           className={Style.username}>{committerName}</Link>
                     在 {Date.parseTimestampToDifference(timestamp)}提交
                 </div>
