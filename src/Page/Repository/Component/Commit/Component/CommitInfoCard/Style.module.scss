@@ -1,0 +1,46 @@
+.CommitInfoCard {
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    padding: 10px 15px;
+
+    .messageWrapper {
+        border-bottom: 1px solid #CCC;
+
+        .message {
+            font-size: 18px;
+            font-weight: bolder;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 10px;
+        }
+
+        .body {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 0;
+            padding-bottom: 15px;
+        }
+    }
+
+    .infoWrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+
+        .info {
+
+            .username {
+                display: inline-block;
+                margin-right: 5px;
+                font-weight: bolder;
+            }
+        }
+
+        .hashWrapper {
+
+
+        }
+    }
+}

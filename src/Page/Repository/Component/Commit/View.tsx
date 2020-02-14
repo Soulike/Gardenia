@@ -2,6 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Commit as CommitClass, FileDiff} from '../../../../Class';
 import {Spin} from 'antd';
+import CommitInfoCard from './Component/CommitInfoCard';
 
 interface IProps
 {
@@ -16,12 +17,9 @@ function Commit(props: IProps)
     return (
         <div className={Style.Commit}>
             <Spin spinning={loading}>
-                <pre>
-                    {JSON.stringify(commit, null, 4)}
-                </pre>
-                <pre>
-                    {JSON.stringify(diff, null, 4)}
-                </pre>
+                <div className={Style.commitInfoCardWrapper}>
+                    <CommitInfoCard commit={commit} />
+                </div>
             </Spin>
         </div>
     );
