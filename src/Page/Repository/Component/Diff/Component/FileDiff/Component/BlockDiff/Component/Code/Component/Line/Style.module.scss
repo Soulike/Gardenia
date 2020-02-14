@@ -1,0 +1,57 @@
+.Line {
+
+    %fontStyle {
+        line-height: 1.5em;
+        font-size: 14px;
+    }
+
+    .lineNumber {
+        text-align: right;
+        padding: 0 10px;
+        width: 1%;
+        min-width: 50px;
+        @extend %fontStyle;
+        color: #AAA;
+
+        &.addition {
+            background-color: #CDFFD8;
+        }
+
+        &.deletion {
+            background-color: #FFDCE0;
+        }
+    }
+
+    .codeWrapper {
+        @extend %fontStyle;
+        padding: 0 10px;
+        overflow: visible;
+        transition: 0.25s background-color;
+
+        .code {
+            margin: 0;
+        }
+
+        &:hover {
+            background-color: #EEE;
+        }
+
+        &.addition {
+            background-color: #E6FFED;
+
+            &:hover {
+                background-color: #CDFFD8;
+            }
+        }
+
+        &.deletion {
+            background-color: #FFEEF0;
+
+            &:hover {
+                background-color: #FFDCE0;
+            }
+        }
+    }
+
+
+}

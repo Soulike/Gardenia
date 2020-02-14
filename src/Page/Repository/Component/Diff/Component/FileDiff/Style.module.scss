@@ -1,0 +1,32 @@
+.FileDiff {
+    border: 1px solid #CCC;
+    border-radius: 5px;
+
+    .header {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: #FAFBFC;
+        max-width: 750px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        .showCodeButtonWrapper {
+            margin-right: 10px;
+        }
+
+        .path {
+
+        }
+
+        .tag {
+            margin-left: 10px;
+        }
+    }
+
+    .blockDiffsWrapper {
+        overflow: auto;
+    }
+
+}

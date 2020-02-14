@@ -3,6 +3,7 @@ import Style from './Style.module.scss';
 import {Commit as CommitClass, FileDiff} from '../../../../Class';
 import {Spin} from 'antd';
 import CommitInfoCard from './Component/CommitInfoCard';
+import Diff from '../Diff';
 
 interface IProps
 {
@@ -19,6 +20,9 @@ function Commit(props: IProps)
             <Spin spinning={loading}>
                 <div className={Style.commitInfoCardWrapper}>
                     <CommitInfoCard commit={commit} />
+                </div>
+                <div className={Style.diffWrapper}>
+                    <Diff fileDiffs={diff} />
                 </div>
             </Spin>
         </div>
