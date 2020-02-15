@@ -21,8 +21,8 @@ function Diff(props: IProps)
             <div className={Style.fileDiffsWrapper}>
                 {
                     fileDiffs.map(fileDiff =>
-                        <div className={Style.fileDiffWrapper}>
-                            <FileDiff fileDiff={fileDiff} key={fileDiff.path} />
+                        <div className={Style.fileDiffWrapper} key={fileDiff.path}>
+                            <FileDiff fileDiff={fileDiff} />
                         </div>)
                 }
             </div>

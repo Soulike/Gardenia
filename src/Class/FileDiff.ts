@@ -5,9 +5,10 @@ export class FileDiff
     public readonly path: string;
     public readonly isNew: boolean;
     public readonly isDeleted: boolean;
+    public readonly isBinary: boolean;
     public readonly blockDiffs: BlockDiff[];
 
-    constructor(path: string, isNew: boolean, isDeleted: boolean, blockDiffs: BlockDiff[])
+    constructor(path: string, isNew: boolean, isDeleted: boolean, isBinary: boolean, blockDiffs: BlockDiff[])
     {
         if (isNew && isDeleted)  // 不可能同时新建和删除
         {
@@ -16,6 +17,7 @@ export class FileDiff
         this.path = path;
         this.isNew = isNew;
         this.isDeleted = isDeleted;
+        this.isBinary = isBinary;
         this.blockDiffs = [];
         for (const blockDiff of blockDiffs)  // deep clone
         {
@@ -25,10 +27,11 @@ export class FileDiff
 
     public static validate(fileDiff: Readonly<Record<keyof FileDiff, any>>): boolean
     {
-        const {path, isNew, isDeleted, blockDiffs} = fileDiff;
+        const {path, isNew, isDeleted, isBinary, blockDiffs} = fileDiff;
         return typeof path === 'string'
             && typeof isNew === 'boolean'
             && typeof isDeleted === 'boolean'
+            && typeof isBinary === 'boolean'
             && Array.isArray(blockDiffs);
     }
 
@@ -38,7 +41,7 @@ export class FileDiff
         {
             throw TypeError();
         }
-        const {path, isNew, isDeleted, blockDiffs} = fileDiff;
-        return new FileDiff(path, isNew, isDeleted, blockDiffs);
+        const {path, isNew, isDeleted, isBinary, blockDiffs} = fileDiff;
+        return new FileDiff(path, isNew, isDeleted, isBinary, blockDiffs);
     }
 }

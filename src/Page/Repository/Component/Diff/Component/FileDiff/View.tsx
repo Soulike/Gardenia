@@ -15,7 +15,7 @@ interface IProps
 function FileDiff(props: IProps)
 {
     const {
-        fileDiff: {path, isNew, isDeleted, blockDiffs},
+        fileDiff: {path, isNew, isDeleted, isBinary, blockDiffs},
         showCode,
         onShowCodeButtonClick,
     } = props;
@@ -23,7 +23,10 @@ function FileDiff(props: IProps)
         <div className={Style.FileDiff}>
             <div className={Style.header} style={{borderBottom: showCode ? '1px solid #CCC' : ''}}>
                 <div className={Style.showCodeButtonWrapper}>
-                    <Button size={'small'} className={Style.showCodeButton} onClick={onShowCodeButtonClick}>
+                    <Button disabled={isBinary}
+                            size={'small'}
+                            className={Style.showCodeButton}
+                            onClick={onShowCodeButtonClick}>
                         {showCode ? <Icon type="down" /> : <Icon type="right" />}
                     </Button>
                 </div>
@@ -37,18 +40,17 @@ function FileDiff(props: IProps)
                     {
                         isDeleted ? <Tag color={'red'}>已被删除</Tag> : null
                     }
+                    {
+                        isBinary ? <Tag color={'blue'}>二进制文件</Tag> : null
+                    }
                 </div>
             </div>
-            {
-                showCode ? (
-                    <div className={Style.blockDiffsWrapper}>
-                        {
-                            blockDiffs.map(blockDiff =>
-                                <BlockDiff blockDiff={blockDiff} key={blockDiff.info} />)
-                        }
-                    </div>
-                ) : null
-            }
+            <div className={Style.blockDiffsWrapper} style={showCode ? {} : {position: 'absolute', top: '99999999px'}}>
+                {
+                    blockDiffs.map(blockDiff =>
+                        <BlockDiff blockDiff={blockDiff} key={blockDiff.info} />)
+                }
+            </div>
         </div>
     );
 }

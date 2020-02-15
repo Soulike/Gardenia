@@ -25,8 +25,8 @@ class FileDiff extends PureComponent<IProps, IState>
 
     componentDidMount()
     {
-        const {fileDiff: {isDeleted}} = this.props;
-        if (isDeleted)
+        const {fileDiff: {isDeleted, isBinary}} = this.props;
+        if (isDeleted || isBinary)
         {
             this.setState({showCode: false});
         }
