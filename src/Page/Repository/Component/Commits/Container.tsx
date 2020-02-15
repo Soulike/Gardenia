@@ -3,13 +3,13 @@ import View from './View';
 import {RepositoryInfo} from '../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../Router';
-import {Commit} from '../../../../Class';
+import {Branch, Commit} from '../../../../Class';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits> {}
 
 interface IState
 {
-    branches: Readonly<string[]>;
+    branches: Readonly<Branch[]>;
     loading: boolean;
     commits: Commit[];
 }
@@ -49,10 +49,11 @@ class Commits extends PureComponent<IProps, IState>
     loadBranches = async () =>
     {
         const {match: {params: {username, repository: repositoryName}}} = this.props;
-        const branches = await RepositoryInfo.branch({username}, {name: repositoryName});
-        if (branches !== null)
+        const result = await RepositoryInfo.branches({username, name: repositoryName});
+        if (result !== null)
         {
-            this.setState({branches: [...branches]});
+            const {branches} = result;
+            this.setState({branches});
         }
     };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {ObjectType} from '../../../../CONSTANT';
-import {Repository as RepositoryClass} from '../../../../Class';
+import {Branch, Repository as RepositoryClass} from '../../../../Class';
 import {Skeleton} from 'antd';
 
 const BranchMenu = React.lazy(() => import('./Component/BranchMenu'));
@@ -14,7 +14,7 @@ const InfoBar = React.lazy(() => import('./Component/InfoBar'));
 interface IProps
 {
     repository: Readonly<RepositoryClass>,
-    branches: Readonly<Array<string>>,
+    branches: Readonly<Branch[]>,
     commitCount: number,
     isEmpty: boolean,
     objectType: ObjectType,

@@ -12,7 +12,6 @@ import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
 import {
     ADD_TO_GROUP,
-    BRANCH,
     BRANCHES,
     COMMIT,
     COMMIT_COUNT,
@@ -63,38 +62,11 @@ export async function repository(account: Readonly<Pick<Account, 'username'>>, r
     }
 }
 
-export async function branch(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<RepositoryClass, 'name'>>): Promise<Readonly<Array<string>> | null>
+export async function branches(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<{ branches: Branch[] }> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<string>>> =
-            await axios.get(BRANCH, {
-                params: {
-                    json: JSON.stringify({account, repository}),
-                },
-            });
-        if (isSuccessful)
-        {
-            return data!;
-        }
-        else
-        {
-            notification.warn({message});
-            return null;
-        }
-    }
-    catch (e)
-    {
-        errorHandler(e);
-        return null;
-    }
-}
-
-export async function branches(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<Array<Branch[]>> | null>
-{
-    try
-    {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<Branch[]>>> =
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ branches: Branch[] }>> =
             await axios.get(BRANCHES, {
                 params: {
                     json: JSON.stringify({repository}),

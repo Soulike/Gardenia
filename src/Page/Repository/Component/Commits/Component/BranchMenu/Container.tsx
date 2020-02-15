@@ -3,15 +3,16 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import BranchMenu from '../../../BranchMenu';
 import {MenuItemProps} from 'antd/lib/menu/MenuItem';
+import {Branch} from '../../../../../../Class';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
 {
-    branches: Readonly<Array<Readonly<string>>>,
+    branches: Readonly<Branch[]>,
 }
 
 class BranchButton extends PureComponent<IProps>
 {
-    onBranchClick: (branch: string) => MenuItemProps['onClick'] = (branch: string) =>
+    onBranchClick: (branch: Readonly<Branch>) => MenuItemProps['onClick'] = (branch: Readonly<Branch>) =>
     {
         return () =>
         {
@@ -21,7 +22,7 @@ class BranchButton extends PureComponent<IProps>
                     {
                         username,
                         repository,
-                        branch,
+                        branch: branch.name,
                     }));
         };
     };
@@ -29,10 +30,21 @@ class BranchButton extends PureComponent<IProps>
     render()
     {
 
-        const {match: {params: {branch}}, branches} = this.props;
+        const {match: {params: {branch: branchName}}, branches} = this.props;
+        let defaultBranchName: string = '';
+        if (branchName === undefined)
+        {
+            for (const branch of branches)
+            {
+                if (branch.isDefault)
+                {
+                    defaultBranchName = branch.name;
+                }
+            }
+        }
         return (
             <BranchMenu branches={branches}
-                        currentBranch={branch}
+                        currentBranch={branchName ? branchName : defaultBranchName}
                         onBranchClick={this.onBranchClick} />
         );
     }

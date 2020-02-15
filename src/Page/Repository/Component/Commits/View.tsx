@@ -2,13 +2,13 @@ import React from 'react';
 import Style from './Style.module.scss';
 import BranchMenu from './Component/BranchMenu';
 import {Spin} from 'antd';
-import {Commit} from '../../../../Class';
+import {Branch, Commit} from '../../../../Class';
 import CommitTimeline from '../CommitTimeline';
 
 
 interface IProps
 {
-    branches: Readonly<string[]>;
+    branches: Readonly<Branch[]>;
     loading: boolean;
     commits: Readonly<Commit[]>
 }
