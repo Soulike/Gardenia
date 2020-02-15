@@ -1,9 +1,19 @@
-import {Account, Commit, FileDiff, Group, Repository as RepositoryClass, Repository, ResponseBody} from '../../Class';
+import {
+    Account,
+    Branch,
+    Commit,
+    FileDiff,
+    Group,
+    Repository as RepositoryClass,
+    Repository,
+    ResponseBody,
+} from '../../Class';
 import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
 import {
     ADD_TO_GROUP,
     BRANCH,
+    BRANCHES,
     COMMIT,
     COMMIT_COUNT,
     COMMIT_HISTORY,
@@ -61,6 +71,33 @@ export async function branch(account: Readonly<Pick<Account, 'username'>>, repos
             await axios.get(BRANCH, {
                 params: {
                     json: JSON.stringify({account, repository}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function branches(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<Array<Branch[]>> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<Branch[]>>> =
+            await axios.get(BRANCHES, {
+                params: {
+                    json: JSON.stringify({repository}),
                 },
             });
         if (isSuccessful)

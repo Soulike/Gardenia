@@ -7,6 +7,7 @@ function repositoryInfoPrefix(url: string): string
 
 export const REPOSITORY = repositoryInfoPrefix('/repository');
 export const BRANCH = repositoryInfoPrefix('/branch');
+export const BRANCHES = repositoryInfoPrefix('/branches');
 export const LAST_COMMIT = repositoryInfoPrefix('/lastCommit');
 export const DIRECTORY = repositoryInfoPrefix('/directory');
 export const COMMIT_COUNT = repositoryInfoPrefix('/commitCount');
