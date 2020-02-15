@@ -6,3 +6,4 @@ export * from './Profile';
 export * from './Group';
 export * from './FileDiff';
 export * from './BlockDiff';
+export * from './Branch';

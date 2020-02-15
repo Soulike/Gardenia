@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {Repository as RepositoryClass} from '../../../../Class';
+import {Branch, Repository as RepositoryClass} from '../../../../Class';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../Router';
 import {RepositoryInfo} from '../../../../Api/RepositoryInfo';
@@ -10,7 +10,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 interface IState
 {
     repository: RepositoryClass,
-    branches: Array<string>,
+    branches: Readonly<Branch[]>,
     commitCount: number,
     isEmpty: boolean,
     loading: boolean,
@@ -90,10 +90,11 @@ class Code extends PureComponent<Readonly<IProps>, IState>
     loadBranches = async () =>
     {
         const {match: {params: {username, repository: repositoryName}}} = this.props;
-        const branches = await RepositoryInfo.branch({username}, {name: repositoryName});
-        if (branches !== null)
+        const result = await RepositoryInfo.branches({username, name: repositoryName});
+        if (result !== null)
         {
-            this.setState({branches: [...branches]});
+            const {branches} = result;
+            this.setState({branches});
         }
     };
 

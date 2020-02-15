@@ -4,12 +4,12 @@
  * */
 export class Commit
 {
-    public commitHash: string;  // %H
-    public committerName: string;   // %cn
-    public committerEmail: string;  // %ce
-    public timestamp: number;   // 毫秒 %ct * 1000
-    public message: string; // %s
-    public body: string;    // %b
+    public readonly commitHash: string;  // %H
+    public readonly committerName: string;   // %cn
+    public readonly committerEmail: string;  // %ce
+    public readonly timestamp: number;   // 毫秒 %ct
+    public readonly message: string; // %s
+    public readonly body: string;    // %b
 
     constructor(commitHash: string, committerName: string, committerEmail: string, timestamp: number, message: string, body: string)
     {
@@ -19,5 +19,26 @@ export class Commit
         this.timestamp = timestamp;
         this.message = message;
         this.body = body;
+    }
+
+    public static validate(commit: Readonly<Record<keyof Commit, any>>): boolean
+    {
+        const {commitHash, committerName, committerEmail, timestamp, message, body} = commit;
+        return typeof commitHash === 'string'
+            && typeof committerName === 'string'
+            && typeof committerEmail === 'string'
+            && typeof timestamp === 'number'
+            && typeof message === 'string'
+            && typeof body === 'string';
+    }
+
+    public static from(commit: Readonly<Record<keyof Commit, any>>): Commit
+    {
+        if (!Commit.validate(commit))
+        {
+            throw new TypeError();
+        }
+        const {commitHash, committerName, committerEmail, timestamp, message, body} = commit;
+        return new Commit(commitHash, committerName, committerEmail, timestamp, message, body);
     }
 }

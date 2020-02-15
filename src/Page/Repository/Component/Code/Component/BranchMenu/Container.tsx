@@ -4,38 +4,49 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../..
 import {ObjectType} from '../../../../../../CONSTANT';
 import BranchMenu from '../../../BranchMenu';
 import {MenuItemProps} from 'antd/lib/menu/MenuItem';
+import {Branch} from '../../../../../../Class';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
-    branches: Readonly<Array<Readonly<string>>>,
+    branches: Readonly<Branch[]>,
 }
 
 class BranchButton extends PureComponent<IProps>
 {
-    onBranchClick: (branch: string) => MenuItemProps['onClick'] = (branch: string) =>
+    onBranchClick: (branch: Readonly<Branch>) => MenuItemProps['onClick'] = (branch: Readonly<Branch>) =>
     {
         return () =>
         {
-            const {history, match: {params: {username, repository, objectType, path}}, branches} = this.props;
+            const {history, match: {params: {username, repository, objectType, path}}} = this.props;
             history.replace(
                 RouterFunction.generateRepositoryCodeRoute(
                     {
                         username,
                         repository,
                         objectType: objectType ? objectType : ObjectType.TREE,
-                        branch: branch ? branch : branches[0],
+                        branch: branch.name,
                         path,
                     }));
-        }
+        };
     };
 
     render()
     {
-
-        const {match: {params: {branch}}, branches} = this.props;
+        const {match: {params: {branch: branchName}}, branches} = this.props;
+        let defaultBranchName: string = '';
+        if (branchName === undefined)
+        {
+            for (const branch of branches)
+            {
+                if (branch.isDefault)
+                {
+                    defaultBranchName = branch.name;
+                }
+            }
+        }
         return (
             <BranchMenu branches={branches}
-                        currentBranch={branch === undefined || branch === 'master' ? branches[0] : branch}
+                        currentBranch={branchName ? branchName : defaultBranchName}
                         onBranchClick={this.onBranchClick} />
         );
     }
