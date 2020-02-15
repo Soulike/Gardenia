@@ -37,7 +37,7 @@ function CodeView(props: Readonly<IProps>)
                 <div className={Style.description}>
                     {description}
                 </div>
-                <InfoBar commitCount={commitCount} branchCount={branches.length} />
+                <InfoBar commitCount={commitCount} branches={branches} />
                 {
                     isEmpty ?
                         <Empty /> :
