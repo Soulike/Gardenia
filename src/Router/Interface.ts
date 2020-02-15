@@ -35,6 +35,8 @@ export interface IRepositoryCommit extends IRepository
     readonly commitHash: string,
 }
 
+export interface IRepositoryBranches extends IRepository {}
+
 export interface IRepositorySettings extends IRepository {}
 
 export interface IGroup

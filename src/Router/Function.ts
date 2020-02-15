@@ -2,6 +2,7 @@ import {PAGE_ID, PAGE_ID_TO_ROUTE} from './CONFIG';
 import {
     IGroup,
     IPersonalCenter,
+    IRepositoryBranches,
     IRepositoryCode,
     IRepositoryCommit,
     IRepositoryCommits,
@@ -101,6 +102,14 @@ export function generateRepositoryCommitRoute(parameter: IRepositoryCommit)
         .replace(':commitHash', commitHash);
 }
 
+export function generateRepositoryBranchesRoute(parameter: IRepositoryBranches)
+{
+    const {username, repository} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.BRANCHES]
+        .replace(':username', username)
+        .replace(':repository', repository);
+}
+
 function generateRepositorySettingsRouteHelper(route: string, parameter: IRepositorySettings)
 {
     const {username, repository} = parameter;
@@ -119,17 +128,17 @@ export function generateRepositorySettingsOptionsRoute(parameter: IRepositorySet
     return generateRepositorySettingsRoute(parameter);
 }
 
-export function generateRepositoryBranchesRoute(parameter: IRepositorySettings)
+export function generateRepositorySettingsBranchesRoute(parameter: IRepositorySettings)
 {
     return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.BRANCHES], parameter);
 }
 
-export function generateRepositoryCollaboratorsRoute(parameter: IRepositorySettings)
+export function generateRepositorySettingsCollaboratorsRoute(parameter: IRepositorySettings)
 {
     return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS], parameter);
 }
 
-export function generateRepositoryGroupsRoute(parameter: IRepositorySettings)
+export function generateRepositorySettingsGroupsRoute(parameter: IRepositorySettings)
 {
     return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.GROUPS], parameter);
 }
