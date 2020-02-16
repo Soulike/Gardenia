@@ -86,11 +86,13 @@ export function generateRepositoryPullRequestsRoute(parameter: IRepositoryPullRe
 
 export function generateRepositoryCommitsRoute(parameter: IRepositoryCommits)
 {
-    const {username, repository, branch} = parameter;
-    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMITS]
+    const {username, repository, branch, path} = parameter;
+    const replacedStringWithoutPath = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMITS]
         .replace(':username', username)
         .replace(':repository', repository)
         .replace(':branch', branch);
+    return replacedStringWithoutPath.replace('/:path*',
+        typeof path === 'string' ? `/${path}` : '');
 }
 
 export function generateRepositoryCommitRoute(parameter: IRepositoryCommit)

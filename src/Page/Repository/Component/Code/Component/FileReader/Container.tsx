@@ -24,7 +24,6 @@ interface IState
 
 class FileReader extends PureComponent<Readonly<IProps>, IState>
 {
-
     constructor(props: Readonly<IProps>)
     {
         super(props);

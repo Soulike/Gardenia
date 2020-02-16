@@ -1,6 +1,17 @@
 .Commits {
     padding: 15px 0;
 
+    .infoWrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .path {
+            font-size: 16px;
+            font-weight: bolder;
+        }
+    }
+
     .timeLineWrapper {
         margin-top: 40px;
     }

@@ -5,8 +5,10 @@ import {Commit} from '../../../../../../Class';
 import {Alert, Button, Spin} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 import CommitInfoBar from '../CommitInfoBar';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
+import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 
-interface IProps
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
     isBinary: boolean,
     isOversize: boolean,
@@ -29,6 +31,7 @@ function FileReader(props: Readonly<IProps>)
         lastCommit,
         loading,
         onRawFileButtonClick,
+        match: {params: {username, repository: repositoryName, branch, path}},
     } = props;
     return (
         <div className={Style.FileReader}>
@@ -39,9 +42,18 @@ function FileReader(props: Readonly<IProps>)
                 <div className={Style.contentWrapper}>
                     <div className={Style.fileInfoBar}>
                         <div className={Style.fileName}>{fileName}</div>
-                        <div className={Style.buttonWrapper}>
+                        <Button.Group className={Style.buttonWrapper}>
+                            <Button>
+                                <Link to={RouterFunction.generateRepositoryCommitsRoute({
+                                    username,
+                                    repository: repositoryName,
+                                    branch: branch!,
+                                    path,
+                                })}>历史
+                                </Link>
+                            </Button>
                             <Button onClick={onRawFileButtonClick}>下载</Button>
-                        </div>
+                        </Button.Group>
                     </div>
                     {
                         exists ?
@@ -64,4 +76,4 @@ function FileReader(props: Readonly<IProps>)
     );
 }
 
-export default React.memo(FileReader);
+export default withRouter(React.memo(FileReader));

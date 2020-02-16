@@ -28,6 +28,7 @@ export interface IRepositoryPullRequests extends IRepositoryIssues {}
 export interface IRepositoryCommits extends IRepository
 {
     readonly branch: string,
+    readonly path?: string,
 }
 
 export interface IRepositoryCommit extends IRepository

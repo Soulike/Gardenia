@@ -59,19 +59,32 @@ class Commits extends PureComponent<IProps, IState>
 
     loadCommits = async () =>
     {
-        const {match: {params: {username, repository: repositoryName, branch}}} = this.props;
-        const result = await RepositoryInfo.commitHistory({username, name: repositoryName}, branch);
+        const {match: {params: {username, repository: repositoryName, branch, path}}} = this.props;
+        let result: { commits: Commit[] } | null;
+        if (typeof path === 'string')
+        {
+            result = await RepositoryInfo.fileCommitHistory({username, name: repositoryName}, path, branch);
+        }
+        else
+        {
+            result = await RepositoryInfo.commitHistory({username, name: repositoryName}, branch);
+        }
         if (result !== null)
         {
             const {commits} = result;
-            this.setState({commits: [...commits]});
+            this.setState({commits: commits});
         }
     };
 
     render()
     {
         const {branches, loading, commits} = this.state;
-        return (<View branches={branches} loading={loading} commits={commits} />);
+        const {match: {params: {repository: repositoryName, path}}} = this.props;
+        return (<View branches={branches}
+                      loading={loading}
+                      commits={commits}
+                      path={path}
+                      repositoryName={repositoryName} />);
     }
 }
 

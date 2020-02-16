@@ -10,20 +10,23 @@ interface IProps
 {
     branches: Readonly<Branch[]>;
     loading: boolean;
-    commits: Readonly<Commit[]>
+    commits: Readonly<Commit[]>;
+    repositoryName: string;
+    path?: string;
 }
 
 function Commits(props: IProps)
 {
-    const {branches, loading, commits} = props;
+    const {branches, loading, commits, path, repositoryName} = props;
     return (
         <div className={Style.Commits}>
             <Spin spinning={loading}>
-                <div className={Style.branchesButtonWrapper}>
+                <div className={Style.infoWrapper}>
                     <BranchMenu branches={branches} />
-                    <div className={Style.timeLineWrapper}>
-                        <CommitTimeline commits={commits} />
-                    </div>
+                    {typeof path === 'string' ? <div className={Style.path}>{repositoryName}/{path}</div> : null}
+                </div>
+                <div className={Style.timeLineWrapper}>
+                    <CommitTimeline commits={commits} />
                 </div>
             </Spin>
         </div>
