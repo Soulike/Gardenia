@@ -24,6 +24,8 @@ import {
     FILE_COMMIT_HISTORY_BETWEEN_COMMITS,
     FILE_DIFF_BETWEEN_COMMITS,
     FILE_INFO,
+    FORK_AMOUNT,
+    FORK_REPOSITORIES,
     GROUPS,
     LAST_COMMIT,
     RAW_FILE,
@@ -539,6 +541,60 @@ export async function fileCommit(repository: Pick<Repository, 'username' | 'name
             await axios.get(FILE_COMMIT, {
                 params: {
                     json: JSON.stringify({repository, filePath, commitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkAmount(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<{ amount: number }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
+            await axios.get(FORK_AMOUNT, {
+                params: {
+                    json: JSON.stringify(repository),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkRepositories(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<{ repositories: RepositoryClass[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ repositories: RepositoryClass[] }>> =
+            await axios.get(FORK_REPOSITORIES, {
+                params: {
+                    json: JSON.stringify(repository),
                 },
             });
         if (isSuccessful)

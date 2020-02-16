@@ -25,3 +25,5 @@ export const DIFF_BETWEEN_COMMITS = repositoryInfoPrefix('/diffBetweenCommits');
 export const FILE_DIFF_BETWEEN_COMMITS = repositoryInfoPrefix('/fileDiffBetweenCommits');
 export const COMMIT = repositoryInfoPrefix('/commit');
 export const FILE_COMMIT = repositoryInfoPrefix('/fileCommit');
+export const FORK_AMOUNT = repositoryInfoPrefix('/forkAmount');
+export const FORK_REPOSITORIES = repositoryInfoPrefix('/forkRepositories');
