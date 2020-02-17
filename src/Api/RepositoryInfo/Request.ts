@@ -25,6 +25,7 @@ import {
     FILE_DIFF_BETWEEN_COMMITS,
     FILE_INFO,
     FORK_AMOUNT,
+    FORK_FROM,
     FORK_REPOSITORIES,
     GROUPS,
     LAST_COMMIT,
@@ -593,6 +594,33 @@ export async function forkRepositories(repository: Readonly<Pick<RepositoryClass
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ repositories: RepositoryClass[] }>> =
             await axios.get(FORK_REPOSITORIES, {
+                params: {
+                    json: JSON.stringify(repository),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkFrom(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<{ repository: Pick<RepositoryClass, 'username' | 'name'> | null }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ repository: Pick<RepositoryClass, 'username' | 'name'> | null }>> =
+            await axios.get(FORK_FROM, {
                 params: {
                     json: JSON.stringify(repository),
                 },

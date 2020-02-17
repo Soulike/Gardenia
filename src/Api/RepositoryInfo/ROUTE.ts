@@ -27,3 +27,4 @@ export const COMMIT = repositoryInfoPrefix('/commit');
 export const FILE_COMMIT = repositoryInfoPrefix('/fileCommit');
 export const FORK_AMOUNT = repositoryInfoPrefix('/forkAmount');
 export const FORK_REPOSITORIES = repositoryInfoPrefix('/forkRepositories');
+export const FORK_FROM = repositoryInfoPrefix('/forkFrom');

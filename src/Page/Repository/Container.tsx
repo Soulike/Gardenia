@@ -25,7 +25,8 @@ interface IState
     repository: RepositoryClass,
     loading: boolean,
     tabActiveKey: TAB_KEY,
-    visitorProfile: Profile | null
+    visitorProfile: Profile | null,
+    forkFrom: Readonly<Pick<RepositoryClass, 'username' | 'name'>> | null;
 }
 
 class Repository extends PureComponent<Readonly<IProps>, IState>
@@ -38,6 +39,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
             loading: true,
             tabActiveKey: TAB_KEY.CODE,
             visitorProfile: null,
+            forkFrom: null,
         };
     }
 
@@ -47,7 +49,10 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         this.setTitle();
         this.setTabActiveKey();
         this.setState({loading: true});
-        await this.loadRepository();
+        await Promise.all([
+            this.loadRepository(),
+            this.loadForkFrom(),
+        ]);
         if (isLoggedIn)
         {
             await this.loadVisitorProfile();
@@ -95,6 +100,17 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         if (repository !== null)
         {
             this.setState({repository});
+        }
+    };
+
+    loadForkFrom = async () =>
+    {
+        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const result = await RepositoryInfo.forkFrom({username, name: repositoryName});
+        if (result !== null)
+        {
+            const {repository} = result;
+            this.setState({forkFrom: repository});
         }
     };
 
@@ -182,14 +198,14 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {repository, loading, tabActiveKey, visitorProfile} = this.state;
+        const {repository, loading, tabActiveKey, visitorProfile, forkFrom} = this.state;
         const {children, isLoggedIn} = this.props;
         return (
             <View showSettings={isLoggedIn && visitorProfile !== null && repository.username === visitorProfile.username}
                   repository={repository}
                   loading={loading}
                   onTabChange={this.onTabChange}
-                  tabActiveKey={tabActiveKey}>
+                  tabActiveKey={tabActiveKey} forkFrom={forkFrom}>
                 {children}
             </View>
         );

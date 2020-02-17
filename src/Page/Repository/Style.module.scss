@@ -14,11 +14,30 @@
 
         .basicInfo {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
 
-            .usernameAndName {
-                display: inline-block;
-                font-size: 1rem;
+            .usernameAndNameWrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .usernameAndName {
+                    font-size: 1rem;
+                    line-height: 1em;
+                }
+
+                .forkFrom {
+                    margin-top: 5px;
+                    font-size: 0.6rem;
+                    line-height: 1em;
+                    display: flex;
+                    align-items: center;
+
+                    .text {
+                        margin-right: 2px;
+                    }
+                }
+
             }
         }
     }
