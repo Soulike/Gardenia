@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 import TAB_KEY from './TAB_KEY';
 import {TabsProps} from 'antd/lib/tabs';
+import ForkButton from './Component/ForkButton';
 
 interface IProps
 {
@@ -44,6 +45,9 @@ function RepositoryView(props: Readonly<IProps>)
                             <b>{name}</b>
                         </Link>
                         </div>
+                    </div>
+                    <div className={Style.buttonWrapper}>
+                        <ForkButton />
                     </div>
                 </div>
                 <Tabs defaultActiveKey={TAB_KEY.CODE} type={'card'} className={Style.tab} tabBarStyle={{
