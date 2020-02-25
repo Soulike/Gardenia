@@ -13,7 +13,7 @@ const Root = React.lazy(() => import('../Component/Root'));
 export default () =>
 {
     return (
-        <BrowserRouter>
+        <BrowserRouter forceRefresh={true}>
             <Suspense fallback={<Loading />}>
                 <Root>
                     <Switch>
