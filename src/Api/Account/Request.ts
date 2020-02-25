@@ -54,7 +54,10 @@ export async function checkSession(): Promise<Readonly<{ isValid: boolean }> | n
 {
     try
     {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isValid: boolean }>> = await axios.get(CHECK_SESSION);
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isValid: boolean }>> =
+            await axios.get(CHECK_SESSION, {
+                params: {_t: Date.now()},   // 不允许缓存
+            });
         if (isSuccessful)
         {
             return data!;
