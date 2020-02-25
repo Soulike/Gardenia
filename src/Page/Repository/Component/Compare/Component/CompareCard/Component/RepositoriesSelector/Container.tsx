@@ -2,11 +2,9 @@ import React, {PureComponent} from 'react';
 import View from './View';
 import {SelectProps} from 'antd/lib/select';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG, Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../../Router';
 import {Repository} from '../../../../../../../../Class';
 import {RepositoryInfo} from '../../../../../../../../Api';
-
-const {PAGE_ID_TO_ROUTE, PAGE_ID} = CONFIG;
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCompare> {}
 
@@ -33,7 +31,6 @@ class RepositoriesSelector extends PureComponent<IProps, IState>
 
     async componentDidMount()
     {
-        this.checkURLParameters();
         this.setState({loading: true});
         await Promise.all([
             this.loadSourceRepositoryBranchNames(),
@@ -42,24 +39,6 @@ class RepositoriesSelector extends PureComponent<IProps, IState>
         ]);
         this.setState({loading: false});
     }
-
-    checkURLParameters = () =>
-    {
-        const {
-            match: {
-                params: {
-                    sourceRepositoryUsername, sourceRepositoryName,
-                    sourceRepositoryBranch, targetRepositoryBranch,
-                },
-            },
-            history,
-        } = this.props;
-        if (sourceRepositoryUsername === undefined || sourceRepositoryName === undefined
-            || sourceRepositoryBranch === undefined || targetRepositoryBranch === undefined)
-        {
-            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
-        }
-    };
 
     loadSourceRepositoryBranchNames = async () =>
     {
@@ -84,17 +63,12 @@ class RepositoriesSelector extends PureComponent<IProps, IState>
             match: {
                 params: {
                     sourceRepositoryUsername, sourceRepositoryName,
-                    repository: targetRepositoryName, username: targetRepositoryUsername,
                 },
             },
         } = this.props;
         const sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>> = {
             username: sourceRepositoryUsername,
             name: sourceRepositoryName,
-        };
-        const targetRepository: Readonly<Pick<Repository, 'username' | 'name'>> = {
-            username: targetRepositoryUsername,
-            name: targetRepositoryName,
         };
         const repositoryWrapper = await RepositoryInfo.forkFrom(sourceRepository);
         if (repositoryWrapper !== null)

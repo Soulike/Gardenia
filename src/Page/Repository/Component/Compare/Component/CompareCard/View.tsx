@@ -2,13 +2,9 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Card, Icon} from 'antd';
 import RepositoriesSelector from './Component/RepositoriesSelector';
+import IsMergeableIndicator from './Component/IsMergeableIndicator';
 
-interface IProps
-{
-
-}
-
-function CompareCard(props: IProps)
+function CompareCard()
 {
     return (
         <Card size={'small'}>
@@ -20,6 +16,9 @@ function CompareCard(props: IProps)
                     <div className={Style.repositoriesSelectorWrapper}>
                         <RepositoriesSelector />
                     </div>
+                </div>
+                <div className={Style.isMergeableIndicatorWrapper}>
+                    <IsMergeableIndicator />
                 </div>
             </div>
         </Card>
