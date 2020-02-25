@@ -11,7 +11,6 @@ import {
     IRepositoryPullRequests,
     IRepositorySettings,
 } from './Interface';
-import qs from 'querystring';
 
 export function generatePersonalCenterRoute(parameter: IPersonalCenter): string
 {
@@ -90,18 +89,16 @@ export function generateRepositoryCompareRoute(parameter: IRepositoryCompare)
 {
     const {
         username, repository,
-        sourceRepository: {username: sourceRepositoryUsername, name: sourceRepositoryName},
+        sourceRepositoryUsername, sourceRepositoryName,
         sourceRepositoryBranch, targetRepositoryBranch,
     } = parameter;
-    const url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMPARE]
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMPARE]
         .replace(':username', username)
-        .replace(':repository', repository);
-    return `${url}?${qs.encode({
-        sourceRepositoryUsername,
-        sourceRepositoryName,
-        sourceRepositoryBranch,
-        targetRepositoryBranch,
-    })}`;
+        .replace(':repository', repository)
+        .replace(':sourceRepositoryUsername', sourceRepositoryUsername)
+        .replace(':sourceRepositoryName', sourceRepositoryName)
+        .replace(':sourceRepositoryBranch', sourceRepositoryBranch)
+        .replace(':targetRepositoryBranch', targetRepositoryBranch);
 }
 
 export function generateRepositoryCommitsRoute(parameter: IRepositoryCommits)
