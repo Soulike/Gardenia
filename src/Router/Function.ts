@@ -6,10 +6,12 @@ import {
     IRepositoryCode,
     IRepositoryCommit,
     IRepositoryCommits,
+    IRepositoryCompare,
     IRepositoryIssues,
     IRepositoryPullRequests,
     IRepositorySettings,
 } from './Interface';
+import qs from 'querystring';
 
 export function generatePersonalCenterRoute(parameter: IPersonalCenter): string
 {
@@ -82,6 +84,24 @@ export function generateRepositoryPullRequestsRoute(parameter: IRepositoryPullRe
         url = url.replace('/:number?', '');
     }
     return url;
+}
+
+export function generateRepositoryCompareRoute(parameter: IRepositoryCompare)
+{
+    const {
+        username, repository,
+        sourceRepository: {username: sourceRepositoryUsername, name: sourceRepositoryName},
+        sourceRepositoryBranch, targetRepositoryBranch,
+    } = parameter;
+    const url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMPARE]
+        .replace(':username', username)
+        .replace(':repository', repository);
+    return `${url}?${qs.encode({
+        sourceRepositoryUsername,
+        sourceRepositoryName,
+        sourceRepositoryBranch,
+        targetRepositoryBranch,
+    })}`;
 }
 
 export function generateRepositoryCommitsRoute(parameter: IRepositoryCommits)

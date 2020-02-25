@@ -13,6 +13,7 @@ export const PAGE_ID_TO_ROUTE = Object.freeze({
     [PAGE_ID.REPOSITORY.REPOSITORY]: '/repository/:username/:repository',
     [PAGE_ID.REPOSITORY.ISSUES]: '/repository/:username/:repository/issues/:number?',
     [PAGE_ID.REPOSITORY.PULL_REQUESTS]: '/repository/:username/:repository/pulls/:number?',
+    [PAGE_ID.REPOSITORY.COMPARE]: '/repository/:username/:repository/compare',
     [PAGE_ID.REPOSITORY.CODE]: '/repository/:username/:repository/:objectType?/:branch?/:path*',
     [PAGE_ID.REPOSITORY.COMMITS]: '/repository/:username/:repository/:branch/commits/:path*',
     [PAGE_ID.REPOSITORY.COMMIT]: '/repository/:username/:repository/commit/:commitHash',

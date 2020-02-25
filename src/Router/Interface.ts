@@ -1,4 +1,5 @@
 import {ObjectType} from '../CONSTANT';
+import {Repository} from '../Class';
 
 export interface IPersonalCenter
 {
@@ -24,6 +25,13 @@ export interface IRepositoryIssues extends IRepository
 }
 
 export interface IRepositoryPullRequests extends IRepositoryIssues {}
+
+export interface IRepositoryCompare extends IRepository
+{
+    sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>;
+    sourceRepositoryBranch: string;
+    targetRepositoryBranch: string;
+}
 
 export interface IRepositoryCommits extends IRepository
 {
