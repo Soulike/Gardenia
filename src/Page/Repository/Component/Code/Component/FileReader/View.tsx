@@ -7,6 +7,7 @@ import {ButtonProps} from 'antd/lib/button';
 import CommitInfoBar from '../CommitInfoBar';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
+import HTMLPreviewer from '../../../../../../Component/HTMLPreviewer';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -67,7 +68,7 @@ function FileReader(props: Readonly<IProps>)
                                            showIcon={true}
                                            message={'文件太大'}
                                            description={'你可以直接查看原文件'} /> :
-                                    <div className={Style.content} dangerouslySetInnerHTML={{__html: html}} /> :
+                                    (<HTMLPreviewer html={html} processing={loading} />) :
                             <Alert type={'error'} showIcon={true} message={'文件不存在'} />
                     }
                 </div>
