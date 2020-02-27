@@ -5,7 +5,15 @@
 
     }
 
-    .detail {
+    .detailWrapper {
         margin-top: 15px;
+
+        .detailTabs {
+            margin-top: 15px;
+
+            .pullRequestCommitsWrapper {
+                margin-top: 15px;
+            }
+        }
     }
 }

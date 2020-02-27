@@ -26,6 +26,8 @@ import {
     FILE_DIFF_BETWEEN_COMMITS,
     FILE_INFO,
     FORK_AMOUNT,
+    FORK_COMMIT_HISTORY,
+    FORK_FILE_DIFF,
     FORK_FROM,
     FORK_REPOSITORIES,
     GROUPS,
@@ -651,6 +653,70 @@ export async function forkFrom(repository: Readonly<Pick<RepositoryClass, 'usern
             await axios.get(FORK_FROM, {
                 params: {
                     json: JSON.stringify(repository),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkCommitHistory(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string): Promise<Readonly<{ commits: Commit[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[] }>> =
+            await axios.get(FORK_COMMIT_HISTORY, {
+                params: {
+                    json: JSON.stringify({
+                        sourceRepository,
+                        sourceRepositoryBranch,
+                        targetRepository,
+                        targetRepositoryBranch,
+                    }),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkFileDiff(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string): Promise<Readonly<{ fileDiffs: FileDiff[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ fileDiffs: FileDiff[] }>> =
+            await axios.get(FORK_FILE_DIFF, {
+                params: {
+                    json: JSON.stringify({
+                        sourceRepository,
+                        sourceRepositoryBranch,
+                        targetRepository,
+                        targetRepositoryBranch,
+                    }),
                 },
             });
         if (isSuccessful)
