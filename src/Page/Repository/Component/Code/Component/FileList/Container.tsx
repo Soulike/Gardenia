@@ -41,9 +41,20 @@ class FileList extends Component<IProps, IState>
     {
         const {match: {params: {branch: preBranch, path: prePath}}} = prevProps;
         const {match: {params: {branch, path}}} = this.props;
-        if (preBranch !== branch || prePath !== path)
+        if (preBranch !== branch)
         {
-            await this.componentDidMount();
+            this.setState({loading: true});
+            await Promise.all([
+                this.loadDirectory(),
+                this.loadLastCommit(),
+            ]);
+            this.setState({loading: false});
+        }
+        else if (prePath !== path)
+        {
+            this.setState({loading: true});
+            await this.loadDirectory();
+            this.setState({loading: false});
         }
     }
 
