@@ -2,7 +2,7 @@ import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {RouteComponentProps} from 'react-router-dom';
 import {Profile, Repository as RepositoryClass} from '../../Class';
-import {Profile as ProfileApi, RepositoryInfo} from '../../Api';
+import {Profile as ProfileApi, PullRequest as PullRequestApi, RepositoryInfo} from '../../Api';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {TabsProps} from 'antd/lib/tabs';
 import TAB_KEY from './TAB_KEY';
@@ -27,6 +27,7 @@ interface IState
     tabActiveKey: TAB_KEY,
     visitorProfile: Profile | null,
     forkFrom: Readonly<Pick<RepositoryClass, 'username' | 'name'>> | null;
+    openPullRequestAmount: number;
 }
 
 class Repository extends PureComponent<Readonly<IProps>, IState>
@@ -40,6 +41,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
             tabActiveKey: TAB_KEY.CODE,
             visitorProfile: null,
             forkFrom: null,
+            openPullRequestAmount: 0,
         };
     }
 
@@ -52,6 +54,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         await Promise.all([
             this.loadRepository(),
             this.loadForkFrom(),
+            this.loadPullRequestAmount(),
         ]);
         if (isLoggedIn)
         {
@@ -90,6 +93,17 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
     {
         const {match: {params: {username, repository: name}}} = this.props;
         document.title = `${username}/${name} - ${CONFIG.NAME}`;
+    };
+
+    loadPullRequestAmount = async () =>
+    {
+        const {match: {params: {username, repository: name}}} = this.props;
+        const amountWrapper = await PullRequestApi.getOpenPullRequestAmount({username, name});
+        if (amountWrapper !== null)
+        {
+            const {amount} = amountWrapper;
+            this.setState({openPullRequestAmount: amount});
+        }
     };
 
     loadRepository = async () =>
@@ -198,14 +212,14 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {repository, loading, tabActiveKey, visitorProfile, forkFrom} = this.state;
+        const {repository, loading, tabActiveKey, visitorProfile, forkFrom, openPullRequestAmount} = this.state;
         const {children, isLoggedIn} = this.props;
         return (
             <View showSettings={isLoggedIn && visitorProfile !== null && repository.username === visitorProfile.username}
                   repository={repository}
                   loading={loading}
                   onTabChange={this.onTabChange}
-                  tabActiveKey={tabActiveKey} forkFrom={forkFrom}>
+                  tabActiveKey={tabActiveKey} forkFrom={forkFrom} openPullRequestAmount={openPullRequestAmount}>
                 {children}
             </View>
         );

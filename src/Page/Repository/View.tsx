@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import Style from './Style.module.scss';
 import {Repository as RepositoryClass} from '../../Class';
-import {Icon, Tabs} from 'antd';
+import {Icon, Tabs, Tag} from 'antd';
 import AccessibilityTag from '../../Component/AccessibilityTag';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
@@ -18,6 +18,7 @@ interface IProps
     showSettings: boolean,
     children: ReactNode,
     forkFrom: Readonly<Pick<RepositoryClass, 'username' | 'name'>> | null,
+    openPullRequestAmount: number,
 }
 
 function RepositoryView(props: Readonly<IProps>)
@@ -30,6 +31,7 @@ function RepositoryView(props: Readonly<IProps>)
         tabActiveKey,
         showSettings,
         children,
+        openPullRequestAmount,
     } = props;
     return (
         loading ? null :
@@ -90,7 +92,8 @@ function RepositoryView(props: Readonly<IProps>)
                         </div>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab={
-                        <><Icon type="pull-request" />Pull Requests</>
+                        <><Icon type="pull-request" />Pull
+                                                      Requests <Tag className={Style.tag}>{openPullRequestAmount}</Tag></>
                     } key={TAB_KEY.PULL_REQUESTS}>
                         <div className={Style.tabContent}>
                             {children}
