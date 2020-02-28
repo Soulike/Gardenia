@@ -15,7 +15,9 @@ export default () =>
         <Switch>
             <Suspense fallback={<Loading />}>
                 <Route path={[
+                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUE],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUES],
+                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUEST],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMPARE],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMIT],
@@ -29,8 +31,14 @@ export default () =>
                     return (
                         <Repository {...props}>
                             <Switch>
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUE]}
+                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.ISSUE]}
+                                       exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUES]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.ISSUES]}
+                                       exact={true} />
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUEST]}
+                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.PULL_REQUEST]}
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.PULL_REQUESTS]}

@@ -10,7 +10,7 @@ import {
     GET_BY_REPOSITORY,
     GET_COMMENTS,
     GET_CONFLICTS,
-    GET_OPEN_PULL_REQUEST_AMOUNT,
+    GET_PULL_REQUEST_AMOUNT,
     IS_MERGEABLE,
     MERGE,
     REOPEN,
@@ -189,14 +189,14 @@ export async function get(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promi
     }
 }
 
-export async function getByRepository(repository: Readonly<Pick<Repository, 'username' | 'name'>>, status: PULL_REQUEST_STATUS | undefined): Promise<{ pullRequests: PullRequest[] } | null>
+export async function getByRepository(repository: Readonly<Pick<Repository, 'username' | 'name'>>, status: PULL_REQUEST_STATUS | undefined, offset: number, limit: number): Promise<{ pullRequests: PullRequest[] } | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ pullRequests: PullRequest[] }>> =
             await axios.get(GET_BY_REPOSITORY, {
                 params: {
-                    json: JSON.stringify({repository, status}),
+                    json: JSON.stringify({repository, status, offset, limit}),
                 },
             });
         if (isSuccessful)
@@ -216,14 +216,14 @@ export async function getByRepository(repository: Readonly<Pick<Repository, 'use
     }
 }
 
-export async function getOpenPullRequestAmount(repository: Readonly<Pick<Repository, 'username' | 'name'>>): Promise<{ amount: number } | null>
+export async function getPullRequestAmount(repository: Readonly<Pick<Repository, 'username' | 'name'>>, status: PULL_REQUEST_STATUS | undefined): Promise<{ amount: number } | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
-            await axios.get(GET_OPEN_PULL_REQUEST_AMOUNT, {
+            await axios.get(GET_PULL_REQUEST_AMOUNT, {
                 params: {
-                    json: JSON.stringify(repository),
+                    json: JSON.stringify({repository, status}),
                 },
             });
         if (isSuccessful)

@@ -10,6 +10,7 @@ import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {connect} from 'react-redux';
 import {IRootState, IState as StoreState} from '../../Store';
 import CONFIG from '../../CONFIG';
+import {PULL_REQUEST_STATUS} from '../../CONSTANT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode
     | RouterInterface.IRepositoryIssues
@@ -54,7 +55,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         await Promise.all([
             this.loadRepository(),
             this.loadForkFrom(),
-            this.loadPullRequestAmount(),
+            this.loadOpenPullRequestAmount(),
         ]);
         if (isLoggedIn)
         {
@@ -95,10 +96,10 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         document.title = `${username}/${name} - ${CONFIG.NAME}`;
     };
 
-    loadPullRequestAmount = async () =>
+    loadOpenPullRequestAmount = async () =>
     {
         const {match: {params: {username, repository: name}}} = this.props;
-        const amountWrapper = await PullRequestApi.getOpenPullRequestAmount({username, name});
+        const amountWrapper = await PullRequestApi.getPullRequestAmount({username, name}, PULL_REQUEST_STATUS.OPEN);
         if (amountWrapper !== null)
         {
             const {amount} = amountWrapper;
@@ -142,7 +143,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
     setTabActiveKey = () =>
     {
         const {match: {path}} = this.props;
-        const {REPOSITORY: {REPOSITORY, CODE, ISSUES, PULL_REQUESTS, SETTINGS}} = PAGE_ID;
+        const {REPOSITORY: {REPOSITORY, CODE, ISSUES, ISSUE, PULL_REQUESTS, PULL_REQUEST, SETTINGS}} = PAGE_ID;
         switch (path)
         {
             case PAGE_ID_TO_ROUTE[CODE]:
@@ -153,6 +154,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
                 });
                 break;
             }
+            case PAGE_ID_TO_ROUTE[ISSUE]:
             case PAGE_ID_TO_ROUTE[ISSUES]:
             {
                 this.setState({
@@ -160,6 +162,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
                 });
                 break;
             }
+            case PAGE_ID_TO_ROUTE[PULL_REQUEST]:
             case PAGE_ID_TO_ROUTE[PULL_REQUESTS]:
             {
                 this.setState({

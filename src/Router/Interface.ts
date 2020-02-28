@@ -18,12 +18,19 @@ export interface IRepositoryCode extends IRepository
     readonly path?: string,
 }
 
-export interface IRepositoryIssues extends IRepository
+export interface IRepositoryIssues extends IRepository {}
+
+export interface IRepositoryIssue extends IRepository
 {
-    readonly number?: string,
+    readonly id: string,
 }
 
-export interface IRepositoryPullRequests extends IRepositoryIssues {}
+export interface IRepositoryPullRequests extends IRepository {}
+
+export interface IRepositoryPullRequest extends IRepository
+{
+    readonly id: string,
+}
 
 export interface IRepositoryCompare extends IRepository
 {

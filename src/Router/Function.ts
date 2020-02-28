@@ -7,7 +7,9 @@ import {
     IRepositoryCommit,
     IRepositoryCommits,
     IRepositoryCompare,
+    IRepositoryIssue,
     IRepositoryIssues,
+    IRepositoryPullRequest,
     IRepositoryPullRequests,
     IRepositorySettings,
 } from './Interface';
@@ -53,36 +55,36 @@ export function generateRepositoryCodeRoute(parameter: IRepositoryCode)
 
 export function generateRepositoryIssuesRoute(parameter: IRepositoryIssues)
 {
-    const {username, repository, number} = parameter;
-    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUES]
+    const {username, repository} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUES]
         .replace(':username', username)
         .replace(':repository', repository);
-    if (number !== undefined)
-    {
-        url = url.replace(':number?', number);
-    }
-    else
-    {
-        url = url.replace('/:number?', '');
-    }
-    return url;
+}
+
+export function generateRepositoryIssueRoute(parameter: IRepositoryIssue)
+{
+    const {username, repository, id} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUE]
+        .replace(':username', username)
+        .replace(':repository', repository)
+        .replace(':id', id);
 }
 
 export function generateRepositoryPullRequestsRoute(parameter: IRepositoryPullRequests)
 {
-    const {username, repository, number} = parameter;
-    let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS]
+    const {username, repository} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS]
         .replace(':username', username)
         .replace(':repository', repository);
-    if (number !== undefined)
-    {
-        url = url.replace(':number?', number);
-    }
-    else
-    {
-        url = url.replace('/:number?', '');
-    }
-    return url;
+}
+
+export function generateRepositoryPullRequestRoute(parameter: IRepositoryPullRequest)
+{
+    const {username, repository, id} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUEST]
+        .replace(':username', username)
+        .replace(':repository', repository)
+        .replace(':id', id);
 }
 
 export function generateRepositoryCompareRoute(parameter: IRepositoryCompare)
