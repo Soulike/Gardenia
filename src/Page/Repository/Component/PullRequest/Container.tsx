@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG, Interface as RouterInterface} from '../../../../Router';
@@ -16,7 +16,7 @@ interface IState
     loading: boolean,
 }
 
-class PullRequest extends Component<IProps, IState>
+class PullRequest extends PureComponent<IProps, IState>
 {
     constructor(props: IProps)
     {
@@ -32,6 +32,16 @@ class PullRequest extends Component<IProps, IState>
         this.setState({loading: true});
         await this.loadPullRequest();
         this.setState({loading: false});
+    }
+
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    {
+        const {match: {params: {no, repository: repositoryName, username}}} = this.props;
+        const {match: {params: {no: prevNo, repository: prevRepositoryName, username: prevUsername}}} = this.props;
+        if (no !== prevNo || repositoryName !== prevRepositoryName || username !== prevUsername)
+        {
+            await this.componentDidMount();
+        }
     }
 
     loadPullRequest = async () =>

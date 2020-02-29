@@ -32,6 +32,16 @@ class Commits extends PureComponent<IProps, IState>
         this.setState({loading: false});
     }
 
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    {
+        const {pullRequest} = this.props;
+        const {pullRequest: prevPullRequest} = prevProps;
+        if (pullRequest !== prevPullRequest)
+        {
+            await this.componentDidMount();
+        }
+    }
+
     loadCommits = async () =>
     {
         const {
