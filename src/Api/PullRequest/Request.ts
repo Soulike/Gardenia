@@ -162,14 +162,14 @@ export async function merge(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Pro
     }
 }
 
-export async function get(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<PullRequest | null>
+export async function get(repository: Readonly<Pick<Repository, 'username' | 'name'>>, pullRequest: Readonly<Pick<PullRequest, 'no'>>): Promise<PullRequest | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<PullRequest>> =
             await axios.get(GET, {
                 params: {
-                    json: JSON.stringify(pullRequest),
+                    json: JSON.stringify({repository, pullRequest}),
                 },
             });
         if (isSuccessful)

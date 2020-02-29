@@ -22,14 +22,14 @@ export interface IRepositoryIssues extends IRepository {}
 
 export interface IRepositoryIssue extends IRepository
 {
-    readonly id: string,
+    readonly no: string,
 }
 
 export interface IRepositoryPullRequests extends IRepository {}
 
 export interface IRepositoryPullRequest extends IRepository
 {
-    readonly id: string,
+    readonly no: string,
 }
 
 export interface IRepositoryCompare extends IRepository

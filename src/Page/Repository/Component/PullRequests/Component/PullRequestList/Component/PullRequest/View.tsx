@@ -16,7 +16,7 @@ function PullRequest(props: IProps)
 {
     const {
         pullRequest: {
-            id, title, status, creationTime, no,
+            title, status, creationTime, no,
             sourceRepositoryUsername, targetRepositoryUsername, targetRepositoryName,
         },
     } = props;
@@ -29,7 +29,7 @@ function PullRequest(props: IProps)
                 <Link to={RouterFunction.generateRepositoryPullRequestRoute({
                     username: targetRepositoryUsername,
                     repository: targetRepositoryName,
-                    id: id!.toString(),
+                    no: no!.toString(),
                 })}>
                     <div className={Style.title}>{title}</div>
                 </Link>

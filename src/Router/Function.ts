@@ -63,11 +63,11 @@ export function generateRepositoryIssuesRoute(parameter: IRepositoryIssues)
 
 export function generateRepositoryIssueRoute(parameter: IRepositoryIssue)
 {
-    const {username, repository, id} = parameter;
+    const {username, repository, no} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUE]
         .replace(':username', username)
         .replace(':repository', repository)
-        .replace(':id', id);
+        .replace(':no', no);
 }
 
 export function generateRepositoryPullRequestsRoute(parameter: IRepositoryPullRequests)
@@ -80,11 +80,11 @@ export function generateRepositoryPullRequestsRoute(parameter: IRepositoryPullRe
 
 export function generateRepositoryPullRequestRoute(parameter: IRepositoryPullRequest)
 {
-    const {username, repository, id} = parameter;
+    const {username, repository, no} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUEST]
         .replace(':username', username)
         .replace(':repository', repository)
-        .replace(':id', id);
+        .replace(':no', no);
 }
 
 export function generateRepositoryCompareRoute(parameter: IRepositoryCompare)
