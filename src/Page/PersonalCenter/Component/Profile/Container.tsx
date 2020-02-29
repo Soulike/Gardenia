@@ -25,10 +25,19 @@ class Profile extends PureComponent<Readonly<IProps>, IState>
         };
     }
 
-
     async componentDidMount()
     {
         await this.loadProfile();
+    }
+
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    {
+        const {match: {params: {username}}} = this.props;
+        const {match: {params: {username: prevUsername}}} = prevProps;
+        if (username !== prevUsername)
+        {
+            await this.componentDidMount();
+        }
     }
 
     loadProfile = async () =>

@@ -53,11 +53,15 @@ class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {location: {search}} = this.props;
-        const {location: {search: prevSearch}} = prevProps;
+        const {location: {search}, match: {params: {username}}} = this.props;
+        const {location: {search: prevSearch}, match: {params: {username: prevUsername}}} = prevProps;
         if (search !== prevSearch)
         {
             this.setActiveTabKey();
+        }
+        if (username !== prevUsername)
+        {
+            this.componentDidMount();
         }
     }
 
