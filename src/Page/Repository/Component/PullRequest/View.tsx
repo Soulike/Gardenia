@@ -4,6 +4,7 @@ import {Icon, Spin, Tabs} from 'antd';
 import {PullRequest as PullRequestClass} from '../../../../Class';
 import PullRequestInfo from './Component/PullRequestInfo';
 import Commits from './Component/Commits';
+import FileChanged from './Component/FileChanged';
 
 interface IProps
 {
@@ -31,7 +32,9 @@ function PullRequest(props: IProps)
                             </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane key={'fileChanged'} tab={<div><Icon type="diff" />文件修改</div>}>
-
+                            <div className={Style.fileChangedWrapper}>
+                                <FileChanged pullRequest={pullRequest} />
+                            </div>
                         </Tabs.TabPane>
                     </Tabs>
                 </div>
