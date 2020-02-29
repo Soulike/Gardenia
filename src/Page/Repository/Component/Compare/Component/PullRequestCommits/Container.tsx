@@ -31,6 +31,39 @@ class PullRequestCommits extends PureComponent<IProps, IState>
         this.setState({loading: false});
     }
 
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    {
+        const {
+            match: {
+                params: {
+                    username: targetRepositoryUsername, repository: targetRepositoryName,
+                    targetRepositoryBranch,
+                    sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
+                },
+            },
+        } = this.props;
+        const {
+            match: {
+                params: {
+                    username: prevTargetRepositoryUsername, repository: prevTargetRepositoryName,
+                    targetRepositoryBranch: prevTargetRepositoryBranch,
+                    sourceRepositoryUsername: prevSourceRepositoryUsername,
+                    sourceRepositoryName: prevSourceRepositoryName,
+                    sourceRepositoryBranch: prevSourceRepositoryBranch,
+                },
+            },
+        } = prevProps;
+        if (targetRepositoryUsername !== prevTargetRepositoryUsername
+            || targetRepositoryName !== prevTargetRepositoryName
+            || targetRepositoryBranch !== prevTargetRepositoryBranch
+            || sourceRepositoryUsername !== prevSourceRepositoryUsername
+            || sourceRepositoryName !== prevSourceRepositoryName
+            || sourceRepositoryBranch !== prevSourceRepositoryBranch)
+        {
+            await this.componentDidMount();
+        }
+    }
+
     loadCommits = async () =>
     {
         const {
