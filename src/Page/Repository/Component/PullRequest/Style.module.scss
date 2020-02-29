@@ -1,3 +1,11 @@
 .PullRequest {
     margin: 15px 0;
+
+    .tabsWrapper {
+        margin-top: 15px;
+
+        .commitsWrapper {
+            margin: 15px 0;
+        }
+    }
 }

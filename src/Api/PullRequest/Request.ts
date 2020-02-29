@@ -289,14 +289,14 @@ export async function updateComment(primaryKey: Readonly<Pick<PullRequestComment
     }
 }
 
-export async function getComments(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ comments: PullRequestComment[] } | null>
+export async function getComments(repository: Readonly<Pick<Repository, 'username' | 'name'>>, pullRequest: Readonly<Pick<PullRequest, 'no'>>): Promise<{ comments: PullRequestComment[] } | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ comments: PullRequestComment[] }>> =
             await axios.get(GET_COMMENTS, {
                 params: {
-                    json: JSON.stringify({pullRequest}),
+                    json: JSON.stringify({repository, pullRequest}),
                 },
             });
         if (isSuccessful)

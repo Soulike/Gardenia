@@ -1,8 +1,8 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG, Interface as RouterInterface} from '../../../../Router';
-import {PullRequest as PullRequestClass, PullRequestComment} from '../../../../Class';
+import {PullRequest as PullRequestClass} from '../../../../Class';
 import {PULL_REQUEST_STATUS} from '../../../../CONSTANT';
 import {PullRequest as PullRequestApi} from '../../../../Api';
 
@@ -13,18 +13,16 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequ
 interface IState
 {
     pullRequest: PullRequestClass,
-    comments: PullRequestComment[],
     loading: boolean,
 }
 
-class PullRequest extends PureComponent<IProps, IState>
+class PullRequest extends Component<IProps, IState>
 {
     constructor(props: IProps)
     {
         super(props);
         this.state = {
             pullRequest: new PullRequestClass(0, 0, '', '', '', '', '', '', 0, 0, ',', '', PULL_REQUEST_STATUS.OPEN),
-            comments: [],
             loading: false,
         };
     }
@@ -33,7 +31,6 @@ class PullRequest extends PureComponent<IProps, IState>
     {
         this.setState({loading: true});
         await this.loadPullRequest();
-        await this.loadComments();   // 评论加载依赖 PR 信息
         this.setState({loading: false});
     }
 
@@ -52,21 +49,10 @@ class PullRequest extends PureComponent<IProps, IState>
         }
     };
 
-    loadComments = async () =>
-    {
-        const {pullRequest: {id}} = this.state;
-        const pullRequestCommentsWrapper = await PullRequestApi.getComments({id});
-        if (pullRequestCommentsWrapper !== null)
-        {
-            const {comments} = pullRequestCommentsWrapper;
-            this.setState({comments});
-        }
-    };
-
     render()
     {
-        const {loading, pullRequest, comments} = this.state;
-        return (<View loading={loading} pullRequest={pullRequest} comments={comments} />);
+        const {loading, pullRequest} = this.state;
+        return (<View loading={loading} pullRequest={pullRequest} />);
     }
 }
 

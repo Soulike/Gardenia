@@ -1,14 +1,14 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Spin} from 'antd';
-import {PullRequest as PullRequestClass, PullRequestComment} from '../../../../Class';
+import {Icon, Spin, Tabs} from 'antd';
+import {PullRequest as PullRequestClass} from '../../../../Class';
 import PullRequestInfo from './Component/PullRequestInfo';
+import Commits from './Component/Commits';
 
 interface IProps
 {
     loading: boolean,
     pullRequest: PullRequestClass,
-    comments: PullRequestComment[],
 }
 
 function PullRequest(props: IProps)
@@ -19,6 +19,21 @@ function PullRequest(props: IProps)
             <Spin spinning={loading}>
                 <div className={Style.infoWrapper}>
                     <PullRequestInfo pullRequest={pullRequest} />
+                </div>
+                <div className={Style.tabsWrapper}>
+                    <Tabs type={'card'} defaultActiveKey={'comments'}>
+                        <Tabs.TabPane key={'comments'} tab={<div><Icon type="message" />讨论</div>}>
+
+                        </Tabs.TabPane>
+                        <Tabs.TabPane key={'commits'} tab={<div><Icon type="bars" />提交</div>}>
+                            <div className={Style.commitsWrapper}>
+                                <Commits pullRequest={pullRequest} />
+                            </div>
+                        </Tabs.TabPane>
+                        <Tabs.TabPane key={'fileChanged'} tab={<div><Icon type="diff" />文件修改</div>}>
+
+                        </Tabs.TabPane>
+                    </Tabs>
                 </div>
             </Spin>
         </div>
