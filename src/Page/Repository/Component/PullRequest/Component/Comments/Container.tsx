@@ -1,10 +1,10 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {FileDiff, PullRequest} from '../../../../../../Class';
-import {PullRequest as PullRequestApi, RepositoryInfo} from '../../../../../../Api';
+import {PullRequest, PullRequestComment} from '../../../../../../Class';
+import {PullRequest as PullRequestApi} from '../../../../../../Api';
 import {PULL_REQUEST_STATUS} from '../../../../../../CONSTANT';
-import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
@@ -12,18 +12,18 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequ
 
 interface IState
 {
-    fileDiffs: FileDiff[],
-    loading: boolean,
-    pullRequest: PullRequest,
+    pullRequest: PullRequest;
+    pullRequestComments: PullRequestComment[];
+    loading: boolean;
 }
 
-class FileChanged extends PureComponent<IProps, IState>
+class Comments extends PureComponent<IProps, IState>
 {
     constructor(props: IProps)
     {
         super(props);
         this.state = {
-            fileDiffs: [],
+            pullRequestComments: [],
             loading: false,
             pullRequest: new PullRequest(0, 0, '', '', '', '', '', '', 0, 0, '', '', PULL_REQUEST_STATUS.OPEN),
         };
@@ -33,7 +33,7 @@ class FileChanged extends PureComponent<IProps, IState>
     {
         this.setState({loading: true});
         await this.loadPullRequest();
-        await this.loadFileDiffs();
+        await this.loadPullRequestComments();
         this.setState({loading: false});
     }
 
@@ -58,38 +58,29 @@ class FileChanged extends PureComponent<IProps, IState>
         const pullRequest = await PullRequestApi.get({username, name: repositoryName}, {no});
         if (pullRequest !== null)
         {
-            return new Promise(resolve =>
-            {
-                this.setState({pullRequest}, resolve);
-            });
+            this.setState({pullRequest});
         }
     };
 
-    loadFileDiffs = async () =>
+    loadPullRequestComments = async () =>
     {
-        const {
-            pullRequest: {
-                sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                targetRepositoryUsername, targetRepositoryName, targetRepositoryBranch,
-            },
-        } = this.state;
-        const fileDiffsWrapper = await RepositoryInfo.forkFileDiff(
-            {username: sourceRepositoryUsername, name: sourceRepositoryName},
-            sourceRepositoryBranch,
+        const {pullRequest: {targetRepositoryUsername, targetRepositoryName, no}} = this.state;
+        const pullRequestCommentsWrapper = await PullRequestApi.getComments(
             {username: targetRepositoryUsername, name: targetRepositoryName},
-            targetRepositoryBranch);
-        if (fileDiffsWrapper !== null)
+            {no},
+        );
+        if (pullRequestCommentsWrapper !== null)
         {
-            const {fileDiffs} = fileDiffsWrapper;
-            this.setState({fileDiffs});
+            const {comments} = pullRequestCommentsWrapper;
+            this.setState({pullRequestComments: comments});
         }
     };
 
     render()
     {
-        const {fileDiffs, loading} = this.state;
-        return (<View fileDiffs={fileDiffs} loading={loading} />);
+        const {pullRequestComments, loading, pullRequest} = this.state;
+        return (<View loading={loading} pullRequestComments={pullRequestComments} pullRequest={pullRequest} />);
     }
 }
 
-export default withRouter(FileChanged);
+export default withRouter(Comments);

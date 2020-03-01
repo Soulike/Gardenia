@@ -5,6 +5,7 @@ import {PullRequest as PullRequestClass} from '../../../../Class';
 import PullRequestInfo from './Component/PullRequestInfo';
 import Commits from './Component/Commits';
 import FileChanged from './Component/FileChanged';
+import Comments from './Component/Comments';
 
 interface IProps
 {
@@ -24,16 +25,18 @@ function PullRequest(props: IProps)
                 <div className={Style.tabsWrapper}>
                     <Tabs type={'card'} defaultActiveKey={'comments'}>
                         <Tabs.TabPane key={'comments'} tab={<div><Icon type="message" />讨论</div>}>
-
+                            <div className={Style.commentsWrapper}>
+                                <Comments />
+                            </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane key={'commits'} tab={<div><Icon type="bars" />提交</div>}>
                             <div className={Style.commitsWrapper}>
-                                <Commits pullRequest={pullRequest} />
+                                <Commits />
                             </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane key={'fileChanged'} tab={<div><Icon type="diff" />文件修改</div>}>
                             <div className={Style.fileChangedWrapper}>
-                                <FileChanged pullRequest={pullRequest} />
+                                <FileChanged />
                             </div>
                         </Tabs.TabPane>
                     </Tabs>
