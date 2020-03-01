@@ -122,14 +122,14 @@ export async function branchNames(repository: Readonly<Pick<RepositoryClass, 'us
     }
 }
 
-export async function lastCommit(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<RepositoryClass, 'name'>>, commitHash: Readonly<string>, filePath?: Readonly<string>): Promise<Readonly<Commit> | null>
+export async function lastCommit(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<RepositoryClass, 'name'>>, branch: Readonly<string>, filePath?: Readonly<string>): Promise<Readonly<Commit> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Commit>> =
             await axios.get(LAST_COMMIT, {
                 params: {
-                    json: JSON.stringify({account, repository, commitHash, filePath}),
+                    json: JSON.stringify({account, repository, branch, filePath}),
                 },
             });
         if (isSuccessful)
