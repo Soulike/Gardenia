@@ -14,6 +14,7 @@ interface IState
 {
     pullRequest: PullRequestClass,
     loading: boolean,
+    isMergeable: boolean,
 }
 
 class PullRequest extends PureComponent<IProps, IState>
@@ -24,6 +25,7 @@ class PullRequest extends PureComponent<IProps, IState>
         this.state = {
             pullRequest: new PullRequestClass(0, 0, '', '', '', '', '', '', 0, 0, ',', '', PULL_REQUEST_STATUS.OPEN),
             loading: false,
+            isMergeable: false,
         };
     }
 

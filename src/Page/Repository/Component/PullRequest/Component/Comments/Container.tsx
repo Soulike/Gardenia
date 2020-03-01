@@ -15,6 +15,7 @@ interface IState
     pullRequest: PullRequest;
     pullRequestComments: PullRequestComment[];
     loading: boolean;
+    isMergeable: boolean;
 }
 
 class Comments extends PureComponent<IProps, IState>
@@ -26,6 +27,7 @@ class Comments extends PureComponent<IProps, IState>
             pullRequestComments: [],
             loading: false,
             pullRequest: new PullRequest(0, 0, '', '', '', '', '', '', 0, 0, '', '', PULL_REQUEST_STATUS.OPEN),
+            isMergeable: false,
         };
     }
 
@@ -33,6 +35,7 @@ class Comments extends PureComponent<IProps, IState>
     {
         this.setState({loading: true});
         await this.loadPullRequest();
+        await this.loadIsMergeable();
         await this.loadPullRequestComments();
         this.setState({loading: false});
     }
@@ -76,10 +79,24 @@ class Comments extends PureComponent<IProps, IState>
         }
     };
 
+    loadIsMergeable = async () =>
+    {
+        const {pullRequest: {id}} = this.state;
+        const isMergeableWrapper = await PullRequestApi.isMergeable({id});
+        if (isMergeableWrapper !== null)
+        {
+            const {isMergeable} = isMergeableWrapper;
+            this.setState({isMergeable});
+        }
+    };
+
     render()
     {
-        const {pullRequestComments, loading, pullRequest} = this.state;
-        return (<View loading={loading} pullRequestComments={pullRequestComments} pullRequest={pullRequest} />);
+        const {pullRequestComments, loading, pullRequest, isMergeable} = this.state;
+        return (<View isMergeable={isMergeable}
+                      loading={loading}
+                      pullRequestComments={pullRequestComments}
+                      pullRequest={pullRequest} />);
     }
 }
 
