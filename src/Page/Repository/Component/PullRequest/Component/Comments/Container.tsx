@@ -1,24 +1,27 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import View from './View';
-import {PullRequest, PullRequestComment} from '../../../../../../Class';
+import {PullRequestComment} from '../../../../../../Class';
 import {PullRequest as PullRequestApi} from '../../../../../../Api';
 import {PULL_REQUEST_STATUS} from '../../../../../../CONSTANT';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
+import {Interface as RouterInterface} from '../../../../../../Router';
+import {IPullRequestState, IState as StoreState} from '../../../../../../Store';
+import {connect} from 'react-redux';
 
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
-
-interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequest> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequest>
+{
+    pullRequest: IPullRequestState['pullRequest'],
+    loading: IPullRequestState['loading'],
+}
 
 interface IState
 {
-    pullRequest: PullRequest;
     pullRequestComments: PullRequestComment[];
     loading: boolean;
     isMergeable: boolean;
 }
 
-class Comments extends PureComponent<IProps, IState>
+class Comments extends Component<IProps, IState>
 {
     constructor(props: IProps)
     {
@@ -26,48 +29,35 @@ class Comments extends PureComponent<IProps, IState>
         this.state = {
             pullRequestComments: [],
             loading: false,
-            pullRequest: new PullRequest(0, 0, '', '', '', '', '', '', 0, 0, '', '', PULL_REQUEST_STATUS.OPEN),
             isMergeable: false,
         };
     }
 
     async componentDidMount()
     {
-        this.setState({loading: true});
-        await this.loadPullRequest();
-        await this.loadIsMergeable();
-        await this.loadPullRequestComments();
-        this.setState({loading: false});
+        const {loading} = this.props;
+        if (!loading)
+        {
+            this.setState({loading: true});
+            await this.loadIsMergeable();
+            await this.loadPullRequestComments();
+            this.setState({loading: false});
+        }
     }
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {no, username, repository}}} = this.props;
-        const {match: {params: {no: prevNo, username: prevUsername, repository: prevRepository}}} = prevProps;
-        if (no !== prevNo || username !== prevUsername || repository !== prevRepository)
+        const {pullRequest, loading} = this.props;
+        const {pullRequest: prevPullRequest, loading: prevLoading} = prevProps;
+        if (pullRequest !== prevPullRequest || prevLoading !== loading)
         {
             await this.componentDidMount();
         }
     }
 
-    loadPullRequest = async () =>
-    {
-        const {match: {params: {no: noString, repository: repositoryName, username}}, history} = this.props;
-        const no = Number.parseInt(noString);
-        if (Number.isNaN(no) || no <= 0)
-        {
-            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
-        }
-        const pullRequest = await PullRequestApi.get({username, name: repositoryName}, {no});
-        if (pullRequest !== null)
-        {
-            this.setState({pullRequest});
-        }
-    };
-
     loadPullRequestComments = async () =>
     {
-        const {pullRequest: {targetRepositoryUsername, targetRepositoryName, no}} = this.state;
+        const {pullRequest: {targetRepositoryUsername, targetRepositoryName, no}} = this.props;
         const pullRequestCommentsWrapper = await PullRequestApi.getComments(
             {username: targetRepositoryUsername, name: targetRepositoryName},
             {no},
@@ -81,7 +71,7 @@ class Comments extends PureComponent<IProps, IState>
 
     loadIsMergeable = async () =>
     {
-        const {pullRequest: {id, status}} = this.state;
+        const {pullRequest: {id, status}} = this.props;
         if (status === PULL_REQUEST_STATUS.OPEN)
         {
             const isMergeableWrapper = await PullRequestApi.isMergeable({id});
@@ -95,12 +85,19 @@ class Comments extends PureComponent<IProps, IState>
 
     render()
     {
-        const {pullRequestComments, loading, pullRequest, isMergeable} = this.state;
+        const {pullRequest, loading: pullRequestIsLoading} = this.props;
+        const {pullRequestComments, loading, isMergeable} = this.state;
         return (<View isMergeable={isMergeable}
-                      loading={loading}
+                      loading={loading || pullRequestIsLoading}
                       pullRequestComments={pullRequestComments}
                       pullRequest={pullRequest} />);
     }
 }
 
-export default withRouter(Comments);
+const mapStateToProps = (state: StoreState) =>
+{
+    const {PullRequest: {pullRequest, loading}} = state;
+    return {pullRequest, loading};
+};
+
+export default withRouter(connect(mapStateToProps, {})(Comments));
