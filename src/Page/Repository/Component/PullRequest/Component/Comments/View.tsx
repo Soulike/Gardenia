@@ -4,6 +4,7 @@ import Style from './Style.module.scss';
 import Comment from './Component/Comment';
 import {Alert, Icon, Spin} from 'antd';
 import {PULL_REQUEST_STATUS} from '../../../../../../CONSTANT';
+import OperationButton from './Component/OperationButton';
 
 interface IProps
 {
@@ -54,6 +55,9 @@ function Comments(props: IProps)
                     </div>
                 ) : null
             }
+            <div className={Style.operationButtonWrapper}>
+                <OperationButton />
+            </div>
         </div>
     );
 }
