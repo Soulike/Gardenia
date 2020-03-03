@@ -81,12 +81,15 @@ class Comments extends PureComponent<IProps, IState>
 
     loadIsMergeable = async () =>
     {
-        const {pullRequest: {id}} = this.state;
-        const isMergeableWrapper = await PullRequestApi.isMergeable({id});
-        if (isMergeableWrapper !== null)
+        const {pullRequest: {id, status}} = this.state;
+        if (status === PULL_REQUEST_STATUS.OPEN)
         {
-            const {isMergeable} = isMergeableWrapper;
-            this.setState({isMergeable});
+            const isMergeableWrapper = await PullRequestApi.isMergeable({id});
+            if (isMergeableWrapper !== null)
+            {
+                const {isMergeable} = isMergeableWrapper;
+                this.setState({isMergeable});
+            }
         }
     };
 
