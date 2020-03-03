@@ -12,7 +12,7 @@ const initValues: IState = {
         isLoggedIn: false,
     },
     PullRequest: {
-        pullRequest: new PullRequest(0, 0, '', '', '', '', '', '', 0, 0, ',', '', PULL_REQUEST_STATUS.CLOSED),
+        pullRequest: new PullRequest(0, 0, '', '', '', '', '', '', '', '', 0, 0, ',', '', PULL_REQUEST_STATUS.CLOSED),
         loading: true,
     },
 };

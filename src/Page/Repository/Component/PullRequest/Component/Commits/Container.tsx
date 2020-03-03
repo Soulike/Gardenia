@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Commit} from '../../../../../../Class';
 import View from './View';
-import {RepositoryInfo} from '../../../../../../Api';
+import {PullRequest as PullRequestApi} from '../../../../../../Api';
 import {Interface as RouterInterface} from '../../../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {IPullRequestState, IState as StoreState} from '../../../../../../Store';
@@ -53,17 +53,8 @@ class Commits extends Component<IProps, IState>
 
     loadCommits = async () =>
     {
-        const {
-            pullRequest: {
-                sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                targetRepositoryUsername, targetRepositoryName, targetRepositoryBranch,
-            },
-        } = this.props;
-        const commitsWrapper = await RepositoryInfo.forkCommitHistory(
-            {username: sourceRepositoryUsername, name: sourceRepositoryName},
-            sourceRepositoryBranch,
-            {username: targetRepositoryUsername, name: targetRepositoryName},
-            targetRepositoryBranch);
+        const {pullRequest: {id}} = this.props;
+        const commitsWrapper = await PullRequestApi.getCommits({id});
         if (commitsWrapper !== null)
         {
             const {commits} = commitsWrapper;

@@ -17,8 +17,8 @@ function PullRequestInfo(props: IProps)
     const {
         pullRequest: {
             title, no, status,
-            sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-            targetRepositoryUsername, targetRepositoryName, targetRepositoryBranch, creationTime,
+            sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranchName,
+            targetRepositoryUsername, targetRepositoryName, targetRepositoryBranchName, creationTime,
         },
     } = props;
     return (
@@ -39,21 +39,21 @@ function PullRequestInfo(props: IProps)
                         <Link to={RouterFunction.generateRepositoryCodeRoute({
                             username: sourceRepositoryUsername,
                             repository: sourceRepositoryName,
-                            branch: sourceRepositoryBranch,
+                            branch: sourceRepositoryBranchName,
                             objectType: ObjectType.TREE,
                         })}>
                             <Tag color={'blue'}
-                                 className={Style.tag}>{sourceRepositoryUsername}/{sourceRepositoryName}:{sourceRepositoryBranch}</Tag>
+                                 className={Style.tag}>{sourceRepositoryUsername}/{sourceRepositoryName}:{sourceRepositoryBranchName}</Tag>
                         </Link>
                                     合并到
                         <Link to={RouterFunction.generateRepositoryCodeRoute({
                             username: targetRepositoryUsername,
                             repository: targetRepositoryName,
-                            branch: targetRepositoryBranch,
+                            branch: targetRepositoryBranchName,
                             objectType: ObjectType.TREE,
                         })}>
                             <Tag color={'blue'}
-                                 className={Style.tag}>{targetRepositoryUsername}/{targetRepositoryName}:{targetRepositoryBranch}</Tag>
+                                 className={Style.tag}>{targetRepositoryUsername}/{targetRepositoryName}:{targetRepositoryBranchName}</Tag>
                         </Link>
                     </div>
                     <div className={Style.creationTime}>

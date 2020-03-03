@@ -6,7 +6,6 @@ import PullRequestInfo from './Component/PullRequestInfo';
 import Commits from './Component/Commits';
 import FileChanged from './Component/FileChanged';
 import Comments from './Component/Comments';
-import {PULL_REQUEST_STATUS} from '../../../../CONSTANT';
 
 interface IProps
 {
@@ -17,7 +16,6 @@ interface IProps
 function PullRequest(props: IProps)
 {
     const {loading, pullRequest} = props;
-    const {status} = pullRequest;
     return (
         <div className={Style.PullRequest}>
             <Spin spinning={loading}>
@@ -31,15 +29,13 @@ function PullRequest(props: IProps)
                                 <Comments />
                             </div>
                         </Tabs.TabPane>
-                        <Tabs.TabPane disabled={status !== PULL_REQUEST_STATUS.OPEN}
-                                      key={'commits'}
+                        <Tabs.TabPane key={'commits'}
                                       tab={<div><Icon type="bars" />提交</div>}>
                             <div className={Style.commitsWrapper}>
                                 <Commits />
                             </div>
                         </Tabs.TabPane>
-                        <Tabs.TabPane disabled={status !== PULL_REQUEST_STATUS.OPEN}
-                                      key={'fileChanged'}
+                        <Tabs.TabPane key={'fileChanged'}
                                       tab={<div><Icon type="diff" />文件修改</div>}>
                             <div className={Style.fileChangedWrapper}>
                                 <FileChanged />

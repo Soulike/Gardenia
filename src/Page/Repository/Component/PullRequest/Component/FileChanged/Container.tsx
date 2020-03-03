@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {FileDiff} from '../../../../../../Class';
-import {RepositoryInfo} from '../../../../../../Api';
+import {PullRequest as PullRequestApi} from '../../../../../../Api';
 import {Interface as RouterInterface} from '../../../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {IPullRequestState, IState as StoreState} from '../../../../../../Store';
@@ -53,17 +53,8 @@ class FileChanged extends PureComponent<IProps, IState>
 
     loadFileDiffs = async () =>
     {
-        const {
-            pullRequest: {
-                sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                targetRepositoryUsername, targetRepositoryName, targetRepositoryBranch,
-            },
-        } = this.props;
-        const fileDiffsWrapper = await RepositoryInfo.forkFileDiff(
-            {username: sourceRepositoryUsername, name: sourceRepositoryName},
-            sourceRepositoryBranch,
-            {username: targetRepositoryUsername, name: targetRepositoryName},
-            targetRepositoryBranch);
+        const {pullRequest: {id}} = this.props;
+        const fileDiffsWrapper = await PullRequestApi.getFileDiffs({id});
         if (fileDiffsWrapper !== null)
         {
             const {fileDiffs} = fileDiffsWrapper;

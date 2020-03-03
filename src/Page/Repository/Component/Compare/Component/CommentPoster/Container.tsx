@@ -74,10 +74,10 @@ class CommentPoster extends PureComponent<IProps, IState>
                 content,
                 sourceRepositoryUsername,
                 sourceRepositoryName,
-                sourceRepositoryBranch,
+                sourceRepositoryBranchName: sourceRepositoryBranch,
                 targetRepositoryUsername,
                 targetRepositoryName,
-                targetRepositoryBranch,
+                targetRepositoryBranchName: targetRepositoryBranch,
             });
             if (result !== null)
             {

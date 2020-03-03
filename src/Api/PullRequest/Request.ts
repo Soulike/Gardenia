@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import {Conflict, PullRequest, PullRequestComment, Repository, ResponseBody} from '../../Class';
+import {Commit, Conflict, FileDiff, PullRequest, PullRequestComment, Repository, ResponseBody} from '../../Class';
 import {notification} from 'antd';
 import {errorHandler} from '../Function';
 import {
@@ -9,7 +9,9 @@ import {
     GET,
     GET_BY_REPOSITORY,
     GET_COMMENTS,
+    GET_COMMITS,
     GET_CONFLICTS,
+    GET_FILE_DIFFS,
     GET_PULL_REQUEST_AMOUNT,
     IS_MERGEABLE,
     MERGE,
@@ -20,7 +22,7 @@ import {
 } from './ROUTE';
 import {PULL_REQUEST_STATUS} from '../../CONSTANT';
 
-export async function add(pullRequest: Readonly<Omit<PullRequest, 'id' | 'no' | 'creationTime' | 'modificationTime' | 'status'>>): Promise<true | null>
+export async function add(pullRequest: Readonly<Omit<PullRequest, 'id' | 'no' | 'sourceRepositoryCommitHash' | 'targetRepositoryCommitHash' | 'creationTime' | 'modificationTime' | 'status'>>): Promise<true | null>
 {
     try
     {
@@ -352,6 +354,56 @@ export async function resolveConflicts(pullRequest: Readonly<Pick<PullRequest, '
         if (isSuccessful)
         {
             return true;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function getCommits(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ commits: Commit[] } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[] }>> =
+            await axios.get(GET_COMMITS, {
+                params: {json: JSON.stringify(pullRequest)},
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ fileDiffs: FileDiff[] } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ fileDiffs: FileDiff[] }>> =
+            await axios.get(GET_FILE_DIFFS, {
+                params: {json: JSON.stringify(pullRequest)},
+            });
+        if (isSuccessful)
+        {
+            return data!;
         }
         else
         {

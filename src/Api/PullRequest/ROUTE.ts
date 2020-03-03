@@ -19,3 +19,5 @@ export const UPDATE_COMMENT = pullRequestPrefix('/updateComment');
 export const GET_COMMENTS = pullRequestPrefix('/getComments');
 export const GET_CONFLICTS = pullRequestPrefix('/getConflicts');
 export const RESOLVE_CONFLICTS = pullRequestPrefix('/resolveConflicts');
+export const GET_COMMITS = pullRequestPrefix('/getCommits');
+export const GET_FILE_DIFFS = pullRequestPrefix('/getFileDiffs');
