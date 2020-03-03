@@ -51,7 +51,7 @@ function getIcon(status: PULL_REQUEST_STATUS)
         }
         case PULL_REQUEST_STATUS.MERGED:
         {
-            return <Icon type="check" />;
+            return <Icon type="pull-request" />;
         }
         case PULL_REQUEST_STATUS.OPEN:
         {
