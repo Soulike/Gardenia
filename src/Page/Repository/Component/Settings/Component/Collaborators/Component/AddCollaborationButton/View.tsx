@@ -1,9 +1,10 @@
 import React from 'react';
-import {Button, Icon, Input, Popover, Spin} from 'antd';
+import {Button, Input, Popover, Spin} from 'antd';
 import Style from './Style.module.scss';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {ButtonProps} from 'antd/lib/button';
 import InputTip from '../../../../../../../../Component/InputTip';
+import {CopyOutlined, PlusOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -25,7 +26,7 @@ function AddCollaborationButton(props: IProps)
                              : <div>
                                  <Input value={code} addonAfter={
                                      <CopyToClipboard text={code} onCopy={onCopy}>
-                                         <Icon type="copy" />
+                                         <CopyOutlined />
                                      </CopyToClipboard>
                                  } />
                                  <InputTip>邀请码有效期 10 分钟，且只可使用一次。</InputTip>
@@ -34,7 +35,7 @@ function AddCollaborationButton(props: IProps)
                      </div>
                  }>
             <Button type={'primary'} onClick={onClick}>
-                <Icon type={'plus'} />添加
+                <PlusOutlined />添加
             </Button>
         </Popover>
     );

@@ -1,11 +1,12 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Icon, Switch} from 'antd';
+import {Switch} from 'antd';
 import InputLabel from '../../../../../../../../Component/InputLabel';
 import {SwitchProps} from 'antd/lib/switch';
 import CriticalOperationConfirmModal from '../../../../../../../../Component/CriticalOperationConfirmModal';
 import {InputProps} from 'antd/lib/input';
 import {ModalProps} from 'antd/lib/modal';
+import {LockOutlined, UnlockOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -47,10 +48,10 @@ function AccessibilitySwitchView(props: Readonly<IProps>)
                         disabled={loading}
                         onChange={onSwitchChange}
                         checkedChildren={
-                            <><Icon type="unlock" /> 公开</>
+                            <><UnlockOutlined /> 公开</>
                         }
                         unCheckedChildren={
-                            <><Icon type="lock" /> 私有</>
+                            <><LockOutlined /> 私有</>
                         } />
             </div>
             <CriticalOperationConfirmModal confirmLoading={loading} title={'可见性切换确认'} warning={

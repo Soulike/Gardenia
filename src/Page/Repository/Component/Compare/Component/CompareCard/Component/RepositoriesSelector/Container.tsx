@@ -106,7 +106,7 @@ class RepositoriesSelector extends PureComponent<IProps, IState>
         }
     };
 
-    onTargetRepositorySelectorChange: SelectProps['onChange'] = value =>
+    onTargetRepositorySelectorChange: SelectProps<string>['onChange'] = value =>
     {
         const {match: {params}, history} = this.props;
         const [targetRepositoryUsername, targetRepositoryName] = value.toString().split('/');
@@ -115,7 +115,7 @@ class RepositoriesSelector extends PureComponent<IProps, IState>
         }));
     };
 
-    onSourceRepositoryBranchSelectorChange: SelectProps['onChange'] = value =>
+    onSourceRepositoryBranchSelectorChange: SelectProps<string>['onChange'] = value =>
     {
         const {match: {params}, history} = this.props;
         history.push(RouterFunction.generateRepositoryCompareRoute({
@@ -123,7 +123,7 @@ class RepositoriesSelector extends PureComponent<IProps, IState>
         }));
     };
 
-    onTargetRepositoryBranchSelectorChange: SelectProps['onChange'] = value =>
+    onTargetRepositoryBranchSelectorChange: SelectProps<string>['onChange'] = value =>
     {
         const {match: {params}, history} = this.props;
         history.push(RouterFunction.generateRepositoryCompareRoute({

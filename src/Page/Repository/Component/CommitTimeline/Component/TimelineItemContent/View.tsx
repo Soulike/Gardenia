@@ -1,13 +1,14 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Commit} from '../../../../../../Class';
-import {Button, Icon} from 'antd';
+import {Button} from 'antd';
 import {Link, RouteComponentProps} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {ObjectType} from '../../../../../../CONSTANT';
 import {ButtonProps} from 'antd/lib/button';
 import {Date} from '../../../../../../Function';
+import {CodeOutlined, CopyOutlined} from '@ant-design/icons';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
 {
@@ -41,7 +42,7 @@ function TimelineItemContent(props: IProps)
             <div className={Style.right}>
                 <Button.Group className={Style.commitHash}>
                     <CopyToClipboard text={commitHash}>
-                        <Button><Icon type="copy" /></Button>
+                        <Button><CopyOutlined /></Button>
                     </CopyToClipboard>
                     <Button>
                         <Link to={RouterFunction.generateRepositoryCommitRoute({
@@ -59,7 +60,7 @@ function TimelineItemContent(props: IProps)
                     branch: commitHash,
                     objectType: ObjectType.TREE,
                 })}>
-                    <Button><Icon type="code" /></Button>
+                    <Button><CodeOutlined /></Button>
                 </Link>
             </div>
         </div>

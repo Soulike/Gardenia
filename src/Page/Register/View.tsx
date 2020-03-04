@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {HTMLAttributes} from 'react';
 import Style from './Style.module.scss';
-import {Button, Icon, Input} from 'antd';
+import {Button, Input} from 'antd';
 import svg from '../../Static/Login/developing_code.svg';
 import {InputProps} from 'antd/lib/input';
-import {FormProps} from 'antd/lib/form';
 import {HINT} from '../../Validator';
 import InputTip from '../../Component/InputTip';
 import InputLabel from '../../Component/InputLabel';
+import {LockOutlined, MailOutlined, UserOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -18,7 +18,7 @@ interface IProps
     onPasswordInputChange: InputProps['onChange'],
     onRepeatPasswordInputChange: InputProps['onChange'],
     onEmailInputChange: InputProps['onChange'],
-    onFormSubmit: FormProps['onSubmit'],
+    onFormSubmit: HTMLAttributes<HTMLFormElement>['onSubmit'],
 }
 
 function RegisterView(props: Readonly<IProps>)
@@ -45,7 +45,7 @@ function RegisterView(props: Readonly<IProps>)
                            onChange={onUsernameInputChange}
                            autoFocus={true}
                            value={username}
-                           prefix={<Icon type="user" />} />
+                           prefix={<UserOutlined />} />
                     <InputTip>
                         用户名要求 {HINT.Account.USERNAME}。
                     </InputTip>
@@ -56,7 +56,7 @@ function RegisterView(props: Readonly<IProps>)
                            size={'large'}
                            onChange={onPasswordInputChange}
                            value={password}
-                           prefix={<Icon type="lock" />} />
+                           prefix={<LockOutlined />} />
                     <InputTip>
                         为了您的账户安全，密码要求 {HINT.Account.PASSWORD}。
                     </InputTip>
@@ -67,7 +67,7 @@ function RegisterView(props: Readonly<IProps>)
                            size={'large'}
                            onChange={onRepeatPasswordInputChange}
                            value={repeatPassword}
-                           prefix={<Icon type="lock" />} />
+                           prefix={<LockOutlined />} />
                 </div>
                 <div className={Style.inputWrapper}>
                     <InputLabel required={true}>E-Mail</InputLabel>
@@ -75,7 +75,7 @@ function RegisterView(props: Readonly<IProps>)
                            size={'large'}
                            onChange={onEmailInputChange}
                            value={email}
-                           prefix={<Icon type="mail" />} />
+                           prefix={<MailOutlined />} />
                     <InputTip>
                         该邮箱将用于统计您的提交次数及接收通知，请确保该邮箱可用。
                     </InputTip>

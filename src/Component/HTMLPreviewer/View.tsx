@@ -1,7 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Empty, Spin} from 'antd';
-import 'highlight.js/scss/github-gist.scss';
 
 interface IProps
 {

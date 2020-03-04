@@ -1,8 +1,9 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Icon, Menu} from 'antd';
+import {Menu} from 'antd';
 import {CONFIG as ROUTER_CONFIG} from '../../../../Router';
 import {Link} from 'react-router-dom';
+import {ProfileOutlined, SmileOutlined} from '@ant-design/icons';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -23,13 +24,13 @@ function ItemMenu(props: IProps)
             <Menu mode={'inline'} selectedKeys={[selectKey]}>
                 <Menu.Item key={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.PROFILE]}>
                     <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.PROFILE]}>
-                        <Icon type="profile" />
+                        <ProfileOutlined />
                         个人资料
                     </Link>
                 </Menu.Item>
                 <Menu.Item key={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.AVATAR]}>
                     <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.AVATAR]}>
-                        <Icon type="smile" />
+                        <SmileOutlined />
                         头像
                     </Link>
                 </Menu.Item>

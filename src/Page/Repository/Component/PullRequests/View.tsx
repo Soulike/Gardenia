@@ -1,12 +1,13 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Icon, Spin, Tag} from 'antd';
+import {Button, Spin, Tag} from 'antd';
 import {Branch, PullRequest} from '../../../../Class';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {PULL_REQUEST_STATUS} from '../../../../CONSTANT';
 import {ButtonProps} from 'antd/lib/button';
 import PullRequestList from './Component/PullRequestList';
+import {CloseOutlined, EllipsisOutlined, ForkOutlined, PlusOutlined, PullRequestOutlined} from '@ant-design/icons';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepository>
 {
@@ -53,7 +54,7 @@ function PullRequests(props: IProps)
                                             fontWeight: currentStatus === undefined ? 'bolder' : 'inherit',
                                         }}
                                         onClick={onStatusButtonClick(undefined)}>
-                                    <Icon type="ellipsis" /> 所有
+                                    <EllipsisOutlined /> 所有
                                     <Tag className={Style.tag}>{openAmount + closedAmount + mergedAmount}</Tag>
                                 </Button>
                                 <Button type={'link'}
@@ -62,7 +63,7 @@ function PullRequests(props: IProps)
                                             fontWeight: currentStatus === PULL_REQUEST_STATUS.OPEN ? 'bolder' : 'inherit',
                                         }}
                                         onClick={onStatusButtonClick(PULL_REQUEST_STATUS.OPEN)}>
-                                    <Icon type="fork" /> 开启的
+                                    <ForkOutlined /> 开启的
                                     <Tag className={Style.tag}>{openAmount}</Tag>
                                 </Button>
                                 <Button type={'link'}
@@ -71,7 +72,7 @@ function PullRequests(props: IProps)
                                             fontWeight: currentStatus === PULL_REQUEST_STATUS.CLOSED ? 'bolder' : 'inherit',
                                         }}
                                         onClick={onStatusButtonClick(PULL_REQUEST_STATUS.CLOSED)}>
-                                    <Icon type="close" /> 已关闭
+                                    <CloseOutlined /> 已关闭
                                     <Tag className={Style.tag}>{closedAmount}</Tag>
                                 </Button>
                                 <Button type={'link'}
@@ -80,7 +81,7 @@ function PullRequests(props: IProps)
                                             fontWeight: currentStatus === PULL_REQUEST_STATUS.MERGED ? 'bolder' : 'inherit',
                                         }}
                                         onClick={onStatusButtonClick(PULL_REQUEST_STATUS.MERGED)}>
-                                    <Icon type="pull-request" /> 已合并
+                                    <PullRequestOutlined /> 已合并
                                     <Tag className={Style.tag}>{mergedAmount}</Tag>
                                 </Button>
                             </Button.Group>
@@ -95,7 +96,7 @@ function PullRequests(props: IProps)
                                 username,
                             })}>
                                 <Button type={'primary'}>
-                                    <Icon type="plus" />
+                                    <PlusOutlined />
                                     创建 Pull Request
                                 </Button>
                             </Link>

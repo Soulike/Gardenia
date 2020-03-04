@@ -1,8 +1,9 @@
 import React from 'react';
-import {Button, Dropdown, Icon, Menu, Tag} from 'antd';
+import {Button, Dropdown, Menu, Tag} from 'antd';
 import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 import {Branch} from '../../../../Class';
 import Style from './Style.module.scss';
+import {CaretDownOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -41,7 +42,7 @@ function BranchMenu(props: IProps)
                 }
             </Menu>
         }>
-            <Button>{isBranch ? '分支：' : 'Tree：'}{currentBranch}<Icon type="caret-down" /></Button>
+            <Button>{isBranch ? '分支：' : 'Tree：'}{currentBranch}<CaretDownOutlined /></Button>
         </Dropdown>);
 }
 

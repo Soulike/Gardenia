@@ -1,6 +1,7 @@
 import React from 'react';
-import {Button, Icon, Input, Popover} from 'antd';
+import {Button, Input, Popover} from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import {CopyOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -21,7 +22,7 @@ function CloneButtonView(props: Readonly<IProps>)
 
                 <Input value={`${window.location.origin}/${username}/${repository}.git`} addonAfter={
                     <CopyToClipboard text={`${window.location.origin}/${username}/${repository}.git`} onCopy={onCopy}>
-                        <Icon type="copy" />
+                        <CopyOutlined />
                     </CopyToClipboard>
                 } />
             </React.Fragment>}>

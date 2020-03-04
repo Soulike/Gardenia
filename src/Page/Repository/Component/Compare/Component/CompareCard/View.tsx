@@ -1,10 +1,11 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Card, Icon} from 'antd';
+import {Card} from 'antd';
 import RepositoriesSelector from './Component/RepositoriesSelector';
 import IsMergeableIndicator from './Component/IsMergeableIndicator';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../Router';
+import {PullRequestOutlined} from '@ant-design/icons';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCompare> {}
 
@@ -27,7 +28,7 @@ function CompareCard(props: IProps)
             <div className={Style.CompareCard}>
                 <div className={Style.selectorWrapper}>
                     <div className={Style.iconWrapper}>
-                        <Icon type="pull-request" />
+                        <PullRequestOutlined />
                     </div>
                     <div className={Style.repositoriesSelectorWrapper}>
                         <RepositoriesSelector />

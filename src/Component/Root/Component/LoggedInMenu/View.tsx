@@ -1,11 +1,12 @@
 import React from 'react';
-import {Avatar, Icon, Menu, Modal} from 'antd';
+import {Avatar, Menu, Modal} from 'antd';
 import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import MenuDivider from './Component/MenuDivider';
 import svg from '../../../../Static/PersonalCenter/default.svg';
+import {CaretDownOutlined, LogoutOutlined, PlusOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -21,23 +22,23 @@ function LoggedInMenu(props: IProps)
         <Menu mode={'horizontal'} theme={'dark'} selectable={false}>
             <Menu.SubMenu title={
                 <>
-                    <Icon type="plus" />
-                    <Icon type="caret-down" />
+                    <PlusOutlined />
+                    <CaretDownOutlined />
                 </>
             }>
                 <Menu.Item>
                     <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}>
-                        <Icon type="plus" />创建仓库
+                        <PlusOutlined />创建仓库
                     </Link>
                 </Menu.Item>
                 <Menu.Item>
                     <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}>
-                        <Icon type="plus" />创建小组
+                        <PlusOutlined />创建小组
                     </Link>
                 </Menu.Item>
                 <Menu.Item>
                     <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION]}>
-                        <Icon type="plus" />成为仓库合作者
+                        <PlusOutlined />成为仓库合作者
                     </Link>
                 </Menu.Item>
             </Menu.SubMenu>
@@ -46,7 +47,7 @@ function LoggedInMenu(props: IProps)
                     {avatar ?
                         <Avatar shape={'square'} src={avatar} size={'small'} /> :
                         <Avatar shape={'square'} size={'small'} src={svg} />}
-                    <Icon type="caret-down" />
+                    <CaretDownOutlined />
                 </>
             }>
                 <Menu.Item>
@@ -57,12 +58,12 @@ function LoggedInMenu(props: IProps)
                 <MenuDivider />
                 <Menu.Item>
                     <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
-                        <Icon type="user" />个人中心
+                        <UserOutlined />个人中心
                     </Link>
                 </Menu.Item>
                 <Menu.Item>
                     <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}>
-                        <Icon type="setting" />设置
+                        <SettingOutlined />设置
                     </Link>
                 </Menu.Item>
                 <MenuDivider />
@@ -73,7 +74,7 @@ function LoggedInMenu(props: IProps)
                         onOk: onLogoutClick,
                     });
                 }}>
-                    <Icon type="logout" />退出登录
+                    <LogoutOutlined />退出登录
                 </Menu.Item>
             </Menu.SubMenu>
         </Menu>

@@ -1,8 +1,9 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Card, Icon, Input} from 'antd';
+import {Card, Input} from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import svg from '../../../../../../Static/Repository/process_building.svg';
+import {CopyOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -21,7 +22,7 @@ function EmptyView(props: Readonly<IProps>)
             <p>可复制以下链接，在本地克隆本仓库并开始您的工作。</p>
             <Input value={`${window.location.origin}/${username}/${repository}.git`} size={'large'} addonAfter={
                 <CopyToClipboard text={`${window.location.origin}/${username}/${repository}.git`} onCopy={onCopy}>
-                    <Icon type="copy" />
+                    <CopyOutlined />
                 </CopyToClipboard>
             } />
         </Card>

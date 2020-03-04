@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import View from '../HTMLPreviewer';
-import hljs from 'highlight.js';
-import {mdConverter} from '../../Singleton';
+import {hljs, mdConverter} from '../../Singleton';
 
 interface IProps
 {
@@ -25,9 +24,9 @@ class MarkdownPreviewer extends PureComponent<IProps, IState>
         };
     }
 
-    componentDidMount()
+    async componentDidMount()
     {
-        this.processMarkdown();
+        await this.processMarkdown();
     }
 
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
@@ -40,7 +39,7 @@ class MarkdownPreviewer extends PureComponent<IProps, IState>
         }
     }
 
-    processMarkdown = () =>
+    processMarkdown = async () =>
     {
         const {markdown} = this.props;
         this.setState({processing: true});

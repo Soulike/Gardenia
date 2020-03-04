@@ -3,9 +3,8 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Commit} from '../../../../../../Class';
 import {RepositoryInfo} from '../../../../../../Api';
-import hljs from 'highlight.js';
 import path, {basename} from 'path';
-import {mdConverter} from '../../../../../../Singleton';
+import {hljs, mdConverter} from '../../../../../../Singleton';
 import {Interface as RouterInterface} from '../../../../../../Router';
 import {File} from '../../../../../../Function';
 
@@ -117,7 +116,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
                 }
                 else // is code
                 {
-                    html = this.getHighlightedHtml(rawContent);
+                    html = await this.getHighlightedHtml(rawContent);
                 }
             }
             this.setState({html});
@@ -149,7 +148,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         return pathSplit[pathSplit.length - 1];
     };
 
-    getHighlightedHtml = (rawContent: string): string =>
+    getHighlightedHtml = async (rawContent: string): Promise<string> =>
     {
         const {isBinary} = this.state;
         if (!isBinary)

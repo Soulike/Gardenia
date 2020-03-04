@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {HTMLAttributes} from 'react';
 import Style from './Style.module.scss';
-import {Button, Icon, Input} from 'antd';
+import {Button, Input} from 'antd';
 import svg from '../../Static/Login/developing_code.svg';
 import {InputProps} from 'antd/lib/input';
-import {FormProps} from 'antd/lib/form';
 import InputLabel from '../../Component/InputLabel/View';
 import {Link} from 'react-router-dom';
 import {CONFIG} from '../../Router';
+import {LockOutlined, UserOutlined} from '@ant-design/icons';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
@@ -16,7 +16,7 @@ interface IProps
     password: string,
     onUsernameInputChange: InputProps['onChange'],
     onPasswordInputChange: InputProps['onChange'],
-    onLoginFormSubmit: FormProps['onSubmit'],
+    onLoginFormSubmit: HTMLAttributes<HTMLFormElement>['onSubmit'],
 }
 
 function LoginView(props: Readonly<IProps>)
@@ -37,7 +37,7 @@ function LoginView(props: Readonly<IProps>)
                            onChange={onUsernameInputChange}
                            autoFocus={true}
                            value={username}
-                           prefix={<Icon type="user" />} />
+                           prefix={<UserOutlined />} />
                 </div>
                 <div className={Style.inputWrapper}>
                     <InputLabel>密码</InputLabel>
@@ -45,7 +45,7 @@ function LoginView(props: Readonly<IProps>)
                            size={'large'}
                            onChange={onPasswordInputChange}
                            value={password}
-                           prefix={<Icon type="lock" />} />
+                           prefix={<LockOutlined />} />
                 </div>
                 <Button htmlType={'submit'}
                         className={Style.button}

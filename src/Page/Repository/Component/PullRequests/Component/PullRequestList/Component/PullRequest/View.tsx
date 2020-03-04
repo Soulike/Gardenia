@@ -1,11 +1,11 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {PullRequest as PullRequestClass} from '../../../../../../../../Class';
-import {Icon} from 'antd';
 import {PULL_REQUEST_STATUS} from '../../../../../../../../CONSTANT';
 import {Date} from '../../../../../../../../Function';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../../../../../../../Router';
+import {CloseOutlined, ForkOutlined, PullRequestOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -47,15 +47,15 @@ function getIcon(status: PULL_REQUEST_STATUS)
     {
         case PULL_REQUEST_STATUS.CLOSED:
         {
-            return <Icon type="close" />;
+            return <CloseOutlined />;
         }
         case PULL_REQUEST_STATUS.MERGED:
         {
-            return <Icon type="pull-request" />;
+            return <PullRequestOutlined />;
         }
         case PULL_REQUEST_STATUS.OPEN:
         {
-            return <Icon type="fork" />;
+            return <ForkOutlined />;
         }
     }
 }

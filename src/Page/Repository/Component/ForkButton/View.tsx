@@ -1,8 +1,9 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Icon, Tooltip} from 'antd';
+import {Button, Tooltip} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 import {String} from '../../../../Function';
+import {ForkOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -17,7 +18,7 @@ function ForkButton(props: IProps)
     return (
         <Button.Group className={Style.ForkButton} size={'small'}>
             <Button onClick={onClick} disabled={loading} loading={loading}>
-                <Icon type={'fork'} />
+                <ForkOutlined />
                 Fork
             </Button>
             <Tooltip title={forkAmount}>

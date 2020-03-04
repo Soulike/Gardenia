@@ -1,10 +1,11 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Card, Empty, Icon, List, Popconfirm} from 'antd';
+import {Button, Card, Empty, List, Popconfirm} from 'antd';
 import {Profile} from '../../../../Class';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
+import {UserOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -31,7 +32,7 @@ function MembersView(props: Readonly<IProps>)
                               <Card size={'small'}>
                                   <div className={Style.cardContent}>
                                       <div className={Style.titleWrapper}>
-                                          <Icon type={'user'} />
+                                          <UserOutlined />
                                           <Link to={RouterFunction.generatePersonalCenterRoute({username})}
                                                 target={'_blank'}
                                                 className={Style.title}>{nickname}({username})</Link>

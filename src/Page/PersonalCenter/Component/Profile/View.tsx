@@ -1,10 +1,11 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Profile as ProfileClass} from '../../../../Class';
-import {Button, Icon} from 'antd';
+import {Button} from 'antd';
 import {CONFIG} from '../../../../Router';
 import {Link} from 'react-router-dom';
 import DefaultAvatar from '../../../../Component/DefaultAvatar';
+import {MailOutlined} from '@ant-design/icons';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
@@ -36,7 +37,7 @@ function ProfileView(props: Readonly<IProps>)
             </div>
             <div className={Style.infoWrapper}>
                 <div className={Style.info}>
-                    <Icon type={'mail'} className={Style.icon} />
+                    <MailOutlined className={Style.icon} />
                     <a href={`mailto:${email}`}>
                         {email}
                     </a>

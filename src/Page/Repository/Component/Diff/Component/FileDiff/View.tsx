@@ -2,8 +2,9 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {FileDiff as FileDiffClass} from '../../../../../../Class';
 import BlockDiff from './Component/BlockDiff';
-import {Button, Icon, Tag, Tooltip} from 'antd';
+import {Button, Tag, Tooltip} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
+import {DownOutlined, RightOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -27,7 +28,7 @@ function FileDiff(props: IProps)
                             size={'small'}
                             className={Style.showCodeButton}
                             onClick={onShowCodeButtonClick}>
-                        {showCode ? <Icon type="down" /> : <Icon type="right" />}
+                        {showCode ? <DownOutlined /> : <RightOutlined />}
                     </Button>
                 </div>
                 <Tooltip title={path}>

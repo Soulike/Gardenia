@@ -1,9 +1,10 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Icon, Popconfirm} from 'antd';
+import {Button, Popconfirm} from 'antd';
 import {PullRequest} from '../../../../../../../../Class';
 import {PULL_REQUEST_STATUS} from '../../../../../../../../CONSTANT';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
+import {CloseOutlined, PullRequestOutlined, RedoOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -37,7 +38,7 @@ function OperationButton(props: IProps)
                                                     onConfirm={onCloseButtonClick}
                                                     disabled={loading}>
                                             <Button type={'danger'} loading={loading} disabled={loading}>
-                                                <Icon type="close" />关闭 Pull Request
+                                                <CloseOutlined />关闭 Pull Request
                                             </Button>
                                         </Popconfirm>
                                         <Popconfirm title={'确认合并 Pull Request'}
@@ -46,7 +47,7 @@ function OperationButton(props: IProps)
                                             <Button type={'primary'}
                                                     loading={loading}
                                                     disabled={loading || !isMergeable}>
-                                                <Icon type="pull-request" />Merge
+                                                <PullRequestOutlined />Merge
                                             </Button>
                                         </Popconfirm>
                                     </>);
@@ -61,7 +62,7 @@ function OperationButton(props: IProps)
                                             <Button type={'primary'}
                                                     loading={loading}
                                                     disabled={loading}>
-                                                <Icon type="redo" />重新开启 Pull Request
+                                                <RedoOutlined />重新开启 Pull Request
                                             </Button>
                                         </Popconfirm>
                                     </>);

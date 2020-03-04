@@ -1,13 +1,14 @@
 import React, {ReactNode} from 'react';
 import Style from './Style.module.scss';
 import {Repository as RepositoryClass} from '../../Class';
-import {Icon, Tabs, Tag} from 'antd';
+import {Tabs, Tag} from 'antd';
 import AccessibilityTag from '../../Component/AccessibilityTag';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 import TAB_KEY from './TAB_KEY';
 import {TabsProps} from 'antd/lib/tabs';
 import ForkButton from './Component/ForkButton';
+import {CodeOutlined, ExclamationCircleOutlined, PullRequestOutlined, SettingOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -78,22 +79,22 @@ function RepositoryView(props: Readonly<IProps>)
                     margin: '0',
                 }} onChange={onTabChange} activeKey={tabActiveKey}>
                     <Tabs.TabPane tab={
-                        <><Icon type="code" />代码</>
+                        <><CodeOutlined />代码</>
                     } key={TAB_KEY.CODE}>
                         <div className={Style.tabContent}>
                             {children}
                         </div>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab={
-                        <><Icon type="exclamation-circle" />Issues</>
+                        <><ExclamationCircleOutlined />Issues</>
                     } key={TAB_KEY.ISSUES}>
                         <div className={Style.tabContent}>
                             {children}
                         </div>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab={
-                        <><Icon type="pull-request" />Pull
-                                                      Requests <Tag className={Style.tag}>{openPullRequestAmount}</Tag></>
+                        <><PullRequestOutlined />Pull
+                                                 Requests <Tag className={Style.tag}>{openPullRequestAmount}</Tag></>
                     } key={TAB_KEY.PULL_REQUESTS}>
                         <div className={Style.tabContent}>
                             {children}
@@ -102,7 +103,7 @@ function RepositoryView(props: Readonly<IProps>)
                     {
                         showSettings ? (
                             <Tabs.TabPane tab={
-                                <><Icon type="setting" />设置</>
+                                <><SettingOutlined />设置</>
                             } key={TAB_KEY.SETTINGS}>
                                 <div className={Style.tabContent}>
                                     {children}

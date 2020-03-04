@@ -1,9 +1,9 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Icon} from 'antd';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import {Branch} from '../../../../../../Class';
+import {BranchesOutlined, ClockCircleOutlined} from '@ant-design/icons';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -32,7 +32,7 @@ function InfoBar(props: Readonly<IProps>)
                 })
                 : '#'}
                   className={Style.info}>
-                <Icon type="clock-circle" /> {commitCount} 次提交
+                <ClockCircleOutlined /> {commitCount} 次提交
             </Link>
             <Link className={Style.info} to={commitCount > 0
                 ? RouterFunction.generateRepositoryBranchesRoute({
@@ -40,7 +40,7 @@ function InfoBar(props: Readonly<IProps>)
                     repository,
                 })
                 : '#'}>
-                <Icon type="branches" /> {branches.length} 个分支
+                <BranchesOutlined /> {branches.length} 个分支
             </Link>
         </div>
     );

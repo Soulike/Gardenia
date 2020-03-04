@@ -1,8 +1,9 @@
 import React from 'react';
-import {Icon, Menu} from 'antd';
+import {Menu} from 'antd';
 import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 import qs from 'querystring';
+import {LoginOutlined, UserAddOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -21,12 +22,12 @@ function UnLoggedInMenu(props: IProps)
                 <Link to={currentURLQueryString ?
                     `${PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]}?${currentURLQueryString}` :
                     PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]}>
-                    <Icon type="login" />登录
+                    <LoginOutlined />登录
                 </Link>
             </Menu.Item>
             <Menu.Item>
                 <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.REGISTER]}>
-                    <Icon type="user-add" />注册
+                    <UserAddOutlined />注册
                 </Link>
             </Menu.Item>
         </Menu>

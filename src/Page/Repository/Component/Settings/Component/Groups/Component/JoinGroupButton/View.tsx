@@ -1,10 +1,11 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Icon} from 'antd';
+import {Button} from 'antd';
 import {ModalProps} from 'antd/lib/modal';
 import JoinGroupModal from './Component/JoinGroupModal';
 import {ButtonProps} from 'antd/lib/button';
 import {InputProps} from 'antd/lib/input';
+import {PlusOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -22,7 +23,7 @@ function JoinGroupButtonView(props: Readonly<IProps>)
     return (
         <>
             <Button type={'primary'} className={Style.JoinGroupButton} onClick={onClick}>
-                <Icon type={'plus'} />加入
+                <PlusOutlined />加入
             </Button>
             <JoinGroupModal visible={modalVisible}
                             onOk={onModalOk}

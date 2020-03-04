@@ -1,11 +1,12 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {PullRequest} from '../../../../../../Class';
-import {Icon, Tag} from 'antd';
+import {Tag} from 'antd';
 import {ObjectType, PULL_REQUEST_STATUS} from '../../../../../../CONSTANT';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../../../../../Router';
 import {Date} from '../../../../../../Function';
+import {CheckOutlined, CloseOutlined, ForkOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -71,15 +72,15 @@ function getTag(status: PULL_REQUEST_STATUS)
     {
         case PULL_REQUEST_STATUS.CLOSED:
         {
-            return <Tag color={'red'}><Icon type="close" /> 已关闭</Tag>;
+            return <Tag color={'red'}><CloseOutlined /> 已关闭</Tag>;
         }
         case PULL_REQUEST_STATUS.MERGED:
         {
-            return <Tag color={'purple'}><Icon type="check" /> 已合并</Tag>;
+            return <Tag color={'purple'}><CheckOutlined /> 已合并</Tag>;
         }
         case PULL_REQUEST_STATUS.OPEN:
         {
-            return <Tag color={'green'}><Icon type="fork" /> 开启的</Tag>;
+            return <Tag color={'green'}><ForkOutlined /> 开启的</Tag>;
         }
     }
 }

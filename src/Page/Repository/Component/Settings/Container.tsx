@@ -4,7 +4,7 @@ import {IMenuItem} from './Interface';
 import {PAGE_ID} from '../../../../Router/CONFIG';
 import {RouteComponentProps} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
-import {Icon} from 'antd';
+import {BranchesOutlined, ProjectOutlined, SettingOutlined, TeamOutlined} from '@ant-design/icons';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings>
 {
@@ -52,25 +52,25 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
             this.setState({
                 menuItems: [
                     {
-                        icon: <Icon type="setting" />,
+                        icon: <SettingOutlined />,
                         title: '选项',
                         key: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS,
                         to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repository}),
                     },
                     {
-                        icon: <Icon type="project" />,
+                        icon: <ProjectOutlined />,
                         title: '合作者',
                         key: PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS,
                         to: RouterFunction.generateRepositorySettingsCollaboratorsRoute({username, repository}),
                     },
                     {
-                        icon: <Icon type="branches" />,
+                        icon: <BranchesOutlined />,
                         title: '分支',
                         key: PAGE_ID.REPOSITORY.SETTINGS.BRANCHES,
                         to: RouterFunction.generateRepositorySettingsBranchesRoute({username, repository}),
                     },
                     {
-                        icon: <Icon type="team" />,
+                        icon: <TeamOutlined />,
                         title: '小组',
                         key: PAGE_ID.REPOSITORY.SETTINGS.GROUPS,
                         to: RouterFunction.generateRepositorySettingsGroupsRoute({username, repository}),

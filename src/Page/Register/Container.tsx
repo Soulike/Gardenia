@@ -1,11 +1,10 @@
-import React, {PureComponent} from 'react';
+import React, {HTMLAttributes, PureComponent} from 'react';
 import View from './View';
 import {CONFIG as ROUTER_CONFIG} from '../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Account} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
-import {FormProps} from 'antd/lib/form';
 import {Account as AccountClass} from '../../Class';
 import CONFIG from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
@@ -66,7 +65,7 @@ class Register extends PureComponent<Readonly<IProps>, IState>
         this.setState({email: e.target.value});
     };
 
-    onFormSubmit: FormProps['onSubmit'] = async e =>
+    onFormSubmit: HTMLAttributes<HTMLFormElement>['onSubmit'] = async e =>
     {
         e.preventDefault();
         if (this.validateFormInput())

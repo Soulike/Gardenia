@@ -1,11 +1,10 @@
-import React, {PureComponent} from 'react';
+import React, {HTMLAttributes, PureComponent} from 'react';
 import LoginView from './View';
 import {CONFIG as ROUTER_CONFIG} from '../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Account as AccountApi} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
-import {FormProps} from 'antd/lib/form';
 import {setLoggedInAction} from '../../Component/Root/Action/Action';
 import {connect} from 'react-redux';
 import {Account as AccountClass} from '../../Class';
@@ -67,7 +66,7 @@ class Login extends PureComponent<Readonly<IProps>, IState>
         this.setState({password: e.target.value});
     };
 
-    onLoginFormSubmit: FormProps['onSubmit'] = async e =>
+    onLoginFormSubmit: HTMLAttributes<HTMLFormElement>['onSubmit'] = async e =>
     {
         e.preventDefault();
         if (this.loginFormInputCheck())

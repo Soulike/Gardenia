@@ -1,9 +1,10 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Group} from '../../Class';
-import {Card, Empty, Icon, List, Tag} from 'antd';
+import {Card, Empty, List, Tag} from 'antd';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
+import {TeamOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -27,7 +28,7 @@ function GroupList(props: Readonly<IProps>)
                       <Card className={Style.group} hoverable={true} size={'small'}>
                           <Card.Meta avatar={
                               <>
-                                  <Icon type="team" /> {id}
+                                  <TeamOutlined /> {id}
                               </>
                           } title={<>
                               <div className={Style.groupName}>{name}</div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import 'highlight.js/scss/github-gist.scss';
 import Code from './Component/Code';
 import {BlockDiff as BlockDiffClass} from '../../../../../../../../Class';
 import {notification} from 'antd';

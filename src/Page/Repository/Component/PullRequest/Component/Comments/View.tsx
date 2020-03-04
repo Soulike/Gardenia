@@ -2,9 +2,10 @@ import React from 'react';
 import {PullRequest, PullRequestComment} from '../../../../../../Class';
 import Style from './Style.module.scss';
 import Comment from './Component/Comment';
-import {Alert, Icon, Spin} from 'antd';
+import {Alert, Spin} from 'antd';
 import {PULL_REQUEST_STATUS} from '../../../../../../CONSTANT';
 import OperationButton from './Component/OperationButton';
+import {LoadingOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -45,7 +46,7 @@ function Comments(props: IProps)
                     <div className={Style.isMergeableWrapper}>
                         {
                             loading ? <Alert type={'warning'}
-                                             icon={<Icon type={'loading'} />}
+                                             icon={<LoadingOutlined />}
                                              showIcon={true}
                                              message={'正在检查是否可以自动合并'} /> :
                                 isMergeable

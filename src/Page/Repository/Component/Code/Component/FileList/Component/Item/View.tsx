@@ -1,11 +1,12 @@
 import React from 'react';
-import {Icon, List} from 'antd';
+import {List} from 'antd';
 import {ObjectType} from '../../../../../../../../CONSTANT';
 import {Commit} from '../../../../../../../../Class';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import Style from './Style.module.scss';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../../Router';
 import {Date} from '../../../../../../../../Function';
+import {FileTextOutlined, FolderOutlined} from '@ant-design/icons';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -20,8 +21,8 @@ function Item(props: Readonly<IProps>)
         <List.Item className={Style.Item}>
             {
                 type === ObjectType.BLOB ?
-                    <Icon className={Style.icon} type="file-text" /> :
-                    <Icon className={Style.icon} type="folder" />
+                    <FileTextOutlined className={Style.icon} /> :
+                    <FolderOutlined className={Style.icon} />
             }
             <div className={Style.fileName}>
                 <Link to={
