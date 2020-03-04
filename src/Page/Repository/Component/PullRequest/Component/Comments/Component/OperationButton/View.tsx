@@ -12,13 +12,14 @@ interface IProps
     onMergeButtonClick: PopconfirmProps['onConfirm'];
     onReopenButtonClick: PopconfirmProps['onConfirm'];
     loading: boolean;
+    isMergeable: boolean;
 }
 
 function OperationButton(props: IProps)
 {
     const {
         pullRequest: {status},
-        onCloseButtonClick, onMergeButtonClick, onReopenButtonClick, loading,
+        onCloseButtonClick, onMergeButtonClick, onReopenButtonClick, loading, isMergeable,
     } = props;
     return (
         <div className={Style.OperationButton}>
@@ -41,10 +42,10 @@ function OperationButton(props: IProps)
                                         </Popconfirm>
                                         <Popconfirm title={'确认合并 Pull Request'}
                                                     onConfirm={onMergeButtonClick}
-                                                    disabled={loading}>
+                                                    disabled={loading || !isMergeable}>
                                             <Button type={'primary'}
                                                     loading={loading}
-                                                    disabled={loading}>
+                                                    disabled={loading || !isMergeable}>
                                                 <Icon type="pull-request" />Merge
                                             </Button>
                                         </Popconfirm>

@@ -15,6 +15,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequ
     pullRequest: IPullRequestState['pullRequest'],
     modifyPullRequest: typeof modifyAction,
     loading: IPullRequestState['loading'],
+    isMergeable: boolean;
 }
 
 interface IState
@@ -34,48 +35,58 @@ class OperationButton extends Component<IProps, IState>
 
     onCloseButtonClick: PopconfirmProps['onConfirm'] = async () =>
     {
-        const {pullRequest: {id}, modifyPullRequest} = this.props;
-        this.setState({loading: true});
-        const result = await PullRequestApi.close({id});
-        if (result !== null)
+        const {pullRequest: {id, status}, modifyPullRequest} = this.props;
+        if (status === PULL_REQUEST_STATUS.OPEN)
         {
-            notification.success({message: 'Pull Request 已关闭'});
-            await modifyPullRequest({status: PULL_REQUEST_STATUS.CLOSED});
+            this.setState({loading: true});
+            const result = await PullRequestApi.close({id});
+            if (result !== null)
+            {
+                notification.success({message: 'Pull Request 已关闭'});
+                await modifyPullRequest({status: PULL_REQUEST_STATUS.CLOSED});
+            }
+            this.setState({loading: false});
         }
-        this.setState({loading: false});
     };
 
     onMergeButtonClick: PopconfirmProps['onConfirm'] = async () =>
     {
-        const {pullRequest: {id}, modifyPullRequest} = this.props;
-        this.setState({loading: true});
-        const result = await PullRequestApi.merge({id});
-        if (result !== null)
+
+        const {pullRequest: {id}, modifyPullRequest, isMergeable} = this.props;
+        if (isMergeable)
         {
-            notification.success({message: 'Pull Request 已合并'});
-            await modifyPullRequest({status: PULL_REQUEST_STATUS.MERGED});
+            this.setState({loading: true});
+            const result = await PullRequestApi.merge({id});
+            if (result !== null)
+            {
+                notification.success({message: 'Pull Request 已合并'});
+                await modifyPullRequest({status: PULL_REQUEST_STATUS.MERGED});
+            }
+            this.setState({loading: false});
         }
-        this.setState({loading: false});
     };
 
     onReopenButtonClick: PopconfirmProps['onConfirm'] = async () =>
     {
-        const {pullRequest: {id}, modifyPullRequest} = this.props;
-        this.setState({loading: true});
-        const result = await PullRequestApi.reopen({id});
-        if (result !== null)
+        const {pullRequest: {id, status}, modifyPullRequest} = this.props;
+        if (status === PULL_REQUEST_STATUS.CLOSED)
         {
-            notification.success({message: 'Pull Request 已重新开启'});
-            await modifyPullRequest({status: PULL_REQUEST_STATUS.OPEN});
+            this.setState({loading: true});
+            const result = await PullRequestApi.reopen({id});
+            if (result !== null)
+            {
+                notification.success({message: 'Pull Request 已重新开启'});
+                await modifyPullRequest({status: PULL_REQUEST_STATUS.OPEN});
+            }
+            this.setState({loading: false});
         }
-        this.setState({loading: false});
     };
 
     render()
     {
-        const {pullRequest, loading: pullRequestIsLoading} = this.props;
+        const {pullRequest, loading: pullRequestIsLoading, isMergeable} = this.props;
         const {loading} = this.state;
-        return (<View pullRequest={pullRequest}
+        return (<View isMergeable={isMergeable} pullRequest={pullRequest}
                       onCloseButtonClick={this.onCloseButtonClick}
                       onMergeButtonClick={this.onMergeButtonClick}
                       onReopenButtonClick={this.onReopenButtonClick} loading={loading || pullRequestIsLoading} />);

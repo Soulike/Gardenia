@@ -56,7 +56,7 @@ function Comments(props: IProps)
                 ) : null
             }
             <div className={Style.operationButtonWrapper}>
-                <OperationButton />
+                <OperationButton isMergeable={isMergeable} />
             </div>
         </div>
     );
