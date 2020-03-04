@@ -7,6 +7,7 @@ import {ButtonProps} from 'antd/lib/button';
 import CommitInfoBar from '../CommitInfoBar';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
+import HTMLPreviewer from '../../../../../../Component/HTMLPreviewer';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -55,21 +56,23 @@ function FileReader(props: Readonly<IProps>)
                             <Button onClick={onRawFileButtonClick}>下载</Button>
                         </Button.Group>
                     </div>
-                    {
-                        exists ?
-                            isBinary ?
-                                <Alert type={'info'}
-                                       showIcon={true}
-                                       message={'二进制文件无法显示'}
-                                       description={'你可以直接查看原文件'} /> :
-                                isOversize ?
+                    <div className={Style.htmlWrapper}>
+                        {
+                            exists ?
+                                isBinary ?
                                     <Alert type={'info'}
                                            showIcon={true}
-                                           message={'文件太大'}
+                                           message={'二进制文件无法显示'}
                                            description={'你可以直接查看原文件'} /> :
-                                    <div className={Style.content} dangerouslySetInnerHTML={{__html: html}} /> :
-                            <Alert type={'error'} showIcon={true} message={'文件不存在'} />
-                    }
+                                    isOversize ?
+                                        <Alert type={'info'}
+                                               showIcon={true}
+                                               message={'文件太大'}
+                                               description={'你可以直接查看原文件'} /> :
+                                        (<HTMLPreviewer html={html} processing={loading} />) :
+                                <Alert type={'error'} showIcon={true} message={'文件不存在'} />
+                        }
+                    </div>
                 </div>
             </Spin>
         </div>

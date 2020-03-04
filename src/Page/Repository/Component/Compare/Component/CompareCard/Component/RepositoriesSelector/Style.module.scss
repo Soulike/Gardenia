@@ -1,0 +1,17 @@
+.RepositoriesSelector {
+    display: flex;
+    align-items: center;
+
+    .arrow {
+        margin: 0 15px;
+    }
+
+    .target, .source {
+        display: flex;
+        align-items: center;
+
+        .targetRepositorySelectWrapper, .sourceRepository {
+            margin-right: 10px;
+        }
+    }
+}

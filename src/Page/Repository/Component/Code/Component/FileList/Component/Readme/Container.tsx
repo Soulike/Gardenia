@@ -3,7 +3,6 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
 import {join} from 'path';
-import {mdConverter} from '../../../../../../../../Singleton';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {File} from '../../../../../../../../Function';
 
@@ -71,7 +70,7 @@ class Readme extends PureComponent<Readonly<IProps>, IState>
     {
         const {readme, exists, loading} = this.state;
         return (
-            <View exists={exists} html={mdConverter.makeHtml(readme)} loading={loading} />
+            <View exists={exists} readme={readme} loading={loading} />
         );
     }
 }

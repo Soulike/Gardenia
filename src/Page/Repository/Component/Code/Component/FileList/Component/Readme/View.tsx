@@ -1,22 +1,25 @@
 import React from 'react';
 import Style from './Style.module.scss';
+import MarkdownPreviewer from '../../../../../../../../Component/MarkdownPreviewer';
 import {Spin} from 'antd';
 
 interface IProps
 {
     exists: boolean,
-    html: string,
-    loading: boolean,
+    readme: string,
+    loading: boolean;
 }
 
 function ReadmeView(props: Readonly<IProps>)
 {
-    const {html, exists, loading} = props;
+    const {readme, exists, loading} = props;
     return exists ?
         (<div className={Style.Readme}>
             <Spin spinning={loading}>
                 <div className={Style.title}>README.md</div>
-                <div className={Style.content} dangerouslySetInnerHTML={{__html: html}} />
+                <div className={Style.contentWrapper}>
+                    <MarkdownPreviewer markdown={readme} />
+                </div>
             </Spin>
         </div>) :
         null;

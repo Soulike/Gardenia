@@ -14,7 +14,10 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
 
     [PAGE_ID.REPOSITORY.CODE]: React.lazy(() => import('../../Page/Repository/Component/Code')),
     [PAGE_ID.REPOSITORY.ISSUES]: undefined,
-    [PAGE_ID.REPOSITORY.PULL_REQUESTS]: undefined,
+    [PAGE_ID.REPOSITORY.ISSUE]: undefined,
+    [PAGE_ID.REPOSITORY.PULL_REQUESTS]: React.lazy(() => import('../../Page/Repository/Component/PullRequests')),
+    [PAGE_ID.REPOSITORY.PULL_REQUEST]: React.lazy(() => import('../../Page/Repository/Component/PullRequest')),
+    [PAGE_ID.REPOSITORY.COMPARE]: React.lazy(() => import('../../Page/Repository/Component/Compare')),
     [PAGE_ID.REPOSITORY.COMMITS]: React.lazy(() => import('../../Page/Repository/Component/Commits')),
     [PAGE_ID.REPOSITORY.COMMIT]: React.lazy(() => import('../../Page/Repository/Component/Commit')),
     [PAGE_ID.REPOSITORY.BRANCHES]: React.lazy(() => import('../../Page/Repository/Component/Branches')),

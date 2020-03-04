@@ -2,7 +2,7 @@ import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {RouteComponentProps} from 'react-router-dom';
 import {Profile, Repository as RepositoryClass} from '../../Class';
-import {Profile as ProfileApi, RepositoryInfo} from '../../Api';
+import {Profile as ProfileApi, PullRequest as PullRequestApi, RepositoryInfo} from '../../Api';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {TabsProps} from 'antd/lib/tabs';
 import TAB_KEY from './TAB_KEY';
@@ -10,6 +10,7 @@ import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {connect} from 'react-redux';
 import {IRootState, IState as StoreState} from '../../Store';
 import CONFIG from '../../CONFIG';
+import {PULL_REQUEST_STATUS} from '../../CONSTANT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode
     | RouterInterface.IRepositoryIssues
@@ -25,7 +26,9 @@ interface IState
     repository: RepositoryClass,
     loading: boolean,
     tabActiveKey: TAB_KEY,
-    visitorProfile: Profile | null
+    visitorProfile: Profile | null,
+    forkFrom: Readonly<Pick<RepositoryClass, 'username' | 'name'>> | null;
+    openPullRequestAmount: number;
 }
 
 class Repository extends PureComponent<Readonly<IProps>, IState>
@@ -38,6 +41,8 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
             loading: true,
             tabActiveKey: TAB_KEY.CODE,
             visitorProfile: null,
+            forkFrom: null,
+            openPullRequestAmount: 0,
         };
     }
 
@@ -47,7 +52,11 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         this.setTitle();
         this.setTabActiveKey();
         this.setState({loading: true});
-        await this.loadRepository();
+        await Promise.all([
+            this.loadRepository(),
+            this.loadForkFrom(),
+            this.loadOpenPullRequestAmount(),
+        ]);
         if (isLoggedIn)
         {
             await this.loadVisitorProfile();
@@ -87,6 +96,17 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         document.title = `${username}/${name} - ${CONFIG.NAME}`;
     };
 
+    loadOpenPullRequestAmount = async () =>
+    {
+        const {match: {params: {username, repository: name}}} = this.props;
+        const amountWrapper = await PullRequestApi.getPullRequestAmount({username, name}, PULL_REQUEST_STATUS.OPEN);
+        if (amountWrapper !== null)
+        {
+            const {amount} = amountWrapper;
+            this.setState({openPullRequestAmount: amount});
+        }
+    };
+
     loadRepository = async () =>
     {
         const {match: {params: {username, repository: repositoryName}}} = this.props;
@@ -95,6 +115,17 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         if (repository !== null)
         {
             this.setState({repository});
+        }
+    };
+
+    loadForkFrom = async () =>
+    {
+        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const result = await RepositoryInfo.forkFrom({username, name: repositoryName});
+        if (result !== null)
+        {
+            const {repository} = result;
+            this.setState({forkFrom: repository});
         }
     };
 
@@ -112,7 +143,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
     setTabActiveKey = () =>
     {
         const {match: {path}} = this.props;
-        const {REPOSITORY: {REPOSITORY, CODE, ISSUES, PULL_REQUESTS, SETTINGS}} = PAGE_ID;
+        const {REPOSITORY: {REPOSITORY, CODE, ISSUES, ISSUE, PULL_REQUESTS, PULL_REQUEST, SETTINGS}} = PAGE_ID;
         switch (path)
         {
             case PAGE_ID_TO_ROUTE[CODE]:
@@ -123,6 +154,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
                 });
                 break;
             }
+            case PAGE_ID_TO_ROUTE[ISSUE]:
             case PAGE_ID_TO_ROUTE[ISSUES]:
             {
                 this.setState({
@@ -130,6 +162,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
                 });
                 break;
             }
+            case PAGE_ID_TO_ROUTE[PULL_REQUEST]:
             case PAGE_ID_TO_ROUTE[PULL_REQUESTS]:
             {
                 this.setState({
@@ -182,14 +215,14 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {repository, loading, tabActiveKey, visitorProfile} = this.state;
+        const {repository, loading, tabActiveKey, visitorProfile, forkFrom, openPullRequestAmount} = this.state;
         const {children, isLoggedIn} = this.props;
         return (
             <View showSettings={isLoggedIn && visitorProfile !== null && repository.username === visitorProfile.username}
                   repository={repository}
                   loading={loading}
                   onTabChange={this.onTabChange}
-                  tabActiveKey={tabActiveKey}>
+                  tabActiveKey={tabActiveKey} forkFrom={forkFrom} openPullRequestAmount={openPullRequestAmount}>
                 {children}
             </View>
         );

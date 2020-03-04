@@ -1,12 +1,13 @@
 import React, {ReactNode} from 'react';
 import Style from './Style.module.scss';
 import {Repository as RepositoryClass} from '../../Class';
-import {Icon, Tabs} from 'antd';
+import {Icon, Tabs, Tag} from 'antd';
 import AccessibilityTag from '../../Component/AccessibilityTag';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 import TAB_KEY from './TAB_KEY';
 import {TabsProps} from 'antd/lib/tabs';
+import ForkButton from './Component/ForkButton';
 
 interface IProps
 {
@@ -15,18 +16,22 @@ interface IProps
     tabActiveKey: TAB_KEY,
     onTabChange: TabsProps['onChange'],
     showSettings: boolean,
-    children: ReactNode
+    children: ReactNode,
+    forkFrom: Readonly<Pick<RepositoryClass, 'username' | 'name'>> | null,
+    openPullRequestAmount: number,
 }
 
 function RepositoryView(props: Readonly<IProps>)
 {
     const {
         repository: {username, name, isPublic},
+        forkFrom,
         loading,
         onTabChange,
         tabActiveKey,
         showSettings,
         children,
+        openPullRequestAmount,
     } = props;
     return (
         loading ? null :
@@ -34,16 +39,38 @@ function RepositoryView(props: Readonly<IProps>)
                 <div className={Style.header}>
                     <div className={Style.basicInfo}>
                         <AccessibilityTag isPublic={isPublic} />
-                        <div className={Style.usernameAndName}>
-                            <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
-                                {username}
-                            </Link> / <Link to={RouterFunction.generateRepositoryCodeRoute({
-                            username,
-                            repository: name,
-                        })}>
-                            <b>{name}</b>
-                        </Link>
+                        <div className={Style.usernameAndNameWrapper}>
+                            <div className={Style.usernameAndName}>
+                                <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
+                                    {username}
+                                </Link> / <Link to={RouterFunction.generateRepositoryCodeRoute({
+                                username,
+                                repository: name,
+                            })}>
+                                <b>{name}</b>
+                            </Link>
+                            </div>
+                            <div className={Style.forkFrom}>
+                                {
+                                    forkFrom === null ? null : (
+                                        <div className={Style.forkFrom}>
+                                            <div className={Style.text}>fork 自</div>
+                                            <Link to={RouterFunction.generatePersonalCenterRoute({username: forkFrom.username})}>
+                                                {forkFrom.username}
+                                            </Link> / <Link to={RouterFunction.generateRepositoryCodeRoute({
+                                            username: forkFrom.username,
+                                            repository: forkFrom.name,
+                                        })}>
+                                            <b>{forkFrom.name}</b>
+                                        </Link>
+                                        </div>
+                                    )
+                                }
+                            </div>
                         </div>
+                    </div>
+                    <div className={Style.buttonWrapper}>
+                        <ForkButton />
                     </div>
                 </div>
                 <Tabs defaultActiveKey={TAB_KEY.CODE} type={'card'} className={Style.tab} tabBarStyle={{
@@ -65,7 +92,8 @@ function RepositoryView(props: Readonly<IProps>)
                         </div>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab={
-                        <><Icon type="pull-request" />Pull Requests</>
+                        <><Icon type="pull-request" />Pull
+                                                      Requests <Tag className={Style.tag}>{openPullRequestAmount}</Tag></>
                     } key={TAB_KEY.PULL_REQUESTS}>
                         <div className={Style.tabContent}>
                             {children}

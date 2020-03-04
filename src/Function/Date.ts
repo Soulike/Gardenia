@@ -1,38 +1,43 @@
 export function parseTimestampToDifference(timestamp: number): string
 {
-    const date = new Date(timestamp);
-    const nowDate = new Date();
+    const nowTimestamp = Date.now();
+    const timestampDiff = Math.abs(nowTimestamp - timestamp);
 
-    const yearDiff = nowDate.getFullYear() - date.getFullYear();
-    const monthDiff = nowDate.getMonth() - date.getMonth();
-    const dateDiff = nowDate.getDate() - date.getDate();
-    const hourDiff = nowDate.getHours() - date.getHours();
-    const minuteDiff = nowDate.getMinutes() - date.getMinutes();
-    const secondDiff = nowDate.getSeconds() - date.getSeconds();
+    const SECOND = 1000;
+    const MINUTE = 60 * SECOND;
+    const HOUR = 60 * MINUTE;
+    const DAY = 24 * HOUR;
+    const WEEK = 7 * DAY;
+    const MONTH = 30 * DAY;
+    const YEAR = 365 * DAY;
 
-    if (Math.abs(yearDiff) >= 1) // 一年以上
+    if (timestampDiff > YEAR) // 一年以上
     {
-        return `${yearDiff} 年前`;
+        return `${Math.floor(timestampDiff / YEAR)} 年前`;
     }
-    else if (Math.abs(monthDiff) >= 1)  // 不满一年，一个月以上
+    else if (timestampDiff > MONTH)  // 不满一年，一个月以上
     {
-        return `${monthDiff} 个月前`;
+        return `${Math.floor(timestampDiff / MONTH)} 个月前`;
     }
-    else if (Math.abs(dateDiff) >= 1) // 不满一个月，一天以上
+    else if (timestampDiff > WEEK) // 不满一个月，一周以上
     {
-        return `${dateDiff} 天前`;
+        return `${Math.floor(timestampDiff / WEEK)} 周前`;
     }
-    else if (Math.abs(hourDiff) >= 1) // 不满一天，一小时以上
+    else if (timestampDiff > DAY) // 不满一周，一天以上
     {
-        return `${hourDiff} 小时前`;
+        return `${Math.floor(timestampDiff / DAY)} 天前`;
     }
-    else if (Math.abs(minuteDiff) >= 1) // 不满一小时，一分钟以上
+    else if (timestampDiff > HOUR) // 不满一天，一小时以上
     {
-        return `${minuteDiff} 分钟前`;
+        return `${Math.floor(timestampDiff / HOUR)} 小时前`;
     }
-    else if (Math.abs(secondDiff) >= 1) // 不满一分钟，一秒以上
+    else if (timestampDiff > MINUTE) // 不满一小时，一分钟以上
     {
-        return `${secondDiff} 秒前`;
+        return `${Math.floor(timestampDiff / MINUTE)} 分钟前`;
+    }
+    else if (timestampDiff > SECOND) // 不满一分钟，一秒以上
+    {
+        return `${Math.floor(timestampDiff / SECOND)} 秒前`;
     }
     else    // 不满一秒
     {

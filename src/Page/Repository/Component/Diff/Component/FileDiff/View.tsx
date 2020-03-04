@@ -21,7 +21,7 @@ function FileDiff(props: IProps)
     } = props;
     return (
         <div className={Style.FileDiff}>
-            <div className={Style.header} style={{borderBottom: showCode ? '1px solid #CCC' : ''}}>
+            <div className={Style.header} style={showCode ? {} : {borderRadius: '5px'}}>
                 <div className={Style.showCodeButtonWrapper}>
                     <Button disabled={isBinary}
                             size={'small'}
@@ -45,7 +45,7 @@ function FileDiff(props: IProps)
                     }
                 </div>
             </div>
-            <div className={Style.blockDiffsWrapper} style={showCode ? {} : {position: 'absolute', top: '99999999px'}}>
+            <div className={Style.blockDiffsWrapper} style={showCode ? {} : {position: 'fixed', top: '99999999px'}}>
                 {
                     blockDiffs.map(blockDiff =>
                         <BlockDiff blockDiff={blockDiff} key={blockDiff.info} />)

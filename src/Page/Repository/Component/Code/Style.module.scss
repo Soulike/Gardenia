@@ -8,5 +8,15 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        .leftButtonWrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .newPullRequestButtonWrapper {
+                margin-left: 5px;
+            }
+        }
     }
 }

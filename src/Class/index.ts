@@ -7,3 +7,6 @@ export * from './Group';
 export * from './FileDiff';
 export * from './BlockDiff';
 export * from './Branch';
+export * from './PullRequest';
+export * from './PullRequestComment';
+export * from './Conflict';

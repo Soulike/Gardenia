@@ -2,7 +2,9 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {ObjectType} from '../../../../CONSTANT';
 import {Branch, Repository as RepositoryClass} from '../../../../Class';
-import {Skeleton} from 'antd';
+import {Button, Skeleton} from 'antd';
+import {Link} from 'react-router-dom';
+import {Function as RouterFunction} from '../../../../Router';
 
 const BranchMenu = React.lazy(() => import('./Component/BranchMenu'));
 const FileList = React.lazy(() => import('./Component/FileList'));
@@ -31,6 +33,14 @@ function CodeView(props: Readonly<IProps>)
         objectType,
         loading,
     } = props;
+    let masterBranchName = '';
+    for (const {isDefault, name} of branches)
+    {
+        if (isDefault)
+        {
+            masterBranchName = name;
+        }
+    }
     return (
         <div className={Style.Code}>
             <Skeleton active={true} loading={loading}>
@@ -43,7 +53,21 @@ function CodeView(props: Readonly<IProps>)
                         <Empty /> :
                         <>
                             <div className={Style.buttonWrapper}>
-                                <BranchMenu branches={branches} />
+                                <div className={Style.leftButtonWrapper}>
+                                    <BranchMenu branches={branches} />
+                                    <div className={Style.newPullRequestButtonWrapper}>
+                                        <Link to={RouterFunction.generateRepositoryCompareRoute({
+                                            sourceRepositoryUsername: username,
+                                            sourceRepositoryName: name,
+                                            sourceRepositoryBranch: masterBranchName,
+                                            targetRepositoryBranch: masterBranchName,
+                                            repository: name,
+                                            username,
+                                        })}>
+                                            <Button>创建 Pull Request</Button>
+                                        </Link>
+                                    </div>
+                                </div>
                                 <CloneButton username={username} repository={name} />
                             </div>
                             {

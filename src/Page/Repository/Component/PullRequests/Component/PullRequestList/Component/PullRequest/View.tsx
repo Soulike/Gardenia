@@ -1,0 +1,82 @@
+import React from 'react';
+import Style from './Style.module.scss';
+import {PullRequest as PullRequestClass} from '../../../../../../../../Class';
+import {Icon} from 'antd';
+import {PULL_REQUEST_STATUS} from '../../../../../../../../CONSTANT';
+import {Date} from '../../../../../../../../Function';
+import {Link} from 'react-router-dom';
+import {Function as RouterFunction} from '../../../../../../../../Router';
+
+interface IProps
+{
+    pullRequest: PullRequestClass
+}
+
+function PullRequest(props: IProps)
+{
+    const {
+        pullRequest: {
+            title, status, creationTime, no,
+            sourceRepositoryUsername, targetRepositoryUsername, targetRepositoryName,
+        },
+    } = props;
+    return (
+        <div className={Style.PullRequest}>
+            <div className={Style.titleWrapper}>
+                <div className={Style.iconWrapper} style={{color: getIconColor(status)}}>
+                    {getIcon(status)}
+                </div>
+                <Link to={RouterFunction.generateRepositoryPullRequestRoute({
+                    username: targetRepositoryUsername,
+                    repository: targetRepositoryName,
+                    no: no!.toString(),
+                })}>
+                    <div className={Style.title}>{title}</div>
+                </Link>
+            </div>
+            <div className={Style.info}>
+                #{no} 由 <b>{sourceRepositoryUsername}</b> 于 {Date.parseTimestampToDifference(creationTime)} 创建
+            </div>
+        </div>
+    );
+}
+
+function getIcon(status: PULL_REQUEST_STATUS)
+{
+    switch (status)
+    {
+        case PULL_REQUEST_STATUS.CLOSED:
+        {
+            return <Icon type="close" />;
+        }
+        case PULL_REQUEST_STATUS.MERGED:
+        {
+            return <Icon type="pull-request" />;
+        }
+        case PULL_REQUEST_STATUS.OPEN:
+        {
+            return <Icon type="fork" />;
+        }
+    }
+}
+
+function getIconColor(status: PULL_REQUEST_STATUS): string
+{
+    switch (status)
+    {
+        case PULL_REQUEST_STATUS.CLOSED:
+        {
+            return 'red';
+        }
+        case PULL_REQUEST_STATUS.MERGED:
+        {
+            return 'purple';
+        }
+        case PULL_REQUEST_STATUS.OPEN:
+        {
+            return 'green';
+        }
+    }
+}
+
+export default React.memo(PullRequest);

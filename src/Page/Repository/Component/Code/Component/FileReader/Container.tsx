@@ -6,7 +6,6 @@ import {RepositoryInfo} from '../../../../../../Api';
 import hljs from 'highlight.js';
 import path, {basename} from 'path';
 import {mdConverter} from '../../../../../../Singleton';
-import {ObjectType} from '../../../../../../CONSTANT';
 import {Interface as RouterInterface} from '../../../../../../Router';
 import {File} from '../../../../../../Function';
 
@@ -19,7 +18,7 @@ interface IState
     isOversize: boolean,
     lastCommit: Commit,
     loading: boolean,
-    rawContent: string,
+    html: string;
 }
 
 class FileReader extends PureComponent<Readonly<IProps>, IState>
@@ -33,7 +32,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             isOversize: false,
             lastCommit: new Commit('', '', '', 0, '', ''),
             loading: true,
-            rawContent: '',
+            html: '',
         };
     }
 
@@ -41,6 +40,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
     {
         this.setState({loading: true});
         await this.loadLastCommit();
+        await this.loadFileInfo();
         this.setState({loading: false});
     }
 
@@ -56,59 +56,71 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
 
     loadLastCommit = async () =>
     {
-        const {match: {params: {username, repository: name, path, branch}}} = this.props;
-        const lastCommit = await RepositoryInfo.lastCommit({username}, {name}, branch!, path);
-        if (lastCommit !== null)
+        return new Promise(async resolve =>
         {
-            await this.onLastCommitLoaded(lastCommit);
-        }
+            const {match: {params: {username, repository: name, path, branch}}} = this.props;
+            const lastCommit = await RepositoryInfo.lastCommit({username}, {name}, branch!, path);
+            if (lastCommit !== null)
+            {
+                this.setState({lastCommit}, () => resolve());
+            }
+        });
     };
 
-    onLastCommitLoaded = async (lastCommit: Commit) =>
+    loadFileInfo = async () =>
     {
-        this.setState({lastCommit});
-        const {commitHash} = lastCommit;
-        await this.loadFileInfo(commitHash);
-    };
-
-    loadFileInfo = async (commitHash: string) =>
-    {
+        const {lastCommit: {commitHash}} = this.state;
         const {match: {params: {username, repository: name, path}}} = this.props;
         const fileInfo = await RepositoryInfo.fileInfo({username}, {name}, path!, commitHash);
         if (fileInfo !== null)
         {
-            await this.onFileInfoLoaded(fileInfo, commitHash);
-        }
-    };
-
-    onFileInfoLoaded = async (fileInfo: { exists: boolean, type?: ObjectType, size?: number, isBinary?: boolean }, commitHash: string) =>
-    {
-        const {exists, size, isBinary} = fileInfo;
-        this.setState({exists});
-        if (exists)
-        {
-            this.setState({isBinary: isBinary!});
-            if (!isBinary)   // 不是二进制文件，但大小超过 1M
+            const {exists, size, isBinary} = fileInfo;
+            this.setState({exists});
+            if (exists)
             {
-                if (size! > 1024 * 1024)
+                this.setState({isBinary: isBinary!});
+                if (!isBinary)   // 不是二进制文件，但大小超过 1M
                 {
-                    this.setState({isOversize: true});
-                }
-                else    // 不是二进制文件，且大小小于 1M，就加载文件内容
-                {
-                    await this.loadRawContent(commitHash);
+                    if (size! > 1024 * 1024)
+                    {
+                        this.setState({isOversize: true});
+                    }
+                    else    // 不是二进制文件，且大小小于 1M，就加载文件内容
+                    {
+                        await this.loadHTML();
+                    }
                 }
             }
         }
     };
 
-    loadRawContent = async (commitHash: string) =>
+    loadHTML = async () =>
     {
         const {match: {params: {username, repository: name, path}}} = this.props;
+        const {isBinary, exists, isOversize, lastCommit: {commitHash}} = this.state;
+        const fileName = this.getFileNameFromPath(path!);
         const fileRawContent = await RepositoryInfo.rawFile({username}, {name}, path!, commitHash);
         if (fileRawContent !== null)
         {
-            this.setState({rawContent: await File.transformBlobToString(fileRawContent)});
+            const rawContent = await File.transformBlobToString(fileRawContent);
+            let html = '';
+            if (exists && !isOversize && !isBinary)
+            {
+                if (this.isMarkdown(fileName))
+                {
+                    html = mdConverter.makeHtml(rawContent);
+                    const node = document.createElement('div');
+                    node.innerHTML = html;
+                    node.querySelectorAll('pre code')
+                        .forEach(block => hljs.highlightBlock(block));
+                    html = node.innerHTML;
+                }
+                else // is code
+                {
+                    html = this.getHighlightedHtml(rawContent);
+                }
+            }
+            this.setState({html});
         }
     };
 
@@ -137,9 +149,9 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         return pathSplit[pathSplit.length - 1];
     };
 
-    getHighlightedHtml = (): string =>
+    getHighlightedHtml = (rawContent: string): string =>
     {
-        const {isBinary, rawContent} = this.state;
+        const {isBinary} = this.state;
         if (!isBinary)
         {
             const pre = document.createElement('pre');
@@ -168,20 +180,9 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
     render()
     {
         const {match: {params: {path}}} = this.props;
-        const {isBinary, exists, isOversize, rawContent, lastCommit, loading} = this.state;
+        const {isBinary, exists, isOversize, lastCommit, loading, html} = this.state;
         const fileName = this.getFileNameFromPath(path!);
-        let html = '';
-        if (exists && !isOversize && !isBinary)
-        {
-            if (this.isMarkdown(fileName))
-            {
-                html = mdConverter.makeHtml(rawContent);
-            }
-            else // is code
-            {
-                html = this.getHighlightedHtml();
-            }
-        }
+
         return (
             <View html={html} exists={exists} isBinary={isBinary} isOversize={isOversize} lastCommit={lastCommit}
                   fileName={fileName} loading={loading} onRawFileButtonClick={this.onRawFileButtonClick} />

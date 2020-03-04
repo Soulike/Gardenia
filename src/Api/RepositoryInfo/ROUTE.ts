@@ -7,6 +7,7 @@ function repositoryInfoPrefix(url: string): string
 
 export const REPOSITORY = repositoryInfoPrefix('/repository');
 export const BRANCHES = repositoryInfoPrefix('/branches');
+export const BRANCH_NAMES = repositoryInfoPrefix('/branchNames');
 export const LAST_COMMIT = repositoryInfoPrefix('/lastCommit');
 export const DIRECTORY = repositoryInfoPrefix('/directory');
 export const COMMIT_COUNT = repositoryInfoPrefix('/commitCount');
@@ -25,3 +26,8 @@ export const DIFF_BETWEEN_COMMITS = repositoryInfoPrefix('/diffBetweenCommits');
 export const FILE_DIFF_BETWEEN_COMMITS = repositoryInfoPrefix('/fileDiffBetweenCommits');
 export const COMMIT = repositoryInfoPrefix('/commit');
 export const FILE_COMMIT = repositoryInfoPrefix('/fileCommit');
+export const FORK_AMOUNT = repositoryInfoPrefix('/forkAmount');
+export const FORK_REPOSITORIES = repositoryInfoPrefix('/forkRepositories');
+export const FORK_FROM = repositoryInfoPrefix('/forkFrom');
+export const FORK_COMMIT_HISTORY = repositoryInfoPrefix('/forkCommitHistory');
+export const FORK_FILE_DIFF = repositoryInfoPrefix('/forkFileDiff');

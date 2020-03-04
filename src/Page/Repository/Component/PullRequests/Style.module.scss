@@ -1,0 +1,38 @@
+.PullRequests {
+    margin: 15px 0;
+
+    .list {
+        border: 1px solid #DDD;
+        border-radius: 3px;
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 10px;
+            border-bottom: 1px solid #DDD;
+
+            .statusFilter {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .tag {
+                    margin-right: 0;
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        .pullRequestListWrapper {
+
+        }
+    }
+
+    .pageButtonWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 15px 0;
+    }
+}

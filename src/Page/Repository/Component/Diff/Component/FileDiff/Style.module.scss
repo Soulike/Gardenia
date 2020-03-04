@@ -7,7 +7,7 @@
         align-items: center;
         padding: 10px 15px;
         background-color: #FAFBFC;
-        max-width: 750px;
+        width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -26,7 +26,7 @@
     }
 
     .blockDiffsWrapper {
-        overflow: auto;
+
     }
 
 }

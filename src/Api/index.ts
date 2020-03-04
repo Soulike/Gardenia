@@ -6,3 +6,4 @@ export * from './RepositoryInfo';
 export * from './Profile';
 export * from './Group';
 export * from './Collaborator';
+export * from './PullRequest';

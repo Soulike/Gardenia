@@ -12,6 +12,7 @@ import {notification} from 'antd';
 import axios, {AxiosResponse} from 'axios';
 import {
     ADD_TO_GROUP,
+    BRANCH_NAMES,
     BRANCHES,
     COMMIT,
     COMMIT_COUNT,
@@ -24,6 +25,11 @@ import {
     FILE_COMMIT_HISTORY_BETWEEN_COMMITS,
     FILE_DIFF_BETWEEN_COMMITS,
     FILE_INFO,
+    FORK_AMOUNT,
+    FORK_COMMIT_HISTORY,
+    FORK_FILE_DIFF,
+    FORK_FROM,
+    FORK_REPOSITORIES,
     GROUPS,
     LAST_COMMIT,
     RAW_FILE,
@@ -89,14 +95,41 @@ export async function branches(repository: Readonly<Pick<RepositoryClass, 'usern
     }
 }
 
-export async function lastCommit(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<RepositoryClass, 'name'>>, commitHash: Readonly<string>, filePath?: Readonly<string>): Promise<Readonly<Commit> | null>
+export async function branchNames(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<{ branchNames: string[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ branchNames: string[] }>> =
+            await axios.get(BRANCH_NAMES, {
+                params: {
+                    json: JSON.stringify({repository}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function lastCommit(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<RepositoryClass, 'name'>>, branch: Readonly<string>, filePath?: Readonly<string>): Promise<Readonly<Commit> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Commit>> =
             await axios.get(LAST_COMMIT, {
                 params: {
-                    json: JSON.stringify({account, repository, commitHash, filePath}),
+                    json: JSON.stringify({account, repository, branch, filePath}),
                 },
             });
         if (isSuccessful)
@@ -539,6 +572,151 @@ export async function fileCommit(repository: Pick<Repository, 'username' | 'name
             await axios.get(FILE_COMMIT, {
                 params: {
                     json: JSON.stringify({repository, filePath, commitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkAmount(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<{ amount: number }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
+            await axios.get(FORK_AMOUNT, {
+                params: {
+                    json: JSON.stringify(repository),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkRepositories(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<{ repositories: RepositoryClass[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ repositories: RepositoryClass[] }>> =
+            await axios.get(FORK_REPOSITORIES, {
+                params: {
+                    json: JSON.stringify(repository),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkFrom(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<{ repository: Pick<RepositoryClass, 'username' | 'name'> | null }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ repository: Pick<RepositoryClass, 'username' | 'name'> | null }>> =
+            await axios.get(FORK_FROM, {
+                params: {
+                    json: JSON.stringify(repository),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkCommitHistory(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string): Promise<Readonly<{ commits: Commit[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[] }>> =
+            await axios.get(FORK_COMMIT_HISTORY, {
+                params: {
+                    json: JSON.stringify({
+                        sourceRepository,
+                        sourceRepositoryBranch,
+                        targetRepository,
+                        targetRepositoryBranch,
+                    }),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkFileDiff(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string): Promise<Readonly<{ fileDiffs: FileDiff[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ fileDiffs: FileDiff[] }>> =
+            await axios.get(FORK_FILE_DIFF, {
+                params: {
+                    json: JSON.stringify({
+                        sourceRepository,
+                        sourceRepositoryBranch,
+                        targetRepository,
+                        targetRepositoryBranch,
+                    }),
                 },
             });
         if (isSuccessful)

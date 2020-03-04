@@ -19,7 +19,7 @@ function CommitTimeline(props: IProps)
                     <Timeline>
                         {
                             commits.map(commit =>
-                                <Timeline.Item>
+                                <Timeline.Item key={commit.commitHash}>
                                     <TimelineItemContent commit={commit} />
                                 </Timeline.Item>)
                         }
