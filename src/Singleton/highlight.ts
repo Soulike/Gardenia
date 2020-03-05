@@ -28,6 +28,7 @@ hljs.registerLanguage('markdown', require(`highlight.js/lib/languages/markdown.j
 hljs.registerLanguage('matlab', require(`highlight.js/lib/languages/matlab.js`));
 hljs.registerLanguage('nginx', require(`highlight.js/lib/languages/nginx.js`));
 hljs.registerLanguage('php', require(`highlight.js/lib/languages/php.js`));
+hljs.registerLanguage('plaintext', require(`highlight.js/lib/languages/plaintext`));
 hljs.registerLanguage('powershell', require(`highlight.js/lib/languages/powershell.js`));
 hljs.registerLanguage('python', require(`highlight.js/lib/languages/python.js`));
 hljs.registerLanguage('ruby', require(`highlight.js/lib/languages/ruby.js`));

@@ -1,5 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
+import {Code} from '../../Function';
 
 interface IProps
 {
@@ -9,19 +10,21 @@ interface IProps
 function CodeReader(props: IProps)
 {
     const {code} = props;
-    const codeLines = code.split('\n');
+    const highlightedCodeLines = Code.getHighlightedCodeLines(code);
 
     return (
         <table className={Style.CodeReader}>
             <tbody>
             {
-                codeLines.map((codeline, i) => (
+                highlightedCodeLines.map((codeline, i) => (
                     <tr key={i} className={Style.line}>
                         <td>
                             <div className={Style.lineNumber}>{i + 1}</div>
                         </td>
                         <td>
-                            <pre className={Style.code}><code>{codeline}</code></pre>
+                            <pre className={Style.code}>
+                                <code dangerouslySetInnerHTML={{__html: codeline}} />
+                            </pre>
                         </td>
                     </tr>))
             }

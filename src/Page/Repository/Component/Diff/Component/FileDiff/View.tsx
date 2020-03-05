@@ -24,7 +24,7 @@ function FileDiff(props: IProps)
         <div className={Style.FileDiff}>
             <div className={Style.header} style={showCode ? {} : {borderRadius: '5px'}}>
                 <div className={Style.showCodeButtonWrapper}>
-                    <Button disabled={isBinary}
+                    <Button disabled={isBinary || isDeleted}
                             size={'small'}
                             className={Style.showCodeButton}
                             onClick={onShowCodeButtonClick}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import Line from './Component/Line';
+import {Code as CodeFunction} from '../../../../../../../../../../Function';
 
 interface IProps
 {
@@ -12,7 +13,10 @@ interface IProps
 function Code(props: IProps)
 {
     const {code, prevStartLineNumber, afterStartLineNumber} = props;
-    const codeLines = splitToLines(code);
+    const codeLines = code.split('\n');
+    const codeLinesWithoutSign = codeLines.map(line => line.slice(1));
+    const codeWithoutSigns = codeLinesWithoutSign.join('\n');
+    const highlightedCodeLines = CodeFunction.getHighlightedCodeLines(codeWithoutSigns);
     let currentPrevLineNumber = prevStartLineNumber;
     let currentAfterLineNumber = afterStartLineNumber;
     return (
@@ -22,7 +26,7 @@ function Code(props: IProps)
                 codeLines.map((rawLine, i) =>
                 {
                     const sign = rawLine.slice(0, 1);
-                    const code = rawLine.slice(1);
+                    const code = highlightedCodeLines[i];
                     const line = `${sign} ${code}`;
                     let node = <Line codeLine={line} key={i} />;
                     if (sign === ' ')
@@ -54,11 +58,6 @@ function Code(props: IProps)
             </tbody>
         </table>
     );
-}
-
-function splitToLines(string: string)
-{
-    return string.split('\n').filter(line => line.length > 0);
 }
 
 export default React.memo(Code);

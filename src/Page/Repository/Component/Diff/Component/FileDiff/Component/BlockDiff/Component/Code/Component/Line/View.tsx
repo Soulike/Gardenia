@@ -34,7 +34,7 @@ function Line(props: IProps)
             <td className={lineNumberStyle}><code>{prevLineNumber !== undefined ? prevLineNumber : ''}</code></td>
             <td className={lineNumberStyle}><code>{afterLineNumber !== undefined ? afterLineNumber : ''}</code></td>
             <td className={codeWrapperStyle}>
-                <pre className={Style.code}>{codeLine}</pre>
+                <pre className={Style.code}><code dangerouslySetInnerHTML={{__html: codeLine}} /></pre>
             </td>
         </tr>
     );
