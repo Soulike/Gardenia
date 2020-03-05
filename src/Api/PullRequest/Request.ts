@@ -9,6 +9,7 @@ import {
     GET,
     GET_BY_REPOSITORY,
     GET_COMMENTS,
+    GET_COMMIT_AMOUNT,
     GET_COMMITS,
     GET_CONFLICTS,
     GET_FILE_DIFFS,
@@ -374,6 +375,31 @@ export async function getCommits(pullRequest: Readonly<Pick<PullRequest, 'id'>>)
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[] }>> =
             await axios.get(GET_COMMITS, {
+                params: {json: JSON.stringify(pullRequest)},
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function getCommitAmount(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ commitAmount: number } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commitAmount: number }>> =
+            await axios.get(GET_COMMIT_AMOUNT, {
                 params: {json: JSON.stringify(pullRequest)},
             });
         if (isSuccessful)
