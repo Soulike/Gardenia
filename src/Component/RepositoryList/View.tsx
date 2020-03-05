@@ -27,7 +27,7 @@ function RepositoryList(props: Readonly<IProps>)
                       <Link className={Style.repositoryWrapper}
                             target={'_blank'} rel={'noreferrer noopener'}
                             to={RouterFunction.generateRepositoryCodeRoute({username, repository: name})}>
-                          <Card className={Style.repository} hoverable={true}>
+                          <Card className={Style.repository}>
                               <Card.Meta title={
                                   <React.Fragment>
                                       <AccessibilityTag isPublic={isPublic} />
