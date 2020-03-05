@@ -13,6 +13,7 @@ interface IState
     fileList: Array<{ type: ObjectType, path: string, commit: Commit }>,
     lastCommit: Commit,
     loading: boolean,
+    masterBranchName: string,
 }
 
 class FileList extends Component<IProps, IState>
@@ -24,12 +25,14 @@ class FileList extends Component<IProps, IState>
             fileList: [],
             lastCommit: new Commit('', '', '', 0, '', ''),
             loading: true,
+            masterBranchName: '',
         };
     }
 
     async componentDidMount()
     {
         this.setState({loading: true});
+        await this.loadMasterBranchName();
         await Promise.all([
             this.loadDirectory(),
             this.loadLastCommit(),
@@ -39,9 +42,13 @@ class FileList extends Component<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {branch: preBranch, path: prePath}}} = prevProps;
-        const {match: {params: {branch, path}}} = this.props;
-        if (preBranch !== branch)
+        const {match: {params: {username: prevUsername, repository: prevRepository, branch: preBranch, path: prePath}}} = prevProps;
+        const {match: {params: {username, repository, branch, path}}} = this.props;
+        if (prevUsername !== username || prevRepository !== repository)
+        {
+            await this.componentDidMount();
+        }
+        else if (preBranch !== branch)
         {
             this.setState({loading: true});
             await Promise.all([
@@ -58,12 +65,36 @@ class FileList extends Component<IProps, IState>
         }
     }
 
+    loadMasterBranchName = async () =>
+    {
+        return new Promise(async resolve =>
+        {
+            const {match: {params: {username, repository: repositoryName}}} = this.props;
+            const result = await RepositoryInfo.branches({username, name: repositoryName});
+            if (result !== null)
+            {
+                const {branches} = result;
+                let masterBranchName = '';
+                for (const {name, isDefault} of branches)
+                {
+                    if (isDefault)
+                    {
+                        masterBranchName = name;
+                        break;
+                    }
+                }
+                this.setState({masterBranchName}, () => resolve());
+            }
+        });
+    };
+
     loadDirectory = async () =>
     {
         const {match: {params: {username, repository: name, path, branch}}} = this.props;
+        const {masterBranchName} = this.state;
         const fileList = await RepositoryInfo.directory(
             {username}, {name},
-            branch ? branch : 'master',
+            branch ? branch : masterBranchName,
             path === undefined ? '' : path + '/');
         if (fileList !== null)
         {
@@ -74,7 +105,9 @@ class FileList extends Component<IProps, IState>
     loadLastCommit = async () =>
     {
         const {match: {params: {username, repository: name, branch, path}}} = this.props;
-        const lastCommit = await RepositoryInfo.lastCommit({username}, {name}, branch ? branch : 'master', path);
+        const {masterBranchName} = this.state;
+        const lastCommit = await RepositoryInfo.lastCommit(
+            {username}, {name}, branch ? branch : masterBranchName, path);
         if (lastCommit !== null)
         {
             this.setState({lastCommit});
@@ -83,9 +116,9 @@ class FileList extends Component<IProps, IState>
 
     render()
     {
-        const {fileList, lastCommit, loading} = this.state;
+        const {fileList, lastCommit, loading, masterBranchName} = this.state;
         const {match: {params: {path}}} = this.props;
-        return (<View fileList={fileList}
+        return (<View fileList={fileList} masterBranchName={masterBranchName}
                       lastCommit={lastCommit}
                       loading={loading}
                       showPreviousFolderItem={path !== undefined} />);

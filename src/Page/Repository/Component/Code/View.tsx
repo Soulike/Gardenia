@@ -18,7 +18,6 @@ interface IProps
     repository: Readonly<RepositoryClass>,
     branches: Readonly<Branch[]>,
     commitCount: number,
-    isEmpty: boolean,
     objectType: ObjectType,
     loading: boolean,
 }
@@ -29,7 +28,6 @@ function CodeView(props: Readonly<IProps>)
         repository: {username, name, description},
         branches,
         commitCount,
-        isEmpty,
         objectType,
         loading,
     } = props;
@@ -49,7 +47,7 @@ function CodeView(props: Readonly<IProps>)
                 </div>
                 <InfoBar commitCount={commitCount} branches={branches} />
                 {
-                    isEmpty ?
+                    commitCount === 0 ?
                         <Empty /> :
                         <>
                             <div className={Style.buttonWrapper}>

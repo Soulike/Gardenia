@@ -42,7 +42,9 @@ function BranchMenu(props: IProps)
                 }
             </Menu>
         }>
-            <Button>{isBranch ? '分支：' : 'Tree：'}{currentBranch}<CaretDownOutlined /></Button>
+            <Button>{isBranch ? '分支：' : 'Tree: '}
+                <div className={Style.branchNameInButton}>{currentBranch}</div>
+                <CaretDownOutlined /></Button>
         </Dropdown>);
 }
 

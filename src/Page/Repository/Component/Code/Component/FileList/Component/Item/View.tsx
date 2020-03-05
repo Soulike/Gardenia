@@ -10,12 +10,13 @@ import {FileTextOutlined, FolderOutlined} from '@ant-design/icons';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
-    fileInfo: Readonly<{ type: ObjectType, path: string, commit: Commit }>
+    fileInfo: Readonly<{ type: ObjectType, path: string, commit: Commit }>;
+    masterBranchName: string;
 }
 
 function Item(props: Readonly<IProps>)
 {
-    const {fileInfo: {type, path, commit: {message, timestamp, commitHash}}, match: {params: {username, repository, branch}}} = props;
+    const {masterBranchName, fileInfo: {type, path, commit: {message, timestamp, commitHash}}, match: {params: {username, repository, branch}}} = props;
     const fileName = getFileNameFromPath(path);
     return (
         <List.Item className={Style.Item}>
@@ -30,7 +31,7 @@ function Item(props: Readonly<IProps>)
                         username,
                         repository,
                         objectType: type,
-                        branch: branch ? branch : 'master',
+                        branch: branch ? branch : masterBranchName,
                         path,
                     })}>
                     {fileName}

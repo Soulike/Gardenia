@@ -12,7 +12,6 @@ interface IState
     repository: RepositoryClass,
     branches: Readonly<Branch[]>,
     commitCount: number,
-    isEmpty: boolean,
     loading: boolean,
 }
 
@@ -25,7 +24,6 @@ class Code extends PureComponent<Readonly<IProps>, IState>
             repository: new RepositoryClass('', '', '', true),
             branches: [],
             commitCount: 0,
-            isEmpty: false, // 是否是空仓库
             loading: true,
         };
     }
@@ -33,77 +31,91 @@ class Code extends PureComponent<Readonly<IProps>, IState>
     async componentDidMount()
     {
         this.setState({loading: true});
+        await this.loadBranches();
         await Promise.all([
             this.loadRepository(),
             this.loadCommitCount(),
         ]);
-        const {isEmpty} = this.state;
-        if (!isEmpty)
-        {
-            await this.loadBranches();
-        }
         this.setState({loading: false});
     }
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {branch: preBranch}}} = prevProps;
-        const {match: {params: {branch}}} = this.props;
-        if (preBranch !== branch)    // 分支切换，重新获取提交相关信息
+        const {match: {params: {username: prevUsername, repository: prevRepository, branch: preBranch}}} = prevProps;
+        const {match: {params: {username, repository, branch}}} = this.props;
+        if (prevUsername !== username || prevRepository !== repository)
+        {
+            await this.componentDidMount();
+        }
+        else if (preBranch !== branch)    // 分支切换，重新获取提交相关信息
         {
             this.setState({loading: true});
-            await this.loadCommitCount(branch);
+            await this.loadCommitCount();
             this.setState({loading: false});
         }
     }
 
     loadRepository = async () =>
     {
-        const {match: {params: {username, repository: name}}} = this.props;
-        const repository = await RepositoryInfo.repository({username}, {name});
-        // 设置仓库基本信息
-        if (repository !== null)
+        return new Promise(async resolve =>
         {
-            this.setState({repository});
-        }
+            const {match: {params: {username, repository: name}}} = this.props;
+            const repository = await RepositoryInfo.repository({username}, {name});
+            // 设置仓库基本信息
+            if (repository !== null)
+            {
+                this.setState({repository}, () => resolve());
+            }
+        });
     };
 
-    loadCommitCount = async (branch: string = 'master') =>
+    loadCommitCount = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
-        const commitCountWrapper = await RepositoryInfo.commitCount({username}, {name: repositoryName}, branch);
-        if (commitCountWrapper !== null)
+        return new Promise(async resolve =>
         {
-            const {commitCount} = commitCountWrapper;
-            if (commitCount === 0)
+            const {match: {params: {username, repository: repositoryName, branch}}} = this.props;
+            const {branches} = this.state;
+            let masterBranchName = '';
+            if (!branch)
             {
-                // 查看 commit 次数是不是 0。如果是 0 就是空仓库，不再继续请求剩下的信息
-                this.setState({isEmpty: true});
+                for (const {isDefault, name} of branches)
+                {
+                    if (isDefault)
+                    {
+                        masterBranchName = name;
+                    }
+                }
             }
-            else
+            // 在仓库还没有提交的时候 commitHash 参数写什么都是无所谓的，所以即使是空字符串也不会出错
+            const commitCountWrapper = await RepositoryInfo.commitCount(
+                {username}, {name: repositoryName}, branch ? branch : masterBranchName);
+            if (commitCountWrapper !== null)
             {
-                this.setState({commitCount});
+                const {commitCount} = commitCountWrapper;
+                this.setState({commitCount}, () => resolve());
             }
-        }
+        });
     };
 
     loadBranches = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
-        const result = await RepositoryInfo.branches({username, name: repositoryName});
-        if (result !== null)
+        return new Promise(async resolve =>
         {
-            const {branches} = result;
-            this.setState({branches});
-        }
+            const {match: {params: {username, repository: repositoryName}}} = this.props;
+            const result = await RepositoryInfo.branches({username, name: repositoryName});
+            if (result !== null)
+            {
+                const {branches} = result;
+                this.setState({branches}, () => resolve());
+            }
+        });
     };
 
     render()
     {
-        const {repository, branches, commitCount, isEmpty, loading} = this.state;
+        const {repository, branches, commitCount, loading} = this.state;
         const {match: {params: {objectType}}} = this.props;
-        return (<View isEmpty={isEmpty}
-                      repository={repository}
+        return (<View repository={repository}
                       commitCount={commitCount}
                       branches={branches}
                       objectType={objectType!} loading={loading} />);

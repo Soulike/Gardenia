@@ -15,11 +15,12 @@ interface IProps
     lastCommit: Readonly<Commit>,
     loading: boolean,
     showPreviousFolderItem: boolean,
+    masterBranchName: string;
 }
 
 function FileListView(props: Readonly<IProps>)
 {
-    const {fileList, lastCommit, loading, showPreviousFolderItem} = props;
+    const {fileList, lastCommit, loading, showPreviousFolderItem, masterBranchName} = props;
     const {commitHash} = lastCommit;
     return (
         <>
@@ -32,7 +33,9 @@ function FileListView(props: Readonly<IProps>)
                         showPreviousFolderItem ? <PreviousFolderItem /> : null
                     }
                     {
-                        fileList.map(fileInfo => <Item fileInfo={fileInfo} key={fileInfo.path} />)
+                        fileList.map(fileInfo => <Item masterBranchName={masterBranchName}
+                                                       fileInfo={fileInfo}
+                                                       key={fileInfo.path} />)
                     }
                 </List>
             </div>
