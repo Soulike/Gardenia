@@ -39,7 +39,7 @@ class MarkdownPreviewer extends PureComponent<IProps, IState>
         }
     }
 
-    processMarkdown = async () =>
+    processMarkdown = () =>
     {
         const {markdown} = this.props;
         this.setState({processing: true});

@@ -23,12 +23,12 @@
             }
         }
 
-        .htmlWrapper {
-            padding: 0 10px;
+        .readerWrapper {
+            overflow: auto;
         }
 
         .content {
-            margin: 10px 25px;
+            margin: 0;
             overflow: auto;
         }
     }

@@ -1,0 +1,20 @@
+.CodeReader {
+    font-size: 12px;
+
+    .line {
+
+        .lineNumber {
+            text-align: right;
+            width: 1%;
+            min-width: 50px;
+            padding: 0 10px;
+            color: #AAA;
+        }
+
+        .code {
+            margin: 0;
+        }
+    }
+
+
+}

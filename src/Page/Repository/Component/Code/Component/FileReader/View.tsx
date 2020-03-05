@@ -1,38 +1,44 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Commit} from '../../../../../../Class';
-import {Alert, Button, Spin} from 'antd';
+import {Button, Spin} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 import CommitInfoBar from '../CommitInfoBar';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
-import HTMLPreviewer from '../../../../../../Component/HTMLPreviewer';
+import Binary from './Component/Binary';
+import Oversize from './Component/Oversize';
+import {extname} from 'path';
+import CodeReader from '../../../../../../Component/CodeReader';
+import MarkdownReader from './Component/MarkdownReader';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
     isBinary: boolean,
     isOversize: boolean,
-    exists: boolean,
     fileName: string,
-    html: string,
     lastCommit: Readonly<Commit>,
     loading: boolean,
     onRawFileButtonClick: ButtonProps['onClick'],
+    fileContent: string;
 }
 
 function FileReader(props: Readonly<IProps>)
 {
+    // 文件类型扩展名
+    const JSON = ['.json'];
+    const MARKDOWN = ['.md', '.markdown', '.mdwn'];
     const {
         isBinary,
         isOversize,
-        exists,
         fileName,
-        html,
         lastCommit,
         loading,
         onRawFileButtonClick,
+        fileContent,
         match: {params: {username, repository: repositoryName, branch, path}},
     } = props;
+    const ext = extname(fileName).toLowerCase();
     return (
         <div className={Style.FileReader}>
             <Spin spinning={loading}>
@@ -55,21 +61,31 @@ function FileReader(props: Readonly<IProps>)
                             <Button onClick={onRawFileButtonClick}>下载</Button>
                         </Button.Group>
                     </div>
-                    <div className={Style.htmlWrapper}>
+                    <div className={Style.readerWrapper}>
                         {
-                            exists ?
-                                isBinary ?
-                                    <Alert type={'info'}
-                                           showIcon={true}
-                                           message={'二进制文件无法显示'}
-                                           description={'你可以直接查看原文件'} /> :
-                                    isOversize ?
-                                        <Alert type={'info'}
-                                               showIcon={true}
-                                               message={'文件太大'}
-                                               description={'你可以直接查看原文件'} /> :
-                                        (<HTMLPreviewer html={html} processing={loading} />) :
-                                <Alert type={'error'} showIcon={true} message={'文件不存在'} />
+                            (() =>
+                            {
+                                if (isBinary)
+                                {
+                                    return <Binary />;
+                                }
+                                else if (isOversize)
+                                {
+                                    return <Oversize />;
+                                }
+                                else if (JSON.includes(ext))
+                                {
+                                    return <CodeReader code={fileContent} />;
+                                }
+                                else if (MARKDOWN.includes(ext))
+                                {
+                                    return <MarkdownReader markdown={fileContent} />;
+                                }
+                                else
+                                {
+                                    return <CodeReader code={fileContent} />;
+                                }
+                            })()
                         }
                     </div>
                 </div>
