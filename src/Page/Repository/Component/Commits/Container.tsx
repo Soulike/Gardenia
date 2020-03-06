@@ -32,7 +32,8 @@ class Commits extends PureComponent<IProps, IState>
 
     async componentDidMount()
     {
-        this.setState({loading: true, commits: []});
+        await this.init();
+        this.setState({loading: true});
         await this.loadBranches();
         await this.loadMoreCommits();
         this.setState({loading: false});
@@ -40,15 +41,21 @@ class Commits extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {branch: prevBranch}}} = prevProps;
-        const {match: {params: {branch}}} = this.props;
-        if (branch !== prevBranch)
+        const {location: {pathname}} = prevProps;
+        const {location: {pathname: prePathName}} = this.props;
+        if (pathname !== prePathName)
         {
-            this.setState({loading: true});
-            await this.loadMoreCommits();
-            this.setState({loading: false});
+            await this.componentDidMount();
         }
     }
+
+    init = async () =>
+    {
+        return new Promise(resolve =>
+        {
+            this.setState({branches: [], commits: []}, () => resolve());
+        });
+    };
 
     loadBranches = async () =>
     {

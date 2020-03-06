@@ -30,43 +30,29 @@ class PullRequestCommits extends PureComponent<IProps, IState>
 
     async componentDidMount()
     {
-        this.setState({loading: true, commits: []});
+        await this.init();
+        this.setState({loading: true});
         await this.loadMoreCommits();
         this.setState({loading: false});
     }
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {
-            match: {
-                params: {
-                    username: targetRepositoryUsername, repository: targetRepositoryName,
-                    targetRepositoryBranch,
-                    sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                },
-            },
-        } = this.props;
-        const {
-            match: {
-                params: {
-                    username: prevTargetRepositoryUsername, repository: prevTargetRepositoryName,
-                    targetRepositoryBranch: prevTargetRepositoryBranch,
-                    sourceRepositoryUsername: prevSourceRepositoryUsername,
-                    sourceRepositoryName: prevSourceRepositoryName,
-                    sourceRepositoryBranch: prevSourceRepositoryBranch,
-                },
-            },
-        } = prevProps;
-        if (targetRepositoryUsername !== prevTargetRepositoryUsername
-            || targetRepositoryName !== prevTargetRepositoryName
-            || targetRepositoryBranch !== prevTargetRepositoryBranch
-            || sourceRepositoryUsername !== prevSourceRepositoryUsername
-            || sourceRepositoryName !== prevSourceRepositoryName
-            || sourceRepositoryBranch !== prevSourceRepositoryBranch)
+        const {location: {pathname}} = prevProps;
+        const {location: {pathname: prePathName}} = this.props;
+        if (pathname !== prePathName)
         {
             await this.componentDidMount();
         }
     }
+
+    init = async () =>
+    {
+        return new Promise(resolve =>
+        {
+            this.setState({commits: []}, () => resolve());
+        });
+    };
 
     loadMoreCommits = async () =>
     {

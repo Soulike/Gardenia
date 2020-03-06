@@ -39,6 +39,7 @@ class Commits extends Component<IProps, IState>
         const {loading} = this.props;
         if (!loading)
         {
+            await this.init();
             this.setState({loading: true, commits: []});
             await this.loadMoreCommits();
             this.setState({loading: false});
@@ -54,6 +55,14 @@ class Commits extends Component<IProps, IState>
             await this.componentDidMount();
         }
     }
+
+    init = async () =>
+    {
+        return new Promise(resolve =>
+        {
+            this.setState({commits: []}, () => resolve());
+        });
+    };
 
     loadMoreCommits = async () =>
     {
