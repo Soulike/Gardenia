@@ -4,6 +4,8 @@ import {RepositoryInfo} from '../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../Router';
 import {Branch, Commit} from '../../../../Class';
+import {notification} from 'antd';
+import {ButtonProps} from 'antd/lib/button';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits> {}
 
@@ -16,6 +18,8 @@ interface IState
 
 class Commits extends PureComponent<IProps, IState>
 {
+    private static COMMIT_AMOUNT_PER_PAGE = 50;
+
     constructor(props: IProps)
     {
         super(props);
@@ -28,9 +32,9 @@ class Commits extends PureComponent<IProps, IState>
 
     async componentDidMount()
     {
-        this.setState({loading: true});
+        this.setState({loading: true, commits: []});
         await this.loadBranches();
-        await this.loadCommits();
+        await this.loadMoreCommits();
         this.setState({loading: false});
     }
 
@@ -41,7 +45,7 @@ class Commits extends PureComponent<IProps, IState>
         if (branch !== prevBranch)
         {
             this.setState({loading: true});
-            await this.loadCommits();
+            await this.loadMoreCommits();
             this.setState({loading: false});
         }
     }
@@ -57,30 +61,51 @@ class Commits extends PureComponent<IProps, IState>
         }
     };
 
-    loadCommits = async () =>
+    loadMoreCommits = async () =>
     {
         const {match: {params: {username, repository: repositoryName, branch, path}}} = this.props;
         let result: { commits: Commit[] } | null;
+        const {commits} = this.state;
         if (typeof path === 'string')
         {
-            result = await RepositoryInfo.fileCommitHistory({username, name: repositoryName}, path, branch);
+            result = await RepositoryInfo.fileCommitHistory({
+                username,
+                name: repositoryName,
+            }, path, branch, commits.length, Commits.COMMIT_AMOUNT_PER_PAGE);
         }
         else
         {
-            result = await RepositoryInfo.commitHistory({username, name: repositoryName}, branch);
+            result = await RepositoryInfo.commitHistory({
+                username,
+                name: repositoryName,
+            }, branch, commits.length, Commits.COMMIT_AMOUNT_PER_PAGE);
         }
         if (result !== null)
         {
-            const {commits} = result;
-            this.setState({commits: commits});
+            const {commits: moreCommits} = result;
+            if (moreCommits.length === 0)
+            {
+                notification.success({message: '已加载所有提交历史'});
+            }
+            else
+            {
+                this.setState({commits: [...commits, ...moreCommits]});
+            }
         }
+    };
+
+    onLoadMoreButtonClick: ButtonProps['onClick'] = async () =>
+    {
+        await this.setState({loading: true});
+        await this.loadMoreCommits();
+        await this.setState({loading: false});
     };
 
     render()
     {
         const {branches, loading, commits} = this.state;
         const {match: {params: {repository: repositoryName, path}}} = this.props;
-        return (<View branches={branches}
+        return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick} branches={branches}
                       loading={loading}
                       commits={commits}
                       path={path}

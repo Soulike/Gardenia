@@ -16,7 +16,7 @@ function CommitTimeline(props: IProps)
         <div className={Style.CommitTimeline}>
             {
                 commits.length !== 0 ? (
-                    <Timeline>
+                    <Timeline pending={true}>
                         {
                             commits.map(commit =>
                                 <Timeline.Item key={commit.commitHash}>

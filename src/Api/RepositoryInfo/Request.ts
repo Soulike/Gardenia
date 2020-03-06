@@ -16,6 +16,7 @@ import {
     BRANCHES,
     COMMIT,
     COMMIT_COUNT,
+    COMMIT_COUNT_BETWEEN_COMMITS,
     COMMIT_HISTORY,
     COMMIT_HISTORY_BETWEEN_COMMITS,
     DIFF_BETWEEN_COMMITS,
@@ -26,6 +27,7 @@ import {
     FILE_DIFF_BETWEEN_COMMITS,
     FILE_INFO,
     FORK_AMOUNT,
+    FORK_COMMIT_AMOUNT,
     FORK_COMMIT_HISTORY,
     FORK_FILE_DIFF,
     FORK_FROM,
@@ -184,6 +186,33 @@ export async function commitCount(account: Readonly<Pick<Account, 'username'>>, 
             await axios.get(COMMIT_COUNT, {
                 params: {
                     json: JSON.stringify({account, repository, commitHash}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function commitCountBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ commitCount: number }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commitCount: number }>> =
+            await axios.get(COMMIT_COUNT_BETWEEN_COMMITS, {
+                params: {
+                    json: JSON.stringify({repository, baseCommitHash, targetCommitHash}),
                 },
             });
         if (isSuccessful)
@@ -369,14 +398,14 @@ export async function addToGroup(repository: Readonly<Pick<Repository, 'username
     }
 }
 
-export async function commitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function commitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string, offset?: number, limit?: number): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
             await axios.get(COMMIT_HISTORY_BETWEEN_COMMITS, {
                 params: {
-                    json: JSON.stringify({repository, baseCommitHash, targetCommitHash}),
+                    json: JSON.stringify({repository, baseCommitHash, targetCommitHash, offset, limit}),
                 },
             });
         if (isSuccessful)
@@ -396,14 +425,14 @@ export async function commitHistoryBetweenCommits(repository: Pick<Repository, '
     }
 }
 
-export async function commitHistory(repository: Pick<Repository, 'username' | 'name'>, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function commitHistory(repository: Pick<Repository, 'username' | 'name'>, targetCommitHash: string, offset?: number, limit?: number): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
             await axios.get(COMMIT_HISTORY, {
                 params: {
-                    json: JSON.stringify({repository, targetCommitHash}),
+                    json: JSON.stringify({repository, targetCommitHash, offset, limit}),
                 },
             });
         if (isSuccessful)
@@ -423,14 +452,14 @@ export async function commitHistory(repository: Pick<Repository, 'username' | 'n
     }
 }
 
-export async function fileCommitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function fileCommitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
             await axios.get(FILE_COMMIT_HISTORY_BETWEEN_COMMITS, {
                 params: {
-                    json: JSON.stringify({repository, filePath, baseCommitHash, targetCommitHash}),
+                    json: JSON.stringify({repository, filePath, baseCommitHash, targetCommitHash, offset, limit}),
                 },
             });
         if (isSuccessful)
@@ -450,14 +479,14 @@ export async function fileCommitHistoryBetweenCommits(repository: Pick<Repositor
     }
 }
 
-export async function fileCommitHistory(repository: Pick<Repository, 'username' | 'name'>, filePath: string, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function fileCommitHistory(repository: Pick<Repository, 'username' | 'name'>, filePath: string, targetCommitHash: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
             await axios.get(FILE_COMMIT_HISTORY, {
                 params: {
-                    json: JSON.stringify({repository, filePath, targetCommitHash}),
+                    json: JSON.stringify({repository, filePath, targetCommitHash, offset, limit}),
                 },
             });
         if (isSuccessful)
@@ -672,12 +701,45 @@ export async function forkFrom(repository: Readonly<Pick<RepositoryClass, 'usern
     }
 }
 
-export async function forkCommitHistory(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function forkCommitHistory(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[] }>> =
             await axios.get(FORK_COMMIT_HISTORY, {
+                params: {
+                    json: JSON.stringify({
+                        sourceRepository,
+                        sourceRepositoryBranch,
+                        targetRepository,
+                        targetRepositoryBranch,
+                        offset, limit,
+                    }),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function forkCommitAmount(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string): Promise<Readonly<{ commitAmount: number }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commitAmount: number }>> =
+            await axios.get(FORK_COMMIT_AMOUNT, {
                 params: {
                     json: JSON.stringify({
                         sourceRepository,
