@@ -369,13 +369,13 @@ export async function resolveConflicts(pullRequest: Readonly<Pick<PullRequest, '
     }
 }
 
-export async function getCommits(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ commits: Commit[] } | null>
+export async function getCommits(pullRequest: Readonly<Pick<PullRequest, 'id'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ commits: Commit[] } | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[] }>> =
             await axios.get(GET_COMMITS, {
-                params: {json: JSON.stringify(pullRequest)},
+                params: {json: JSON.stringify({pullRequest, offset, limit})},
             });
         if (isSuccessful)
         {

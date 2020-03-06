@@ -701,7 +701,7 @@ export async function forkFrom(repository: Readonly<Pick<RepositoryClass, 'usern
     }
 }
 
-export async function forkCommitHistory(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function forkCommitHistory(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     try
     {
@@ -713,6 +713,7 @@ export async function forkCommitHistory(sourceRepository: Readonly<Pick<Reposito
                         sourceRepositoryBranch,
                         targetRepository,
                         targetRepositoryBranch,
+                        offset, limit,
                     }),
                 },
             });
