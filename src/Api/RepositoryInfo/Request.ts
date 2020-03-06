@@ -452,14 +452,14 @@ export async function commitHistory(repository: Pick<Repository, 'username' | 'n
     }
 }
 
-export async function fileCommitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function fileCommitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
             await axios.get(FILE_COMMIT_HISTORY_BETWEEN_COMMITS, {
                 params: {
-                    json: JSON.stringify({repository, filePath, baseCommitHash, targetCommitHash}),
+                    json: JSON.stringify({repository, filePath, baseCommitHash, targetCommitHash, offset, limit}),
                 },
             });
         if (isSuccessful)
@@ -479,14 +479,14 @@ export async function fileCommitHistoryBetweenCommits(repository: Pick<Repositor
     }
 }
 
-export async function fileCommitHistory(repository: Pick<Repository, 'username' | 'name'>, filePath: string, targetCommitHash: string): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function fileCommitHistory(repository: Pick<Repository, 'username' | 'name'>, filePath: string, targetCommitHash: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[], }>> =
             await axios.get(FILE_COMMIT_HISTORY, {
                 params: {
-                    json: JSON.stringify({repository, filePath, targetCommitHash}),
+                    json: JSON.stringify({repository, filePath, targetCommitHash, offset, limit}),
                 },
             });
         if (isSuccessful)
