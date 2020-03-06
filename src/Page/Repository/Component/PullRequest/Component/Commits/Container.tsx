@@ -6,6 +6,8 @@ import {Interface as RouterInterface} from '../../../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {IPullRequestState, IState as StoreState} from '../../../../../../Store';
 import {connect} from 'react-redux';
+import {notification} from 'antd';
+import {ButtonProps} from 'antd/lib/button';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequest>
 {
@@ -21,6 +23,8 @@ interface IState
 
 class Commits extends Component<IProps, IState>
 {
+    private static COMMIT_AMOUNT_PER_PAGE = 50;
+
     constructor(props: IProps)
     {
         super(props);
@@ -35,8 +39,8 @@ class Commits extends Component<IProps, IState>
         const {loading} = this.props;
         if (!loading)
         {
-            this.setState({loading: true});
-            await this.loadCommits();
+            this.setState({loading: true, commits: []});
+            await this.loadMoreCommits();
             this.setState({loading: false});
         }
     }
@@ -51,22 +55,39 @@ class Commits extends Component<IProps, IState>
         }
     }
 
-    loadCommits = async () =>
+    loadMoreCommits = async () =>
     {
         const {pullRequest: {id}} = this.props;
-        const commitsWrapper = await PullRequestApi.getCommits({id});
+        const {commits} = this.state;
+        const commitsWrapper = await PullRequestApi.getCommits({id}, commits.length, Commits.COMMIT_AMOUNT_PER_PAGE);
         if (commitsWrapper !== null)
         {
-            const {commits} = commitsWrapper;
-            this.setState({commits});
+            const {commits: moreCommits} = commitsWrapper;
+            if (moreCommits.length === 0)
+            {
+                notification.success({message: '已加载所有提交历史'});
+            }
+            else
+            {
+                this.setState({commits: [...commits, ...moreCommits]});
+            }
         }
+    };
+
+    onLoadMoreButtonClick: ButtonProps['onClick'] = async () =>
+    {
+        await this.setState({loading: true});
+        await this.loadMoreCommits();
+        await this.setState({loading: false});
     };
 
     render()
     {
         const {commits, loading} = this.state;
         const {loading: pullRequestIsLoading} = this.props;
-        return (<View commits={commits} loading={loading || pullRequestIsLoading} />);
+        return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick}
+                      commits={commits}
+                      loading={loading || pullRequestIsLoading} />);
     }
 }
 
