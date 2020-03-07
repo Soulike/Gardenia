@@ -12,6 +12,7 @@ import {
     GET_COMMIT_AMOUNT,
     GET_COMMITS,
     GET_CONFLICTS,
+    GET_FILE_DIFF_AMOUNT,
     GET_FILE_DIFFS,
     GET_PULL_REQUEST_AMOUNT,
     IS_MERGEABLE,
@@ -449,7 +450,7 @@ export async function getFileDiffAmount(pullRequest: Readonly<Pick<PullRequest, 
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
-            await axios.get(GET_FILE_DIFFS, {
+            await axios.get(GET_FILE_DIFF_AMOUNT, {
                 params: {json: JSON.stringify(pullRequest)},
             });
         if (isSuccessful)

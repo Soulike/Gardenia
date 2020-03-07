@@ -17,6 +17,7 @@ interface IState
 {
     fileDiffs: FileDiff[],
     loading: boolean,
+    fileDiffAmount: number,
 }
 
 class FileChanged extends PureComponent<IProps, IState>
@@ -27,6 +28,7 @@ class FileChanged extends PureComponent<IProps, IState>
         this.state = {
             fileDiffs: [],
             loading: false,
+            fileDiffAmount: 0,
         };
     }
 
@@ -36,7 +38,10 @@ class FileChanged extends PureComponent<IProps, IState>
         if (!loading)
         {
             this.setState({loading: true});
-            await this.loadFileDiffs();
+            await Promise.all([
+                this.loadFileDiffs(),
+                this.loadFileDiffAmount(),
+            ]);
             this.setState({loading: false});
         }
     }
@@ -62,10 +67,21 @@ class FileChanged extends PureComponent<IProps, IState>
         }
     };
 
+    loadFileDiffAmount = async () =>
+    {
+        const {pullRequest: {id}} = this.props;
+        const fileDiffAmountWrapper = await PullRequestApi.getFileDiffAmount({id});
+        if (fileDiffAmountWrapper !== null)
+        {
+            const {amount} = fileDiffAmountWrapper;
+            this.setState({fileDiffAmount: amount});
+        }
+    };
+
     render()
     {
-        const {fileDiffs, loading} = this.state;
-        return (<View fileDiffs={fileDiffs} loading={loading} />);
+        const {fileDiffs, loading, fileDiffAmount} = this.state;
+        return (<View fileDiffs={fileDiffs} loading={loading} fileDiffAmount={fileDiffAmount} />);
     }
 }
 

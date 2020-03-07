@@ -10,6 +10,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCompare>
 interface IState
 {
     fileDiffs: FileDiff[];
+    fileDiffAmount: number;
     loading: boolean;
 }
 
@@ -20,6 +21,7 @@ class PullRequestDiffs extends PureComponent<IProps, IState>
         super(props);
         this.state = {
             fileDiffs: [],
+            fileDiffAmount: 0,
             loading: false,
         };
     }
@@ -27,42 +29,44 @@ class PullRequestDiffs extends PureComponent<IProps, IState>
     async componentDidMount()
     {
         this.setState({loading: true});
-        await this.loadFileDiffs();
+        await Promise.all([
+            this.loadFileDiffAmount(),
+            this.loadFileDiffs(),
+        ]);
         this.setState({loading: false});
     }
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {
-            match: {
-                params: {
-                    username: targetRepositoryUsername, repository: targetRepositoryName,
-                    targetRepositoryBranch,
-                    sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                },
-            },
-        } = this.props;
-        const {
-            match: {
-                params: {
-                    username: prevTargetRepositoryUsername, repository: prevTargetRepositoryName,
-                    targetRepositoryBranch: prevTargetRepositoryBranch,
-                    sourceRepositoryUsername: prevSourceRepositoryUsername,
-                    sourceRepositoryName: prevSourceRepositoryName,
-                    sourceRepositoryBranch: prevSourceRepositoryBranch,
-                },
-            },
-        } = prevProps;
-        if (targetRepositoryUsername !== prevTargetRepositoryUsername
-            || targetRepositoryName !== prevTargetRepositoryName
-            || targetRepositoryBranch !== prevTargetRepositoryBranch
-            || sourceRepositoryUsername !== prevSourceRepositoryUsername
-            || sourceRepositoryName !== prevSourceRepositoryName
-            || sourceRepositoryBranch !== prevSourceRepositoryBranch)
+        const {location: {pathname}} = this.props;
+        const {location: {pathname: prevPathName}} = prevProps;
+        if (pathname !== prevPathName)
         {
             await this.componentDidMount();
         }
     }
+
+    loadFileDiffAmount = async () =>
+    {
+        const {
+            match: {
+                params: {
+                    sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
+                    username: targetRepositoryUsername, repository: targetRepositoryName, targetRepositoryBranch,
+                },
+            },
+        } = this.props;
+        const fileDiffAmountWrapper = await RepositoryInfo.forkFileDiffAmount(
+            {username: sourceRepositoryUsername, name: sourceRepositoryName},
+            sourceRepositoryBranch,
+            {username: targetRepositoryUsername, name: targetRepositoryName},
+            targetRepositoryBranch);
+        if (fileDiffAmountWrapper !== null)
+        {
+            const {amount} = fileDiffAmountWrapper;
+            this.setState({fileDiffAmount: amount});
+        }
+    };
 
     loadFileDiffs = async () =>
     {
@@ -88,8 +92,8 @@ class PullRequestDiffs extends PureComponent<IProps, IState>
 
     render()
     {
-        const {fileDiffs, loading} = this.state;
-        return (<View fileDiffs={fileDiffs} loading={loading} />);
+        const {fileDiffs, loading, fileDiffAmount} = this.state;
+        return (<View fileDiffs={fileDiffs} loading={loading} fileDiffAmount={fileDiffAmount} />);
     }
 }
 

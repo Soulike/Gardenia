@@ -6,15 +6,16 @@ import {Spin} from 'antd';
 interface IProps
 {
     fileDiffs: FileDiff[],
+    fileDiffAmount: number,
     loading: boolean,
 }
 
 function FileChanged(props: IProps)
 {
-    const {fileDiffs, loading} = props;
+    const {fileDiffs, loading, fileDiffAmount} = props;
     return (
         <Spin spinning={loading}>
-            <Diff fileDiffs={fileDiffs} />
+            <Diff fileDiffs={fileDiffs} fileDiffAmount={fileDiffAmount} />
         </Spin>
     );
 }

@@ -9,12 +9,13 @@ interface IProps
 {
     commit: CommitClass;
     diff: FileDiff[];
+    diffAmount: number;
     loading: boolean;
 }
 
 function Commit(props: IProps)
 {
-    const {loading, diff, commit} = props;
+    const {loading, diff, commit, diffAmount} = props;
     return (
         <div className={Style.Commit}>
             <Spin spinning={loading}>
@@ -22,7 +23,7 @@ function Commit(props: IProps)
                     <CommitInfoCard commit={commit} />
                 </div>
                 <div className={Style.diffWrapper}>
-                    <Diff fileDiffs={diff} />
+                    <Diff fileDiffs={diff} fileDiffAmount={diffAmount} />
                 </div>
             </Spin>
         </div>

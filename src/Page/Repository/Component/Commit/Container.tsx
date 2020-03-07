@@ -11,6 +11,7 @@ interface IState
 {
     commit: CommitClass;
     diff: FileDiff[];
+    diffAmount: number;
     loading: boolean;
 }
 
@@ -22,6 +23,7 @@ class Commit extends PureComponent<IProps, IState>
         this.state = {
             commit: new CommitClass('', '', 'a@b.com', 0, '', ''),
             diff: [],
+            diffAmount: 0,
             loading: false,
         };
     }
@@ -29,7 +31,11 @@ class Commit extends PureComponent<IProps, IState>
     async componentDidMount()
     {
         this.setState({loading: true});
-        await this.loadCommit();
+        await Promise.all([
+            this.loadCommit(),
+            this.loadCommitDiffAmount(),
+            this.loadCommitDiff(),
+        ]);
         this.setState({loading: false});
     }
 
@@ -39,15 +45,37 @@ class Commit extends PureComponent<IProps, IState>
         const result = await RepositoryInfo.commit({username, name: repositoryName}, commitHash);
         if (result !== null)
         {
-            const {commit, diff} = result;
-            this.setState({commit, diff});
+            const {commit} = result;
+            this.setState({commit});
+        }
+    };
+
+    loadCommitDiff = async () =>
+    {
+        const {match: {params: {username, repository: repositoryName, commitHash}}} = this.props;
+        const result = await RepositoryInfo.commitDiff({username, name: repositoryName}, commitHash);
+        if (result !== null)
+        {
+            const {diff} = result;
+            this.setState({diff});
+        }
+    };
+
+    loadCommitDiffAmount = async () =>
+    {
+        const {match: {params: {username, repository: repositoryName, commitHash}}} = this.props;
+        const result = await RepositoryInfo.commitDiffAmount({username, name: repositoryName}, commitHash);
+        if (result !== null)
+        {
+            const {amount} = result;
+            this.setState({diffAmount: amount});
         }
     };
 
     render()
     {
-        const {commit, diff, loading} = this.state;
-        return (<View commit={commit} diff={diff} loading={loading} />);
+        const {commit, diff, loading, diffAmount} = this.state;
+        return (<View commit={commit} diff={diff} loading={loading} diffAmount={diffAmount} />);
     }
 }
 
