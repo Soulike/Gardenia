@@ -6,17 +6,18 @@ import {DiffOutlined} from '@ant-design/icons';
 
 interface IProps
 {
+    fileDiffAmount: number,
     fileDiffs: FileDiffClass[];
 }
 
 function Diff(props: IProps)
 {
-    const {fileDiffs} = props;
+    const {fileDiffs, fileDiffAmount} = props;
     return (
         <div className={Style.Diff}>
             <div className={Style.diffInfo}>
                 <DiffOutlined />
-                共有 <strong>{fileDiffs.length} 个文件</strong>被修改。
+                共有 <strong>{fileDiffAmount} 个文件</strong>被修改。
             </div>
             <div className={Style.fileDiffsWrapper}>
                 {

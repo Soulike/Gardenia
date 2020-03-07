@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Spin, Tabs} from 'antd';
+import {Spin, Tabs, Tag} from 'antd';
 import {PullRequest as PullRequestClass} from '../../../../Class';
 import PullRequestInfo from './Component/PullRequestInfo';
 import Commits from './Component/Commits';
@@ -12,11 +12,13 @@ interface IProps
 {
     loading: boolean,
     pullRequest: PullRequestClass,
+    commitAmount: number,
+    fileDiffAmount: number,
 }
 
 function PullRequest(props: IProps)
 {
-    const {loading, pullRequest} = props;
+    const {loading, pullRequest, commitAmount, fileDiffAmount} = props;
     return (
         <div className={Style.PullRequest}>
             <Spin spinning={loading}>
@@ -31,13 +33,15 @@ function PullRequest(props: IProps)
                             </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane key={'commits'}
-                                      tab={<div><BarsOutlined />提交</div>}>
+                                      tab={<div><BarsOutlined />提交<Tag className={Style.tag}>{commitAmount}</Tag>
+                                      </div>}>
                             <div className={Style.commitsWrapper}>
                                 <Commits />
                             </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane key={'fileChanged'}
-                                      tab={<div><DiffOutlined />文件修改</div>}>
+                                      tab={<div><DiffOutlined />文件修改<Tag className={Style.tag}>{fileDiffAmount}</Tag>
+                                      </div>}>
                             <div className={Style.fileChangedWrapper}>
                                 <FileChanged />
                             </div>

@@ -20,6 +20,9 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequ
 interface IState
 {
     isMergeable: boolean,
+    commitAmount: number,
+    fileDiffAmount: number,
+    loading: boolean,
 }
 
 class PullRequest extends PureComponent<IProps, IState>
@@ -29,6 +32,9 @@ class PullRequest extends PureComponent<IProps, IState>
         super(props);
         this.state = {
             isMergeable: false,
+            commitAmount: 0,
+            fileDiffAmount: 0,
+            loading: false,
         };
     }
 
@@ -39,11 +45,20 @@ class PullRequest extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {no, repository: repositoryName, username}}} = this.props;
-        const {match: {params: {no: prevNo, repository: prevRepositoryName, username: prevUsername}}} = this.props;
+        const {match: {params: {no, repository: repositoryName, username}}, loading, pullRequest} = this.props;
+        const {match: {params: {no: prevNo, repository: prevRepositoryName, username: prevUsername}}, pullRequest: prevPullRequest} = prevProps;
         if (no !== prevNo || repositoryName !== prevRepositoryName || username !== prevUsername)
         {
             await this.componentDidMount();
+        }
+        if (!loading && pullRequest !== prevPullRequest)
+        {
+            this.setState({loading: true});
+            await Promise.all([
+                this.loadCommitAmount(),
+                this.loadFileDiffAmount(),
+            ]);
+            this.setState({loading: false});
         }
     }
 
@@ -63,10 +78,36 @@ class PullRequest extends PureComponent<IProps, IState>
         }
     };
 
+    loadCommitAmount = async () =>
+    {
+        const {pullRequest: {id}} = this.props;
+        const commitAmountWrapper = await PullRequestApi.getCommitAmount({id});
+        if (commitAmountWrapper !== null)
+        {
+            const {commitAmount} = commitAmountWrapper;
+            this.setState({commitAmount});
+        }
+    };
+
+    loadFileDiffAmount = async () =>
+    {
+        const {pullRequest: {id}} = this.props;
+        const fileDiffAmountWrapper = await PullRequestApi.getFileDiffAmount({id});
+        if (fileDiffAmountWrapper !== null)
+        {
+            const {amount} = fileDiffAmountWrapper;
+            this.setState({fileDiffAmount: amount});
+        }
+    };
+
     render()
     {
-        const {pullRequest, loading} = this.props;
-        return (<View loading={loading} pullRequest={pullRequest} />);
+        const {pullRequest, loading: pullRequestIsLoading} = this.props;
+        const {loading, fileDiffAmount, commitAmount} = this.state;
+        return (<View loading={loading || pullRequestIsLoading}
+                      pullRequest={pullRequest}
+                      commitAmount={commitAmount}
+                      fileDiffAmount={fileDiffAmount} />);
     }
 }
 

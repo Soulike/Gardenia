@@ -12,6 +12,7 @@ import {
     GET_COMMIT_AMOUNT,
     GET_COMMITS,
     GET_CONFLICTS,
+    GET_FILE_DIFF_AMOUNT,
     GET_FILE_DIFFS,
     GET_PULL_REQUEST_AMOUNT,
     IS_MERGEABLE,
@@ -419,12 +420,37 @@ export async function getCommitAmount(pullRequest: Readonly<Pick<PullRequest, 'i
     }
 }
 
-export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ fileDiffs: FileDiff[] } | null>
+export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ fileDiffs: FileDiff[] } | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ fileDiffs: FileDiff[] }>> =
             await axios.get(GET_FILE_DIFFS, {
+                params: {json: JSON.stringify({pullRequest, offset, limit})},
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
+
+export async function getFileDiffAmount(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ amount: number } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
+            await axios.get(GET_FILE_DIFF_AMOUNT, {
                 params: {json: JSON.stringify(pullRequest)},
             });
         if (isSuccessful)

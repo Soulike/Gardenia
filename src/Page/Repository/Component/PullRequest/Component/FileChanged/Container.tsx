@@ -6,6 +6,8 @@ import {Interface as RouterInterface} from '../../../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {IPullRequestState, IState as StoreState} from '../../../../../../Store';
 import {connect} from 'react-redux';
+import {notification} from 'antd';
+import {ButtonProps} from 'antd/lib/button';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequest>
 {
@@ -17,26 +19,34 @@ interface IState
 {
     fileDiffs: FileDiff[],
     loading: boolean,
+    fileDiffAmount: number,
 }
 
 class FileChanged extends PureComponent<IProps, IState>
 {
+    private static FILE_DIFF_AMOUNT_PER_PAGE = 10;
+
     constructor(props: IProps)
     {
         super(props);
         this.state = {
             fileDiffs: [],
             loading: false,
+            fileDiffAmount: 0,
         };
     }
 
     async componentDidMount()
     {
+        await this.init();
         const {loading} = this.props;
         if (!loading)
         {
             this.setState({loading: true});
-            await this.loadFileDiffs();
+            await Promise.all([
+                this.loadMoreFileDiffs(),
+                this.loadFileDiffAmount(),
+            ]);
             this.setState({loading: false});
         }
     }
@@ -51,21 +61,58 @@ class FileChanged extends PureComponent<IProps, IState>
         }
     }
 
-    loadFileDiffs = async () =>
+    init = async () =>
+    {
+        return new Promise(resolve =>
+        {
+            this.setState({fileDiffs: []}, () => resolve());
+        });
+    };
+
+    loadMoreFileDiffs = async () =>
     {
         const {pullRequest: {id}} = this.props;
-        const fileDiffsWrapper = await PullRequestApi.getFileDiffs({id});
+        const {fileDiffs} = this.state;
+        const fileDiffsWrapper = await PullRequestApi.getFileDiffs({id}, fileDiffs.length, FileChanged.FILE_DIFF_AMOUNT_PER_PAGE);
         if (fileDiffsWrapper !== null)
         {
-            const {fileDiffs} = fileDiffsWrapper;
-            this.setState({fileDiffs});
+            const {fileDiffs: moreFileDiffs} = fileDiffsWrapper;
+            if (moreFileDiffs.length === 0)
+            {
+                notification.success({message: '已加载所有被修改文件'});
+            }
+            else
+            {
+                this.setState({fileDiffs: [...fileDiffs, ...moreFileDiffs]});
+            }
         }
+    };
+
+    loadFileDiffAmount = async () =>
+    {
+        const {pullRequest: {id}} = this.props;
+        const fileDiffAmountWrapper = await PullRequestApi.getFileDiffAmount({id});
+        if (fileDiffAmountWrapper !== null)
+        {
+            const {amount} = fileDiffAmountWrapper;
+            this.setState({fileDiffAmount: amount});
+        }
+    };
+
+    onLoadMoreButtonClick: ButtonProps['onClick'] = async () =>
+    {
+        this.setState({loading: true});
+        await this.loadMoreFileDiffs();
+        this.setState({loading: false});
     };
 
     render()
     {
-        const {fileDiffs, loading} = this.state;
-        return (<View fileDiffs={fileDiffs} loading={loading} />);
+        const {fileDiffs, loading, fileDiffAmount} = this.state;
+        return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick}
+                      fileDiffs={fileDiffs}
+                      loading={loading}
+                      fileDiffAmount={fileDiffAmount} />);
     }
 }
 

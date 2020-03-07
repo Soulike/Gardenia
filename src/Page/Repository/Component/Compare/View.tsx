@@ -5,11 +5,16 @@ import CompareCard from './Component/CompareCard';
 import CommentPoster from './Component/CommentPoster';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../Router';
-import {Empty, Tabs} from 'antd';
+import {Empty, Spin, Tabs, Tag} from 'antd';
 import PullRequestCommits from './Component/PullRequestCommits';
 import PullRequestDiffs from './Component/PullRequestDiffs';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCompare> {}
+interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCompare>
+{
+    commitAmount: number,
+    fileDiffAmount: number,
+    loading: boolean,
+}
 
 function Compare(props: IProps)
 {
@@ -20,6 +25,9 @@ function Compare(props: IProps)
                 username: targetRepositoryUsername, repository: targetRepositoryName, targetRepositoryBranch,
             },
         },
+        commitAmount,
+        fileDiffAmount,
+        loading,
     } = props;
     const theSameBranch = sourceRepositoryUsername === targetRepositoryUsername
         && sourceRepositoryName === targetRepositoryName
@@ -31,29 +39,33 @@ function Compare(props: IProps)
                 <CompareCard />
             </div>
             <div className={Style.detailWrapper}>
-                {
-                    theSameBranch ? (<Empty description={'必须是不同分支才可创建 Pull Request'} />) : (
-                        <div className={Style.detail}>
-                            <div className={Style.commentPosterWrapper}>
-                                <CommentPoster />
+                <Spin spinning={loading}>
+                    {
+                        theSameBranch ? (<Empty description={'必须是不同分支才可创建 Pull Request'} />) : (
+                            <div className={Style.detail}>
+                                <div className={Style.commentPosterWrapper}>
+                                    <CommentPoster />
+                                </div>
+                                <div className={Style.detailTabs}>
+                                    <Tabs defaultActiveKey={'commits'} type={'card'}>
+                                        <Tabs.TabPane tab={<>提交<Tag className={Style.tag}>{commitAmount}</Tag></>}
+                                                      key={'commits'}>
+                                            <div className={Style.pullRequestCommitsWrapper}>
+                                                <PullRequestCommits />
+                                            </div>
+                                        </Tabs.TabPane>
+                                        <Tabs.TabPane tab={<>修改的文件<Tag className={Style.tag}>{fileDiffAmount}</Tag></>}
+                                                      key={'fileChanged'}>
+                                            <div className={Style.pullRequestFileDiffsWrapper}>
+                                                <PullRequestDiffs />
+                                            </div>
+                                        </Tabs.TabPane>
+                                    </Tabs>
+                                </div>
                             </div>
-                            <div className={Style.detailTabs}>
-                                <Tabs defaultActiveKey={'commits'} type={'card'}>
-                                    <Tabs.TabPane tab={'提交'} key={'commits'}>
-                                        <div className={Style.pullRequestCommitsWrapper}>
-                                            <PullRequestCommits />
-                                        </div>
-                                    </Tabs.TabPane>
-                                    <Tabs.TabPane tab={'修改的文件'} key={'fileChanged'}>
-                                        <div className={Style.pullRequestFileDiffsWrapper}>
-                                            <PullRequestDiffs />
-                                        </div>
-                                    </Tabs.TabPane>
-                                </Tabs>
-                            </div>
-                        </div>
-                    )
-                }
+                        )
+                    }
+                </Spin>
             </div>
         </div>
     );
