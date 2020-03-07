@@ -419,13 +419,13 @@ export async function getCommitAmount(pullRequest: Readonly<Pick<PullRequest, 'i
     }
 }
 
-export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ fileDiffs: FileDiff[] } | null>
+export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ fileDiffs: FileDiff[] } | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ fileDiffs: FileDiff[] }>> =
             await axios.get(GET_FILE_DIFFS, {
-                params: {json: JSON.stringify(pullRequest)},
+                params: {json: JSON.stringify({pullRequest, offset, limit})},
             });
         if (isSuccessful)
         {

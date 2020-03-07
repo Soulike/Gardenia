@@ -506,14 +506,14 @@ export async function fileCommitHistory(repository: Pick<Repository, 'username' 
     }
 }
 
-export async function diffBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string): Promise<Readonly<{ diff: FileDiff[] }> | null>
+export async function diffBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ diff: FileDiff[] }> | null>
 {
     try
     {
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ diff: FileDiff[], }>> =
             await axios.get(DIFF_BETWEEN_COMMITS, {
                 params: {
-                    json: JSON.stringify({repository, baseCommitHash, targetCommitHash}),
+                    json: JSON.stringify({repository, baseCommitHash, targetCommitHash, offset, limit}),
                 },
             });
         if (isSuccessful)
@@ -766,7 +766,7 @@ export async function forkCommitAmount(sourceRepository: Readonly<Pick<Repositor
     }
 }
 
-export async function forkFileDiff(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string): Promise<Readonly<{ fileDiffs: FileDiff[] }> | null>
+export async function forkFileDiff(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ fileDiffs: FileDiff[] }> | null>
 {
     try
     {
@@ -778,6 +778,7 @@ export async function forkFileDiff(sourceRepository: Readonly<Pick<Repository, '
                         sourceRepositoryBranch,
                         targetRepository,
                         targetRepositoryBranch,
+                        offset, limit,
                     }),
                 },
             });
