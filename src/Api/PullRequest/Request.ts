@@ -443,3 +443,28 @@ export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>
         return null;
     }
 }
+
+export async function getFileDiffAmount(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ amount: number } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
+            await axios.get(GET_FILE_DIFFS, {
+                params: {json: JSON.stringify(pullRequest)},
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            notification.warn({message});
+            return null;
+        }
+    }
+    catch (e)
+    {
+        errorHandler(e);
+        return null;
+    }
+}
