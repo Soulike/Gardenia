@@ -76,15 +76,24 @@ class Compare extends PureComponent<IProps, IState>
                 },
             },
         } = this.props;
-        const commitAmountWrapper = await RepositoryInfo.forkCommitAmount(
-            {username: sourceRepositoryUsername, name: sourceRepositoryName},
-            sourceRepositoryBranch,
-            {username: targetRepositoryUsername, name: targetRepositoryName},
-            targetRepositoryBranch);
-        if (commitAmountWrapper !== null)
+        if (sourceRepositoryUsername === targetRepositoryUsername
+            && sourceRepositoryName === targetRepositoryName
+            && sourceRepositoryBranch === targetRepositoryBranch)
         {
-            const {commitAmount} = commitAmountWrapper;
-            this.setState({commitAmount});
+            this.setState({commitAmount: 0});
+        }
+        else
+        {
+            const commitAmountWrapper = await RepositoryInfo.forkCommitAmount(
+                {username: sourceRepositoryUsername, name: sourceRepositoryName},
+                sourceRepositoryBranch,
+                {username: targetRepositoryUsername, name: targetRepositoryName},
+                targetRepositoryBranch);
+            if (commitAmountWrapper !== null)
+            {
+                const {commitAmount} = commitAmountWrapper;
+                this.setState({commitAmount});
+            }
         }
     };
 
@@ -98,15 +107,24 @@ class Compare extends PureComponent<IProps, IState>
                 },
             },
         } = this.props;
-        const fileDiffAmountWrapper = await RepositoryInfo.forkFileDiffAmount(
-            {username: sourceRepositoryUsername, name: sourceRepositoryName},
-            sourceRepositoryBranch,
-            {username: targetRepositoryUsername, name: targetRepositoryName},
-            targetRepositoryBranch);
-        if (fileDiffAmountWrapper !== null)
+        if (sourceRepositoryUsername === targetRepositoryUsername
+            && sourceRepositoryName === targetRepositoryName
+            && sourceRepositoryBranch === targetRepositoryBranch)
         {
-            const {amount} = fileDiffAmountWrapper;
-            this.setState({fileDiffAmount: amount});
+            this.setState({fileDiffAmount: 0});
+        }
+        else
+        {
+            const fileDiffAmountWrapper = await RepositoryInfo.forkFileDiffAmount(
+                {username: sourceRepositoryUsername, name: sourceRepositoryName},
+                sourceRepositoryBranch,
+                {username: targetRepositoryUsername, name: targetRepositoryName},
+                targetRepositoryBranch);
+            if (fileDiffAmountWrapper !== null)
+            {
+                const {amount} = fileDiffAmountWrapper;
+                this.setState({fileDiffAmount: amount});
+            }
         }
     };
 
