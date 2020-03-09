@@ -30,11 +30,10 @@ class Readme extends PureComponent<Readonly<IProps>, IState>
         };
     }
 
-    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    async componentDidMount()
     {
-        const {match: {params: {path}}, commitHash} = this.props;
-        const {match: {params: {path: prevPath}}, commitHash: prevCommitHash} = prevProps;
-        if (commitHash.length !== 0 && (prevPath !== path || prevCommitHash !== commitHash))
+        const {commitHash} = this.props;
+        if (commitHash)
         {
             this.setState({loading: true});
             if (await this.readmeExists())
@@ -46,6 +45,16 @@ class Readme extends PureComponent<Readonly<IProps>, IState>
                 this.setState({exists: false});
             }
             this.setState({loading: false});
+        }
+    }
+
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    {
+        const {location: {pathname}, commitHash} = this.props;
+        const {location: {pathname: prevPathName}, commitHash: prevCommitHash} = prevProps;
+        if (pathname !== prevPathName || commitHash !== prevCommitHash)
+        {
+            await this.componentDidMount();
         }
     }
 

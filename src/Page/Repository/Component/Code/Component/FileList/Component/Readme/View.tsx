@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import MarkdownPreviewer from '../../../../../../../../Component/MarkdownPreviewer';
 import {Spin} from 'antd';
+import RepositoryMarkdownPreviewer from '../../../RepositoryMarkdownPreviewer';
 
 interface IProps
 {
@@ -18,7 +18,7 @@ function ReadmeView(props: Readonly<IProps>)
             <Spin spinning={loading}>
                 <div className={Style.title}>README.md</div>
                 <div className={Style.contentWrapper}>
-                    <MarkdownPreviewer markdown={readme} />
+                    <RepositoryMarkdownPreviewer markdown={readme} />
                 </div>
             </Spin>
         </div>) :

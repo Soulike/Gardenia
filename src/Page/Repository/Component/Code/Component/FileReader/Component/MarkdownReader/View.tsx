@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import MarkdownPreviewer from '../../../../../../../../Component/MarkdownPreviewer';
+import RepositoryMarkdownPreviewer from '../../../RepositoryMarkdownPreviewer';
 
 interface IProps
 {
@@ -12,7 +12,7 @@ function MarkdownReader(props: IProps)
     const {markdown} = props;
     return (
         <div className={Style.MarkdownReader}>
-            <MarkdownPreviewer markdown={markdown} />
+            <RepositoryMarkdownPreviewer markdown={markdown} />
         </div>
     );
 }
