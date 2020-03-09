@@ -13,7 +13,7 @@ function CodeReader(props: IProps)
     const highlightedCodeLines = Code.getHighlightedCodeLines(code);
 
     return (
-        <table className={Style.CodeReader}>
+        <table className={`${Style.CodeReader} hljs`}>
             <tbody>
             {
                 highlightedCodeLines.map((codeline, i) => (

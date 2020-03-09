@@ -20,7 +20,7 @@ function Code(props: IProps)
     let currentPrevLineNumber = prevStartLineNumber;
     let currentAfterLineNumber = afterStartLineNumber;
     return (
-        <table className={Style.Code}>
+        <table className={`${Style.Code} hljs`}>
             <tbody>
             {
                 codeLines.map((rawLine, i) =>

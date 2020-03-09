@@ -1,6 +1,7 @@
+import 'highlight.js/scss/github-gist.scss';
+
 // 为了按需加载，使用 require
 const hljs = require('highlight.js/lib/highlight');
-require('highlight.js/scss/github-gist.scss');
 
 hljs.registerLanguage('actionscript', require(`highlight.js/lib/languages/actionscript.js`));
 hljs.registerLanguage('ada', require(`highlight.js/lib/languages/ada.js`));
