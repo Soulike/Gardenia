@@ -20,6 +20,7 @@ interface IProps
     children: ReactNode,
     forkFrom: Readonly<Pick<RepositoryClass, 'username' | 'name'>> | null,
     openPullRequestAmount: number,
+    openIssueAmount: number,
 }
 
 function RepositoryView(props: Readonly<IProps>)
@@ -33,6 +34,7 @@ function RepositoryView(props: Readonly<IProps>)
         showSettings,
         children,
         openPullRequestAmount,
+        openIssueAmount,
     } = props;
     return (
         loading ? null :
@@ -86,7 +88,7 @@ function RepositoryView(props: Readonly<IProps>)
                         </div>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab={
-                        <><ExclamationCircleOutlined />Issues</>
+                        <><ExclamationCircleOutlined />Issues <Tag className={Style.tag}>{openIssueAmount}</Tag></>
                     } key={TAB_KEY.ISSUES}>
                         <div className={Style.tabContent}>
                             {children}

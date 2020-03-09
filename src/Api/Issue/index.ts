@@ -1,1 +1,3 @@
-export * from './Request';
+import * as Issue from './Request';
+
+export {Issue};

@@ -1,5 +1,5 @@
 export enum ISSUE_STATUS
 {
-    open = 'open',
-    closed = 'closed'
+    OPEN = 'open',
+    CLOSED = 'closed'
 }
