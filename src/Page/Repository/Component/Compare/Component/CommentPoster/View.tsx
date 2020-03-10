@@ -44,7 +44,7 @@ function CommentPoster(props: IProps)
                         </Tabs.TabPane>
                         <Tabs.TabPane key={'preview'} tab={'预览'}>
                             <div className={Style.previewWrapper}>
-                                <MarkdownPreviewer markdown={contentToPreview} />
+                                <MarkdownPreviewer markdown={contentToPreview} loading={submitting} />
                             </div>
                         </Tabs.TabPane>
                     </Tabs>
