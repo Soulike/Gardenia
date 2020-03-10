@@ -30,7 +30,7 @@ function PullRequest(props: IProps)
                     username: targetRepositoryUsername,
                     repository: targetRepositoryName,
                     no: no!.toString(),
-                })}>
+                })} target={'__blank'}>
                     <div className={Style.title}>{title}</div>
                 </Link>
             </div>

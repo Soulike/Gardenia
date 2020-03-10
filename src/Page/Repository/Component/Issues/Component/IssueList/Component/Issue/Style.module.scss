@@ -1,0 +1,23 @@
+.Issue {
+    border-bottom: 1px solid #DDD;
+    padding: 10px 20px;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    .titleWrapper {
+        display: flex;
+        align-items: center;
+        font-weight: bolder;
+        font-size: 16px;
+
+        .iconWrapper {
+            margin-right: 5px;
+        }
+    }
+
+    .info {
+        color: #666;
+    }
+}

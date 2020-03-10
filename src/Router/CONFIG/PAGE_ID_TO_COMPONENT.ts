@@ -13,7 +13,7 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
     [PAGE_ID.PERSONAL_CENTER]: React.lazy(() => import('../../Page/PersonalCenter')),
 
     [PAGE_ID.REPOSITORY.CODE]: React.lazy(() => import('../../Page/Repository/Component/Code')),
-    [PAGE_ID.REPOSITORY.ISSUES]: undefined,
+    [PAGE_ID.REPOSITORY.ISSUES]: React.lazy(() => import('../../Page/Repository/Component/Issues')),
     [PAGE_ID.REPOSITORY.ISSUE]: undefined,
     [PAGE_ID.REPOSITORY.CREATE_ISSUE]: React.lazy(() => import('../../Page/Repository/Component/CreateIssue')),
     [PAGE_ID.REPOSITORY.PULL_REQUESTS]: React.lazy(() => import('../../Page/Repository/Component/PullRequests')),

@@ -82,13 +82,10 @@ class CommentPoster extends PureComponent<IProps, IState>
             if (result !== null)
             {
                 notification.success({message: '创建 Pull Request 成功'});
-                setTimeout(() =>
-                {
-                    history.replace(RouterFunction.generateRepositoryPullRequestsRoute({
-                        username: targetRepositoryUsername,
-                        repository: targetRepositoryName,
-                    }));
-                }, 1000);
+                history.replace(RouterFunction.generateRepositoryPullRequestsRoute({
+                    username: targetRepositoryUsername,
+                    repository: targetRepositoryName,
+                }));
             }
             this.setState({submitting: false});
         }

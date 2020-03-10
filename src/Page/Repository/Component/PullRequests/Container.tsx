@@ -54,6 +54,16 @@ class PullRequests extends PureComponent<IProps, IState>
         this.setState({loading: false});
     }
 
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    {
+        const {match: {params: {username, repository: name}}} = this.props;
+        const {match: {params: {username: prevUsername, repository: prevName}}} = prevProps;
+        if (username !== prevUsername || name !== prevName)
+        {
+            await this.componentDidMount();
+        }
+    }
+
     onStatusButtonClick: (status: PULL_REQUEST_STATUS | undefined) => ButtonProps['onClick'] = status =>
     {
         return async () =>

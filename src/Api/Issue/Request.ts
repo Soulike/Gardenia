@@ -75,7 +75,7 @@ export async function reopen(issue: Readonly<Pick<Issue, 'repositoryUsername' | 
     }
 }
 
-export async function getByRepository(repository: Pick<Repository, 'username' | 'name'>,
+export async function getByRepository(repository: Pick<Repository, 'username' | 'name'>, status: ISSUE_STATUS | undefined,
                                       offset: number = 0,
                                       limit: number = Number.MAX_SAFE_INTEGER): Promise<{ issues: Issue[] } | null>
 {
@@ -84,7 +84,7 @@ export async function getByRepository(repository: Pick<Repository, 'username' | 
         const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ issues: Issue[] }>> =
             await axios.get(GET_BY_REPOSITORY, {
                 params: {
-                    json: JSON.stringify({repository, offset, limit}),
+                    json: JSON.stringify({repository, status, offset, limit}),
                 },
             });
         if (isSuccessful)
