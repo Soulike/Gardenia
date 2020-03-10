@@ -2,8 +2,8 @@ import {applyMiddleware, combineReducers, compose, createStore, Middleware} from
 import {IState} from './Interface';
 // import 所有 Reducer
 import {Reducer as RootReducer} from '../Component/Root';
-import {Reducer as PullRequestReducer} from '../Page/Repository/Component/PullRequest';
-import {Reducer as IssueReducer} from '../Page/Repository/Component/Issue';
+import {Reducer as PullRequestReducer} from '../Page/Repository/Page/PullRequest';
+import {Reducer as IssueReducer} from '../Page/Repository/Page/Issue';
 import {Issue, PullRequest} from '../Class';
 import {ISSUE_STATUS, PULL_REQUEST_STATUS} from '../CONSTANT';
 
