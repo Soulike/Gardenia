@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import CommentPoster from '../CommentPoster';
+import TopicPoster from '../TopicPoster';
 import {InputProps, TextAreaProps} from 'antd/lib/input';
 import {TabsProps} from 'antd/lib/tabs';
 import {ButtonProps} from 'antd/lib/button';
@@ -24,14 +24,14 @@ function CreateIssue(props: IProps)
     return (
         <div className={Style.CreateIssue}>
             <PageTitle>创建 Issue</PageTitle>
-            <CommentPoster title={title}
-                           content={content}
-                           contentToPreview={contentToPreview}
-                           onContentChange={onContentChange}
-                           onSubmitButtonClick={onSubmitButtonClick}
-                           onTabChange={onTabChange}
-                           onTitleChange={onTitleChange}
-                           submitting={submitting} buttonText={'创建 Issue'} />
+            <TopicPoster title={title}
+                         content={content}
+                         contentToPreview={contentToPreview}
+                         onContentChange={onContentChange}
+                         onSubmitButtonClick={onSubmitButtonClick}
+                         onTabChange={onTabChange}
+                         onTitleChange={onTitleChange}
+                         submitting={submitting} buttonText={'创建 Issue'} />
         </div>
     );
 }

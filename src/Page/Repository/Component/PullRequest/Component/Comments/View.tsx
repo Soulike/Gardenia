@@ -1,7 +1,7 @@
 import React from 'react';
 import {PullRequest, PullRequestComment} from '../../../../../../Class';
 import Style from './Style.module.scss';
-import Comment from './Component/Comment';
+import Comment from '../../../../Component/Comment';
 import {Alert, Spin} from 'antd';
 import {PULL_REQUEST_STATUS} from '../../../../../../CONSTANT';
 import OperationButton from './Component/OperationButton';
@@ -25,18 +25,20 @@ function Comments(props: IProps)
         <div className={Style.Comments}>
             <Spin spinning={loading}>
                 <div className={Style.commentWrapper}>
-                    <Comment pullRequestComment={{
-                        username: sourceRepositoryUsername,
-                        content,
-                        modificationTime,
-                        creationTime,
-                    }} pullRequest={{sourceRepositoryUsername}} />
+                    <Comment topicCreatorUsername={sourceRepositoryUsername}
+                             username={sourceRepositoryUsername}
+                             content={content}
+                             creationTime={creationTime}
+                             modificationTime={modificationTime} />
                 </div>
                 {
                     pullRequestComments.map(({id, username, content, creationTime, modificationTime}) => (
                         <div className={Style.commentWrapper} key={id}>
-                            <Comment pullRequestComment={{username, content, modificationTime, creationTime}}
-                                     pullRequest={{sourceRepositoryUsername}} />
+                            <Comment topicCreatorUsername={sourceRepositoryUsername}
+                                     username={username}
+                                     content={content}
+                                     creationTime={creationTime}
+                                     modificationTime={modificationTime} />
                         </div>
                     ))
                 }

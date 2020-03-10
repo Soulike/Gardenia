@@ -19,7 +19,7 @@ interface IProps
     buttonText?: ReactNode;
 }
 
-function CommentPoster(props: IProps)
+function TopicPoster(props: IProps)
 {
     const {
         title, onTitleChange,
@@ -27,7 +27,7 @@ function CommentPoster(props: IProps)
     } = props;
     return (
         <Card size={'small'}>
-            <div className={Style.CommentPoster}>
+            <div className={Style.TopicPoster}>
                 <div className={Style.titleWrapper}>
                     <Input placeholder={'标题（必填）'} size={'large'} autoFocus={true}
                            value={title} onChange={onTitleChange} disabled={submitting} maxLength={255} />
@@ -62,4 +62,4 @@ function CommentPoster(props: IProps)
     );
 }
 
-export default React.memo(CommentPoster);
+export default React.memo(TopicPoster);

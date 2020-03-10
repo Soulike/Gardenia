@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import View from '../../../CommentPoster';
+import View from '../../../TopicPoster';
 import {InputProps, TextAreaProps} from 'antd/lib/input';
 import {TabsProps} from 'antd/lib/tabs';
 import {ButtonProps} from 'antd/lib/button';
@@ -18,7 +18,7 @@ interface IState
     submitting: boolean;
 }
 
-class CommentPoster extends PureComponent<IProps, IState>
+class PullRequestPoster extends PureComponent<IProps, IState>
 {
     constructor(props: IProps)
     {
@@ -105,4 +105,4 @@ class CommentPoster extends PureComponent<IProps, IState>
     }
 }
 
-export default withRouter(CommentPoster);
+export default withRouter(PullRequestPoster);
