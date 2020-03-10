@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import Style from './Style.module.scss';
 import {Alert, Button, Card, Input, Tabs} from 'antd';
 import {InputProps, TextAreaProps} from 'antd/lib/input';
 import {TabsProps} from 'antd/lib/tabs';
-import MarkdownPreviewer from '../../../../../../Component/MarkdownPreviewer';
+import MarkdownPreviewer from '../../../../Component/MarkdownPreviewer';
 import {ButtonProps} from 'antd/lib/button';
 
 interface IProps
@@ -16,20 +16,21 @@ interface IProps
     contentToPreview: string;
     onSubmitButtonClick: ButtonProps['onClick'];
     submitting: boolean;
+    buttonText?: ReactNode;
 }
 
 function CommentPoster(props: IProps)
 {
     const {
         title, onTitleChange,
-        content, onContentChange, onTabChange, contentToPreview, submitting, onSubmitButtonClick,
+        content, onContentChange, onTabChange, contentToPreview, submitting, onSubmitButtonClick, buttonText,
     } = props;
     return (
         <Card size={'small'}>
             <div className={Style.CommentPoster}>
                 <div className={Style.titleWrapper}>
                     <Input placeholder={'标题（必填）'} size={'large'} autoFocus={true}
-                           value={title} onChange={onTitleChange} disabled={submitting} />
+                           value={title} onChange={onTitleChange} disabled={submitting} maxLength={255} />
                 </div>
                 <div className={Style.contentWrapper}>
                     <Tabs defaultActiveKey={'write'} type={'card'} onChange={onTabChange}>
@@ -54,8 +55,7 @@ function CommentPoster(props: IProps)
                             disabled={submitting}
                             size={'large'}
                             type={'primary'}
-                            onClick={onSubmitButtonClick}>创建 Pull
-                                                          Request</Button>
+                            onClick={onSubmitButtonClick}>{buttonText ? buttonText : '提交'}</Button>
                 </div>
             </div>
         </Card>

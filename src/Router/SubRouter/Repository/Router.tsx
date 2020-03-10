@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import SettingsRouter from './SubRouter/Settings';
 import Loading from '../../../Page/Loading';
+import RequireLogin from '../../../Component/RequireLogin';
 
 const Repository = React.lazy(() => import('../../../Page/Repository'));
 
@@ -17,6 +18,7 @@ export default () =>
                 <Route path={[
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUE],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUES],
+                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CREATE_ISSUE],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUEST],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMPARE],
@@ -57,6 +59,9 @@ export default () =>
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS]}
                                        component={SettingsRouter} />
+                                <Route path={[
+                                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CREATE_ISSUE],
+                                ]} render={RequireLoginRoute} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.CODE]}
                                        exact={true} />
@@ -67,3 +72,16 @@ export default () =>
         </Switch>
     );
 };
+
+function RequireLoginRoute()
+{
+    return (
+        <RequireLogin>
+            <Switch>
+                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CREATE_ISSUE]}
+                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.CREATE_ISSUE]}
+                       exact={true} />
+            </Switch>
+        </RequireLogin>
+    );
+}

@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import View from './View';
+import View from '../../../CommentPoster';
 import {InputProps, TextAreaProps} from 'antd/lib/input';
 import {TabsProps} from 'antd/lib/tabs';
 import {ButtonProps} from 'antd/lib/button';
@@ -104,7 +104,7 @@ class CommentPoster extends PureComponent<IProps, IState>
                       onContentChange={this.onContentChange}
                       onTabChange={this.onTabChange}
                       submitting={submitting}
-                      onSubmitButtonClick={this.onSubmitButtonClick} />);
+                      onSubmitButtonClick={this.onSubmitButtonClick} buttonText={'创建 Pull Request'} />);
     }
 }
 
