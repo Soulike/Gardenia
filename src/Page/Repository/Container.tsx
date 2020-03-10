@@ -2,7 +2,7 @@ import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {RouteComponentProps} from 'react-router-dom';
 import {Profile, Repository as RepositoryClass} from '../../Class';
-import {Profile as ProfileApi, PullRequest as PullRequestApi, RepositoryInfo} from '../../Api';
+import {Issue as IssueApi, Profile as ProfileApi, PullRequest as PullRequestApi, RepositoryInfo} from '../../Api';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {TabsProps} from 'antd/lib/tabs';
 import TAB_KEY from './TAB_KEY';
@@ -10,7 +10,7 @@ import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {connect} from 'react-redux';
 import {IRootState, IState as StoreState} from '../../Store';
 import CONFIG from '../../CONFIG';
-import {PULL_REQUEST_STATUS} from '../../CONSTANT';
+import {ISSUE_STATUS, PULL_REQUEST_STATUS} from '../../CONSTANT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode
     | RouterInterface.IRepositoryIssues
@@ -29,6 +29,7 @@ interface IState
     visitorProfile: Profile | null,
     forkFrom: Readonly<Pick<RepositoryClass, 'username' | 'name'>> | null;
     openPullRequestAmount: number;
+    openIssueAmount: number;
 }
 
 class Repository extends PureComponent<Readonly<IProps>, IState>
@@ -43,6 +44,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
             visitorProfile: null,
             forkFrom: null,
             openPullRequestAmount: 0,
+            openIssueAmount: 0,
         };
     }
 
@@ -56,6 +58,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
             this.loadRepository(),
             this.loadForkFrom(),
             this.loadOpenPullRequestAmount(),
+            this.loadOpenIssueAmount(),
         ]);
         if (isLoggedIn)
         {
@@ -94,6 +97,19 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
     {
         const {match: {params: {username, repository: name}}} = this.props;
         document.title = `${username}/${name} - ${CONFIG.NAME}`;
+    };
+
+    loadOpenIssueAmount = async () =>
+    {
+        const {match: {params: {username, repository: name}}} = this.props;
+        const amountWrapper = await IssueApi.getAmountByRepository(
+            {username, name}, ISSUE_STATUS.OPEN,
+        );
+        if (amountWrapper !== null)
+        {
+            const {amount} = amountWrapper;
+            this.setState({openIssueAmount: amount});
+        }
     };
 
     loadOpenPullRequestAmount = async () =>
@@ -143,7 +159,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
     setTabActiveKey = () =>
     {
         const {match: {path}} = this.props;
-        const {REPOSITORY: {REPOSITORY, CODE, ISSUES, ISSUE, PULL_REQUESTS, PULL_REQUEST, SETTINGS}} = PAGE_ID;
+        const {REPOSITORY: {REPOSITORY, CODE, ISSUES, ISSUE, CREATE_ISSUE, PULL_REQUESTS, PULL_REQUEST, SETTINGS}} = PAGE_ID;
         switch (path)
         {
             case PAGE_ID_TO_ROUTE[CODE]:
@@ -154,6 +170,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
                 });
                 break;
             }
+            case PAGE_ID_TO_ROUTE[CREATE_ISSUE]:
             case PAGE_ID_TO_ROUTE[ISSUE]:
             case PAGE_ID_TO_ROUTE[ISSUES]:
             {
@@ -215,14 +232,20 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {repository, loading, tabActiveKey, visitorProfile, forkFrom, openPullRequestAmount} = this.state;
+        const {
+            repository, loading, tabActiveKey, visitorProfile, forkFrom,
+            openPullRequestAmount, openIssueAmount,
+        } = this.state;
         const {children, isLoggedIn} = this.props;
         return (
             <View showSettings={isLoggedIn && visitorProfile !== null && repository.username === visitorProfile.username}
                   repository={repository}
                   loading={loading}
                   onTabChange={this.onTabChange}
-                  tabActiveKey={tabActiveKey} forkFrom={forkFrom} openPullRequestAmount={openPullRequestAmount}>
+                  tabActiveKey={tabActiveKey}
+                  forkFrom={forkFrom}
+                  openPullRequestAmount={openPullRequestAmount}
+                  openIssueAmount={openIssueAmount}>
                 {children}
             </View>
         );

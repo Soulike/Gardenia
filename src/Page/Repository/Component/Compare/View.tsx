@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import PageTitle from '../../../../Component/PageTitle';
 import CompareCard from './Component/CompareCard';
-import CommentPoster from './Component/CommentPoster';
+import PullRequestPoster from './Component/PullRequestPoster';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../Router';
 import {Empty, Spin, Tabs, Tag} from 'antd';
@@ -44,7 +44,7 @@ function Compare(props: IProps)
                         theSameBranch ? (<Empty description={'必须是不同分支才可创建 Pull Request'} />) : (
                             <div className={Style.detail}>
                                 <div className={Style.commentPosterWrapper}>
-                                    <CommentPoster />
+                                    <PullRequestPoster />
                                 </div>
                                 <div className={Style.detailTabs}>
                                     <Tabs defaultActiveKey={'commits'} type={'card'}>

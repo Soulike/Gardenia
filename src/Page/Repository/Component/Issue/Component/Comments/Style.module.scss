@@ -1,0 +1,20 @@
+.Comments {
+    margin-top: 15px;
+
+    .commentsWrapper {
+
+        .commentWrapper {
+            margin-top: 15px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .loadMoreButtonWrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+    }
+}

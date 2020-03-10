@@ -18,6 +18,8 @@ export interface IRepositoryCode extends IRepository
     readonly path?: string,
 }
 
+export interface IRepositoryCreateIssue extends IRepository {}
+
 export interface IRepositoryIssues extends IRepository {}
 
 export interface IRepositoryIssue extends IRepository

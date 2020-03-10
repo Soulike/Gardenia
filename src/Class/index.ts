@@ -10,3 +10,5 @@ export * from './Branch';
 export * from './PullRequest';
 export * from './PullRequestComment';
 export * from './Conflict';
+export * from './Issue';
+export * from './IssueComment';

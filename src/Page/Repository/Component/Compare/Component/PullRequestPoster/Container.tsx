@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import View from './View';
+import View from '../../../TopicPoster';
 import {InputProps, TextAreaProps} from 'antd/lib/input';
 import {TabsProps} from 'antd/lib/tabs';
 import {ButtonProps} from 'antd/lib/button';
@@ -18,7 +18,7 @@ interface IState
     submitting: boolean;
 }
 
-class CommentPoster extends PureComponent<IProps, IState>
+class PullRequestPoster extends PureComponent<IProps, IState>
 {
     constructor(props: IProps)
     {
@@ -82,13 +82,10 @@ class CommentPoster extends PureComponent<IProps, IState>
             if (result !== null)
             {
                 notification.success({message: '创建 Pull Request 成功'});
-                setTimeout(() =>
-                {
-                    history.replace(RouterFunction.generateRepositoryPullRequestsRoute({
-                        username: targetRepositoryUsername,
-                        repository: targetRepositoryName,
-                    }));
-                }, 1000);
+                history.replace(RouterFunction.generateRepositoryPullRequestsRoute({
+                    username: targetRepositoryUsername,
+                    repository: targetRepositoryName,
+                }));
             }
             this.setState({submitting: false});
         }
@@ -104,8 +101,8 @@ class CommentPoster extends PureComponent<IProps, IState>
                       onContentChange={this.onContentChange}
                       onTabChange={this.onTabChange}
                       submitting={submitting}
-                      onSubmitButtonClick={this.onSubmitButtonClick} />);
+                      onSubmitButtonClick={this.onSubmitButtonClick} buttonText={'创建 Pull Request'} />);
     }
 }
 
-export default withRouter(CommentPoster);
+export default withRouter(PullRequestPoster);

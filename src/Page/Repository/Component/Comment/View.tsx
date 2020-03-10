@@ -1,21 +1,23 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {PullRequest, PullRequestComment} from '../../../../../../../../Class';
-import {Date} from '../../../../../../../../Function';
-import MarkdownPreviewer from '../../../../../../../../Component/MarkdownPreviewer';
+import {Date} from '../../../../Function';
+import MarkdownPreviewer from '../../../../Component/MarkdownPreviewer';
 import {Link} from 'react-router-dom';
-import {Function as RouterFunction} from '../../../../../../../../Router';
+import {Function as RouterFunction} from '../../../../Router';
 import {Tag} from 'antd';
 
 interface IProps
 {
-    pullRequest: Pick<PullRequest, 'sourceRepositoryUsername'>,
-    pullRequestComment: Pick<PullRequestComment, 'username' | 'content' | 'creationTime' | 'modificationTime'>;
+    topicCreatorUsername: string;    // Issue 或 PR 的创建者 username
+    username: string;
+    content: string;
+    creationTime: number;
+    modificationTime: number;
 }
 
 function Comment(props: IProps)
 {
-    const {pullRequestComment: {username, content, creationTime, modificationTime}, pullRequest: {sourceRepositoryUsername}} = props;
+    const {topicCreatorUsername, username, content, creationTime, modificationTime} = props;
     return (
         <div className={Style.Comment}>
             <div className={Style.header}>
@@ -24,7 +26,7 @@ function Comment(props: IProps)
                         <b>{username}</b>
                     </Link>
                     {
-                        username === sourceRepositoryUsername ?
+                        username === topicCreatorUsername ?
                             <Tag color={'blue'} className={Style.tag}>创建者</Tag> : null
                     }
                     <div className={Style.creationTime}>

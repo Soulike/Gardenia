@@ -1,0 +1,8 @@
+enum ACTION_TYPE
+{
+    LOADING = 'ISSUE_LOADING',
+    LOADED = 'ISSUE_LOADED',
+    MODIFY = 'ISSUE_MODIFY',
+}
+
+export default ACTION_TYPE;
