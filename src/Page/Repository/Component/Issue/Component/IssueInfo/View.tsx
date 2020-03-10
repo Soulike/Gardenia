@@ -4,7 +4,7 @@ import {Issue} from '../../../../../../Class';
 import {Tag} from 'antd';
 import {ISSUE_STATUS} from '../../../../../../CONSTANT';
 import {Date} from '../../../../../../Function';
-import {CheckOutlined, InfoOutlined} from '@ant-design/icons';
+import {InfoCircleOutlined, IssuesCloseOutlined} from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../../../../../Router';
 
@@ -50,11 +50,11 @@ function getTag(status: ISSUE_STATUS)
     {
         case ISSUE_STATUS.CLOSED:
         {
-            return <Tag color={'red'}><CheckOutlined /> 已关闭</Tag>;
+            return <Tag color={'red'}><IssuesCloseOutlined /> 已关闭</Tag>;
         }
         case ISSUE_STATUS.OPEN:
         {
-            return <Tag color={'green'}><InfoOutlined /> 开启的</Tag>;
+            return <Tag color={'green'}><InfoCircleOutlined /> 开启的</Tag>;
         }
     }
 }

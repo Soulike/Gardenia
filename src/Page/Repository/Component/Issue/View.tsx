@@ -5,7 +5,8 @@ import IssueInfo from './Component/IssueInfo';
 import {Spin} from 'antd';
 import Comments from './Component/Comments';
 import {ISSUE_STATUS} from '../../../../CONSTANT';
-import CommentPoster from './Component/CommentPoster/Container';
+import CommentPoster from './Component/CommentPoster';
+import OperationButtons from './Component/OperationButtons';
 
 interface IProps
 {
@@ -32,6 +33,9 @@ function Issue(props: IProps)
                             <CommentPoster />
                         </div>) : null
                 }
+                <div className={Style.operationButtonsWrapper}>
+                    <OperationButtons />
+                </div>
             </Spin>
         </div>
     );

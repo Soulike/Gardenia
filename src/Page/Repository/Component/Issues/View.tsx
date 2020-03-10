@@ -5,7 +5,8 @@ import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {ISSUE_STATUS} from '../../../../CONSTANT';
 import {ButtonProps} from 'antd/lib/button';
-import {CheckOutlined, EllipsisOutlined, InfoOutlined, PlusOutlined} from '@ant-design/icons';
+import {EllipsisOutlined, InfoCircleOutlined, IssuesCloseOutlined, PlusOutlined} from '@ant-design/icons';
+
 import {Issue} from '../../../../Class';
 import IssueList from './Component/IssueList';
 
@@ -53,7 +54,7 @@ function Issues(props: IProps)
                                             fontWeight: currentStatus === ISSUE_STATUS.OPEN ? 'bolder' : 'inherit',
                                         }}
                                         onClick={onStatusButtonClick(ISSUE_STATUS.OPEN)}>
-                                    <InfoOutlined /> 开启的
+                                    <InfoCircleOutlined /> 开启的
                                     <Tag className={Style.tag}>{openAmount}</Tag>
                                 </Button>
                                 <Button type={'link'}
@@ -62,7 +63,7 @@ function Issues(props: IProps)
                                             fontWeight: currentStatus === ISSUE_STATUS.CLOSED ? 'bolder' : 'inherit',
                                         }}
                                         onClick={onStatusButtonClick(ISSUE_STATUS.CLOSED)}>
-                                    <CheckOutlined /> 已关闭
+                                    <IssuesCloseOutlined /> 已关闭
                                     <Tag className={Style.tag}>{closedAmount}</Tag>
                                 </Button>
                             </Button.Group>

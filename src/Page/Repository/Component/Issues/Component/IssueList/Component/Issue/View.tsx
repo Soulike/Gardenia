@@ -4,7 +4,7 @@ import {Issue as IssueClass} from '../../../../../../../../Class';
 import {Function as RouterFunction} from '../../../../../../../../Router';
 import {Date} from '../../../../../../../../Function';
 import {ISSUE_STATUS} from '../../../../../../../../CONSTANT';
-import {CheckOutlined, InfoOutlined} from '@ant-design/icons';
+import {InfoCircleOutlined, IssuesCloseOutlined} from '@ant-design/icons';
 import NewTabLink from '../../../../../../../../Component/NewTabLink';
 
 interface IProps
@@ -46,11 +46,11 @@ function getIcon(status: ISSUE_STATUS)
     {
         case ISSUE_STATUS.CLOSED:
         {
-            return <CheckOutlined />;
+            return <IssuesCloseOutlined />;
         }
         case ISSUE_STATUS.OPEN:
         {
-            return <InfoOutlined />;
+            return <InfoCircleOutlined />;
         }
     }
 }

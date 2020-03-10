@@ -1,8 +1,8 @@
 enum ACTION_TYPE
 {
-    LOADING = 'LOADING',
-    LOADED = 'LOADED',
-    MODIFY = 'MODIFY',
+    LOADING = 'ISSUE_LOADING',
+    LOADED = 'ISSUE_LOADED',
+    MODIFY = 'ISSUE_MODIFY',
 }
 
 export default ACTION_TYPE;
