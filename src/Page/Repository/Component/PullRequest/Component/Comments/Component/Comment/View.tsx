@@ -36,7 +36,7 @@ function Comment(props: IProps)
                 </div>
             </div>
             <div className={Style.content}>
-                {content ? <MarkdownPreviewer markdown={content} /> : <i>没有提供描述。</i>}
+                {content ? <MarkdownPreviewer markdown={content} loading={false} /> : <i>没有提供描述。</i>}
             </div>
         </div>
     );

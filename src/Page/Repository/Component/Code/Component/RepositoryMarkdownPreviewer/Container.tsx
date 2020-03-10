@@ -5,8 +5,7 @@ import {RepositoryInfo} from '../../../../../../Api/RepositoryInfo';
 import isUrl from 'is-url';
 import {ObjectType} from '../../../../../../CONSTANT';
 import path from 'path';
-import {hljs, mdConverter} from '../../../../../../Singleton';
-import HTMLPreviewer from '../../../../../../Component/HTMLPreviewer';
+import MarkdownPreviewer from '../../../../../../Component/MarkdownPreviewer';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -15,7 +14,6 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 
 interface IState
 {
-    html: string;
     mainBranchName: string;
     loading: boolean;
 }
@@ -30,7 +28,6 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
         this.state = {
             mainBranchName: '',
             loading: false,
-            html: '',
         };
     }
 
@@ -42,9 +39,6 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
         {
             await this.loadMainBranchName();
         }
-        // 以下两者有顺序要求
-        await this.processMarkdownLinks();
-        this.processCodes();
         this.setState({loading: false});
     }
 
@@ -84,11 +78,9 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
         });
     };
 
-    processMarkdownLinks = async () =>
+    processHTML = async (html: string) =>
     {
-        // 转换成 HTML，处理其中所有的 <a> 和 <img>
-        const {markdown} = this.props;
-        const html = mdConverter.makeHtml(markdown);
+        // 处理其中所有的 <a> 和 <img>
         const newDocument = document.implementation.createHTMLDocument();
         const node = newDocument.createElement('div');
         node.innerHTML = html;
@@ -120,7 +112,7 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
             }
         }
         await Promise.all(asyncJobs);
-        this.setState({html: node.innerHTML});
+        return node.innerHTML;
     };
 
     getCompleteLink = async (link: string): Promise<string> =>
@@ -205,21 +197,12 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
         }
     };
 
-    processCodes = () =>
-    {
-        const {html} = this.state;
-        this.setState({loading: true});
-        const node = document.createElement('div');
-        node.innerHTML = html;
-        node.querySelectorAll('pre code')
-            .forEach(block => hljs.highlightBlock(block));
-        this.setState({html: node.innerHTML, loading: false});
-    };
-
     render()
     {
-        const {html, loading} = this.state;
-        return (<HTMLPreviewer html={html} processing={loading} />);
+        const {loading} = this.state;
+        const {markdown} = this.props;
+        return (<MarkdownPreviewer markdown={markdown}
+                                   processHTML={this.processHTML} loading={loading} />);
     }
 }
 
