@@ -1,10 +1,10 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Card, Empty, List} from 'antd';
-import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../Router';
 import {Repository} from '../../Class';
 import AccessibilityTag from '../AccessibilityTag';
+import NewTabLink from '../NewTabLink';
 
 interface IProps
 {
@@ -24,9 +24,8 @@ function RepositoryList(props: Readonly<IProps>)
               {
                   const {username, name, description, isPublic} = repository;
                   return (
-                      <Link className={Style.repositoryWrapper}
-                            target={'_blank'} rel={'noreferrer noopener'}
-                            to={RouterFunction.generateRepositoryCodeRoute({username, repository: name})}>
+                      <NewTabLink className={Style.repositoryWrapper}
+                                  to={RouterFunction.generateRepositoryCodeRoute({username, repository: name})}>
                           <Card className={Style.repository}>
                               <Card.Meta title={
                                   <React.Fragment>
@@ -41,7 +40,7 @@ function RepositoryList(props: Readonly<IProps>)
                                       {description.length === 0 ? <i>没有描述</i> : description}
                                   </div>} />
                           </Card>
-                      </Link>);
+                      </NewTabLink>);
               }} />
     );
 }

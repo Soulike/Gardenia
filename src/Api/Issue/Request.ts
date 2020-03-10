@@ -194,11 +194,7 @@ export async function addComments(issue: Readonly<Pick<Issue, 'repositoryUsernam
     try
     {
         const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<{ comments: IssueComment[] }>> =
-            await axios.post(ADD_COMMENT, {
-                params: {
-                    json: JSON.stringify({issue, issueComment}),
-                },
-            });
+            await axios.post(ADD_COMMENT, {issue, issueComment});
         if (isSuccessful)
         {
             return true;

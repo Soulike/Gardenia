@@ -1,0 +1,26 @@
+.CommentPoster {
+
+    .contentWrapper {
+
+        .content {
+            resize: none;
+            min-height: 150px;
+            max-height: 500px;
+            overflow: auto;
+        }
+
+        .tipWrapper {
+            margin-top: 10px;
+        }
+    }
+
+    .previewWrapper {
+        overflow: auto;
+    }
+
+    .buttonWrapper {
+        margin-top: 15px;
+        display: flex;
+        justify-content: flex-end;
+    }
+}

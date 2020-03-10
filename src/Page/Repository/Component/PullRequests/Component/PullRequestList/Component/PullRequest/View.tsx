@@ -3,9 +3,9 @@ import Style from './Style.module.scss';
 import {PullRequest as PullRequestClass} from '../../../../../../../../Class';
 import {PULL_REQUEST_STATUS} from '../../../../../../../../CONSTANT';
 import {Date} from '../../../../../../../../Function';
-import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../../../../../../../Router';
 import {CloseOutlined, ForkOutlined, PullRequestOutlined} from '@ant-design/icons';
+import NewTabLink from '../../../../../../../../Component/NewTabLink';
 
 interface IProps
 {
@@ -26,13 +26,13 @@ function PullRequest(props: IProps)
                 <div className={Style.iconWrapper} style={{color: getIconColor(status)}}>
                     {getIcon(status)}
                 </div>
-                <Link to={RouterFunction.generateRepositoryPullRequestRoute({
+                <NewTabLink to={RouterFunction.generateRepositoryPullRequestRoute({
                     username: targetRepositoryUsername,
                     repository: targetRepositoryName,
                     no: no!.toString(),
-                })} target={'__blank'}>
+                })}>
                     <div className={Style.title}>{title}</div>
-                </Link>
+                </NewTabLink>
             </div>
             <div className={Style.info}>
                 #{no} 由 <b>{sourceRepositoryUsername}</b> 于 {Date.parseTimestampToDifference(creationTime)} 创建

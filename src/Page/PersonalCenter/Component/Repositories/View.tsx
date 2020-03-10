@@ -4,9 +4,9 @@ import RepositoryList from '../../../../Component/RepositoryList';
 import {Repository} from '../../../../Class';
 import {Button} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
-import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 import {PlusOutlined} from '@ant-design/icons';
+import NewTabLink from '../../../../Component/NewTabLink';
 
 interface IProps
 {
@@ -24,9 +24,9 @@ function RepositoriesView(props: Readonly<IProps>)
     return (
         <div className={Style.Repositories}>
             <div className={Style.tools}>
-                <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]} target={'_blank'} rel={'noreferrer noopener'}>
+                <NewTabLink to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}>
                     <Button type={'primary'}><PlusOutlined />添加仓库</Button>
-                </Link>
+                </NewTabLink>
             </div>
             <RepositoryList repositories={repositories} loading={loading} showUsername={false} />
             <div className={Style.buttonWrapper}>

@@ -3,9 +3,9 @@ import Style from './Style.module.scss';
 import {Group} from '../../../../Class';
 import GroupList from '../../../../Component/GroupList';
 import {Alert, Button} from 'antd';
-import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 import {PlusOutlined} from '@ant-design/icons';
+import NewTabLink from '../../../../Component/NewTabLink';
 
 interface IProps
 {
@@ -21,9 +21,9 @@ function GroupsView(props: Readonly<IProps>)
         <div className={Style.Groups}>
             <div className={Style.tools}>
                 <Alert type={'info'} showIcon={true} message={'可由小组管理员邀请进组'} />
-                <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]} target={'_blank'}>
+                <NewTabLink to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}>
                     <Button type={'primary'}><PlusOutlined />新建小组</Button>
-                </Link>
+                </NewTabLink>
             </div>
             <GroupList groups={groups} loading={loading} administratingGroups={administratingGroups} />
         </div>

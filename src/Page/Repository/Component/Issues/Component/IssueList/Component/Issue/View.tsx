@@ -1,11 +1,11 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Issue as IssueClass} from '../../../../../../../../Class';
-import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../../../../../../../Router';
 import {Date} from '../../../../../../../../Function';
 import {ISSUE_STATUS} from '../../../../../../../../CONSTANT';
 import {CheckOutlined, InfoOutlined} from '@ant-design/icons';
+import NewTabLink from '../../../../../../../../Component/NewTabLink';
 
 interface IProps
 {
@@ -25,13 +25,13 @@ function Issue(props: IProps)
                 <div className={Style.iconWrapper} style={{color: getIconColor(status)}}>
                     {getIcon(status)}
                 </div>
-                <Link to={RouterFunction.generateRepositoryIssueRoute({
+                <NewTabLink to={RouterFunction.generateRepositoryIssueRoute({
                     username: repositoryUsername,
                     repository: repositoryName,
                     no: no!.toString(),
-                })} target={'__blank'}>
+                })}>
                     <div className={Style.title}>{title}</div>
-                </Link>
+                </NewTabLink>
             </div>
             <div className={Style.info}>
                 #{no} 由 <b>{username}</b> 于 {Date.parseTimestampToDifference(creationTime)} 创建

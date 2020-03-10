@@ -2,10 +2,10 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Button, Card, Empty, List, Popconfirm} from 'antd';
 import {Profile} from '../../../../Class';
-import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import {UserOutlined} from '@ant-design/icons';
+import NewTabLink from '../../../../Component/NewTabLink';
 
 interface IProps
 {
@@ -33,9 +33,8 @@ function MembersView(props: Readonly<IProps>)
                                   <div className={Style.cardContent}>
                                       <div className={Style.titleWrapper}>
                                           <UserOutlined />
-                                          <Link to={RouterFunction.generatePersonalCenterRoute({username})}
-                                                target={'_blank'}
-                                                className={Style.title}>{nickname}({username})</Link>
+                                          <NewTabLink to={RouterFunction.generatePersonalCenterRoute({username})}
+                                                      className={Style.title}>{nickname}({username})</NewTabLink>
                                       </div>
                                       {
                                           isAdmin ? (
