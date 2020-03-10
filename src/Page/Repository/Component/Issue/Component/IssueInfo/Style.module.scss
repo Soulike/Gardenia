@@ -1,0 +1,32 @@
+.IssueInfo {
+
+    .titleWrapper {
+        display: flex;
+        align-items: center;
+
+        .title, .no {
+            font-size: 32px;
+        }
+
+        .title {
+            font-weight: bolder;
+        }
+
+        .no {
+            margin-left: 10px;
+            font-weight: lighter;
+        }
+    }
+
+    .infoWrapper {
+        display: flex;
+        align-items: center;
+
+        .info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+    }
+}

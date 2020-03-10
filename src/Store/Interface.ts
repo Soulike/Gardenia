@@ -1,9 +1,10 @@
-import {PullRequest} from '../Class';
+import {Issue, PullRequest} from '../Class';
 
 export interface IState
 {
     readonly Root: IRootState;
-    readonly PullRequest: IPullRequestState
+    readonly PullRequest: IPullRequestState;
+    readonly Issue: IIssueState;
 }
 
 export interface IRootState
@@ -14,5 +15,11 @@ export interface IRootState
 export interface IPullRequestState
 {
     readonly pullRequest: PullRequest,
+    readonly loading: boolean,
+}
+
+export interface IIssueState
+{
+    readonly issue: Issue,
     readonly loading: boolean,
 }
