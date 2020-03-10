@@ -126,7 +126,7 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
     getCompleteLink = async (link: string): Promise<string> =>
     {
         // 判断是不是完整 URL 或是绝对路径，如果是保持原样
-        if (isUrl(link) || path.isAbsolute(link) || link.at(0) === '#' || link.at(0) === '?')
+        if (link.length === 0 || isUrl(link) || path.isAbsolute(link) || link.charAt(0) === '#' || link.charAt(0) === '?')
         {
             return link;
         }
