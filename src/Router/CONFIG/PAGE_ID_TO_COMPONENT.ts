@@ -23,10 +23,9 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
     [PAGE_ID.REPOSITORY.COMMIT]: React.lazy(() => import('../../Page/Repository/Page/Commit')),
     [PAGE_ID.REPOSITORY.BRANCHES]: React.lazy(() => import('../../Page/Repository/Page/Branches')),
 
-    [PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]: React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Options')),
-    [PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]: React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Collaborators')),
-    [PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]: undefined,
-    [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: React.lazy(() => import('../../Page/Repository/Component/Settings/Component/Groups')),
+    [PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]: React.lazy(() => import('../../Page/Repository/Page/Settings/Component/Options')),
+    [PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]: React.lazy(() => import('../../Page/Repository/Page/Settings/Component/Collaborators')),
+    [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: React.lazy(() => import('../../Page/Repository/Page/Settings/Component/Groups')),
 
     [PAGE_ID.GROUP.GROUP]: React.lazy(() => import('../../Page/Group/Component/Repositories')),
     [PAGE_ID.GROUP.REPOSITORIES]: React.lazy(() => import('../../Page/Group/Component/Repositories')),

@@ -158,11 +158,6 @@ export function generateRepositorySettingsOptionsRoute(parameter: IRepositorySet
     return generateRepositorySettingsRoute(parameter);
 }
 
-export function generateRepositorySettingsBranchesRoute(parameter: IRepositorySettings)
-{
-    return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.BRANCHES], parameter);
-}
-
 export function generateRepositorySettingsCollaboratorsRoute(parameter: IRepositorySettings)
 {
     return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS], parameter);

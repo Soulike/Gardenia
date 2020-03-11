@@ -4,7 +4,7 @@ import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../../../CONFI
 import Loading from '../../../../../Page/Loading';
 import RequireLogin from '../../../../../Component/RequireLogin';
 
-const Settings = React.lazy(() => import('../../../../../Page/Repository/Component/Settings'));
+const Settings = React.lazy(() => import('../../../../../Page/Repository/Page/Settings'));
 
 export default () =>
 {
@@ -16,7 +16,6 @@ export default () =>
                     <Route path={[
                         PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.GROUPS],
                         PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS],
-                        PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.BRANCHES],
                         PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.OPTIONS],
                     ]} render={props => (
                         <Settings {...props}>
@@ -26,9 +25,6 @@ export default () =>
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]}
-                                       exact={true} />
-                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]}
-                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]}
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]}

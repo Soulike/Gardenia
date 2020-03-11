@@ -2,6 +2,20 @@
     width: 90vw;
     margin: 5vh auto;
 
+    .alertWrapper {
+        margin-bottom: 15px;
+
+        .description {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .meme {
+                height: 100px;
+            }
+        }
+    }
+
     .repositoryWrapper {
         display: block;
         margin: 3vh 0;

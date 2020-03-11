@@ -25,7 +25,6 @@ export const PAGE_ID_TO_ROUTE = Object.freeze({
     [PAGE_ID.REPOSITORY.SETTINGS.SETTINGS]: '/repository/:username/:repository/settings',
     [PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]: '/repository/:username/:repository/settings',
     [PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS]: '/repository/:username/:repository/settings/collaborators',
-    [PAGE_ID.REPOSITORY.SETTINGS.BRANCHES]: '/repository/:username/:repository/settings/branches',
     [PAGE_ID.REPOSITORY.SETTINGS.GROUPS]: '/repository/:username/:repository/settings/groups',
 
     [PAGE_ID.GROUP.GROUP]: '/group/:id',
