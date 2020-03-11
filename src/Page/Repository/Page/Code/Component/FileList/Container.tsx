@@ -33,10 +33,9 @@ class FileList extends Component<IProps, IState>
     {
         this.setState({loading: true});
         await this.loadMasterBranchName();
-        await Promise.all([
-            this.loadDirectory(),
-            this.loadLastCommit(),
-        ]);
+        // 这两个请求不能合并，因为 directory 的返回时间过长
+        await this.loadLastCommit();
+        await this.loadDirectory();
         this.setState({loading: false});
     }
 
@@ -90,28 +89,42 @@ class FileList extends Component<IProps, IState>
 
     loadDirectory = async () =>
     {
-        const {match: {params: {username, repository: name, path, branch}}} = this.props;
-        const {masterBranchName} = this.state;
-        const fileList = await RepositoryInfo.directory(
-            {username}, {name},
-            branch ? branch : masterBranchName,
-            path === undefined ? '' : path + '/');
-        if (fileList !== null)
+        return new Promise(async resolve =>
         {
-            this.setState({fileList: [...fileList]});
-        }
+            const {match: {params: {username, repository: name, path, branch}}} = this.props;
+            const {masterBranchName} = this.state;
+            const fileList = await RepositoryInfo.directory(
+                {username}, {name},
+                branch ? branch : masterBranchName,
+                path === undefined ? '' : path + '/');
+            if (fileList !== null)
+            {
+                this.setState({fileList: [...fileList]}, () => resolve());
+            }
+            else
+            {
+                resolve();
+            }
+        });
     };
 
     loadLastCommit = async () =>
     {
-        const {match: {params: {username, repository: name, branch, path}}} = this.props;
-        const {masterBranchName} = this.state;
-        const lastCommit = await RepositoryInfo.lastCommit(
-            {username}, {name}, branch ? branch : masterBranchName, path);
-        if (lastCommit !== null)
+        return new Promise(async resolve =>
         {
-            this.setState({lastCommit});
-        }
+            const {match: {params: {username, repository: name, branch, path}}} = this.props;
+            const {masterBranchName} = this.state;
+            const lastCommit = await RepositoryInfo.lastCommit(
+                {username}, {name}, branch ? branch : masterBranchName, path);
+            if (lastCommit !== null)
+            {
+                this.setState({lastCommit}, () => resolve());
+            }
+            else
+            {
+                resolve();
+            }
+        });
     };
 
     render()
