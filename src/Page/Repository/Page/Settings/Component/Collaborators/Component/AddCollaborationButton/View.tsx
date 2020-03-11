@@ -29,7 +29,7 @@ function AddCollaborationButton(props: IProps)
                                          <CopyOutlined />
                                      </CopyToClipboard>
                                  } />
-                                 <InputTip>邀请码有效期 10 分钟，且只可使用一次。</InputTip>
+                                 <InputTip>邀请码有效期一周，且只可使用一次。</InputTip>
                              </div>
                          }
                      </div>

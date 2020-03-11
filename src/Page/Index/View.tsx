@@ -35,6 +35,16 @@ function IndexView(props: Readonly<IProps>)
                                <img src={aqua} alt={'meme'} className={Style.meme} />
                            </div>
                        </div>} banner={true} />
+                <Alert type={'info'} message={'Git 自动保存密码的方法'} description={
+                    <div className={Style.text}>
+                        <div>在命令行执行以下命令可自动保存密码，免去每次输入密码的麻烦。</div>
+                        <code>
+                            git config --global credential.helper cache && git config --global credential.helper 'cache
+                            --timeout=31556926'
+                        </code>
+                        <div>SSH 连接方式仍在开发中，给大家带来的不便深表歉意。</div>
+                    </div>
+                } banner={true} />
             </div>
             <InfiniteScroll loadMore={loadMore} initialLoad={false} hasMore={hasMore}>
                 <RepositoryList repositories={repositoryList} loading={loading} showUsername={true} />
