@@ -1,14 +1,12 @@
 import axios, {AxiosResponse} from 'axios';
 import {Repository, Repository as RepositoryClass, ResponseBody} from '../../Class';
-import {notification} from 'antd';
 import {CREATE, DEL, FORK, GET_REPOSITORIES, IS_MERGEABLE} from './ROUTE';
-import {errorHandler} from '../Function';
 
 export async function getRepositories(start: number, end: number, username?: Readonly<string>): Promise<Readonly<Array<Readonly<RepositoryClass>>> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Array<Readonly<RepositoryClass>>>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Array<Readonly<RepositoryClass>>>> =
             await axios.get(GET_REPOSITORIES, {
                 params: {
                     json: JSON.stringify({start, end, username}),
@@ -20,13 +18,11 @@ export async function getRepositories(start: number, end: number, username?: Rea
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -35,20 +31,18 @@ export async function create(repository: Readonly<Omit<RepositoryClass, 'usernam
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(CREATE, repository);
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(CREATE, repository);
         if (isSuccessful)
         {
             return true;
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -57,20 +51,18 @@ export async function del(repository: Readonly<Pick<RepositoryClass, 'name'>>): 
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(DEL, repository);
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(DEL, repository);
         if (isSuccessful)
         {
             return true;
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -79,20 +71,18 @@ export async function fork(repository: Readonly<Pick<RepositoryClass, 'username'
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(FORK, repository);
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(FORK, repository);
         if (isSuccessful)
         {
             return true;
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -101,7 +91,7 @@ export async function isMergeable(sourceRepository: Readonly<Pick<Repository, 'u
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ isMergeable: boolean }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isMergeable: boolean }>> =
             await axios.get(IS_MERGEABLE, {
                 params: {
                     json: JSON.stringify({
@@ -118,13 +108,11 @@ export async function isMergeable(sourceRepository: Readonly<Pick<Repository, 'u
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }

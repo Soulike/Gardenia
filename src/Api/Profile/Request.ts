@@ -2,13 +2,13 @@ import {Account, Profile, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
 import {notification} from 'antd';
 import {GET, SET, UPLOAD_AVATAR} from './ROUTE';
-import {errorHandler} from '../Function';
+import nProgress from 'nprogress';
 
 export async function get(account?: Readonly<Pick<Account, 'username'>>): Promise<Readonly<Profile> | null>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Profile>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Profile>> =
             await axios.get(GET, {
                 params: {
                     json: JSON.stringify({account}),
@@ -20,13 +20,11 @@ export async function get(account?: Readonly<Pick<Account, 'username'>>): Promis
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -35,7 +33,7 @@ export async function set(profile: Readonly<Partial<Omit<Profile, 'avatar' | 'us
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(SET, profile);
         if (isSuccessful)
         {
@@ -43,24 +41,23 @@ export async function set(profile: Readonly<Partial<Omit<Profile, 'avatar' | 'us
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
 
 export async function uploadAvatar(avatar: File): Promise<true | null>
 {
+    nProgress.start();
     try
     {
         const formData = new FormData();
         formData.append('avatar', avatar);
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody> =
             await axios.post(UPLOAD_AVATAR, formData);
         if (isSuccessful)
         {
@@ -74,7 +71,10 @@ export async function uploadAvatar(avatar: File): Promise<true | null>
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
+    }
+    finally
+    {
+        nProgress.done();
     }
 }

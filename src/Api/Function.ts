@@ -8,5 +8,9 @@ export function prefix(url: string): string
 export function errorHandler(e: Readonly<any>): void
 {
     console.error(e);
-    notification.error({message: '网络异常'});
+    notification.error({
+        key: 'error-message',
+        message: '网络请求失败',
+        description: '如确认网络无误，请联系开发者',
+    });
 }

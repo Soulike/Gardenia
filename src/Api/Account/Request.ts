@@ -1,27 +1,23 @@
 import axios, {AxiosResponse} from 'axios';
 import {Account, Group, Profile, ResponseBody} from '../../Class';
 import {CHECK_PASSWORD, CHECK_SESSION, GET_ADMINISTRATING_GROUPS, GET_GROUPS, LOGIN, LOGOUT, REGISTER} from './ROUTE';
-import {notification} from 'antd';
-import {errorHandler} from '../Function';
 
 export async function login(account: Readonly<Account>): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(LOGIN, account);
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(LOGIN, account);
         if (isSuccessful)
         {
             return true;
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -30,7 +26,7 @@ export async function register(account: Readonly<Account>, profile: Readonly<Omi
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(REGISTER, {
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(REGISTER, {
             account, profile,
         });
         if (isSuccessful)
@@ -39,13 +35,11 @@ export async function register(account: Readonly<Account>, profile: Readonly<Omi
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -69,7 +63,6 @@ export async function checkSession(): Promise<Readonly<{ isValid: boolean }> | n
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -92,7 +85,6 @@ export async function checkPassword(account: Readonly<Pick<Account, 'hash'>>): P
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -101,12 +93,11 @@ export async function logout(): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful}}: AxiosResponse<ResponseBody<void>> = await axios.post(LOGOUT);
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(LOGOUT);
         return isSuccessful ? true : null;
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -115,7 +106,7 @@ export async function getGroups(account: Pick<Account, 'username'>): Promise<Rea
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_GROUPS, {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_GROUPS, {
             params: {
                 json: JSON.stringify(account),
             },
@@ -126,13 +117,11 @@ export async function getGroups(account: Pick<Account, 'username'>): Promise<Rea
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -141,7 +130,7 @@ export async function getAdministratingGroups(account: Pick<Account, 'username'>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_ADMINISTRATING_GROUPS,
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_ADMINISTRATING_GROUPS,
             {
                 params: {
                     json: JSON.stringify(account),
@@ -153,13 +142,11 @@ export async function getAdministratingGroups(account: Pick<Account, 'username'>
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }

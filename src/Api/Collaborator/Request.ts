@@ -1,7 +1,5 @@
 import {Account, Profile, Repository, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
-import {notification} from 'antd';
-import {errorHandler} from '../Function';
 import {
     ADD,
     GENERATE_CODE,
@@ -16,7 +14,7 @@ export async function generateCode(repository: Readonly<Pick<Repository, 'userna
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ code: string }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ code: string }>> =
             await axios.get(GENERATE_CODE, {
                 params: {json: JSON.stringify({repository})},
             });
@@ -26,13 +24,11 @@ export async function generateCode(repository: Readonly<Pick<Repository, 'userna
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -41,7 +37,7 @@ export async function add(code: string): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(ADD, {code});
         if (isSuccessful)
         {
@@ -49,13 +45,11 @@ export async function add(code: string): Promise<true | null>
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -64,7 +58,7 @@ export async function remove(repository: Readonly<Pick<Repository, 'username' | 
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(REMOVE, {repository, account});
         if (isSuccessful)
         {
@@ -72,13 +66,11 @@ export async function remove(repository: Readonly<Pick<Repository, 'username' | 
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -87,7 +79,7 @@ export async function getCollaborators(repository: Readonly<Pick<Repository, 'us
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ collaborators: Profile[] }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ collaborators: Profile[] }>> =
             await axios.get(GET_COLLABORATORS, {
                 params: {json: JSON.stringify({repository})},
             });
@@ -97,13 +89,11 @@ export async function getCollaborators(repository: Readonly<Pick<Repository, 'us
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -112,7 +102,7 @@ export async function getCollaboratorsAmount(repository: Readonly<Pick<Repositor
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
             await axios.get(GET_COLLABORATORS_AMOUNT, {
                 params: {json: JSON.stringify({repository})},
             });
@@ -122,13 +112,11 @@ export async function getCollaboratorsAmount(repository: Readonly<Pick<Repositor
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -137,7 +125,7 @@ export async function getCollaboratingRepositories(account?: Pick<Account, 'user
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ repositories: Repository[] }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ repositories: Repository[] }>> =
             await axios.get(GET_COLLABORATING_REPOSITORIES, {
                 params: {json: JSON.stringify({account})},
             });
@@ -147,13 +135,11 @@ export async function getCollaboratingRepositories(account?: Pick<Account, 'user
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -162,7 +148,7 @@ export async function getCollaboratingRepositoriesAmount(account?: Pick<Account,
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
             await axios.get(GET_COLLABORATING_REPOSITORIES_AMOUNT, {
                 params: {json: JSON.stringify({account})},
             });
@@ -172,13 +158,11 @@ export async function getCollaboratingRepositoriesAmount(account?: Pick<Account,
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }

@@ -1,7 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
 import {Commit, Conflict, FileDiff, PullRequest, PullRequestComment, Repository, ResponseBody} from '../../Class';
-import {notification} from 'antd';
-import {errorHandler} from '../Function';
 import {
     ADD,
     ADD_COMMENT,
@@ -23,12 +21,13 @@ import {
     UPDATE_COMMENT,
 } from './ROUTE';
 import {PULL_REQUEST_STATUS} from '../../CONSTANT';
+import nProgress from 'nprogress';
 
 export async function add(pullRequest: Readonly<Omit<PullRequest, 'id' | 'no' | 'sourceRepositoryCommitHash' | 'targetRepositoryCommitHash' | 'creationTime' | 'modificationTime' | 'status'>>): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(ADD, pullRequest);
         if (isSuccessful)
         {
@@ -36,13 +35,11 @@ export async function add(pullRequest: Readonly<Omit<PullRequest, 'id' | 'no' | 
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -51,7 +48,7 @@ export async function update(primaryKey: Readonly<Pick<PullRequest, 'id'>>, pull
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(UPDATE, {primaryKey, pullRequest});
         if (isSuccessful)
         {
@@ -59,13 +56,11 @@ export async function update(primaryKey: Readonly<Pick<PullRequest, 'id'>>, pull
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -74,7 +69,7 @@ export async function close(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Pro
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(CLOSE, pullRequest);
         if (isSuccessful)
         {
@@ -82,13 +77,11 @@ export async function close(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Pro
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -97,7 +90,7 @@ export async function reopen(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Pr
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(REOPEN, pullRequest);
         if (isSuccessful)
         {
@@ -105,13 +98,11 @@ export async function reopen(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Pr
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -120,7 +111,7 @@ export async function isMergeable(pullRequest: Readonly<Pick<PullRequest, 'id'>>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ isMergeable: boolean }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isMergeable: boolean }>> =
             await axios.get(IS_MERGEABLE, {
                 params: {
                     json: JSON.stringify(pullRequest),
@@ -132,13 +123,11 @@ export async function isMergeable(pullRequest: Readonly<Pick<PullRequest, 'id'>>
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -147,7 +136,7 @@ export async function merge(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Pro
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(MERGE, pullRequest);
         if (isSuccessful)
         {
@@ -155,13 +144,11 @@ export async function merge(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Pro
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -170,7 +157,7 @@ export async function get(repository: Readonly<Pick<Repository, 'username' | 'na
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<PullRequest>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<PullRequest>> =
             await axios.get(GET, {
                 params: {
                     json: JSON.stringify({repository, pullRequest}),
@@ -182,13 +169,11 @@ export async function get(repository: Readonly<Pick<Repository, 'username' | 'na
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -197,7 +182,7 @@ export async function getByRepository(repository: Readonly<Pick<Repository, 'use
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ pullRequests: PullRequest[] }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ pullRequests: PullRequest[] }>> =
             await axios.get(GET_BY_REPOSITORY, {
                 params: {
                     json: JSON.stringify({repository, status, offset, limit}),
@@ -209,13 +194,11 @@ export async function getByRepository(repository: Readonly<Pick<Repository, 'use
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -224,7 +207,7 @@ export async function getPullRequestAmount(repository: Readonly<Pick<Repository,
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
             await axios.get(GET_PULL_REQUEST_AMOUNT, {
                 params: {
                     json: JSON.stringify({repository, status}),
@@ -236,13 +219,11 @@ export async function getPullRequestAmount(repository: Readonly<Pick<Repository,
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -251,7 +232,7 @@ export async function addComment(pullRequestComment: Readonly<Omit<PullRequestCo
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(ADD_COMMENT, pullRequestComment);
         if (isSuccessful)
         {
@@ -259,13 +240,11 @@ export async function addComment(pullRequestComment: Readonly<Omit<PullRequestCo
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -274,7 +253,7 @@ export async function updateComment(primaryKey: Readonly<Pick<PullRequestComment
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(UPDATE_COMMENT, {primaryKey, pullRequestComment});
         if (isSuccessful)
         {
@@ -282,13 +261,11 @@ export async function updateComment(primaryKey: Readonly<Pick<PullRequestComment
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -297,7 +274,7 @@ export async function getComments(repository: Readonly<Pick<Repository, 'usernam
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ comments: PullRequestComment[] }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ comments: PullRequestComment[] }>> =
             await axios.get(GET_COMMENTS, {
                 params: {
                     json: JSON.stringify({repository, pullRequest}),
@@ -309,13 +286,11 @@ export async function getComments(repository: Readonly<Pick<Repository, 'usernam
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -324,7 +299,7 @@ export async function getConflicts(pullRequest: Readonly<Pick<PullRequest, 'id'>
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ conflicts: Conflict[], }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ conflicts: Conflict[], }>> =
             await axios.get(GET_CONFLICTS, {
                 params: {
                     json: JSON.stringify(pullRequest),
@@ -336,13 +311,11 @@ export async function getConflicts(pullRequest: Readonly<Pick<PullRequest, 'id'>
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -351,7 +324,7 @@ export async function resolveConflicts(pullRequest: Readonly<Pick<PullRequest, '
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(RESOLVE_CONFLICTS, {pullRequest, conflicts});
         if (isSuccessful)
         {
@@ -359,22 +332,21 @@ export async function resolveConflicts(pullRequest: Readonly<Pick<PullRequest, '
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
 
 export async function getCommits(pullRequest: Readonly<Pick<PullRequest, 'id'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ commits: Commit[] } | null>
 {
+    nProgress.start();
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commits: Commit[] }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ commits: Commit[] }>> =
             await axios.get(GET_COMMITS, {
                 params: {json: JSON.stringify({pullRequest, offset, limit})},
             });
@@ -384,14 +356,16 @@ export async function getCommits(pullRequest: Readonly<Pick<PullRequest, 'id'>>,
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
+    }
+    finally
+    {
+        nProgress.done();
     }
 }
 
@@ -399,7 +373,7 @@ export async function getCommitAmount(pullRequest: Readonly<Pick<PullRequest, 'i
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ commitAmount: number }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ commitAmount: number }>> =
             await axios.get(GET_COMMIT_AMOUNT, {
                 params: {json: JSON.stringify(pullRequest)},
             });
@@ -409,22 +383,21 @@ export async function getCommitAmount(pullRequest: Readonly<Pick<PullRequest, 'i
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
 
 export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ fileDiffs: FileDiff[] } | null>
 {
+    nProgress.start();
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ fileDiffs: FileDiff[] }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ fileDiffs: FileDiff[] }>> =
             await axios.get(GET_FILE_DIFFS, {
                 params: {json: JSON.stringify({pullRequest, offset, limit})},
             });
@@ -434,14 +407,16 @@ export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
+    }
+    finally
+    {
+        nProgress.done();
     }
 }
 
@@ -449,7 +424,7 @@ export async function getFileDiffAmount(pullRequest: Readonly<Pick<PullRequest, 
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ amount: number }>> =
             await axios.get(GET_FILE_DIFF_AMOUNT, {
                 params: {json: JSON.stringify(pullRequest)},
             });
@@ -459,13 +434,11 @@ export async function getFileDiffAmount(pullRequest: Readonly<Pick<PullRequest, 
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }

@@ -1,7 +1,5 @@
 import {Account, Group, Repository, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
-import {notification} from 'antd';
-import {errorHandler} from '../Function';
 import {
     ACCOUNTS,
     ADD,
@@ -21,7 +19,7 @@ export async function add(group: Readonly<Omit<Group, 'id'>>): Promise<Readonly<
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Pick<Group, 'id'>>> = await axios.post(ADD,
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Pick<Group, 'id'>>> = await axios.post(ADD,
             {group});
         if (isSuccessful)
         {
@@ -29,13 +27,11 @@ export async function add(group: Readonly<Omit<Group, 'id'>>): Promise<Readonly<
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -44,7 +40,7 @@ export async function dismiss(group: Readonly<Pick<Group, 'id'>>): Promise<true 
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(DISMISS,
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(DISMISS,
             {group});
         if (isSuccessful)
         {
@@ -52,13 +48,11 @@ export async function dismiss(group: Readonly<Pick<Group, 'id'>>): Promise<true 
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -67,7 +61,7 @@ export async function info(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Group>> = await axios.get(INFO,
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Group>> = await axios.get(INFO,
             {
                 params: {
                     json: {group},
@@ -79,13 +73,11 @@ export async function info(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -94,7 +86,7 @@ export async function accounts(group: Readonly<Pick<Group, 'id'>>): Promise<Read
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Account>[]>> = await axios.get(ACCOUNTS,
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Account>[]>> = await axios.get(ACCOUNTS,
             {
                 params: {
                     json: {group},
@@ -106,13 +98,11 @@ export async function accounts(group: Readonly<Pick<Group, 'id'>>): Promise<Read
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -121,7 +111,7 @@ export async function addAccounts(group: Readonly<Pick<Group, 'id'>>, usernames:
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(ADD_ACCOUNTS,
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(ADD_ACCOUNTS,
             {group, usernames});
         if (isSuccessful)
         {
@@ -129,13 +119,11 @@ export async function addAccounts(group: Readonly<Pick<Group, 'id'>>, usernames:
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -144,7 +132,7 @@ export async function removeAccounts(group: Readonly<Pick<Group, 'id'>>, usernam
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(REMOVE_ACCOUNTS,
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(REMOVE_ACCOUNTS,
             {group, usernames});
         if (isSuccessful)
         {
@@ -152,13 +140,11 @@ export async function removeAccounts(group: Readonly<Pick<Group, 'id'>>, usernam
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -167,7 +153,7 @@ export async function admins(group: Readonly<Pick<Group, 'id'>>): Promise<Readon
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Account>[]>> = await axios.get(ADMINS,
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Account>[]>> = await axios.get(ADMINS,
             {
                 params: {
                     json: {group},
@@ -179,13 +165,11 @@ export async function admins(group: Readonly<Pick<Group, 'id'>>): Promise<Readon
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -194,7 +178,7 @@ export async function addAdmins(group: Readonly<Pick<Group, 'id'>>, usernames: R
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(ADD_ADMINS,
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(ADD_ADMINS,
             {group, usernames});
         if (isSuccessful)
         {
@@ -202,13 +186,11 @@ export async function addAdmins(group: Readonly<Pick<Group, 'id'>>, usernames: R
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -217,7 +199,7 @@ export async function removeAdmins(group: Readonly<Pick<Group, 'id'>>, usernames
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(REMOVE_ADMINS,
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(REMOVE_ADMINS,
             {group, usernames});
         if (isSuccessful)
         {
@@ -225,13 +207,11 @@ export async function removeAdmins(group: Readonly<Pick<Group, 'id'>>, usernames
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -240,7 +220,7 @@ export async function repositories(group: Readonly<Pick<Group, 'id'>>): Promise<
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<Readonly<Repository>[]>> = await axios.get(REPOSITORIES,
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Repository>[]>> = await axios.get(REPOSITORIES,
             {
                 params: {
                     json: {group},
@@ -252,13 +232,11 @@ export async function repositories(group: Readonly<Pick<Group, 'id'>>): Promise<
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -267,7 +245,7 @@ export async function removeRepositories(group: Readonly<Pick<Group, 'id'>>, rep
 {
     try
     {
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody<void>> = await axios.post(REMOVE_REPOSITORIES,
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(REMOVE_REPOSITORIES,
             {group, repositories});
         if (isSuccessful)
         {
@@ -275,13 +253,11 @@ export async function removeRepositories(group: Readonly<Pick<Group, 'id'>>, rep
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
@@ -290,7 +266,7 @@ export async function isAdmin(group: Readonly<Pick<Group, 'id'>>): Promise<Reado
 {
     try
     {
-        const {data: {isSuccessful, message, data}}: AxiosResponse<ResponseBody<{ isAdmin: boolean }>> = await axios.get(IS_ADMIN,
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isAdmin: boolean }>> = await axios.get(IS_ADMIN,
             {
                 params: {
                     json: {group},
@@ -302,13 +278,11 @@ export async function isAdmin(group: Readonly<Pick<Group, 'id'>>): Promise<Reado
         }
         else
         {
-            notification.warn({message});
             return null;
         }
     }
     catch (e)
     {
-        errorHandler(e);
         return null;
     }
 }
