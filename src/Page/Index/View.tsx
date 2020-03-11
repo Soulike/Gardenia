@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import RepositoryList from '../../Component/RepositoryList';
 import {Alert} from 'antd';
 import NewTabAnchor from '../../Component/NewTabAnchor';
-import aqua from '../../Static/minato-aqua.webp';
+import aqua from '../../Static/minato-aqua.jpg';
 
 interface IProps
 {
