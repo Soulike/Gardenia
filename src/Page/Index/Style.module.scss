@@ -10,8 +10,14 @@
             justify-content: space-between;
             align-items: center;
 
-            .meme {
+            .memeWrapper {
+                cursor: pointer;
                 height: 100px;
+
+                .meme {
+                    height: 100%;
+                    transition: 0.25s;
+                }
             }
         }
     }

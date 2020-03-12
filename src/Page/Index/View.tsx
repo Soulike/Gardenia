@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {HTMLAttributes} from 'react';
 import Style from './Style.module.scss';
 import {Repository} from '../../Class';
 import InfiniteScroll from 'react-infinite-scroller';
 import RepositoryList from '../../Component/RepositoryList';
 import {Alert} from 'antd';
 import NewTabAnchor from '../../Component/NewTabAnchor';
-import aqua from '../../Static/minato-aqua.jpg';
+import yoyuuyoyuu from '../../Static/Index/余裕余裕.jpg';
 
 interface IProps
 {
@@ -13,11 +13,13 @@ interface IProps
     loadMore: () => any,
     loading: boolean,
     hasMore: boolean,
+    onMemeDoubleClick: HTMLAttributes<HTMLDivElement>['onDoubleClick'];
+    showMeme: boolean;
 }
 
 function IndexView(props: Readonly<IProps>)
 {
-    const {repositoryList, loadMore, loading, hasMore} = props;
+    const {repositoryList, loadMore, loading, hasMore, onMemeDoubleClick, showMeme} = props;
     return (
         <div className={Style.Index}>
             <div className={Style.alertWrapper}>
@@ -31,9 +33,13 @@ function IndexView(props: Readonly<IProps>)
                                </div>
                                <div>请各位多担待，用正常的姿势使用本平台，不胜感谢😀。</div>
                            </div>
-                           <div className={Style.memeWrapper}>
-                               <img src={aqua} alt={'meme'} className={Style.meme} />
-                           </div>
+                           {
+                               showMeme ? <div className={Style.memeWrapper} onDoubleClick={onMemeDoubleClick}>
+                                   <img src={yoyuuyoyuu}
+                                        alt={'meme'}
+                                        className={Style.meme} />
+                               </div> : <div className={Style.memeWrapper} />
+                           }
                        </div>} banner={true} />
                 <Alert type={'info'} message={'Git 自动保存密码的方法'} description={
                     <div className={Style.text}>
