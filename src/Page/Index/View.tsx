@@ -26,11 +26,12 @@ function IndexView(props: Readonly<IProps>)
                 <Alert type={'warning'} message={'项目仍在开发中'} closable={true}
                        description={<div className={Style.description}>
                            <div className={Style.text}>
-                               <div>本项目仅由<strong> 1 个</strong>练习时长两年半干啥啥不行吃饭第一名的前端开发，且后端运行在每月仅需 9.5 人民币的辣鸡服务器上。</div>
+                               <div>本项目由练习时长两年半干啥啥不行吃饭第一名的前端开发，且后端运行在每月仅需 9.5 元人民币的辣鸡服务器上。</div>
                                <div><strong>请大家备份好自己的代码</strong>，出现 BUG
                                                                 请<NewTabAnchor href={'https://github.com/Soulike/Gardenia/issues'}>提
                                                                                                                                    Issue</NewTabAnchor>。
                                </div>
+                               <div>由于仍处于开发状态，因此可能会出现不兼容更改。<strong>出现问题请先尝试清除缓存刷新页面</strong>。</div>
                                <div>请各位多担待，用正常的姿势使用本平台，不胜感谢<span role={'img'}
                                                                  aria-label={'emoji'}
                                                                  aria-labelledby={'emoji'}>😀</span>。
