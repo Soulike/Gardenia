@@ -2,12 +2,13 @@ import React, {HTMLAttributes, PureComponent} from 'react';
 import View from './View';
 import {CONFIG as ROUTER_CONFIG} from '../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Account} from '../../Api';
+import {Account as AccountApi} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
-import {Account as AccountClass} from '../../Class';
+import {Account} from '../../Class';
 import CONFIG from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
+import {ButtonProps} from 'antd/lib/button';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 const {Account: AccountValidator, Profile: ProfileValidator} = ValidatorFunction;
@@ -20,6 +21,9 @@ interface IState
     password: string,
     repeatPassword: string,
     email: string,
+    verificationCode: string,
+    getVerificationCodeButtonText: string,
+    disableGetVerificationCodeButton: boolean
 }
 
 class Register extends PureComponent<Readonly<IProps>, IState>
@@ -32,6 +36,9 @@ class Register extends PureComponent<Readonly<IProps>, IState>
             password: '',
             repeatPassword: '',
             email: '',
+            verificationCode: '',
+            getVerificationCodeButtonText: '获取验证码',
+            disableGetVerificationCodeButton: false,
         };
     }
 
@@ -65,6 +72,11 @@ class Register extends PureComponent<Readonly<IProps>, IState>
         this.setState({email: e.target.value});
     };
 
+    onVerificationCodeInputChange: InputProps['onChange'] = e =>
+    {
+        this.setState({verificationCode: e.target.value});
+    };
+
     onFormSubmit: HTMLAttributes<HTMLFormElement>['onSubmit'] = async e =>
     {
         e.preventDefault();
@@ -74,10 +86,53 @@ class Register extends PureComponent<Readonly<IProps>, IState>
         }
     };
 
+    onGetVerificationCodeButtonClick: ButtonProps['onClick'] = async () =>
+    {
+        const DISABLE_SECONDS = 30;
+        const {getVerificationCodeButtonText: originalGetVerificationCodeButtonText, email} = this.state;
+        if (!ProfileValidator.email(email))
+        {
+            notification.warn({message: ERROR_MESSAGE.Profile.EMAIL});
+        }
+        else
+        {
+            this.setState({disableGetVerificationCodeButton: true});
+            let passedSeconds = 0;
+            const timer = setInterval(() =>
+            {
+                passedSeconds++;
+                this.setState({
+                    getVerificationCodeButtonText: `${DISABLE_SECONDS - passedSeconds} 秒后再获取`,
+                });
+            }, 1000);
+            const result = await AccountApi.sendVerificationCodeToEmail({email});
+            if (result !== null)
+            {
+                setTimeout(() =>
+                {
+                    clearInterval(timer);
+                    this.setState({
+                        disableGetVerificationCodeButton: false,
+                        getVerificationCodeButtonText: originalGetVerificationCodeButtonText,
+                    });
+                }, DISABLE_SECONDS * 1000);
+                notification.success({message: '获取验证码成功', description: `请到 ${email} 查看`});
+            }
+            else
+            {
+                clearInterval(timer);
+                this.setState({
+                    disableGetVerificationCodeButton: false,
+                    getVerificationCodeButtonText: originalGetVerificationCodeButtonText,
+                });
+            }
+        }
+
+    };
+
     validateFormInput = (): boolean =>
     {
-        // 讲道理这里应该有邮箱验证码的
-        const {username, password, repeatPassword, email} = this.state;
+        const {username, password, repeatPassword, email, verificationCode} = this.state;
         if (!AccountValidator.username(username))
         {
             notification.warn({
@@ -104,14 +159,23 @@ class Register extends PureComponent<Readonly<IProps>, IState>
             notification.warn({message: ERROR_MESSAGE.Profile.EMAIL});
             return false;
         }
+        if (!AccountValidator.verificationCode(verificationCode))
+        {
+            notification.warn({message: ERROR_MESSAGE.Account.VERIFICATION_CODE});
+            return false;
+        }
         return true;
     };
 
     submitForm = async () =>
     {
-        const {username, password, email} = this.state;
-        const hash = AccountClass.calculateHash(username, password);
-        const isSuccessful = await Account.register({username, hash}, {nickname: username, email, avatar: ''});
+        const {username, password, email, verificationCode} = this.state;
+        const hash = Account.calculateHash(username, password);
+        const isSuccessful = await AccountApi.register({username, hash}, {
+            nickname: username,
+            email,
+            avatar: '',
+        }, verificationCode);
         if (isSuccessful)
         {
             this.onRegisterSuccess();
@@ -126,17 +190,22 @@ class Register extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {username, password, repeatPassword, email} = this.state;
+        const {disableGetVerificationCodeButton, username, password, repeatPassword, email, verificationCode, getVerificationCodeButtonText} = this.state;
         return (
             <View username={username}
                   password={password}
                   email={email}
+                  disableGetVerificationCodeButton={disableGetVerificationCodeButton}
+                  verificationCode={verificationCode}
+                  onVerificationCodeInputChange={this.onVerificationCodeInputChange}
                   onFormSubmit={this.onFormSubmit}
                   onPasswordInputChange={this.onPasswordInputChange}
                   onUsernameInputChange={this.onUsernameInputChange}
                   onEmailInputChange={this.onEmailInputChange}
                   onRepeatPasswordInputChange={this.onRepeatPasswordInputChange}
-                  repeatPassword={repeatPassword} />
+                  repeatPassword={repeatPassword}
+                  onGetVerificationCodeButtonClick={this.onGetVerificationCodeButtonClick}
+                  getVerificationCodeButtonText={getVerificationCodeButtonText} />
         );
     }
 }

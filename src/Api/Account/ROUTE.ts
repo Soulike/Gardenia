@@ -7,6 +7,8 @@ function accountPrefix(url: string): string
 
 export const LOGIN = accountPrefix('/login');
 export const REGISTER = accountPrefix('/register');
+export const SEND_VERIFICATION_CODE_BY_USERNAME = accountPrefix('/sendVerificationCodeByUsername');
+export const SEND_VERIFICATION_CODE_TO_EMAIL = accountPrefix('/sendVerificationCodeToEmail');
 export const CHECK_SESSION = accountPrefix('/checkSession');
 export const CHECK_PASSWORD = accountPrefix('/checkPassword');
 export const LOGOUT = accountPrefix('/logout');

@@ -1,6 +1,16 @@
 import axios, {AxiosResponse} from 'axios';
 import {Account, Group, Profile, ResponseBody} from '../../Class';
-import {CHECK_PASSWORD, CHECK_SESSION, GET_ADMINISTRATING_GROUPS, GET_GROUPS, LOGIN, LOGOUT, REGISTER} from './ROUTE';
+import {
+    CHECK_PASSWORD,
+    CHECK_SESSION,
+    GET_ADMINISTRATING_GROUPS,
+    GET_GROUPS,
+    LOGIN,
+    LOGOUT,
+    REGISTER,
+    SEND_VERIFICATION_CODE_BY_USERNAME,
+    SEND_VERIFICATION_CODE_TO_EMAIL,
+} from './ROUTE';
 
 export async function login(account: Readonly<Account>): Promise<true | null>
 {
@@ -22,13 +32,53 @@ export async function login(account: Readonly<Account>): Promise<true | null>
     }
 }
 
-export async function register(account: Readonly<Account>, profile: Readonly<Omit<Profile, 'username'>>): Promise<true | null>
+export async function register(account: Readonly<Account>, profile: Readonly<Omit<Profile, 'username'>>, verificationCode: string): Promise<true | null>
 {
     try
     {
         const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(REGISTER, {
-            account, profile,
+            account, profile, verificationCode,
         });
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function sendVerificationCodeByUsername(profile: Readonly<Pick<Profile, 'username'>>): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(SEND_VERIFICATION_CODE_BY_USERNAME, profile);
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function sendVerificationCodeToEmail(profile: Readonly<Pick<Profile, 'email'>>): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(SEND_VERIFICATION_CODE_TO_EMAIL, profile);
         if (isSuccessful)
         {
             return true;

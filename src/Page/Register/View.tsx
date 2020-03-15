@@ -6,7 +6,8 @@ import {InputProps} from 'antd/lib/input';
 import {HINT} from '../../Validator';
 import InputTip from '../../Component/InputTip';
 import InputLabel from '../../Component/InputLabel';
-import {LockOutlined, MailOutlined, UserOutlined} from '@ant-design/icons';
+import {BarcodeOutlined, LockOutlined, MailOutlined, UserOutlined} from '@ant-design/icons';
+import {ButtonProps} from 'antd/lib/button';
 
 interface IProps
 {
@@ -14,11 +15,16 @@ interface IProps
     password: string,
     repeatPassword: string,
     email: string,
+    verificationCode: string,
     onUsernameInputChange: InputProps['onChange'],
     onPasswordInputChange: InputProps['onChange'],
     onRepeatPasswordInputChange: InputProps['onChange'],
     onEmailInputChange: InputProps['onChange'],
+    onVerificationCodeInputChange: InputProps['onChange'],
     onFormSubmit: HTMLAttributes<HTMLFormElement>['onSubmit'],
+    onGetVerificationCodeButtonClick: ButtonProps['onClick'],
+    getVerificationCodeButtonText: string,
+    disableGetVerificationCodeButton: boolean
 }
 
 function RegisterView(props: Readonly<IProps>)
@@ -33,6 +39,11 @@ function RegisterView(props: Readonly<IProps>)
         onRepeatPasswordInputChange,
         onEmailInputChange,
         onFormSubmit,
+        onVerificationCodeInputChange,
+        verificationCode,
+        onGetVerificationCodeButtonClick,
+        getVerificationCodeButtonText,
+        disableGetVerificationCodeButton,
     } = props;
     return (
         <main className={Style.Register}>
@@ -77,7 +88,25 @@ function RegisterView(props: Readonly<IProps>)
                            value={email}
                            prefix={<MailOutlined />} />
                     <InputTip>
-                        该邮箱将用于统计您的提交次数及接收通知，请确保该邮箱可用。
+                        该邮箱将用于统计您的提交次数、接收通知及修改密码，请确保该邮箱可用。
+                    </InputTip>
+                </div>
+                <div className={Style.inputWrapper}>
+                    <InputLabel required={true}>邮箱验证码</InputLabel>
+                    <Input type={'text'}
+                           size={'large'}
+                           onChange={onVerificationCodeInputChange}
+                           value={verificationCode}
+                           prefix={<BarcodeOutlined />} maxLength={6}
+                           addonAfter={
+                               <Button disabled={disableGetVerificationCodeButton}
+                                       type={'link'}
+                                       onClick={onGetVerificationCodeButtonClick}>
+                                   {getVerificationCodeButtonText}
+                               </Button>
+                           } />
+                    <InputTip>
+                        如未收到验证码邮件，请查看其是否被误分类为垃圾邮件。
                     </InputTip>
                 </div>
                 <Button htmlType={'submit'}
