@@ -4,8 +4,11 @@ interface IProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'ta
 
 function NewTabAnchor(props: IProps)
 {
+    const {children, ...rest} = props;
     return (
-        <a {...props} target={'_blank'} rel={'noopener norefferrer'} />
+        <a {...rest} target={'_blank'} rel={'noopener norefferrer'}>
+            {children}
+        </a>
     );
 }
 

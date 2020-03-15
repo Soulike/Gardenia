@@ -31,7 +31,10 @@ function IndexView(props: Readonly<IProps>)
                                                                 请<NewTabAnchor href={'https://github.com/Soulike/Gardenia/issues'}>提
                                                                                                                                    Issue</NewTabAnchor>。
                                </div>
-                               <div>请各位多担待，用正常的姿势使用本平台，不胜感谢😀。</div>
+                               <div>请各位多担待，用正常的姿势使用本平台，不胜感谢<span role={'img'}
+                                                                 aria-label={'emoji'}
+                                                                 aria-labelledby={'emoji'}>😀</span>。
+                               </div>
                            </div>
                            {
                                showMeme ? <div className={Style.memeWrapper} onDoubleClick={onMemeDoubleClick}>
