@@ -31,7 +31,7 @@ function BranchItem(props: IProps)
                 </Link>
                 <div className={Style.updateInfo}>
                     在 <Tooltip title={Date.parseTimestampToDate(timestamp)}>
-                    {Date.parseTimestampToDifference(timestamp)}
+                    <>{Date.parseTimestampToDifference(timestamp)}</>
                 </Tooltip> 由 <Link to={RouterFunction.generatePersonalCenterRoute({username: committerName})}>
                     {committerName}
                 </Link> 更新
