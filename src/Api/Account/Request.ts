@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import {Account, Group, Profile, ResponseBody} from '../../Class';
 import {
+    CHANGE_PASSWORD,
     CHECK_PASSWORD,
     CHECK_SESSION,
     GET_ADMINISTRATING_GROUPS,
@@ -79,6 +80,28 @@ export async function sendVerificationCodeToEmail(profile: Readonly<Pick<Profile
     try
     {
         const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(SEND_VERIFICATION_CODE_TO_EMAIL, profile);
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function changePassword(account: Readonly<Account>, verificationCode: string): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(CHANGE_PASSWORD, {
+            account, verificationCode,
+        });
         if (isSuccessful)
         {
             return true;
