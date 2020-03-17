@@ -81,7 +81,6 @@ class ChangePassword extends PureComponent<IProps, IState>
         const DISABLE_SECONDS = 30;
         let passedSeconds = 0;
         const {getVerificationCodeButtonText: originalGetVerificationCodeButtonText} = this.state;
-        this.setState({getVerificationCodeButtonDisabled: true});
         const {username} = this.state;
         if (!ValidatorFunction.Account.username(username))
         {
@@ -89,6 +88,7 @@ class ChangePassword extends PureComponent<IProps, IState>
         }
         else
         {
+            this.setState({getVerificationCodeButtonDisabled: true});
             const timer = setInterval(() =>
             {
                 passedSeconds++;
