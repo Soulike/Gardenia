@@ -18,11 +18,12 @@ interface IProps
     onUsernameInputChange: InputProps['onChange'],
     onPasswordInputChange: InputProps['onChange'],
     onLoginFormSubmit: HTMLAttributes<HTMLFormElement>['onSubmit'],
+    loading: boolean,
 }
 
 function LoginView(props: Readonly<IProps>)
 {
-    const {username, password, onUsernameInputChange, onPasswordInputChange, onLoginFormSubmit} = props;
+    const {username, password, onUsernameInputChange, onPasswordInputChange, onLoginFormSubmit, loading} = props;
     return (
         <main className={Style.Login}>
             <form action={'#'} className={Style.form} onSubmit={onLoginFormSubmit}>
@@ -38,6 +39,7 @@ function LoginView(props: Readonly<IProps>)
                            onChange={onUsernameInputChange}
                            autoFocus={true}
                            value={username}
+                           disabled={loading}
                            prefix={<UserOutlined />} />
                 </div>
                 <div className={Style.inputWrapper}>
@@ -46,6 +48,7 @@ function LoginView(props: Readonly<IProps>)
                            size={'large'}
                            onChange={onPasswordInputChange}
                            value={password}
+                           disabled={loading}
                            prefix={<LockOutlined />} />
                     <InputTip>
                         忘记密码？
@@ -55,7 +58,7 @@ function LoginView(props: Readonly<IProps>)
                 <Button htmlType={'submit'}
                         className={Style.button}
                         size={'large'}
-                        type={'primary'}
+                        type={'primary'} disabled={loading} loading={loading}
                         block={true}>登录</Button>
             </form>
         </main>

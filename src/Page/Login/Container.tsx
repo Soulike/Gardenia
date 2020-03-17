@@ -28,6 +28,7 @@ interface IState
 {
     username: string,
     password: string,
+    loading: boolean,
 }
 
 class Login extends PureComponent<Readonly<IProps>, IState>
@@ -38,6 +39,7 @@ class Login extends PureComponent<Readonly<IProps>, IState>
         this.state = {
             username: '',
             password: '',
+            loading: false,
         };
     }
 
@@ -90,11 +92,13 @@ class Login extends PureComponent<Readonly<IProps>, IState>
     {
         const {username, password} = this.state;
         const hash = AccountClass.calculateHash(username, password);
+        this.setState({loading: true});
         const isSuccessful = await AccountApi.login(new AccountClass(username, hash));
         if (isSuccessful)
         {
             await this.onLoginSuccess();
         }
+        this.setState({loading: false});
     };
 
     onLoginSuccess = async () =>
@@ -125,9 +129,9 @@ class Login extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {username, password} = this.state;
+        const {username, password, loading} = this.state;
         return (
-            <LoginView username={username} password={password}
+            <LoginView username={username} password={password} loading={loading}
                        onLoginFormSubmit={this.onLoginFormSubmit}
                        onPasswordInputChange={this.onPasswordInputChange}
                        onUsernameInputChange={this.onUsernameInputChange} />

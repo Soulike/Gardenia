@@ -23,7 +23,8 @@ interface IState
     email: string,
     verificationCode: string,
     getVerificationCodeButtonText: string,
-    disableGetVerificationCodeButton: boolean
+    disableGetVerificationCodeButton: boolean,
+    loading: boolean,
 }
 
 class Register extends PureComponent<Readonly<IProps>, IState>
@@ -39,6 +40,7 @@ class Register extends PureComponent<Readonly<IProps>, IState>
             verificationCode: '',
             getVerificationCodeButtonText: '获取验证码',
             disableGetVerificationCodeButton: false,
+            loading: false,
         };
     }
 
@@ -172,6 +174,7 @@ class Register extends PureComponent<Readonly<IProps>, IState>
     {
         const {username, password, email, verificationCode} = this.state;
         const hash = Account.calculateHash(username, password);
+        this.setState({loading: true});
         const isSuccessful = await AccountApi.register({username, hash}, {
             nickname: username,
             email,
@@ -181,6 +184,7 @@ class Register extends PureComponent<Readonly<IProps>, IState>
         {
             this.onRegisterSuccess();
         }
+        this.setState({loading: false});
     };
 
     onRegisterSuccess = () =>
@@ -191,9 +195,9 @@ class Register extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {disableGetVerificationCodeButton, username, password, repeatPassword, email, verificationCode, getVerificationCodeButtonText} = this.state;
+        const {loading, disableGetVerificationCodeButton, username, password, repeatPassword, email, verificationCode, getVerificationCodeButtonText} = this.state;
         return (
-            <View username={username}
+            <View loading={loading} username={username}
                   password={password}
                   email={email}
                   disableGetVerificationCodeButton={disableGetVerificationCodeButton}

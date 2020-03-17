@@ -24,7 +24,8 @@ interface IProps
     onFormSubmit: HTMLAttributes<HTMLFormElement>['onSubmit'],
     onGetVerificationCodeButtonClick: ButtonProps['onClick'],
     getVerificationCodeButtonText: string,
-    disableGetVerificationCodeButton: boolean
+    disableGetVerificationCodeButton: boolean,
+    loading: boolean,
 }
 
 function RegisterView(props: Readonly<IProps>)
@@ -44,6 +45,7 @@ function RegisterView(props: Readonly<IProps>)
         onGetVerificationCodeButtonClick,
         getVerificationCodeButtonText,
         disableGetVerificationCodeButton,
+        loading,
     } = props;
     return (
         <main className={Style.Register}>
@@ -56,7 +58,7 @@ function RegisterView(props: Readonly<IProps>)
                            onChange={onUsernameInputChange}
                            autoFocus={true}
                            value={username}
-                           prefix={<UserOutlined />} />
+                           prefix={<UserOutlined />} disabled={loading} />
                     <InputTip>
                         用户名要求 {HINT.Account.USERNAME}。
                     </InputTip>
@@ -67,7 +69,7 @@ function RegisterView(props: Readonly<IProps>)
                            size={'large'}
                            onChange={onPasswordInputChange}
                            value={password}
-                           prefix={<LockOutlined />} />
+                           prefix={<LockOutlined />} disabled={loading} />
                     <InputTip>
                         为了您的账户安全，密码要求 {HINT.Account.PASSWORD}。
                     </InputTip>
@@ -78,7 +80,7 @@ function RegisterView(props: Readonly<IProps>)
                            size={'large'}
                            onChange={onRepeatPasswordInputChange}
                            value={repeatPassword}
-                           prefix={<LockOutlined />} />
+                           prefix={<LockOutlined />} disabled={loading} />
                 </div>
                 <div className={Style.inputWrapper}>
                     <InputLabel required={true}>E-Mail</InputLabel>
@@ -86,7 +88,7 @@ function RegisterView(props: Readonly<IProps>)
                            size={'large'}
                            onChange={onEmailInputChange}
                            value={email}
-                           prefix={<MailOutlined />} />
+                           prefix={<MailOutlined />} disabled={loading} />
                     <InputTip>
                         该邮箱将用于统计您的提交次数、接收通知及修改密码，请确保该邮箱可用。
                     </InputTip>
@@ -97,9 +99,9 @@ function RegisterView(props: Readonly<IProps>)
                            size={'large'}
                            onChange={onVerificationCodeInputChange}
                            value={verificationCode}
-                           prefix={<BarcodeOutlined />} maxLength={6}
+                           prefix={<BarcodeOutlined />} disabled={loading} maxLength={6}
                            addonAfter={
-                               <Button disabled={disableGetVerificationCodeButton}
+                               <Button disabled={disableGetVerificationCodeButton || loading}
                                        type={'link'}
                                        onClick={onGetVerificationCodeButtonClick}>
                                    {getVerificationCodeButtonText}
@@ -112,7 +114,7 @@ function RegisterView(props: Readonly<IProps>)
                 <Button htmlType={'submit'}
                         className={Style.button}
                         size={'large'}
-                        type={'primary'}
+                        type={'primary'} disabled={loading} loading={loading}
                         block={true}>注册</Button>
             </form>
         </main>
