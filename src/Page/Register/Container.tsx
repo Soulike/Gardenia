@@ -105,22 +105,23 @@ class Register extends PureComponent<Readonly<IProps>, IState>
                     getVerificationCodeButtonText: `${DISABLE_SECONDS - passedSeconds} 秒后再获取`,
                 });
             }, 1000);
+            const timeout = setTimeout(() =>
+            {
+                clearInterval(timer);
+                this.setState({
+                    disableGetVerificationCodeButton: false,
+                    getVerificationCodeButtonText: originalGetVerificationCodeButtonText,
+                });
+            }, DISABLE_SECONDS * 1000);
             const result = await AccountApi.sendVerificationCodeToEmail({email});
             if (result !== null)
             {
-                setTimeout(() =>
-                {
-                    clearInterval(timer);
-                    this.setState({
-                        disableGetVerificationCodeButton: false,
-                        getVerificationCodeButtonText: originalGetVerificationCodeButtonText,
-                    });
-                }, DISABLE_SECONDS * 1000);
                 notification.success({message: '获取验证码成功', description: `请到 ${email} 查看`});
             }
             else
             {
                 clearInterval(timer);
+                clearTimeout(timeout);
                 this.setState({
                     disableGetVerificationCodeButton: false,
                     getVerificationCodeButtonText: originalGetVerificationCodeButtonText,
