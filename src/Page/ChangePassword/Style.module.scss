@@ -1,0 +1,39 @@
+.ChangePassword {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5vh 0;
+
+    .loginTip {
+        text-align: center;
+    }
+
+    .form {
+        width: 25vw;
+
+        @media all and (max-width: 1000px) {
+            width: 75vw;
+        }
+
+        @media all and (max-width: 500px) {
+            width: 90vw;
+        }
+
+        .inputWrapper {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .logo {
+            display: block;
+            height: 175px;
+            margin-bottom: 25px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .button {
+            margin-top: 10px;
+        }
+    }
+}

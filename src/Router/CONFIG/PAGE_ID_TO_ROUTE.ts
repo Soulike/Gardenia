@@ -5,6 +5,7 @@ export const PAGE_ID_TO_ROUTE = Object.freeze({
     [PAGE_ID.INDEX]: '/',
     [PAGE_ID.LOGIN]: '/login',
     [PAGE_ID.REGISTER]: '/register',
+    [PAGE_ID.CHANGE_PASSWORD]: '/changePassword',
     [PAGE_ID.CREATE_REPOSITORY]: '/createRepository',
     [PAGE_ID.CREATE_GROUP]: '/createGroup',
     [PAGE_ID.ADD_COLLABORATION]: '/addCollaboration',

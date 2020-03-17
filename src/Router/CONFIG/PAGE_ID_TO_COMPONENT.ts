@@ -6,6 +6,7 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
     [PAGE_ID.INDEX]: React.lazy(() => import('../../Page/Index')),
     [PAGE_ID.LOGIN]: React.lazy(() => import('../../Page/Login')),
     [PAGE_ID.REGISTER]: React.lazy(() => import('../../Page/Register')),
+    [PAGE_ID.CHANGE_PASSWORD]: React.lazy(() => import('../../Page/ChangePassword')),
     [PAGE_ID.CREATE_REPOSITORY]: React.lazy(() => import('../../Page/CreateRepository')),
     [PAGE_ID.CREATE_GROUP]: React.lazy(() => import('../../Page/CreateGroup')),
     [PAGE_ID.ADD_COLLABORATION]: React.lazy(() => import('../../Page/AddCollaboration')),
