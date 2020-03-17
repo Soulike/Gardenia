@@ -112,7 +112,8 @@ class Login extends PureComponent<Readonly<IProps>, IState>
         if (typeof prev === 'string'
             && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]
             && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.REGISTER]
-            && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND])
+            && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]
+            && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.CHANGE_PASSWORD])
         {
             this.props.history.push(prev);
         }

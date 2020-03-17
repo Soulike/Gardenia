@@ -2,10 +2,14 @@ import React from 'react';
 import Style from './Style.module.scss';
 import SettingsTitle from '../../../../Component/SettingsTitle';
 import InputLabel from '../../../../Component/InputLabel';
-import {Button, Input, Tooltip} from 'antd';
+import {Alert, Button, Input, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {HINT} from '../../../../Validator';
+import NewTabLink from '../../../../Component/NewTabLink';
+import {CONFIG} from '../../../../Router';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps
 {
@@ -61,6 +65,15 @@ function Profile(props: IProps)
                                 disabled={loading}>保存</Button>
                     </div>
                 </div>
+            </div>
+            <div className={Style.item}>
+                <InputLabel>密码</InputLabel>
+                <Alert type={'info'} showIcon={true} message={
+                    <div>
+                        前往
+                        <NewTabLink to={PAGE_ID_TO_ROUTE[PAGE_ID.CHANGE_PASSWORD]}>修改密码页面</NewTabLink>
+                        修改密码
+                    </div>} />
             </div>
         </div>
     );

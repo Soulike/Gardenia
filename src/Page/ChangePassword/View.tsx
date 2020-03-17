@@ -51,7 +51,7 @@ function ChangePassword(props: IProps)
                     <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]}>点此登录</Link>
                 </div>
                 <div className={Style.inputWrapper}>
-                    <InputLabel>用户名</InputLabel>
+                    <InputLabel required={true}>用户名</InputLabel>
                     <Input type={'text'}
                            size={'large'}
                            autoFocus={true}
@@ -60,7 +60,7 @@ function ChangePassword(props: IProps)
                            prefix={<UserOutlined />} disabled={loading} />
                 </div>
                 <div className={Style.inputWrapper}>
-                    <InputLabel>新密码</InputLabel>
+                    <InputLabel required={true}>新密码</InputLabel>
                     <Input type={'password'}
                            size={'large'}
                            value={password}
@@ -69,7 +69,7 @@ function ChangePassword(props: IProps)
                     <InputTip>为了您的账户安全，密码要求 {HINT.Account.PASSWORD}</InputTip>
                 </div>
                 <div className={Style.inputWrapper}>
-                    <InputLabel>重复新密码</InputLabel>
+                    <InputLabel required={true}>重复新密码</InputLabel>
                     <Input type={'password'}
                            size={'large'}
                            value={repeatPassword}
@@ -77,7 +77,7 @@ function ChangePassword(props: IProps)
                            prefix={<LockOutlined />} disabled={loading} />
                 </div>
                 <div className={Style.inputWrapper}>
-                    <InputLabel>邮箱验证码</InputLabel>
+                    <InputLabel required={true}>邮箱验证码</InputLabel>
                     <Input type={'text'}
                            size={'large'}
                            value={verificationCode}

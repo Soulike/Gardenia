@@ -7,6 +7,7 @@ import InputLabel from '../../Component/InputLabel/View';
 import {Link} from 'react-router-dom';
 import {CONFIG} from '../../Router';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import InputTip from '../../Component/InputTip';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
@@ -46,6 +47,10 @@ function LoginView(props: Readonly<IProps>)
                            onChange={onPasswordInputChange}
                            value={password}
                            prefix={<LockOutlined />} />
+                    <InputTip>
+                        忘记密码？
+                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CHANGE_PASSWORD]}>点此修改密码</Link>
+                    </InputTip>
                 </div>
                 <Button htmlType={'submit'}
                         className={Style.button}
