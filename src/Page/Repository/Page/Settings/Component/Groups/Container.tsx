@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import View from './View';
 import {Group} from '../../../../../../Class';
 import {Interface as RouterInterface} from '../../../../../../Router';
-import {RepositoryInfo as RepositoryInfoApi} from '../../../../../../Api';
+import {Group as GroupApi} from '../../../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import eventEmitter from './EventEmitter';
 import {GROUP_LIST_UPDATED} from './EVENT';
@@ -41,7 +41,7 @@ class Groups extends PureComponent<Readonly<IProps>, IState>
     {
         const {match: {params: {username, repository: name}}} = this.props;
         this.setState({loading: true});
-        const groups = await RepositoryInfoApi.groups({username, name});
+        const groups = await GroupApi.getByRepository({username, name});
         if (groups !== null)
         {
             this.setState({groups: [...groups]});

@@ -5,8 +5,12 @@ import {
     ADD,
     ADD_ACCOUNTS,
     ADD_ADMINS,
+    ADD_REPOSITORY,
     ADMINS,
     DISMISS,
+    GET_ADMINISTRATING_BY_ACCOUNT,
+    GET_BY_ACCOUNT,
+    GET_BY_REPOSITORY,
     INFO,
     IS_ADMIN,
     REMOVE_ACCOUNTS,
@@ -149,6 +153,55 @@ export async function removeAccounts(group: Readonly<Pick<Group, 'id'>>, usernam
     }
 }
 
+export async function getByAccount(account: Pick<Account, 'username'>): Promise<Readonly<Readonly<Group>[]> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_BY_ACCOUNT, {
+            params: {
+                json: JSON.stringify(account),
+            },
+        });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function getAdministratingByAccount(account: Pick<Account, 'username'>): Promise<Readonly<Readonly<Group>[]> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_ADMINISTRATING_BY_ACCOUNT,
+            {
+                params: {
+                    json: JSON.stringify(account),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
 export async function admins(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly<Readonly<Account>[]> | null>
 {
     try
@@ -216,6 +269,30 @@ export async function removeAdmins(group: Readonly<Pick<Group, 'id'>>, usernames
     }
 }
 
+export async function getByRepository(repository: Readonly<Pick<Repository, 'username' | 'name'>>): Promise<Readonly<Group[]> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Group[]>> = await axios.get(GET_BY_REPOSITORY, {
+            params: {
+                json: {repository},
+            },
+        });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
 export async function repositories(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly<Readonly<Repository>[]> | null>
 {
     try
@@ -229,6 +306,27 @@ export async function repositories(group: Readonly<Pick<Group, 'id'>>): Promise<
         if (isSuccessful)
         {
             return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function addRepository(repository: Readonly<Pick<Repository, 'username' | 'name'>>, group: Readonly<Pick<Group, 'id'>>): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
+            await axios.post(ADD_REPOSITORY, {repository, group});
+        if (isSuccessful)
+        {
+            return true;
         }
         else
         {
