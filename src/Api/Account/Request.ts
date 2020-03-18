@@ -1,11 +1,9 @@
 import axios, {AxiosResponse} from 'axios';
-import {Account, Group, Profile, ResponseBody} from '../../Class';
+import {Account, Profile, ResponseBody} from '../../Class';
 import {
     CHANGE_PASSWORD,
     CHECK_PASSWORD,
     CHECK_SESSION,
-    GET_ADMINISTRATING_GROUPS,
-    GET_GROUPS,
     LOGIN,
     LOGOUT,
     REGISTER,
@@ -168,55 +166,6 @@ export async function logout(): Promise<true | null>
     {
         const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(LOGOUT);
         return isSuccessful ? true : null;
-    }
-    catch (e)
-    {
-        return null;
-    }
-}
-
-export async function getGroups(account: Pick<Account, 'username'>): Promise<Readonly<Readonly<Group>[]> | null>
-{
-    try
-    {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_GROUPS, {
-            params: {
-                json: JSON.stringify(account),
-            },
-        });
-        if (isSuccessful)
-        {
-            return data!;
-        }
-        else
-        {
-            return null;
-        }
-    }
-    catch (e)
-    {
-        return null;
-    }
-}
-
-export async function getAdministratingGroups(account: Pick<Account, 'username'>): Promise<Readonly<Readonly<Group>[]> | null>
-{
-    try
-    {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Group>[]>> = await axios.get(GET_ADMINISTRATING_GROUPS,
-            {
-                params: {
-                    json: JSON.stringify(account),
-                },
-            });
-        if (isSuccessful)
-        {
-            return data!;
-        }
-        else
-        {
-            return null;
-        }
     }
     catch (e)
     {

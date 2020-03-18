@@ -1,16 +1,6 @@
-import {
-    Account,
-    Branch,
-    Commit,
-    FileDiff,
-    Group,
-    Repository as RepositoryClass,
-    Repository,
-    ResponseBody,
-} from '../../Class';
+import {Account, Branch, Commit, FileDiff, Repository as RepositoryClass, Repository, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
 import {
-    ADD_TO_GROUP,
     BRANCH_NAMES,
     BRANCHES,
     COMMIT,
@@ -35,7 +25,6 @@ import {
     FORK_FILE_DIFF_AMOUNT,
     FORK_FROM,
     FORK_REPOSITORIES,
-    GROUPS,
     LAST_COMMIT,
     RAW_FILE,
     REPOSITORY,
@@ -324,51 +313,6 @@ export async function setIsPublic(repository: Readonly<Pick<Repository, 'name' |
     {
         const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(SET_IS_PUBLIC, {repository});
-        if (isSuccessful)
-        {
-            return true;
-        }
-        else
-        {
-            return null;
-        }
-    }
-    catch (e)
-    {
-        return null;
-    }
-}
-
-export async function groups(repository: Readonly<Pick<Repository, 'username' | 'name'>>): Promise<Readonly<Group[]> | null>
-{
-    try
-    {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Group[]>> = await axios.get(GROUPS, {
-            params: {
-                json: {repository},
-            },
-        });
-        if (isSuccessful)
-        {
-            return data!;
-        }
-        else
-        {
-            return null;
-        }
-    }
-    catch (e)
-    {
-        return null;
-    }
-}
-
-export async function addToGroup(repository: Readonly<Pick<Repository, 'username' | 'name'>>, group: Readonly<Pick<Group, 'id'>>): Promise<true | null>
-{
-    try
-    {
-        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
-            await axios.post(ADD_TO_GROUP, {repository, group});
         if (isSuccessful)
         {
             return true;

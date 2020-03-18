@@ -3,7 +3,7 @@ import View from './View';
 import {Group} from '../../../../Class';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {Interface as RouterInterface} from '../../../../Router';
-import {Account as AccountApi} from '../../../../Api';
+import {Group as GroupApi} from '../../../../Api';
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
 
@@ -48,7 +48,7 @@ class Groups extends PureComponent<Readonly<IProps>, IState>
     {
         const {match: {params: {username}}} = this.props;
         this.setState({loading: true});
-        const groups = await AccountApi.getGroups({username});
+        const groups = await GroupApi.getByAccount({username});
         if (groups !== null)
         {
             this.setState({groups: [...groups]});
@@ -60,7 +60,7 @@ class Groups extends PureComponent<Readonly<IProps>, IState>
     {
         const {match: {params: {username}}} = this.props;
         this.setState({loading: true});
-        const groups = await AccountApi.getAdministratingGroups({username});
+        const groups = await GroupApi.getAdministratingByAccount({username});
         if (groups !== null)
         {
             this.setState({administratingGroups: [...groups]});

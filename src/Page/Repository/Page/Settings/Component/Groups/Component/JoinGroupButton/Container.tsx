@@ -4,7 +4,7 @@ import {ModalProps} from 'antd/lib/modal';
 import {ButtonProps} from 'antd/lib/button';
 import {InputProps} from 'antd/lib/input';
 import isNumber from 'is-number';
-import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
+import {Group as GroupApi} from '../../../../../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {notification} from 'antd';
@@ -54,7 +54,7 @@ class JoinGroupButton extends PureComponent<Readonly<IProps>, IState>
         else
         {
             const {match: {params: {repository: name, username}}} = this.props;
-            const result = await RepositoryInfo.addToGroup({username, name}, {id: Number.parseInt(groupId)});
+            const result = await GroupApi.addRepository({username, name}, {id: Number.parseInt(groupId)});
             if (result !== null)
             {
                 notification.success({message: '加入小组成功'});
