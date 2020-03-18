@@ -73,10 +73,5 @@
     "development": [
       "last 1 chrome version"
     ]
-  },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "jest-extended"
-    ]
   }
 }

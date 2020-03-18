@@ -1,19 +1,7 @@
-export function getNumberAbbreviation(number: number | string): string
+export function getNumberAbbreviation(number: number): string
 {
-    let n: number;
+    let n = number;
     let str = '';
-    if (typeof number === 'string')
-    {
-        n = Number.parseInt(number);
-    }
-    else
-    {
-        n = number;
-    }
-    if (Number.isNaN(n))
-    {
-        throw new TypeError('not a valid number');
-    }
 
     if (n / 10000 >= 1)
     {
