@@ -6,6 +6,7 @@ import {Conflict as ConflictClass, PullRequest} from '../../../../Class';
 import {PullRequest as PullRequestApi} from '../../../../Api';
 import {notification} from 'antd';
 import {PULL_REQUEST_STATUS} from '../../../../CONSTANT';
+import {IConflictEditorProps} from './Component/ConflictEditor';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
@@ -15,6 +16,7 @@ interface IState
 {
     pullRequest: PullRequest,
     conflicts: ConflictClass[],
+    resolvedFilePath: Set<string>,
     loading: boolean,
 }
 
@@ -30,6 +32,7 @@ class Conflict extends PureComponent<IConflictProps, IState>
                 0, 0, '', '', PULL_REQUEST_STATUS.CLOSED),
             conflicts: [],
             loading: false,
+            resolvedFilePath: new Set<string>(),
         };
     }
 
@@ -144,10 +147,34 @@ class Conflict extends PureComponent<IConflictProps, IState>
         });
     };
 
+    onConflictChange: IConflictEditorProps['onChange'] = (filePath, resolved, code) =>
+    {
+        const {conflicts, resolvedFilePath} = this.state;
+        for (let i = 0; i < conflicts.length; i++)
+        {
+            const {filePath: conflictFilePath, isBinary, content} = conflicts[i];
+            if (conflictFilePath === filePath && code !== content)
+            {
+                conflicts[i] = new ConflictClass(filePath, isBinary, code);
+            }
+            if (resolved)
+            {
+                resolvedFilePath.add(filePath);
+            }
+            else
+            {
+                resolvedFilePath.delete(filePath);
+            }
+        }
+    };
+
     render()
     {
         const {loading, pullRequest, conflicts} = this.state;
-        return (<View loading={loading} pullRequest={pullRequest} conflicts={conflicts} />);
+        return (<View loading={loading}
+                      pullRequest={pullRequest}
+                      conflicts={conflicts}
+                      onConflictChange={this.onConflictChange} />);
     }
 }
 

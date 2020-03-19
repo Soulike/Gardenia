@@ -3,10 +3,12 @@ import View from './View';
 import {Conflict} from '../../../../../../Class';
 import {IControlledCodeMirror} from 'react-codemirror2';
 import {CheckboxProps} from 'antd/lib/checkbox';
+import {notification} from 'antd';
 
 export interface IConflictEditorProps
 {
     conflict: Conflict;
+    onChange?: (filePath: string, resolved: boolean, code: string) => void;
 }
 
 interface IState
@@ -40,6 +42,18 @@ class ConflictEditor extends PureComponent<IConflictEditorProps, IState>
         {
             await this.componentDidMount();
         }
+
+        const {onChange} = this.props;
+        if (typeof onChange === 'function')
+        {
+            const {code, resolved} = this.state;
+            const {filePath} = conflict;
+            const {code: prevCode, resolved: prevResolve} = prevState;
+            if (code !== prevCode || resolved !== prevResolve)
+            {
+                await onChange(filePath, resolved, code);
+            }
+        }
     }
 
     onCodeChange: IControlledCodeMirror['onBeforeChange'] = (editor, data, value) =>
@@ -49,7 +63,21 @@ class ConflictEditor extends PureComponent<IConflictEditorProps, IState>
 
     onResolvedCheckboxChange: CheckboxProps['onChange'] = e =>
     {
-        this.setState({resolved: e.target.checked});
+        const {code} = this.state;
+        const {conflict: {filePath}} = this.props;
+        if (code.search(/(\r?\n)?<<<<<<< .+\r?\n/) !== -1
+            || code.search(/\r?\n=======\r?\n/) !== -1
+            || code.search(/\r?\n>>>>>>> .+\r?\n/) !== -1)
+        {
+            notification.warning({
+                message: `${filePath} 中仍存在冲突`,
+                description: '请解决冲突，并删除所有的冲突标记',
+            });
+        }
+        else
+        {
+            this.setState({resolved: e.target.checked});
+        }
     };
 
     render()

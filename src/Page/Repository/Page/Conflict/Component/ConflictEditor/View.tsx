@@ -22,7 +22,7 @@ function ConflictEditor(props: IConflictEditorProps)
     return (
         <div className={Style.ConflictEditor}>
             <div className={Style.header}>
-                <div className={Style.filePath}>{filePath}</div>
+                <code className={Style.filePath}>{filePath}</code>
                 <label className={Style.checkboxWrapper}>
                     <Checkbox onChange={onResolvedCheckboxChange} checked={resolved} />
                     <div className={Style.text}>已解决</div>
@@ -31,7 +31,7 @@ function ConflictEditor(props: IConflictEditorProps)
             <div className={Style.codeWrapper} style={resolved ? {position: 'fixed', top: '99999999px'} : {}}>
                 <CodeMirror onBeforeChange={onCodeChange} value={code} options={{
                     lineNumbers: true,
-                    indentUnit: 4,
+                    indentUnit: 0,
                 }} />
             </div>
         </div>
