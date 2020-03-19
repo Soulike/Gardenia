@@ -159,7 +159,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
     setTabActiveKey = () =>
     {
         const {match: {path}} = this.props;
-        const {REPOSITORY: {REPOSITORY, CODE, ISSUES, ISSUE, CREATE_ISSUE, PULL_REQUESTS, PULL_REQUEST, SETTINGS}} = PAGE_ID;
+        const {REPOSITORY: {REPOSITORY, CODE, ISSUES, ISSUE, CREATE_ISSUE, PULL_REQUESTS, PULL_REQUEST, SETTINGS, CONFLICT}} = PAGE_ID;
         switch (path)
         {
             case PAGE_ID_TO_ROUTE[CODE]:
@@ -181,6 +181,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
             }
             case PAGE_ID_TO_ROUTE[PULL_REQUEST]:
             case PAGE_ID_TO_ROUTE[PULL_REQUESTS]:
+            case PAGE_ID_TO_ROUTE[CONFLICT]:
             {
                 this.setState({
                     tabActiveKey: TAB_KEY.PULL_REQUESTS,

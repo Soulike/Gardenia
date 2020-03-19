@@ -62,6 +62,7 @@ export default () =>
                                        component={SettingsRouter} />
                                 <Route path={[
                                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CREATE_ISSUE],
+                                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CONFLICT],
                                 ]} render={RequireLoginRoute} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.CODE]}
