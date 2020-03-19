@@ -13,7 +13,7 @@ export interface IConflictProps extends RouteComponentProps<RouterInterface.IRep
 
 interface IState
 {
-    pullRequest: PullRequest | null,
+    pullRequest: PullRequest,
     conflicts: ConflictClass[],
     loading: boolean,
 }
@@ -24,7 +24,10 @@ class Conflict extends PureComponent<IConflictProps, IState>
     {
         super(props);
         this.state = {
-            pullRequest: null,
+            pullRequest: new PullRequest(0, 0,
+                '', '', '', '',
+                '', '', '', '',
+                0, 0, '', '', PULL_REQUEST_STATUS.CLOSED),
             conflicts: [],
             loading: false,
         };
@@ -126,7 +129,8 @@ class Conflict extends PureComponent<IConflictProps, IState>
 
     render()
     {
-        return (<View />);
+        const {loading, pullRequest} = this.state;
+        return (<View loading={loading} pullRequest={pullRequest} />);
     }
 }
 
