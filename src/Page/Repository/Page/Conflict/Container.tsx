@@ -7,6 +7,7 @@ import {PullRequest as PullRequestApi} from '../../../../Api';
 import {notification} from 'antd';
 import {PULL_REQUEST_STATUS} from '../../../../CONSTANT';
 import {IConflictEditorProps} from './Component/ConflictEditor';
+import {PopconfirmProps} from 'antd/lib/popconfirm';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
@@ -168,13 +169,38 @@ class Conflict extends PureComponent<IConflictProps, IState>
         }
     };
 
+    onSubmitButtonClick: PopconfirmProps['onConfirm'] = async () =>
+    {
+        const {pullRequest: {id}, resolvedFilePath, conflicts} = this.state;
+        const filePaths = conflicts.map(({filePath}) => filePath);
+        if (filePaths.length !== resolvedFilePath.size)
+        {
+            notification.error({message: '请解决所有冲突后再提交'});
+        }
+        else
+        {
+            this.setState({loading: true});
+            const result = await PullRequestApi.resolveConflicts({id}, conflicts);
+            if (result !== null)
+            {
+                notification.success({message: '解决冲突成功'});
+                const {history, match: {params: {username, repository, no}}} = this.props;
+                history.push(RouterFunction.generateRepositoryPullRequestRoute({
+                    username, repository, no,
+                }));
+            }
+            this.setState({loading: false});
+        }
+    };
+
     render()
     {
         const {loading, pullRequest, conflicts} = this.state;
         return (<View loading={loading}
                       pullRequest={pullRequest}
                       conflicts={conflicts}
-                      onConflictChange={this.onConflictChange} />);
+                      onConflictChange={this.onConflictChange}
+                      onSubmitButtonClick={this.onSubmitButtonClick} />);
     }
 }
 

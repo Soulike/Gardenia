@@ -1,11 +1,12 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Conflict as ConflictClass, PullRequest} from '../../../../Class';
-import {Alert, Spin} from 'antd';
+import {Alert, Button, Popconfirm, Spin} from 'antd';
 import NewTabLink from '../../../../Component/NewTabLink';
 import {Function as RouterFunction} from '../../../../Router';
 import {ObjectType} from '../../../../CONSTANT';
 import ConflictEditor, {IConflictEditorProps} from './Component/ConflictEditor';
+import {PopconfirmProps} from 'antd/lib/popconfirm';
 
 export interface IConflictProps
 {
@@ -13,6 +14,7 @@ export interface IConflictProps
     pullRequest: PullRequest;
     conflicts: ConflictClass[];
     onConflictChange: IConflictEditorProps['onChange'],
+    onSubmitButtonClick: PopconfirmProps['onConfirm'],
 }
 
 function Conflict(props: IConflictProps)
@@ -25,6 +27,7 @@ function Conflict(props: IConflictProps)
         },
         conflicts,
         onConflictChange,
+        onSubmitButtonClick,
     } = props;
     return (
         <div className={Style.Conflict}>
@@ -64,6 +67,17 @@ function Conflict(props: IConflictProps)
                                 <ConflictEditor conflict={conflict} onChange={onConflictChange} />
                             </div>)
                     }
+                </div>
+                <div className={Style.buttonWrapper}>
+                    <Popconfirm onConfirm={onSubmitButtonClick} disabled={loading} title={
+                        <div>
+                            确认冲突解决？<br />
+                            <strong>以上修改都将被提交到 <code>{sourceRepositoryUsername}/{sourceRepositoryName}:{sourceRepositoryBranchName}</code></strong>
+                        </div>}>
+                        <Button type={'primary'} size={'large'} disabled={loading} loading={loading}>
+                            提交
+                        </Button>
+                    </Popconfirm>
                 </div>
             </Spin>
         </div>
