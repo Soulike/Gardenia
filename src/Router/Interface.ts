@@ -34,6 +34,8 @@ export interface IRepositoryPullRequest extends IRepository
     readonly no: string,
 }
 
+export interface IRepositoryConflict extends IRepositoryPullRequest {}
+
 export interface IRepositoryCompare extends IRepository
 {
     sourceRepositoryUsername: string;
