@@ -24,7 +24,7 @@
     "antd-dayjs-webpack-plugin": "^0.0.8",
     "axios": "^0.19.0",
     "babel-plugin-import": "^1.12.2",
-    "core-js": "^3.2.1",
+    "core-js": "^3.6.4",
     "customize-cra": "^0.9.1",
     "highlight.js": "^9.15.10",
     "is-number": "^7.0.0",
@@ -65,10 +65,7 @@
   },
   "browserslist": {
     "production": [
-      "last 2 chrome version",
-      "last 2 edge version",
-      "last 2 firefox version",
-      "last 2 safari version"
+      "defaults"
     ],
     "development": [
       "last 1 chrome version"
