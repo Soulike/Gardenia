@@ -1,0 +1,27 @@
+.ConflictEditor {
+    border: 1px solid #DDD;
+    border-radius: 2px;
+
+    .header {
+        border-bottom: 1px solid #DDD;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        background-color: #FAFBFC;
+
+        .filePath {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .checkboxWrapper {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            .text {
+                margin-left: 5px;
+            }
+        }
+    }
+}

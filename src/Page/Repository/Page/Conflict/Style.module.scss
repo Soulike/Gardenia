@@ -1,8 +1,15 @@
 .Conflict {
     padding: 15px 0;
 
-    .title {
-        font-size: 16px;
+    .conflictsWrapper {
+        margin-top: 15px;
 
+        .conflictWrapper {
+            margin-top: 15px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
     }
 }

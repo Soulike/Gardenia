@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {Menu} from 'antd';
+import {BackTop, Menu} from 'antd';
 import Style from './Style.module.scss';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG as ROUTER_CONFIG} from '../../Router';
@@ -26,6 +26,7 @@ function RootView(props: Readonly<IProps>)
     const date = new Date();
     return (
         <div className={Style.Root}>
+            <BackTop />
             <div>
                 <Menu mode={'horizontal'} theme={'dark'} className={Style.menu} selectable={false}>
                     <Menu.Item>

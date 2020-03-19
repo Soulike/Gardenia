@@ -1,15 +1,17 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {PullRequest} from '../../../../Class';
+import {Conflict as ConflictClass, PullRequest} from '../../../../Class';
 import {Alert, Spin} from 'antd';
 import NewTabLink from '../../../../Component/NewTabLink';
 import {Function as RouterFunction} from '../../../../Router';
 import {ObjectType} from '../../../../CONSTANT';
+import ConflictEditor from './Component/ConflictEditor';
 
 export interface IConflictProps
 {
     loading: boolean;
     pullRequest: PullRequest;
+    conflicts: ConflictClass[];
 }
 
 function Conflict(props: IConflictProps)
@@ -20,6 +22,7 @@ function Conflict(props: IConflictProps)
             sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranchName,
             targetRepositoryUsername, targetRepositoryName, targetRepositoryBranchName,
         },
+        conflicts,
     } = props;
     return (
         <div className={Style.Conflict}>
@@ -51,6 +54,14 @@ function Conflict(props: IConflictProps)
                                <div>
                                    所做的修改将被提交到 <code>{sourceRepositoryUsername}/{sourceRepositoryName}:{sourceRepositoryBranchName}</code>
                                </div>} />
+                </div>
+                <div className={Style.conflictsWrapper}>
+                    {
+                        conflicts.map(conflict =>
+                            <div key={conflict.filePath} className={Style.conflictWrapper}>
+                                <ConflictEditor conflict={conflict} />
+                            </div>)
+                    }
                 </div>
             </Spin>
         </div>

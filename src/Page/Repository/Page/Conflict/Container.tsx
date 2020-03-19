@@ -105,9 +105,9 @@ class Conflict extends PureComponent<IConflictProps, IState>
                 if (conflictsWrapper !== null)
                 {
                     const {conflicts} = conflictsWrapper;
+                    const {match: {params: {username, repository, no}}, history} = this.props;
                     if (conflicts.length === 0)
                     {
-                        const {match: {params: {username, repository, no}}, history} = this.props;
                         notification.warn({
                             message: `${username}/${repository} #${no} 没有合并冲突`,
                             description: '您可直接执行合并操作',
@@ -116,6 +116,23 @@ class Conflict extends PureComponent<IConflictProps, IState>
                             username, repository, no,
                         }));
                         return resolve();
+                    }
+                    else
+                    {
+                        conflicts.forEach(({isBinary}) =>
+                        {
+                            if (isBinary)
+                            {
+                                notification.warn({
+                                    message: `存在二进制文件冲突`,
+                                    description: '请使用命令行解决冲突',
+                                });
+                                history.replace(RouterFunction.generateRepositoryPullRequestRoute({
+                                    username, repository, no,
+                                }));
+                                return resolve();
+                            }
+                        });
                     }
                     this.setState({conflicts}, () => resolve());
                 }
@@ -129,8 +146,8 @@ class Conflict extends PureComponent<IConflictProps, IState>
 
     render()
     {
-        const {loading, pullRequest} = this.state;
-        return (<View loading={loading} pullRequest={pullRequest} />);
+        const {loading, pullRequest, conflicts} = this.state;
+        return (<View loading={loading} pullRequest={pullRequest} conflicts={conflicts} />);
     }
 }
 
