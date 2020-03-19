@@ -65,9 +65,9 @@ class ConflictEditor extends PureComponent<IConflictEditorProps, IState>
     {
         const {code} = this.state;
         const {conflict: {filePath}} = this.props;
-        if (code.search(/(\r?\n)?<<<<<<< .+\r?\n/) !== -1
-            || code.search(/\r?\n=======\r?\n/) !== -1
-            || code.search(/\r?\n>>>>>>> .+(\r?\n)?/) !== -1)
+        if (code.search(/^<<<<<<< .+$/m) !== -1
+            || code.search(/^=======$/m) !== -1
+            || code.search(/^>>>>>>> .+$/m) !== -1)
         {
             notification.warning({
                 message: <div><code>{filePath}</code> 中仍存在冲突</div>,

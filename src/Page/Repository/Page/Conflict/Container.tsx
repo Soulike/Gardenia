@@ -42,7 +42,6 @@ class Conflict extends PureComponent<IConflictProps, IState>
         this.checkURL();
         this.setState({loading: true});
         await this.loadPullRequest();
-        await this.loadConflicts();
         this.setState({loading: false});
     }
 
@@ -53,6 +52,15 @@ class Conflict extends PureComponent<IConflictProps, IState>
         if (pathname !== prevPathname)
         {
             await this.componentDidMount();
+        }
+
+        const {pullRequest: {id}} = this.state;
+        const {pullRequest: {id: prevId}} = prevState;
+        if (prevId !== id)
+        {
+            this.setState({loading: true});
+            await this.loadConflicts();
+            this.setState({loading: false});
         }
     }
 
@@ -78,7 +86,7 @@ class Conflict extends PureComponent<IConflictProps, IState>
                 const {status} = pullRequest;
                 if (status !== PULL_REQUEST_STATUS.OPEN)
                 {
-                    notification.warn({message: `Pull Request #${no} 已关闭`});
+                    notification.warn({message: `Pull Request #${no} 已关闭或合并`});
                     history.replace(RouterFunction.generateRepositoryPullRequestRoute({
                         username, repository: name, no: noString,
                     }));
@@ -98,52 +106,45 @@ class Conflict extends PureComponent<IConflictProps, IState>
         return new Promise(async resolve =>
         {
             const {pullRequest} = this.state;
-            if (pullRequest === null)
+            const {id} = pullRequest;
+            const conflictsWrapper = await PullRequestApi.getConflicts({id});
+            if (conflictsWrapper !== null)
             {
-                resolve();
-            }
-            else
-            {
-                const {id} = pullRequest;
-                const conflictsWrapper = await PullRequestApi.getConflicts({id});
-                if (conflictsWrapper !== null)
+                const {conflicts} = conflictsWrapper;
+                const {match: {params: {username, repository, no}}, history} = this.props;
+                if (conflicts.length === 0)
                 {
-                    const {conflicts} = conflictsWrapper;
-                    const {match: {params: {username, repository, no}}, history} = this.props;
-                    if (conflicts.length === 0)
-                    {
-                        notification.warn({
-                            message: `${username}/${repository} #${no} 没有合并冲突`,
-                            description: '您可直接执行合并操作',
-                        });
-                        history.replace(RouterFunction.generateRepositoryPullRequestRoute({
-                            username, repository, no,
-                        }));
-                        return resolve();
-                    }
-                    else
-                    {
-                        conflicts.forEach(({isBinary}) =>
-                        {
-                            if (isBinary)
-                            {
-                                notification.warn({
-                                    message: `存在二进制文件冲突`,
-                                    description: '请使用命令行解决冲突',
-                                });
-                                history.replace(RouterFunction.generateRepositoryPullRequestRoute({
-                                    username, repository, no,
-                                }));
-                                return resolve();
-                            }
-                        });
-                    }
-                    this.setState({conflicts}, () => resolve());
+                    notification.warn({
+                        message: `${username}/${repository} #${no} 没有合并冲突`,
+                        description: '您可直接执行合并操作',
+                    });
+                    history.replace(RouterFunction.generateRepositoryPullRequestRoute({
+                        username, repository, no,
+                    }));
+                    return resolve();
                 }
                 else
                 {
-                    resolve();
+                    conflicts.forEach(({isBinary}) =>
+                    {
+                        if (isBinary)
+                        {
+                            notification.warn({
+                                message: `存在二进制文件冲突`,
+                                description: '请使用命令行解决冲突',
+                            });
+                            history.replace(RouterFunction.generateRepositoryPullRequestRoute({
+                                username, repository, no,
+                            }));
+                            return resolve();
+                        }
+                    });
                 }
+                this.setState({conflicts}, () => resolve());
+            }
+            else
+            {
+                resolve();
             }
         });
     };
