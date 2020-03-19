@@ -27,7 +27,7 @@ class Index extends PureComponent<Readonly<IProps>, IState>
             repositories: [],
             loading: true,
             hasMore: true,
-            lastEnd: 0,
+            lastEnd: 1,
             showMeme: true,
         };
     }
@@ -52,7 +52,7 @@ class Index extends PureComponent<Readonly<IProps>, IState>
         if (repositoriesFromServer !== null)
         {
             repositories.push(...repositoriesFromServer);
-            this.setState({lastEnd: lastEnd + Index.PAGE_SIZE - 1});
+            this.setState({lastEnd: lastEnd + Index.PAGE_SIZE});
             if (repositoriesFromServer.length < Index.PAGE_SIZE)
             {
                 this.setState({hasMore: false});
