@@ -1,4 +1,8 @@
+/**
+ * @desc 这个组件引入 CodeMirror 的配置文件，在实际使用时请使用按需加载以减小打包大小
+ * */
 import 'codemirror/lib/codemirror.css';
+import {Controlled} from 'react-codemirror2';
 
 require('codemirror/mode/clike/clike');
 require('codemirror/mode/cmake/cmake');
@@ -39,3 +43,5 @@ require('codemirror/mode/verilog/verilog');
 require('codemirror/mode/vue/vue');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/yaml/yaml');
+
+export default Controlled;

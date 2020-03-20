@@ -1,9 +1,11 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Conflict} from '../../../../../../Class';
-import {Controlled as CodeMirror, IControlledCodeMirror} from 'react-codemirror2';
 import {CheckboxProps} from 'antd/lib/checkbox';
 import {Checkbox} from 'antd';
+import {IControlledCodeMirror} from 'react-codemirror2';
+
+const CodeMirror = React.lazy(() => import('../../../../../../Component/CodeMirror'));
 
 export interface IConflictEditorProps
 {
