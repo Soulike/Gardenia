@@ -10,7 +10,7 @@ import yoyuuyoyuu from '../../Static/Index/余裕余裕.jpg';
 interface IProps
 {
     repositoryList: Readonly<Array<Readonly<Repository>>>,
-    loadMore: () => any,
+    loadMore: (page: number) => void,
     loading: boolean,
     hasMore: boolean,
     onMemeDoubleClick: HTMLAttributes<HTMLDivElement>['onDoubleClick'];
@@ -56,7 +56,7 @@ function IndexView(props: Readonly<IProps>)
                     </div>
                 } banner={true} />
             </div>
-            <InfiniteScroll loadMore={loadMore} initialLoad={false} hasMore={hasMore}>
+            <InfiniteScroll loadMore={loadMore} initialLoad={false} pageStart={1} hasMore={hasMore}>
                 <RepositoryList repositories={repositoryList} loading={loading} showUsername={true} />
             </InfiniteScroll>
         </div>);

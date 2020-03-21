@@ -4,6 +4,7 @@ import {Repository} from '../../Class';
 import View from './View';
 import CONFIG from '../../CONFIG';
 import path from 'path';
+import {promisify} from 'util';
 
 interface IProps {}
 
@@ -12,13 +13,14 @@ interface IState
     repositories: Array<Repository>,
     loading: boolean,
     hasMore: boolean,
-    lastEnd: number,
     showMeme: boolean,
 }
 
 class Index extends PureComponent<Readonly<IProps>, IState>
 {
     private static PAGE_SIZE = 10;  // 每一页有几条
+    private setStatePromise = promisify(this.setState);
+    private forceUpdatePromise = promisify(this.forceUpdate);
 
     constructor(props: Readonly<IProps>)
     {
@@ -27,7 +29,6 @@ class Index extends PureComponent<Readonly<IProps>, IState>
             repositories: [],
             loading: true,
             hasMore: true,
-            lastEnd: 1,
             showMeme: true,
         };
     }
@@ -35,7 +36,7 @@ class Index extends PureComponent<Readonly<IProps>, IState>
     async componentDidMount()
     {
         this.setTitle();
-        await this.loadMoreRepositories();
+        await this.loadMoreRepositories(1);
     }
 
     setTitle = () =>
@@ -43,21 +44,22 @@ class Index extends PureComponent<Readonly<IProps>, IState>
         document.title = CONFIG.NAME;
     };
 
-    loadMoreRepositories = async () =>
+    loadMoreRepositories: (page: number) => void = async page =>
     {
-        const {repositories, lastEnd} = this.state;
+        const {repositories} = this.state;
         this.setState({loading: true});
-        const repositoriesFromServer = await RepositoryApi.getRepositories(lastEnd, lastEnd + Index.PAGE_SIZE);
+        const repositoriesFromServer = await RepositoryApi.getRepositories((page - 1) * Index.PAGE_SIZE, page * Index.PAGE_SIZE);
         this.setState({loading: false});
         if (repositoriesFromServer !== null)
         {
             repositories.push(...repositoriesFromServer);
-            this.setState({lastEnd: lastEnd + Index.PAGE_SIZE});
             if (repositoriesFromServer.length < Index.PAGE_SIZE)
             {
-                this.setState({hasMore: false});
+                await this.setStatePromise({
+                    hasMore: false,
+                });
             }
-            this.forceUpdate();
+            await this.forceUpdatePromise();
         }
     };
 
