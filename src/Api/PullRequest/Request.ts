@@ -297,6 +297,7 @@ export async function getComments(repository: Readonly<Pick<Repository, 'usernam
 
 export async function getConflicts(pullRequest: Readonly<Pick<PullRequest, 'id'>>): Promise<{ conflicts: Conflict[] } | null>
 {
+    nProgress.start();
     try
     {
         const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ conflicts: Conflict[], }>> =
@@ -317,6 +318,10 @@ export async function getConflicts(pullRequest: Readonly<Pick<PullRequest, 'id'>
     catch (e)
     {
         return null;
+    }
+    finally
+    {
+        nProgress.done();
     }
 }
 

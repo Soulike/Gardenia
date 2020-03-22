@@ -19,6 +19,7 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
     [PAGE_ID.REPOSITORY.CREATE_ISSUE]: React.lazy(() => import('../../Page/Repository/Page/CreateIssue')),
     [PAGE_ID.REPOSITORY.PULL_REQUESTS]: React.lazy(() => import('../../Page/Repository/Page/PullRequests')),
     [PAGE_ID.REPOSITORY.PULL_REQUEST]: React.lazy(() => import('../../Page/Repository/Page/PullRequest')),
+    [PAGE_ID.REPOSITORY.CONFLICT]: React.lazy(() => import('../../Page/Repository/Page/Conflict')),
     [PAGE_ID.REPOSITORY.COMPARE]: React.lazy(() => import('../../Page/Repository/Page/Compare')),
     [PAGE_ID.REPOSITORY.COMMITS]: React.lazy(() => import('../../Page/Repository/Page/Commits')),
     [PAGE_ID.REPOSITORY.COMMIT]: React.lazy(() => import('../../Page/Repository/Page/Commit')),

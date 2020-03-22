@@ -17,6 +17,7 @@ export const PAGE_ID_TO_ROUTE = Object.freeze({
     [PAGE_ID.REPOSITORY.CREATE_ISSUE]: '/repository/:username/:repository/createIssue',
     [PAGE_ID.REPOSITORY.PULL_REQUESTS]: '/repository/:username/:repository/pulls',
     [PAGE_ID.REPOSITORY.PULL_REQUEST]: '/repository/:username/:repository/pull/:no',
+    [PAGE_ID.REPOSITORY.CONFLICT]: '/repository/:username/:repository/conflict/:no',
     [PAGE_ID.REPOSITORY.COMPARE]: '/repository/:username/:repository/compare/:targetRepositoryBranch/:sourceRepositoryUsername/:sourceRepositoryName/:sourceRepositoryBranch',
     [PAGE_ID.REPOSITORY.CODE]: '/repository/:username/:repository/:objectType?/:branch?/:path*',
     [PAGE_ID.REPOSITORY.COMMITS]: '/repository/:username/:repository/:branch/commits/:path*',

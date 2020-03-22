@@ -7,6 +7,7 @@ import {
     IRepositoryCommit,
     IRepositoryCommits,
     IRepositoryCompare,
+    IRepositoryConflict,
     IRepositoryCreateIssue,
     IRepositoryIssue,
     IRepositoryIssues,
@@ -91,6 +92,15 @@ export function generateRepositoryPullRequestRoute(parameter: IRepositoryPullReq
 {
     const {username, repository, no} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUEST]
+        .replace(':username', username)
+        .replace(':repository', repository)
+        .replace(':no', no);
+}
+
+export function generateRepositoryConflictRoute(parameter: IRepositoryConflict)
+{
+    const {username, repository, no} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CONFLICT]
         .replace(':username', username)
         .replace(':repository', repository)
         .replace(':no', no);

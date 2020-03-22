@@ -21,6 +21,7 @@ export default () =>
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CREATE_ISSUE],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUEST],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS],
+                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CONFLICT],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMPARE],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMIT],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMITS],
@@ -61,6 +62,7 @@ export default () =>
                                        component={SettingsRouter} />
                                 <Route path={[
                                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CREATE_ISSUE],
+                                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CONFLICT],
                                 ]} render={RequireLoginRoute} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.CODE]}
@@ -80,6 +82,9 @@ function RequireLoginRoute()
             <Switch>
                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CREATE_ISSUE]}
                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.CREATE_ISSUE]}
+                       exact={true} />
+                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CONFLICT]}
+                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.CONFLICT]}
                        exact={true} />
             </Switch>
         </RequireLogin>

@@ -1,0 +1,21 @@
+.Conflict {
+    padding: 15px 0;
+
+    .conflictsWrapper {
+        margin-top: 15px;
+
+        .conflictWrapper {
+            margin-top: 15px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .buttonWrapper {
+        margin-top: 15px;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
