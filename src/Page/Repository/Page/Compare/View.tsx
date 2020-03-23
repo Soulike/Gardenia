@@ -14,6 +14,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCompare>
     commitAmount: number,
     fileDiffAmount: number,
     loading: boolean,
+    hasCommonAncestor: boolean,
 }
 
 function Compare(props: IProps)
@@ -28,6 +29,7 @@ function Compare(props: IProps)
         commitAmount,
         fileDiffAmount,
         loading,
+        hasCommonAncestor,
     } = props;
     const theSameBranch = sourceRepositoryUsername === targetRepositoryUsername
         && sourceRepositoryName === targetRepositoryName
@@ -41,29 +43,32 @@ function Compare(props: IProps)
             <div className={Style.detailWrapper}>
                 <Spin spinning={loading}>
                     {
-                        theSameBranch ? (<Empty description={'必须是不同分支才可创建 Pull Request'} />) : (
-                            <div className={Style.detail}>
-                                <div className={Style.commentPosterWrapper}>
-                                    <PullRequestPoster />
-                                </div>
-                                <div className={Style.detailTabs}>
-                                    <Tabs defaultActiveKey={'commits'} type={'card'}>
-                                        <Tabs.TabPane tab={<>提交<Tag className={Style.tag}>{commitAmount}</Tag></>}
-                                                      key={'commits'}>
-                                            <div className={Style.pullRequestCommitsWrapper}>
-                                                <PullRequestCommits />
-                                            </div>
-                                        </Tabs.TabPane>
-                                        <Tabs.TabPane tab={<>修改的文件<Tag className={Style.tag}>{fileDiffAmount}</Tag></>}
-                                                      key={'fileChanged'}>
-                                            <div className={Style.pullRequestFileDiffsWrapper}>
-                                                <PullRequestDiffs />
-                                            </div>
-                                        </Tabs.TabPane>
-                                    </Tabs>
-                                </div>
-                            </div>
-                        )
+                        hasCommonAncestor ?
+                            theSameBranch ? (
+                                <Empty description={'必须是不同分支才可创建 Pull Request'} />) : (
+                                <div className={Style.detail}>
+                                    <div className={Style.commentPosterWrapper}>
+                                        <PullRequestPoster />
+                                    </div>
+                                    <div className={Style.detailTabs}>
+                                        <Tabs defaultActiveKey={'commits'} type={'card'}>
+                                            <Tabs.TabPane tab={<>提交<Tag className={Style.tag}>{commitAmount}</Tag></>}
+                                                          key={'commits'}>
+                                                <div className={Style.pullRequestCommitsWrapper}>
+                                                    <PullRequestCommits />
+                                                </div>
+                                            </Tabs.TabPane>
+                                            <Tabs.TabPane tab={<>修改的文件<Tag className={Style.tag}>{fileDiffAmount}</Tag></>}
+                                                          key={'fileChanged'}>
+                                                <div className={Style.pullRequestFileDiffsWrapper}>
+                                                    <PullRequestDiffs />
+                                                </div>
+                                            </Tabs.TabPane>
+                                        </Tabs>
+                                    </div>
+                                </div>)
+                            :
+                            <Empty description={`${sourceRepositoryUsername}/${sourceRepositoryName}:${sourceRepositoryBranch} 与 ${targetRepositoryUsername}/${targetRepositoryName}:${targetRepositoryBranch} 之间没有提交历史关联`} />
                     }
                 </Spin>
             </div>

@@ -25,6 +25,7 @@ import {
     FORK_FILE_DIFF_AMOUNT,
     FORK_FROM,
     FORK_REPOSITORIES,
+    HAS_COMMON_ANCESTOR,
     LAST_COMMIT,
     RAW_FILE,
     REPOSITORY,
@@ -841,6 +842,36 @@ export async function forkFileDiffAmount(sourceRepository: Readonly<Pick<Reposit
                         sourceRepositoryBranch,
                         targetRepository,
                         targetRepositoryBranch,
+                    }),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function hasCommonAncestor(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranchName: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranchName: string): Promise<Readonly<{ hasCommonAncestor: boolean }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ hasCommonAncestor: boolean }>> =
+            await axios.get(HAS_COMMON_ANCESTOR, {
+                params: {
+                    json: JSON.stringify({
+                        sourceRepository,
+                        sourceRepositoryBranchName,
+                        targetRepository,
+                        targetRepositoryBranchName,
                     }),
                 },
             });

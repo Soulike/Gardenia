@@ -35,3 +35,4 @@ export const FORK_COMMIT_HISTORY = repositoryInfoPrefix('/forkCommitHistory');
 export const FORK_COMMIT_AMOUNT = repositoryInfoPrefix('/forkCommitAmount');
 export const FORK_FILE_DIFF = repositoryInfoPrefix('/forkFileDiff');
 export const FORK_FILE_DIFF_AMOUNT = repositoryInfoPrefix('/forkFileDiffAmount');
+export const HAS_COMMON_ANCESTOR = repositoryInfoPrefix('/hasCommonAncestor');
