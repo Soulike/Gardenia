@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Card, Empty, List, Popconfirm} from 'antd';
+import {Button, Card, Empty, List, Popconfirm, Tag} from 'antd';
 import {Profile} from '../../../../Class';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
@@ -10,14 +10,17 @@ import DefaultAvatar from '../../../../Component/DefaultAvatar';
 interface IProps
 {
     profiles: Readonly<(Readonly<Profile> | null)[]>,
+    adminUsernames: string[],
     loading: boolean,
     onRemoveAccountConfirm: (username: string) => PopconfirmProps['onConfirm'],
+    onSetAdminConfirm: (username: string) => PopconfirmProps['onConfirm'],
+    onRemoveAdminConfirm: (username: string) => PopconfirmProps['onConfirm'],
     isAdmin: boolean,
 }
 
 function MembersView(props: Readonly<IProps>)
 {
-    const {profiles, loading, onRemoveAccountConfirm, isAdmin} = props;
+    const {profiles, loading, onRemoveAccountConfirm, isAdmin, adminUsernames, onSetAdminConfirm, onRemoveAdminConfirm} = props;
     return (
         <div className={Style.Members}>
             <List loading={loading}
@@ -29,7 +32,7 @@ function MembersView(props: Readonly<IProps>)
                       {
                           const {nickname, username, avatar} = profile;
                           return (
-                              <Card size={'small'}>
+                              <Card size={'small'} key={username}>
                                   <div className={Style.cardContent}>
                                       <NewTabLink className={Style.titleWrapper}
                                                   to={RouterFunction.generatePersonalCenterRoute({username})}>
@@ -41,15 +44,45 @@ function MembersView(props: Readonly<IProps>)
                                                   )
                                               }
                                           </div>
-                                          <div className={Style.title}>{nickname}({username})</div>
+                                          <div className={Style.name}>{nickname}({username})</div>
+                                          <div className={Style.isAdminTagWrapper}>
+                                              {
+                                                  adminUsernames.includes(username) ? (
+                                                      <Tag color={'blue'} className={Style.isAdminTag}>管理员</Tag>
+                                                  ) : null
+                                              }
+                                          </div>
                                       </NewTabLink>
                                       {
                                           isAdmin ? (
                                               <div className={Style.buttonWrapper}>
-                                                  <Popconfirm title={`确认移除成员 ${nickname}？`}
-                                                              onConfirm={onRemoveAccountConfirm(username)}>
-                                                      <Button type={'danger'}>移除</Button>
-                                                  </Popconfirm>
+                                                  <Button.Group>
+                                                      {
+                                                          adminUsernames.includes(username) ? (
+                                                              <Popconfirm title={`确认撤销成员 ${username} 的管理员权限？`}
+                                                                          onConfirm={onRemoveAdminConfirm(username)}
+                                                                          disabled={loading}>
+                                                                  <Button loading={loading}
+                                                                          disabled={loading}>撤销管理员</Button>
+                                                              </Popconfirm>
+                                                          ) : (
+                                                              <Popconfirm title={`确认设置成员 ${username} 为管理员？`}
+                                                                          onConfirm={onSetAdminConfirm(username)}
+                                                                          disabled={loading}>
+                                                                  <Button type={'primary'}
+                                                                          loading={loading}
+                                                                          disabled={loading}>设为管理员</Button>
+                                                              </Popconfirm>
+                                                          )
+                                                      }
+                                                      <Popconfirm title={`确认移除成员 ${username}？`}
+                                                                  onConfirm={onRemoveAccountConfirm(username)}
+                                                                  disabled={loading}>
+                                                          <Button type={'danger'}
+                                                                  loading={loading}
+                                                                  disabled={loading}>移除</Button>
+                                                      </Popconfirm>
+                                                  </Button.Group>
                                               </div>
                                           ) : null
                                       }

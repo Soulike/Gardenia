@@ -10,8 +10,19 @@
             display: inline-flex;
             align-items: center;
 
-            .title {
+            .name {
                 font-size: 1rem;
+                margin-right: 5px;
+                line-height: 1em;
+            }
+
+            .isAdminTagWrapper {
+                display: flex;
+                align-items: center;
+
+                .isAdminTag {
+                    margin: 0;
+                }
             }
         }
 
