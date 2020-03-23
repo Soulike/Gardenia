@@ -29,7 +29,11 @@ function MembersView(props: Readonly<IProps>)
         <div className={Style.Members}>
             <div className={Style.topArea}>
                 <Alert type={'info'} showIcon={true} message={'只有小组成员可将仓库加入小组'} />
-                <AddMemberButton />
+                <div className={Style.addMemberButtonWrapper}>
+                    {
+                        isAdmin ? <AddMemberButton /> : null
+                    }
+                </div>
             </div>
             <List loading={loading}
                   locale={{emptyText: <Empty description={'没有成员'} />}}
