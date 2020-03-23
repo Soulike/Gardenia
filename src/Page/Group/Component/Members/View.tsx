@@ -1,13 +1,15 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Card, Empty, List, Popconfirm, Tag} from 'antd';
+import {Alert, Button, Card, Empty, List, Popconfirm, Tag} from 'antd';
 import {Profile} from '../../../../Class';
-import {Function as RouterFunction} from '../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import NewTabLink from '../../../../Component/NewTabLink';
 import DefaultAvatar from '../../../../Component/DefaultAvatar';
+import {Link} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router';
 
-interface IProps
+interface IProps extends RouteComponentProps<RouterInterface.IGroup>
 {
     profiles: Readonly<(Readonly<Profile> | null)[]>,
     adminUsernames: string[],
@@ -20,9 +22,26 @@ interface IProps
 
 function MembersView(props: Readonly<IProps>)
 {
-    const {profiles, loading, onRemoveAccountConfirm, isAdmin, adminUsernames, onSetAdminConfirm, onRemoveAdminConfirm} = props;
+    const {
+        profiles, loading, isAdmin, adminUsernames,
+        onSetAdminConfirm, onRemoveAccountConfirm, onRemoveAdminConfirm,
+        match: {params: {id}},
+    } = props;
     return (
         <div className={Style.Members}>
+            <div className={Style.banner}>
+                <Alert type={'info'}
+                       showIcon={true}
+                       banner={true}
+                       message={
+                           <div>
+                               可在
+                               <Link to={RouterFunction.generateGroupSettingsRoute({id})}>
+                                   小组设置页面
+                               </Link>
+                               中添加新成员
+                           </div>} />
+            </div>
             <List loading={loading}
                   locale={{emptyText: <Empty description={'没有成员'} />}}
                   dataSource={[...profiles]}
@@ -99,4 +118,4 @@ function MembersView(props: Readonly<IProps>)
     );
 }
 
-export default React.memo(MembersView);
+export default React.memo(withRouter(MembersView));
