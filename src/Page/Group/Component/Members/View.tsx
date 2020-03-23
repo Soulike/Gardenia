@@ -2,14 +2,13 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Alert, Button, Card, Empty, List, Popconfirm, Tag} from 'antd';
 import {Profile} from '../../../../Class';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
+import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import NewTabLink from '../../../../Component/NewTabLink';
 import DefaultAvatar from '../../../../Component/DefaultAvatar';
-import {Link} from 'react-router-dom';
-import {RouteComponentProps, withRouter} from 'react-router';
+import AddMemberButton from './Component/AddMemberButton';
 
-interface IProps extends RouteComponentProps<RouterInterface.IGroup>
+interface IProps
 {
     profiles: Readonly<(Readonly<Profile> | null)[]>,
     adminUsernames: string[],
@@ -25,22 +24,12 @@ function MembersView(props: Readonly<IProps>)
     const {
         profiles, loading, isAdmin, adminUsernames,
         onSetAdminConfirm, onRemoveAccountConfirm, onRemoveAdminConfirm,
-        match: {params: {id}},
     } = props;
     return (
         <div className={Style.Members}>
-            <div className={Style.banner}>
-                <Alert type={'info'}
-                       showIcon={true}
-                       banner={true}
-                       message={
-                           <div>
-                               可在
-                               <Link to={RouterFunction.generateGroupSettingsRoute({id})}>
-                                   小组设置页面
-                               </Link>
-                               中添加新成员
-                           </div>} />
+            <div className={Style.topArea}>
+                <Alert type={'info'} showIcon={true} message={'只有小组成员可将仓库加入小组'} />
+                <AddMemberButton />
             </div>
             <List loading={loading}
                   locale={{emptyText: <Empty description={'没有成员'} />}}
@@ -118,4 +107,4 @@ function MembersView(props: Readonly<IProps>)
     );
 }
 
-export default React.memo(withRouter(MembersView));
+export default React.memo(MembersView);

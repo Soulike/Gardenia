@@ -7,11 +7,9 @@ import {Account, Profile} from '../../../../Class';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import {notification} from 'antd';
 import {promisify} from 'util';
+import {EVENT, eventEmitter} from './EVENT';
 
-interface IProps extends RouteComponentProps<RouterInterface.IGroup>
-{
-
-}
+interface IProps extends RouteComponentProps<RouterInterface.IGroup> {}
 
 interface IState
 {
@@ -36,6 +34,8 @@ class Members extends PureComponent<Readonly<IProps>, IState>
             loading: true,
             isAdmin: false,
         };
+
+        eventEmitter.on(EVENT.addMember, this.onAddMemberListener);
     }
 
     async componentDidMount()
@@ -59,6 +59,13 @@ class Members extends PureComponent<Readonly<IProps>, IState>
             await this.componentDidMount();
         }
     }
+
+    componentWillUnmount()
+    {
+        eventEmitter.removeListener(EVENT.addMember, this.onAddMemberListener);
+    }
+
+    onAddMemberListener = async () => await this.componentDidMount();
 
     // 在删除成员后的本地更改
     removeAccount = async (username: string) =>
