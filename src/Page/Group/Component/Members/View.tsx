@@ -4,8 +4,8 @@ import {Button, Card, Empty, List, Popconfirm} from 'antd';
 import {Profile} from '../../../../Class';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
-import {UserOutlined} from '@ant-design/icons';
 import NewTabLink from '../../../../Component/NewTabLink';
+import DefaultAvatar from '../../../../Component/DefaultAvatar';
 
 interface IProps
 {
@@ -27,15 +27,22 @@ function MembersView(props: Readonly<IProps>)
                   {
                       if (profile !== null)
                       {
-                          const {nickname, username} = profile;
+                          const {nickname, username, avatar} = profile;
                           return (
                               <Card size={'small'}>
                                   <div className={Style.cardContent}>
-                                      <div className={Style.titleWrapper}>
-                                          <UserOutlined />
-                                          <NewTabLink to={RouterFunction.generatePersonalCenterRoute({username})}
-                                                      className={Style.title}>{nickname}({username})</NewTabLink>
-                                      </div>
+                                      <NewTabLink className={Style.titleWrapper}
+                                                  to={RouterFunction.generatePersonalCenterRoute({username})}>
+                                          <div className={Style.avatarWrapper}>
+                                              {
+                                                  avatar.length === 0 ? (
+                                                      <DefaultAvatar />) : (
+                                                      <img src={avatar} alt={'avatar'} className={Style.avatar} />
+                                                  )
+                                              }
+                                          </div>
+                                          <div className={Style.title}>{nickname}({username})</div>
+                                      </NewTabLink>
                                       {
                                           isAdmin ? (
                                               <div className={Style.buttonWrapper}>
