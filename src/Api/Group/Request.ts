@@ -7,6 +7,7 @@ import {
     ADD_ADMINS,
     ADD_REPOSITORY,
     ADMINS,
+    CHANGE_NAME,
     DISMISS,
     GET_ADMINISTRATING_BY_ACCOUNT,
     GET_BY_ACCOUNT,
@@ -75,6 +76,27 @@ export async function info(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly
         if (isSuccessful)
         {
             return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function changeName(group: Readonly<Pick<Group, 'id' | 'name'>>): Promise<true | null>
+{
+    try
+    {
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
+            await axios.post(CHANGE_NAME, group);
+        if (isSuccessful)
+        {
+            return true;
         }
         else
         {

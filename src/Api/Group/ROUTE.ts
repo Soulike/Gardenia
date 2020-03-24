@@ -8,6 +8,7 @@ function groupPrefix(url: string): string
 export const ADD = groupPrefix('/add');
 export const DISMISS = groupPrefix('/dismiss');
 export const INFO = groupPrefix('/info');
+export const CHANGE_NAME = groupPrefix('/changeName');
 export const ACCOUNTS = groupPrefix('/accounts');
 export const ADD_ACCOUNTS = groupPrefix('/addAccounts');
 export const REMOVE_ACCOUNTS = groupPrefix('/removeAccounts');
