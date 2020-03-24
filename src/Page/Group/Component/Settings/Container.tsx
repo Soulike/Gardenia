@@ -56,9 +56,13 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {path: prePath}} = prevProps;
-        const {match: {path}} = this.props;
-        if (prePath !== path)
+        const {match: {path: prePath, params: {id: prevId}}} = prevProps;
+        const {match: {path, params: {id}}} = this.props;
+        if (id !== prevId)
+        {
+            await this.componentDidMount();
+        }
+        else if (prePath !== path)
         {
             await this.setActiveMenuItemKey();
         }

@@ -55,13 +55,17 @@ class Group extends PureComponent<Readonly<IProps>, IState>
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {path}} = this.props;
-        const {match: {path: prevPath}} = prevProps;
-        if (path !== prevPath)
+        const {match: {path: prePath, params: {id: prevId}}} = prevProps;
+        const {match: {path, params: {id}}} = this.props;
+        if (id !== prevId)
         {
-            this.setTabActiveKey();
+            await this.componentDidMount();
+        }
+        else if (prePath !== path)
+        {
+            await this.setTabActiveKey();
         }
     }
 
