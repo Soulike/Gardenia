@@ -35,6 +35,7 @@ export const PAGE_ID = Object.freeze({
         SETTINGS: {
             SETTINGS: 'GROUP_SETTINGS',
             OPTIONS: 'GROUP_SETTINGS_OPTIONS',
+            REPOSITORIES: 'GROUP_SETTINGS_REPOSITORIES',
         },
     }),
     SETTING: Object.freeze({

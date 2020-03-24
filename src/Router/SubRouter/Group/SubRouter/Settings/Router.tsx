@@ -14,10 +14,14 @@ export default () =>
             <Switch>
                 <Suspense fallback={<Loading />}>
                     <Route path={[
+                        PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.REPOSITORIES],
                         PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.OPTIONS],
                     ]} render={props => (
                         <Settings {...props}>
                             <Switch>
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.REPOSITORIES]}
+                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.GROUP.SETTINGS.REPOSITORIES]}
+                                       exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.OPTIONS]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.GROUP.SETTINGS.OPTIONS]}
                                        exact={true} />

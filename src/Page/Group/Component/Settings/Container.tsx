@@ -3,7 +3,7 @@ import View from './View';
 import {IMenuItem} from './Interface';
 import {RouteComponentProps} from 'react-router-dom';
 import {CONFIG, Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
-import {SettingOutlined} from '@ant-design/icons';
+import {HomeOutlined, SettingOutlined} from '@ant-design/icons';
 import {promisify} from 'util';
 import {Group as GroupApi} from '../../../../Api';
 
@@ -78,6 +78,12 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
                     title: '设置',
                     key: PAGE_ID.GROUP.SETTINGS.OPTIONS,
                     to: RouterFunction.generateGroupSettingsRoute({id}),
+                },
+                {
+                    icon: <HomeOutlined />,
+                    title: '仓库管理',
+                    key: PAGE_ID.GROUP.SETTINGS.REPOSITORIES,
+                    to: RouterFunction.generateGroupSettingsRepositoriesRoute({id}),
                 },
             ],
         });

@@ -1,6 +1,8 @@
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from './CONFIG';
 import {
     IGroup,
+    IGroupSettings,
+    IGroupSettingsRepositories,
     IPersonalCenter,
     IRepositoryBranches,
     IRepositoryCode,
@@ -178,7 +180,7 @@ export function generateRepositorySettingsGroupsRoute(parameter: IRepositorySett
     return generateRepositorySettingsRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.GROUPS], parameter);
 }
 
-export function generateGroupRouteHelper(route: string, parameter: IGroup)
+export function generateGroupRouteHelper<T extends IGroup>(route: string, parameter: T)
 {
     const {id} = parameter;
     return route.replace(':id', id);
@@ -204,7 +206,12 @@ export function generateGroupSettingsRoute(parameter: IGroup)
     return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.SETTINGS], parameter);
 }
 
-export function generateGroupSettingsOptionsRoute(parameter: IGroup)
+export function generateGroupSettingsOptionsRoute(parameter: IGroupSettings)
 {
     return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.OPTIONS], parameter);
+}
+
+export function generateGroupSettingsRepositoriesRoute(parameter: IGroupSettingsRepositories)
+{
+    return generateGroupRouteHelper(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.REPOSITORIES], parameter);
 }

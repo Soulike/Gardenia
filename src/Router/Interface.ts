@@ -65,3 +65,5 @@ export interface IGroup
 }
 
 export interface IGroupSettings extends IGroup {}
+
+export interface IGroupSettingsRepositories extends IGroup {}
