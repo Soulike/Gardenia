@@ -5,6 +5,7 @@ import {PAGE_ID} from '../../../../Router/CONFIG';
 import {RouteComponentProps} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {SettingOutlined} from '@ant-design/icons';
+import {promisify} from 'util';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings>
 {
@@ -19,6 +20,8 @@ interface IState
 
 class Settings extends PureComponent<Readonly<IProps>, IState>
 {
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: Readonly<IProps>)
     {
         super(props);
@@ -30,39 +33,38 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
 
     async componentDidMount()
     {
-        await this.initMenuItems();
-        this.setActiveMenuItemKey();
+        await Promise.all([
+            this.initMenuItems(),
+            this.setActiveMenuItemKey(),
+        ]);
     }
 
-    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {match: {path: prePath}} = prevProps;
         const {match: {path}} = this.props;
         if (prePath !== path)
         {
-            this.setActiveMenuItemKey();
+            await this.setActiveMenuItemKey();
         }
     }
 
     initMenuItems = async () =>
     {
-        return new Promise(resolve =>
-        {
-            const {match: {params: {username, repository}}} = this.props;
-            this.setState({
-                menuItems: [
-                    {
-                        icon: <SettingOutlined />,
-                        title: '选项',
-                        key: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS,
-                        to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repository}),
-                    },
-                ],
-            }, resolve);
+        const {match: {params: {username, repository}}} = this.props;
+        await this.setStatePromise({
+            menuItems: [
+                {
+                    icon: <SettingOutlined />,
+                    title: '设置',
+                    key: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS,
+                    to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repository}),
+                },
+            ],
         });
     };
 
-    setActiveMenuItemKey = () =>
+    setActiveMenuItemKey = async () =>
     {
         const {location: {pathname}} = this.props;
         const {menuItems} = this.state;
@@ -70,7 +72,7 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
         {
             if (to === pathname)
             {
-                this.setState({
+                await this.setStatePromise({
                     activeItemKey: key,
                 });
                 break;
