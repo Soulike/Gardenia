@@ -44,7 +44,8 @@ function CriticalOperationConfirmModal(props: Readonly<IProps>)
                className={Style.CriticalOperationConfirmModal}
                visible={visible}
                onOk={onOk}
-               onCancel={onCancel}>
+               onCancel={onCancel}
+               destroyOnClose={true}>
             <div className={Style.content}>
                 <div className={Style.warningWrapper}>{warning}</div>
                 <Input className={Style.input} value={validateText}

@@ -1,13 +1,15 @@
 import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {IMenuItem} from './Interface';
-import {PAGE_ID} from '../../../../Router/CONFIG';
 import {RouteComponentProps} from 'react-router-dom';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
+import {CONFIG, Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {SettingOutlined} from '@ant-design/icons';
 import {promisify} from 'util';
+import {Group as GroupApi} from '../../../../Api';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings>
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+
+interface IProps extends RouteComponentProps<RouterInterface.IGroupSettings>
 {
     children: ReactNode,
 }
@@ -16,6 +18,7 @@ interface IState
 {
     activeItemKey: string,
     menuItems: IMenuItem[],
+    loading: boolean,
 }
 
 class Settings extends PureComponent<Readonly<IProps>, IState>
@@ -28,15 +31,27 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
         this.state = {
             menuItems: [],
             activeItemKey: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS,
+            loading: false,
         };
     }
 
     async componentDidMount()
     {
-        await Promise.all([
-            this.initMenuItems(),
-            this.setActiveMenuItemKey(),
-        ]);
+        await this.setStatePromise({loading: true});
+        const isAdmin = await this.isAdmin();
+        await this.setStatePromise({loading: false});
+        if (isAdmin)
+        {
+            await Promise.all([
+                this.initMenuItems(),
+                this.setActiveMenuItemKey(),
+            ]);
+        }
+        else
+        {
+            const {history} = this.props;
+            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.REPOSITORIES]);
+        }
     }
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
@@ -51,17 +66,32 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
 
     initMenuItems = async () =>
     {
-        const {match: {params: {username, repository}}} = this.props;
+        const {match: {params: {id}}} = this.props;
         await this.setStatePromise({
             menuItems: [
                 {
                     icon: <SettingOutlined />,
                     title: '设置',
-                    key: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS,
-                    to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repository}),
+                    key: PAGE_ID.GROUP.SETTINGS.OPTIONS,
+                    to: RouterFunction.generateGroupSettingsRoute({id}),
                 },
             ],
         });
+    };
+
+    isAdmin = async () =>
+    {
+        const {match: {params: {id}}} = this.props;
+        const isAdminWrapper = await GroupApi.isAdmin({id: Number.parseInt(id)});
+        if (isAdminWrapper !== null)
+        {
+            const {isAdmin} = isAdminWrapper;
+            return isAdmin;
+        }
+        else
+        {
+            return false;
+        }
     };
 
     setActiveMenuItemKey = async () =>
@@ -83,9 +113,9 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
     render()
     {
         const {children} = this.props;
-        const {activeItemKey, menuItems} = this.state;
+        const {activeItemKey, menuItems, loading} = this.state;
         return (
-            <View menuItems={menuItems} activeItemKey={activeItemKey}>{children}</View>);
+            <View loading={loading} menuItems={menuItems} activeItemKey={activeItemKey}>{children}</View>);
     }
 }
 

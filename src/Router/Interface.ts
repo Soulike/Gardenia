@@ -63,3 +63,5 @@ export interface IGroup
 {
     readonly id: string,
 }
+
+export interface IGroupSettings extends IGroup {}
