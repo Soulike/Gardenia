@@ -44,6 +44,19 @@
 
             }
         }
+
+        .buttonArea {
+            display: flex;
+            align-items: center;
+
+            .buttonWrapper {
+                margin-right: 5px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
     }
 
     .tab {

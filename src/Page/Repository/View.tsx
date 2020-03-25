@@ -9,8 +9,11 @@ import TAB_KEY from './TAB_KEY';
 import {TabsProps} from 'antd/lib/tabs';
 import ForkButton from './Component/ForkButton';
 import {CodeOutlined, ExclamationCircleOutlined, PullRequestOutlined, SettingOutlined} from '@ant-design/icons';
+import StarButton from './Component/StarButton';
+import {IRootState, IState as StoreState} from '../../Store';
+import {connect} from 'react-redux';
 
-interface IProps
+interface IProps extends IRootState
 {
     repository: Readonly<RepositoryClass>,
     loading: boolean,
@@ -35,6 +38,7 @@ function RepositoryView(props: Readonly<IProps>)
         children,
         openPullRequestAmount,
         openIssueAmount,
+        isLoggedIn,
     } = props;
     return (
         loading ? null :
@@ -74,8 +78,19 @@ function RepositoryView(props: Readonly<IProps>)
                             </div>
                         </div>
                     </div>
-                    <div className={Style.buttonWrapper}>
-                        <ForkButton />
+                    <div className={Style.buttonArea}>
+                        {
+                            isLoggedIn ? (
+                                <>
+                                    <div className={Style.buttonWrapper}>
+                                        <StarButton />
+                                    </div>
+                                    <div className={Style.buttonWrapper}>
+                                        <ForkButton />
+                                    </div>
+                                </>
+                            ) : null
+                        }
                     </div>
                 </div>
                 <Tabs defaultActiveKey={TAB_KEY.CODE} type={'card'} className={Style.tab} tabBarStyle={{
@@ -120,4 +135,10 @@ function RepositoryView(props: Readonly<IProps>)
     );
 }
 
-export default React.memo(RepositoryView);
+const mapStateToProps = (state: StoreState) =>
+{
+    const {Root: {isLoggedIn}} = state;
+    return {isLoggedIn};
+};
+
+export default React.memo(connect(mapStateToProps)(RepositoryView));
