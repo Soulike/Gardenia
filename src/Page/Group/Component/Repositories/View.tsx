@@ -16,7 +16,7 @@ function RepositoriesView(props: Readonly<IProps>)
     return (
         <div className={Style.Repositories}>
             <div className={Style.banner}>
-                <Alert type={'info'} showIcon={true} banner={true} message={'小组成员可在仓库设置中加入小组'} />
+                <Alert type={'info'} showIcon={true} banner={true} message={'小组成员可在仓库设置中将仓库加入小组'} />
             </div>
             <RepositoryList repositories={repositories} loading={loading} showUsername={true} />
         </div>

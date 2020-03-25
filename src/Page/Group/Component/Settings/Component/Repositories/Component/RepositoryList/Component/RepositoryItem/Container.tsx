@@ -46,6 +46,7 @@ class RepositoryItem extends PureComponent<IProps, IState>
             notification.success({message: `仓库 ${username}/${name} 已从 #${id} 小组中删除`});
             eventEmitter.emit(EVENT.repositoryChange);
         }
+        await this.setStatePromise({loading: false});
     };
 
     render()
