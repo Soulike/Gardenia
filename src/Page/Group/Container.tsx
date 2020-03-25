@@ -1,12 +1,13 @@
 import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {RouteComponentProps} from 'react-router';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
+import {CONFIG as ROUTER_CONFIG, Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {TabsProps} from 'antd/lib/tabs';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {Group as GroupClass} from '../../Class';
 import {Group as GroupApi} from '../../Api';
 import CONFIG from '../../CONFIG';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface IProps extends RouteComponentProps<RouterInterface.IGroup>
 {
@@ -36,25 +37,43 @@ class Group extends PureComponent<Readonly<IProps>, IState>
 
     async componentDidMount()
     {
-        this.setTabActiveKey();
-        this.setState({loading: true});
-        await Promise.all([
-            this.loadGroup(),
-            this.loadIsAdmin(),
-        ]);
-        this.setState({loading: false});
-        this.setTitle();
-    }
-
-    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
-    {
-        const {match: {path}} = this.props;
-        const {match: {path: prevPath}} = prevProps;
-        if (path !== prevPath)
+        if (this.isValidURL())
         {
             this.setTabActiveKey();
+            this.setState({loading: true});
+            await Promise.all([
+                this.loadGroup(),
+                this.loadIsAdmin(),
+            ]);
+            this.setState({loading: false});
+            this.setTitle();
+        }
+        else
+        {
+            const {history} = this.props;
+            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     }
+
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    {
+        const {match: {path: prePath, params: {id: prevId}}} = prevProps;
+        const {match: {path, params: {id}}} = this.props;
+        if (id !== prevId)
+        {
+            await this.componentDidMount();
+        }
+        else if (prePath !== path)
+        {
+            await this.setTabActiveKey();
+        }
+    }
+
+    isValidURL = () =>
+    {
+        const {match: {params: {id}}} = this.props;
+        return !Number.isNaN(Number.parseInt(id));
+    };
 
     setTitle = () =>
     {

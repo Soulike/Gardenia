@@ -7,6 +7,7 @@ import {
     ADD_ADMINS,
     ADD_REPOSITORY,
     ADMINS,
+    CHANGE_NAME,
     DISMISS,
     GET_ADMINISTRATING_BY_ACCOUNT,
     GET_BY_ACCOUNT,
@@ -18,6 +19,7 @@ import {
     REMOVE_REPOSITORIES,
     REPOSITORIES,
 } from './ROUTE';
+import nProgress from 'nprogress';
 
 export async function add(group: Readonly<Omit<Group, 'id'>>): Promise<Readonly<Pick<Group, 'id'>> | null>
 {
@@ -86,11 +88,33 @@ export async function info(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly
     }
 }
 
-export async function accounts(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly<Readonly<Account>[]> | null>
+export async function changeName(group: Readonly<Pick<Group, 'id' | 'name'>>): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Readonly<Account>[]>> = await axios.get(ACCOUNTS,
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
+            await axios.post(CHANGE_NAME, group);
+        if (isSuccessful)
+        {
+            return true;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function accounts(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly<Account[]> | null>
+{
+    nProgress.start();
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Account[]>> = await axios.get(ACCOUNTS,
             {
                 params: {
                     json: {group},
@@ -108,6 +132,10 @@ export async function accounts(group: Readonly<Pick<Group, 'id'>>): Promise<Read
     catch (e)
     {
         return null;
+    }
+    finally
+    {
+        nProgress.done();
     }
 }
 

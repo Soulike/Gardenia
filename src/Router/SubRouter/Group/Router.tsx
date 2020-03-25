@@ -18,6 +18,7 @@ export default () =>
                     PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.REPOSITORIES],
                     PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.MEMBERS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.SETTINGS],
+                    PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.REPOSITORIES],
                     PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.GROUP],
                 ]} render={props =>
                 {
@@ -30,7 +31,10 @@ export default () =>
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.MEMBERS]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.GROUP.MEMBERS]}
                                        exact={true} />
-                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.SETTINGS]}
+                                <Route path={[
+                                    PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.SETTINGS],
+                                    PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.REPOSITORIES],
+                                ]}
                                        render={SettingsRouter}
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.GROUP]}

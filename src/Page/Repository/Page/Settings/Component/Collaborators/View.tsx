@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import SettingsTitle from '../../../../../Group/Component/Settings/Component/SettingsTitle';
+import SettingsTitle from '../../../../../../Component/SettingsTitle';
 import AddCollaborationButton from './Component/AddCollaborationButton';
 import CollaboratorList from './Component/CollaboratorList';
 import {Alert} from 'antd';

@@ -24,7 +24,7 @@ function GroupList(props: Readonly<IProps>)
               renderItem={({id, name}) => (
                   <NewTabLink className={Style.groupWrapper}
                               to={RouterFunction.generateGroupRoute({id: id.toString()})}>
-                      <Card className={Style.group} hoverable={true} size={'small'}>
+                      <Card className={Style.group} size={'small'}>
                           <Card.Meta avatar={
                               <>
                                   <TeamOutlined /> {id}

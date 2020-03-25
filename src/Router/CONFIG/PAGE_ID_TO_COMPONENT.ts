@@ -35,6 +35,7 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
 
     [PAGE_ID.GROUP.SETTINGS.SETTINGS]: React.lazy(() => import('../../Page/Group/Component/Settings/Component/Options')),
     [PAGE_ID.GROUP.SETTINGS.OPTIONS]: React.lazy(() => import('../../Page/Group/Component/Settings/Component/Options')),
+    [PAGE_ID.GROUP.SETTINGS.REPOSITORIES]: React.lazy(() => import('../../Page/Group/Component/Settings/Component/Repositories')),
 
     [PAGE_ID.SETTING.SETTING]: React.lazy(() => import('../../Page/Setting/Component/Profile')),
     [PAGE_ID.SETTING.PROFILE]: React.lazy(() => import('../../Page/Setting/Component/Profile')),

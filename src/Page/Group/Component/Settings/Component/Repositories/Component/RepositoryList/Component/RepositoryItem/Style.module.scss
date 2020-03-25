@@ -1,0 +1,19 @@
+.RepositoryItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .infoWrapper {
+        display: flex;
+        align-items: center;
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        .tag {
+            margin-right: 5px;
+        }
+    }
+}

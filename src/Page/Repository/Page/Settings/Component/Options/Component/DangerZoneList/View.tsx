@@ -1,15 +1,13 @@
 import React from 'react';
-import {List} from 'antd';
 import DeleteRepositoryItem from './Component/DeleteRepositoryItem';
-import TransferOwnershipItem from './Component/TransferOwnershipItem';
+import DangerZone from '../../../../../../../../Component/DangerZone';
 
 function DangerZoneList()
 {
     return (
-        <List bordered={true} split={true}>
-            <TransferOwnershipItem />
+        <DangerZone>
             <DeleteRepositoryItem />
-        </List>
+        </DangerZone>
     );
 }
 

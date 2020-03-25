@@ -32,6 +32,16 @@ class Repositories extends PureComponent<Readonly<IProps>, IState>
         await this.loadRepositories();
     }
 
+    async componentDidUpdate(prevProps: Readonly<Readonly<IProps>>, prevState: Readonly<IState>, snapshot?: any)
+    {
+        const {match: {params: {id}}} = this.props;
+        const {match: {params: {id: prevId}}} = prevProps;
+        if (id !== prevId)
+        {
+            await this.componentDidMount();
+        }
+    }
+
     loadRepositories = async () =>
     {
         const {match: {params: {id}}} = this.props;

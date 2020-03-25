@@ -24,11 +24,11 @@ function GroupView(props: Readonly<IProps>)
             <div className={Style.Group}>
                 <div className={Style.header}>
                     <div className={Style.basicInfo}>
-                        <div className={Style.groupId}>
+                        <div className={Style.icon}>
                             <TeamOutlined />
-                            {id}
                         </div>
                         <div className={Style.groupName}>{name}</div>
+                        <div className={Style.groupId}>({id})</div>
                     </div>
                 </div>
                 <Tabs type={'card'} className={Style.tab} tabBarStyle={{
