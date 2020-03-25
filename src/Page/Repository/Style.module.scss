@@ -16,6 +16,10 @@
             display: flex;
             align-items: flex-start;
 
+            .tag {
+                margin-right: 5px;
+            }
+
             .usernameAndNameWrapper {
                 display: flex;
                 flex-direction: column;

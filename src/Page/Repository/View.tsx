@@ -41,7 +41,9 @@ function RepositoryView(props: Readonly<IProps>)
             <div className={Style.Repository}>
                 <div className={Style.header}>
                     <div className={Style.basicInfo}>
-                        <AccessibilityTag isPublic={isPublic} />
+                        <div className={Style.tag}>
+                            <AccessibilityTag isPublic={isPublic} />
+                        </div>
                         <div className={Style.usernameAndNameWrapper}>
                             <div className={Style.usernameAndName}>
                                 <Link to={RouterFunction.generatePersonalCenterRoute({username})}>

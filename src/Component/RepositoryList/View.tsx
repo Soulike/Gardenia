@@ -29,7 +29,9 @@ function RepositoryList(props: Readonly<IProps>)
                           <Card className={Style.repository}>
                               <Card.Meta title={
                                   <React.Fragment>
-                                      <AccessibilityTag isPublic={isPublic} />
+                                      <div className={Style.tag}>
+                                          <AccessibilityTag isPublic={isPublic} />
+                                      </div>
                                       {
                                           showUsername ? `${username}/` : ''
                                       }
