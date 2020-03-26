@@ -9,6 +9,7 @@ import CONFIG from '../../CONFIG';
 import Repositories from './Component/Repositories';
 import Groups from './Component/Groups';
 import Collaborations from './Component/Collaborations';
+import Stars from './Component/Stars';
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
 
@@ -26,14 +27,19 @@ class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
             component: <Repositories />,
         },
         {
-            key: 'groups',
-            title: '小组',
-            component: <Groups />,
-        },
-        {
             key: 'collaborations',
             title: '合作仓库',
             component: <Collaborations />,
+        },
+        {
+            key: 'stars',
+            title: 'Stars',
+            component: <Stars />,
+        },
+        {
+            key: 'groups',
+            title: '小组',
+            component: <Groups />,
         },
     ];
 

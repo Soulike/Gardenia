@@ -51,14 +51,14 @@ export async function remove(repository: Readonly<Pick<Repository, 'username' | 
     }
 }
 
-export async function getStaredRepositories(account?: Readonly<Pick<Account, 'username'>>): Promise<{ repositories: Repository[] } | null>
+export async function getStaredRepositories(account?: Readonly<Pick<Account, 'username'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ repositories: Repository[] } | null>
 {
     nProgress.start();
     try
     {
         const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ repositories: Repository[] }>> = await axios.get(GET_STARED_REPOSITORIES, {
             params: {
-                json: JSON.stringify({account}),
+                json: JSON.stringify({account, offset, limit}),
             },
         });
         if (isSuccessful)
