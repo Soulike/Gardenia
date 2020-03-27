@@ -6,6 +6,7 @@ import AccessibilityTag from '../../../AccessibilityTag/View';
 import NewTabLink from '../../../NewTabLink/View';
 import {Repository as RepositoryClass} from '../../../../Class';
 import StarButton from './Component/StarButton';
+import ForkAmount from '../../../ForkAmount';
 
 interface IProps
 {
@@ -42,6 +43,11 @@ function Repository(props: IProps)
                         <div>
                             {description.length === 0 ? <i>没有描述</i> : description}
                         </div>} />
+                    <div className={Style.repositoryMoreInfo}>
+                        <div className={Style.forkAmountWrapper}>
+                            <ForkAmount repository={repository} />
+                        </div>
+                    </div>
                 </Card>
             </NewTabLink>
         </div>
