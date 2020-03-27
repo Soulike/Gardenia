@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import View from './View';
+import View from '../../../../Component/StarButton';
 import {ButtonProps} from 'antd/lib/button';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../Router';

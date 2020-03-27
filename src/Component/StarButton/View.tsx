@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Tooltip} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 import {StarFilled, StarOutlined} from '@ant-design/icons';
-import {String} from '../../../../Function';
+import {String} from '../../Function';
 
 interface IProps
 {

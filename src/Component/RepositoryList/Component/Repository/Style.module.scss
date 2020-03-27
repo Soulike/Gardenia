@@ -1,0 +1,19 @@
+.Repository {
+    display: block;
+    margin: 3vh 0;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .repository {
+        .tag {
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+}
