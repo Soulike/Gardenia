@@ -11,9 +11,25 @@
     }
 
     .repository {
-        .tag {
-            display: inline-block;
-            margin-right: 5px;
+
+        .title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .infoWrapper {
+                display: flex;
+                align-items: center;
+
+                .tag {
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+
+                .name {
+
+                }
+            }
         }
     }
 }

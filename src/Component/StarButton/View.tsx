@@ -18,7 +18,14 @@ function StarButton(props: IProps)
     // TODO: star 人员列表
     return (
         <Button.Group size={'small'}>
-            <Button onClick={onClick} loading={loading} disabled={loading}>
+            <Button onClick={async e =>
+            {
+                e.preventDefault();
+                if (typeof onClick === 'function')
+                {
+                    await onClick(e);
+                }
+            }} loading={loading} disabled={loading}>
                 {
                     hasStared ? (
                         <>
@@ -30,7 +37,7 @@ function StarButton(props: IProps)
                 }
             </Button>
             <Tooltip title={starAmount}>
-                <Button>
+                <Button onClick={async e => e.preventDefault()}>
                     {String.getNumberAbbreviation(starAmount)}
                 </Button>
             </Tooltip>
