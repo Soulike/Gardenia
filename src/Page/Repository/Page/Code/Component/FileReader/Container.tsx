@@ -62,7 +62,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         return new Promise(async resolve =>
         {
             const {match: {params: {username, repository: name, path, branch}}} = this.props;
-            const lastCommit = await RepositoryInfo.lastCommit({username}, {name}, branch!, path);
+            const lastCommit = await RepositoryInfo.lastBranchCommit({username}, {name}, branch!, path);
             if (lastCommit !== null)
             {
                 this.setState({lastCommit}, () => resolve());

@@ -114,7 +114,7 @@ class FileList extends Component<IProps, IState>
         {
             const {match: {params: {username, repository: name, branch, path}}} = this.props;
             const {masterBranchName} = this.state;
-            const lastCommit = await RepositoryInfo.lastCommit(
+            const lastCommit = await RepositoryInfo.lastBranchCommit(
                 {username}, {name}, branch ? branch : masterBranchName, path);
             if (lastCommit !== null)
             {

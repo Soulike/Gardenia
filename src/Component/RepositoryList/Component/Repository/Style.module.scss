@@ -1,0 +1,46 @@
+.Repository {
+    display: block;
+    margin: 3vh 0;
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .repository {
+
+        .title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .infoWrapper {
+                display: flex;
+                align-items: center;
+
+                .tag {
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+
+                .name {
+
+                }
+            }
+        }
+
+        .repositoryMoreInfo {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            .forkAmountWrapper {
+                margin-right: 20px;
+            }
+        }
+    }
+}

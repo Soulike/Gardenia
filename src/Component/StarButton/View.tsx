@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Tooltip} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 import {StarFilled, StarOutlined} from '@ant-design/icons';
-import {String} from '../../../../Function';
+import {String} from '../../Function';
 
 interface IProps
 {
@@ -18,7 +18,14 @@ function StarButton(props: IProps)
     // TODO: star 人员列表
     return (
         <Button.Group size={'small'}>
-            <Button onClick={onClick} loading={loading} disabled={loading}>
+            <Button onClick={async e =>
+            {
+                e.preventDefault();
+                if (typeof onClick === 'function')
+                {
+                    await onClick(e);
+                }
+            }} loading={loading} disabled={loading}>
                 {
                     hasStared ? (
                         <>
@@ -30,7 +37,7 @@ function StarButton(props: IProps)
                 }
             </Button>
             <Tooltip title={starAmount}>
-                <Button>
+                <Button onClick={async e => e.preventDefault()}>
                     {String.getNumberAbbreviation(starAmount)}
                 </Button>
             </Tooltip>

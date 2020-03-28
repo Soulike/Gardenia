@@ -1,14 +1,13 @@
 import React, {PureComponent} from 'react';
-import View from '../../../../Component/StarButton';
+import View from '../../../../../StarButton';
 import {ButtonProps} from 'antd/lib/button';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Interface as RouterInterface} from '../../../../Router';
 import {promisify} from 'util';
-import {Star as StarApi} from '../../../../Api';
+import {Star as StarApi} from '../../../../../../Api';
+import {Repository} from '../../../../../../Class';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
+interface IProps
 {
-
+    repository: Readonly<Pick<Repository, 'username' | 'name'>>
 }
 
 interface IState
@@ -44,9 +43,9 @@ class StarButton extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username, repository}}} = this.props;
-        const {match: {params: {username: prevUsername, repository: prevRepository}}} = prevProps;
-        if (username !== prevUsername || repository !== prevRepository)
+        const {repository} = this.props;
+        const {repository: prevRepository} = prevProps;
+        if (repository !== prevRepository)
         {
             await this.componentDidMount();
         }
@@ -54,8 +53,8 @@ class StarButton extends PureComponent<IProps, IState>
 
     loadHasStared = async () =>
     {
-        const {match: {params: {username, repository}}} = this.props;
-        const hasStaredWrapper = await StarApi.isStaredRepository({username, name: repository});
+        const {repository: {username, name}} = this.props;
+        const hasStaredWrapper = await StarApi.isStaredRepository({username, name});
         if (hasStaredWrapper !== null)
         {
             const {isStared} = hasStaredWrapper;
@@ -65,8 +64,8 @@ class StarButton extends PureComponent<IProps, IState>
 
     loadStarAmount = async () =>
     {
-        const {match: {params: {username, repository}}} = this.props;
-        const starAmountWrapper = await StarApi.getRepositoryStarAmount({username, name: repository});
+        const {repository: {username, name}} = this.props;
+        const starAmountWrapper = await StarApi.getRepositoryStarAmount({username, name});
         if (starAmountWrapper !== null)
         {
             const {amount} = starAmountWrapper;
@@ -77,11 +76,11 @@ class StarButton extends PureComponent<IProps, IState>
     onClick: ButtonProps['onClick'] = async () =>
     {
         const {hasStared, starAmount} = this.state;
-        const {match: {params: {username, repository}}} = this.props;
+        const {repository: {username, name}} = this.props;
         await this.setStatePromise({loading: true});
         if (hasStared)
         {
-            const result = await StarApi.remove({username, name: repository});
+            const result = await StarApi.remove({username, name});
             if (result !== null)
             {
                 await this.setStatePromise({hasStared: false, starAmount: starAmount - 1});
@@ -89,7 +88,7 @@ class StarButton extends PureComponent<IProps, IState>
         }
         else
         {
-            const result = await StarApi.add({username, name: repository});
+            const result = await StarApi.add({username, name});
             if (result !== null)
             {
                 await this.setStatePromise({hasStared: true, starAmount: starAmount + 1});
@@ -108,4 +107,4 @@ class StarButton extends PureComponent<IProps, IState>
     }
 }
 
-export default withRouter(StarButton);
+export default StarButton;
