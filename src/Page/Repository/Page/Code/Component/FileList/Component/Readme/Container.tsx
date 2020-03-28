@@ -5,6 +5,7 @@ import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
 import {join} from 'path';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {File} from '../../../../../../../../Function';
+import {promisify} from 'util';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -20,13 +21,15 @@ interface IState
 
 class Readme extends PureComponent<Readonly<IProps>, IState>
 {
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {
             exists: false,
             readme: '',
-            loading: true,
+            loading: false,
         };
     }
 
@@ -35,16 +38,9 @@ class Readme extends PureComponent<Readonly<IProps>, IState>
         const {commitHash} = this.props;
         if (commitHash)
         {
-            this.setState({loading: true});
-            if (await this.readmeExists())
-            {
-                await this.loadRawReadme();
-            }
-            else
-            {
-                this.setState({exists: false});
-            }
-            this.setState({loading: false});
+            await this.setStatePromise({loading: true});
+            await this.loadRawReadme();
+            await this.setStatePromise({loading: false});
         }
     }
 
@@ -58,20 +54,29 @@ class Readme extends PureComponent<Readonly<IProps>, IState>
         }
     }
 
-    readmeExists = async () =>
-    {
-        const {match: {params: {username, repository, path}}, commitHash} = this.props;
-        const info = await RepositoryInfo.fileInfo({username}, {name: repository}, join(path ? path : '', 'README.md'), commitHash);
-        return info !== null && info.exists;
-    };
-
     loadRawReadme = async () =>
     {
+        await this.setStatePromise({exists: false});
+        const readmeNames = [
+            'README.md', 'readme.md', 'readMe.md', 'ReadMe.md',
+            'README.MD', 'readme.MD', 'readMe.MD', 'ReadMe.MD',
+        ];
         const {match: {params: {username, repository, path}}, commitHash} = this.props;
-        const raw = await RepositoryInfo.rawFile({username}, {name: repository}, join(path ? path : '', 'README.md'), commitHash);
-        if (raw !== null)
+        for (const readmeName of readmeNames)
         {
-            this.setState({readme: await File.transformBlobToString(raw), exists: true});
+            const info = await RepositoryInfo.fileInfo({username}, {name: repository}, join(path ? path : '', readmeName), commitHash);
+            if (info !== null && info.exists)
+            {
+                const raw = await RepositoryInfo.rawFile({username}, {name: repository}, join(path ? path : '', readmeName), commitHash);
+                if (raw !== null)
+                {
+                    await this.setStatePromise({
+                        readme: await File.transformBlobToString(raw),
+                        exists: true,
+                    });
+                }
+                break;
+            }
         }
     };
 
