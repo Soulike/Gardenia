@@ -26,6 +26,7 @@ import {
     FORK_FROM,
     FORK_REPOSITORIES,
     HAS_COMMON_ANCESTOR,
+    LAST_BRANCH_COMMIT,
     LAST_COMMIT,
     RAW_FILE,
     REPOSITORY,
@@ -111,14 +112,39 @@ export async function branchNames(repository: Readonly<Pick<RepositoryClass, 'us
     }
 }
 
-export async function lastCommit(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<RepositoryClass, 'name'>>, branch: Readonly<string>, filePath?: Readonly<string>): Promise<Readonly<Commit> | null>
+export async function lastBranchCommit(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<RepositoryClass, 'name'>>, branch: Readonly<string>, filePath?: Readonly<string>): Promise<Readonly<Commit> | null>
 {
     try
     {
         const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Commit>> =
-            await axios.get(LAST_COMMIT, {
+            await axios.get(LAST_BRANCH_COMMIT, {
                 params: {
                     json: JSON.stringify({account, repository, branch, filePath}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function lastCommit(repository: Readonly<Pick<Repository, 'username' | 'name'>>): Promise<Commit | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Commit | null>> =
+            await axios.get(LAST_COMMIT, {
+                params: {
+                    json: JSON.stringify({repository}),
                 },
             });
         if (isSuccessful)

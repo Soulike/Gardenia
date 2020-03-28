@@ -7,6 +7,7 @@ import NewTabLink from '../../../NewTabLink/View';
 import {Repository as RepositoryClass} from '../../../../Class';
 import StarButton from './Component/StarButton';
 import ForkAmount from '../../../ForkAmount';
+import LastUpdateInfo from './Component/LastUpdateInfo';
 
 interface IProps
 {
@@ -46,6 +47,9 @@ function Repository(props: IProps)
                     <div className={Style.repositoryMoreInfo}>
                         <div className={Style.forkAmountWrapper}>
                             <ForkAmount repository={repository} />
+                        </div>
+                        <div className={Style.updateInfoWrapper}>
+                            <LastUpdateInfo repository={repository} />
                         </div>
                     </div>
                 </Card>
