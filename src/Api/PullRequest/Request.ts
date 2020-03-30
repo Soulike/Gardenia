@@ -157,7 +157,7 @@ export async function get(repository: Readonly<Pick<Repository, 'username' | 'na
 {
     try
     {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<PullRequest>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<PullRequest | null>> =
             await axios.get(GET, {
                 params: {
                     json: JSON.stringify({repository, pullRequest}),

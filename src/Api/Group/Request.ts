@@ -67,7 +67,7 @@ export async function info(group: Readonly<Pick<Group, 'id'>>): Promise<Readonly
 {
     try
     {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Group>> = await axios.get(INFO,
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Group | null>> = await axios.get(INFO,
             {
                 params: {
                     json: {group},

@@ -98,10 +98,14 @@ class DismissGroupItem extends PureComponent<Readonly<IProps>, IState>
                         {
                             notification.success({message: `小组 #${groupId} 已解散`});
                             await this.setStatePromise({modalVisible: false});
-                            history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
+                            return history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
                         }
                     }
                 }
+            }
+            else
+            {
+                return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
             }
             await this.setStatePromise({modalConfirmLoading: false});
         }

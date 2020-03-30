@@ -50,7 +50,7 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
         else
         {
             const {history} = this.props;
-            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.REPOSITORIES]);
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.REPOSITORIES]);
         }
     }
 

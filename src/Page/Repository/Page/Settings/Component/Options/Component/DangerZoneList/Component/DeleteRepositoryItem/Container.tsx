@@ -74,7 +74,7 @@ class DeleteRepositoryItem extends PureComponent<Readonly<IProps>, IState>
                     {
                         notification.success({message: '仓库删除成功'});
                         this.setState({modalVisible: false});
-                        history.replace(RouterFunction.generatePersonalCenterRoute({username}));
+                        return history.replace(RouterFunction.generatePersonalCenterRoute({username}));
                     }
                 }
                 else

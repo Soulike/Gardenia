@@ -82,7 +82,7 @@ class PullRequestPoster extends PureComponent<IProps, IState>
             if (result !== null)
             {
                 notification.success({message: '创建 Pull Request 成功'});
-                history.replace(RouterFunction.generateRepositoryPullRequestsRoute({
+                return history.replace(RouterFunction.generateRepositoryPullRequestsRoute({
                     username: targetRepositoryUsername,
                     repository: targetRepositoryName,
                 }));

@@ -68,7 +68,7 @@ class CreateIssue extends PureComponent<IProps, IState>
             if (result !== null)
             {
                 notification.success({message: 'Issue 创建成功'});
-                history.replace(RouterFunction.generateRepositoryIssuesRoute({
+                return history.replace(RouterFunction.generateRepositoryIssuesRoute({
                     username, repository: name,
                 }));
             }

@@ -68,13 +68,17 @@ class PullRequest extends PureComponent<IProps, IState>
         const no = Number.parseInt(noString);
         if (Number.isNaN(no) || no <= 0)
         {
-            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
         await loadingPullRequest();
         const pullRequest = await PullRequestApi.get({username, name: repositoryName}, {no});
         if (pullRequest !== null)
         {
             await loadedPullRequest(pullRequest);
+        }
+        else
+        {
+            return history.push(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 

@@ -17,7 +17,7 @@ class BranchButton extends PureComponent<IProps>
         return () =>
         {
             const {history, match: {params: {username, repository, path}}} = this.props;
-            history.replace(
+            return history.replace(
                 RouterFunction.generateRepositoryCommitsRoute(
                     {
                         username,

@@ -31,7 +31,7 @@ class RequireLogin extends PureComponent<IProps>
                 if (!isValid)
                 {
                     notification.info({message: '请先登录'});
-                    history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
+                    return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
                 }
             }
         }

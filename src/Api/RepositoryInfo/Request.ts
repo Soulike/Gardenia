@@ -37,11 +37,11 @@ import {
 import {ObjectType} from '../../CONSTANT';
 import nProgress from 'nprogress';
 
-export async function repository(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<RepositoryClass, 'name'>>): Promise<Readonly<RepositoryClass> | null>
+export async function repository(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<RepositoryClass, 'name'>>): Promise<RepositoryClass | null>
 {
     try
     {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<RepositoryClass>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<RepositoryClass | null>> =
             await axios.get(REPOSITORY, {
                 params: {
                     json: JSON.stringify({account, repository}),

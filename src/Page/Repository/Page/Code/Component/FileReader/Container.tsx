@@ -82,7 +82,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
                 const {exists, size, isBinary} = fileInfo;
                 if (!exists)
                 {
-                    history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+                    return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
                 }
                 else
                 {
