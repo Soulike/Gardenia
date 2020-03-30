@@ -1,9 +1,11 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {Interface as RouterInterface} from '../../../../Router';
+import {CONFIG, Interface as RouterInterface} from '../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Profile as ProfileApi} from '../../../../Api';
 import {Profile as ProfileClass} from '../../../../Class';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter>
 {
@@ -42,11 +44,15 @@ class Profile extends PureComponent<Readonly<IProps>, IState>
 
     loadProfile = async () =>
     {
-        const {match: {params: {username}}} = this.props;
+        const {match: {params: {username}}, history} = this.props;
         const profile = await ProfileApi.get({username});
         if (profile !== null)
         {
             this.setState({profile});
+        }
+        else
+        {
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 

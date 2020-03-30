@@ -4,11 +4,11 @@ import {notification} from 'antd';
 import {GET, GET_BY_EMAIL, SET, UPLOAD_AVATAR} from './ROUTE';
 import nProgress from 'nprogress';
 
-export async function get(account?: Readonly<Pick<Account, 'username'>>): Promise<Readonly<Profile> | null>
+export async function get(account?: Readonly<Pick<Account, 'username'>>): Promise<Profile | null>
 {
     try
     {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Profile>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Profile | null>> =
             await axios.get(GET, {
                 params: {
                     json: JSON.stringify({account}),

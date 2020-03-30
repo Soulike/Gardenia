@@ -152,7 +152,7 @@ class ChangePassword extends PureComponent<IProps, IState>
                 notification.success({message: '修改密码成功', description: '请使用新密码登录'});
                 const {setLoggedOut, history} = this.props;
                 await setLoggedOut();
-                history.push(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
+                return history.push(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
             }
             this.setState({loading: false});
         }

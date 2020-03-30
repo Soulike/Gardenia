@@ -5,8 +5,13 @@ import {ButtonProps} from 'antd/lib/button';
 import {Profile as ProfileApi} from '../../../../Api';
 import {notification} from 'antd';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../../../Validator';
+import {promisify} from 'util';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {CONFIG as ROUTER_CONFIG} from '../../../../Router';
 
-interface IProps {}
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
+
+interface IProps extends RouteComponentProps {}
 
 interface IState
 {
@@ -17,6 +22,8 @@ interface IState
 
 class Profile extends PureComponent<IProps, IState>
 {
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: IProps)
     {
         super(props);
@@ -29,17 +36,23 @@ class Profile extends PureComponent<IProps, IState>
 
     async componentDidMount()
     {
+        await this.setStatePromise({loading: true});
         await this.loadProfile();
+        await this.setStatePromise({loading: false});
     }
 
     loadProfile = async () =>
     {
-        this.setState({loading: true});
         const result = await ProfileApi.get();
         if (result !== null)
         {
             const {nickname, email} = result;
-            this.setState({nickname, email, loading: false});
+            await this.setStatePromise({nickname, email});
+        }
+        else
+        {
+            const {history} = this.props;
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 
@@ -110,4 +123,4 @@ class Profile extends PureComponent<IProps, IState>
     }
 }
 
-export default Profile;
+export default withRouter(Profile);

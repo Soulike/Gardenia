@@ -69,8 +69,8 @@ class Comments extends PureComponent<IProps, IState>
             const no = Number.parseInt(noString);
             if (Number.isNaN(no) || no <= 0)
             {
-                history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
                 resolve();
+                return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
             }
             else
             {

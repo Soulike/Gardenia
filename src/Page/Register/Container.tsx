@@ -190,7 +190,7 @@ class Register extends PureComponent<Readonly<IProps>, IState>
     onRegisterSuccess = () =>
     {
         notification.success({message: '注册成功'});
-        this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
+        return this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
     };
 
     render()

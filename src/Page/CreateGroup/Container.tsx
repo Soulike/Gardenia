@@ -82,7 +82,7 @@ class CreateGroup extends PureComponent<Readonly<IProps>, IState>
                 message: '小组创建成功',
                 description: '您已自动成为小组管理员，邀请更多成员进行协作吧！',
             });
-            history.push(RouterFunction.generateGroupRoute({id: id.toString()}));
+            return history.push(RouterFunction.generateGroupRoute({id: id.toString()}));
         }
     };
 

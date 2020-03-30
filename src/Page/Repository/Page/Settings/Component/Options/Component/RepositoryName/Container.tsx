@@ -74,7 +74,7 @@ class RepositoryName extends PureComponent<Readonly<IProps>, IState>
         const {history} = this.props;
         const {match: {params: {username}}} = this.props;
         const {repositoryName: newRepositoryName} = this.state;
-        history.replace(RouterFunction.generateRepositorySettingsOptionsRoute({
+        return history.replace(RouterFunction.generateRepositorySettingsOptionsRoute({
             username,
             repository: newRepositoryName,
         }));

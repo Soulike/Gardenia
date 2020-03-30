@@ -6,9 +6,12 @@ import {notification} from 'antd';
 import {Profile} from '../../Api/Profile';
 import {Repository as RepositoryApi} from '../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Function as RouterFunction} from '../../Router';
+import {CONFIG as ROUTER_CONFIG, Function as RouterFunction} from '../../Router';
 import CONFIG from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
+import {promisify} from 'util';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface IProps extends RouteComponentProps {}
 
@@ -24,6 +27,8 @@ interface IState
 
 class CreateRepository extends PureComponent<Readonly<IProps>, IState>
 {
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: Readonly<IProps>)
     {
         super(props);
@@ -40,9 +45,9 @@ class CreateRepository extends PureComponent<Readonly<IProps>, IState>
     async componentDidMount()
     {
         this.setTitle();
-        this.setState({loading: true});
+        await this.setStatePromise({loading: true});
         await this.loadUsername();
-        this.setState({loading: false});
+        await this.setStatePromise({loading: false});
     }
 
     setTitle = () =>
@@ -56,7 +61,12 @@ class CreateRepository extends PureComponent<Readonly<IProps>, IState>
         if (profile !== null)
         {
             const {username} = profile;
-            this.setState({username});
+            await this.setStatePromise({username});
+        }
+        else
+        {
+            const {history} = this.props;
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
         }
     };
 
@@ -118,7 +128,7 @@ class CreateRepository extends PureComponent<Readonly<IProps>, IState>
         {
             const {history} = this.props;
             notification.success({message: '仓库创建成功'});
-            history.push(RouterFunction.generateRepositoryCodeRoute({username, repository: name}));
+            return history.push(RouterFunction.generateRepositoryCodeRoute({username, repository: name}));
         }
     };
 

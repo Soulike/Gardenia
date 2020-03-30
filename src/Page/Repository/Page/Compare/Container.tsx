@@ -72,7 +72,7 @@ class Compare extends PureComponent<IProps, IState>
         if (sourceRepositoryUsername === undefined || sourceRepositoryName === undefined
             || sourceRepositoryBranch === undefined || targetRepositoryBranch === undefined)
         {
-            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 

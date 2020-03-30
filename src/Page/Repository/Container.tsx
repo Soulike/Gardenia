@@ -206,23 +206,19 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         {
             case TAB_KEY.CODE:
             {
-                history.push(RouterFunction.generateRepositoryCodeRoute({username, repository: name}));
-                break;
+                return history.push(RouterFunction.generateRepositoryCodeRoute({username, repository: name}));
             }
             case TAB_KEY.ISSUES:
             {
-                history.push(RouterFunction.generateRepositoryIssuesRoute({username, repository: name}));
-                break;
+                return history.push(RouterFunction.generateRepositoryIssuesRoute({username, repository: name}));
             }
             case TAB_KEY.PULL_REQUESTS:
             {
-                history.push(RouterFunction.generateRepositoryPullRequestsRoute({username, repository: name}));
-                break;
+                return history.push(RouterFunction.generateRepositoryPullRequestsRoute({username, repository: name}));
             }
             case TAB_KEY.SETTINGS:
             {
-                history.push(RouterFunction.generateRepositorySettingsRoute({username, repository: name}));
-                break;
+                return history.push(RouterFunction.generateRepositorySettingsRoute({username, repository: name}));
             }
             default:
             {

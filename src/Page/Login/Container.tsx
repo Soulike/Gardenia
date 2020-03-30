@@ -5,11 +5,10 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Account as AccountApi} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
-import {setLoggedInAction} from '../../Component/Root/Action/Action';
+import {setLoggedInAction, setLoggedOutAction} from '../../Component/Root/Action/Action';
 import {connect} from 'react-redux';
 import {Account as AccountClass} from '../../Class';
 import {IRootState, IState as StoreState} from '../../Store';
-import {AnyAction} from 'redux';
 import qs from 'querystring';
 import CONFIG from '../../CONFIG';
 import {Function as ValidatorFunction} from '../../Validator';
@@ -18,10 +17,10 @@ const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 const {Account: AccountValidator} = ValidatorFunction;
 
-interface IProps extends RouteComponentProps
+interface IProps extends RouteComponentProps, IRootState
 {
-    setLoggedIn: () => AnyAction,
-    isLoggedIn: IRootState['isLoggedIn']
+    setLoggedIn: typeof setLoggedInAction,
+    setLoggedOut: typeof setLoggedOutAction,
 }
 
 interface IState
@@ -43,19 +42,42 @@ class Login extends PureComponent<Readonly<IProps>, IState>
         };
     }
 
-    componentDidMount()
+    async componentDidMount()
     {
         this.setTitle();
+        await this.checkSession();
         const {isLoggedIn} = this.props;
         if (isLoggedIn)
         {
-            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
+            return this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
         }
     }
 
     setTitle = () =>
     {
         document.title = `登录 - ${CONFIG.NAME}`;
+    };
+
+    checkSession = async () =>
+    {
+        const {setLoggedOut, setLoggedIn} = this.props;
+        const result = await AccountApi.checkSession();
+        if (result !== null)
+        {
+            const {isValid} = result;
+            if (isValid)
+            {
+                await setLoggedIn();
+            }
+            else
+            {
+                await setLoggedOut();
+            }
+        }
+        else
+        {
+            await setLoggedOut();
+        }
     };
 
     onUsernameInputChange: InputProps['onChange'] = e =>
@@ -119,11 +141,11 @@ class Login extends PureComponent<Readonly<IProps>, IState>
             && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]
             && prev !== PAGE_ID_TO_ROUTE[PAGE_ID.CHANGE_PASSWORD])
         {
-            this.props.history.push(prev);
+            return this.props.history.push(prev);
         }
         else
         {
-            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
+            return this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
         }
     };
 
@@ -147,6 +169,7 @@ const mapStateToProps = (state: StoreState) =>
 
 const mapDispatchToProps = {
     setLoggedIn: setLoggedInAction,
+    setLoggedOut: setLoggedOutAction,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

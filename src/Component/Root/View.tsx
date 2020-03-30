@@ -16,13 +16,12 @@ interface IProps extends RouteComponentProps<{}>
 {
     children?: ReactNode,
     isLoggedIn: boolean,
-    username: Profile['username'],
-    avatar: Profile['avatar'],
+    profile: Profile | null,
 }
 
 function RootView(props: Readonly<IProps>)
 {
-    const {children, isLoggedIn, username, avatar, location} = props;
+    const {children, isLoggedIn, profile, location} = props;
     const date = new Date();
     return (
         <div className={Style.Root}>
@@ -36,8 +35,8 @@ function RootView(props: Readonly<IProps>)
                     </Menu.Item>
                     <Menu.Item className={Style.accountMenu}>
                         {
-                            isLoggedIn ?
-                                <LoggedInMenu username={username} avatar={avatar} /> :
+                            isLoggedIn && profile !== null ?
+                                <LoggedInMenu username={profile.username} avatar={profile.avatar} /> :
                                 <UnLoggedInMenu currentURL={location.pathname} />
                         }
                     </Menu.Item>

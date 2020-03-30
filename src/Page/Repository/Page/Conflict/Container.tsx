@@ -70,7 +70,7 @@ class Conflict extends PureComponent<IConflictProps, IState>
         const no = Number.parseInt(noString);
         if (Number.isNaN(no))
         {
-            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 
@@ -87,10 +87,10 @@ class Conflict extends PureComponent<IConflictProps, IState>
                 if (status !== PULL_REQUEST_STATUS.OPEN)
                 {
                     notification.warn({message: `Pull Request #${no} 已关闭或合并`});
-                    history.replace(RouterFunction.generateRepositoryPullRequestRoute({
+                    resolve();
+                    return history.replace(RouterFunction.generateRepositoryPullRequestRoute({
                         username, repository: name, no: noString,
                     }));
-                    return resolve();
                 }
                 this.setState({pullRequest}, () => resolve());
             }
@@ -118,10 +118,10 @@ class Conflict extends PureComponent<IConflictProps, IState>
                         message: `${username}/${repository} #${no} 没有合并冲突`,
                         description: '您可直接执行合并操作',
                     });
-                    history.replace(RouterFunction.generateRepositoryPullRequestRoute({
+                    resolve();
+                    return history.replace(RouterFunction.generateRepositoryPullRequestRoute({
                         username, repository, no,
                     }));
-                    return resolve();
                 }
                 else
                 {
@@ -133,10 +133,10 @@ class Conflict extends PureComponent<IConflictProps, IState>
                                 message: `存在二进制文件冲突`,
                                 description: '请使用命令行解决冲突',
                             });
-                            history.replace(RouterFunction.generateRepositoryPullRequestRoute({
+                            resolve();
+                            return history.replace(RouterFunction.generateRepositoryPullRequestRoute({
                                 username, repository, no,
                             }));
-                            return resolve();
                         }
                     });
                 }
@@ -186,7 +186,7 @@ class Conflict extends PureComponent<IConflictProps, IState>
             {
                 notification.success({message: '解决冲突成功'});
                 const {history, match: {params: {username, repository, no}}} = this.props;
-                history.push(RouterFunction.generateRepositoryPullRequestRoute({
+                return history.push(RouterFunction.generateRepositoryPullRequestRoute({
                     username, repository, no,
                 }));
             }

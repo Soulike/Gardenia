@@ -4,8 +4,13 @@ import {Profile} from '../../../../Api';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {notification} from 'antd';
+import {CONFIG as ROUTER_CONFIG} from '../../../../Router';
+import {RouteComponentProps} from 'react-router-dom';
+import {promisify} from 'util';
 
-interface IProps {}
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
+
+interface IProps extends RouteComponentProps {}
 
 interface IState
 {
@@ -16,7 +21,8 @@ interface IState
 
 class Avatar extends PureComponent<IProps, IState>
 {
-    fileInputRef = React.createRef<HTMLInputElement>();
+    private fileInputRef = React.createRef<HTMLInputElement>();
+    private setStatePromise = promisify(this.setState);
 
     constructor(props: IProps)
     {
@@ -30,9 +36,9 @@ class Avatar extends PureComponent<IProps, IState>
 
     async componentDidMount()
     {
-        this.setState({loading: true});
+        await this.setStatePromise({loading: true});
         await this.loadAvatar();
-        this.setState({loading: false});
+        await this.setStatePromise({loading: false});
     }
 
     loadAvatar = async () =>
@@ -41,7 +47,12 @@ class Avatar extends PureComponent<IProps, IState>
         if (result !== null)
         {
             const {avatar} = result;
-            this.setState({avatar});
+            await this.setStatePromise({avatar});
+        }
+        else
+        {
+            const {history} = this.props;
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 
