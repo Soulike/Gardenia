@@ -1,0 +1,11 @@
+.NameAndAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .avatarWrapper {
+        height: 1.5em;
+        width: 1.5em;
+        margin-right: 5px;
+    }
+}

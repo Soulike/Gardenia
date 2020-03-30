@@ -9,4 +9,13 @@
     .branchInfo {
         display: flex;
     }
+
+    .updateInfo {
+        display: flex;
+        align-items: center;
+
+        .updaterWrapper {
+            margin-right: 0.5em;
+        }
+    }
 }

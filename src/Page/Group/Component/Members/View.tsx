@@ -5,8 +5,8 @@ import {Profile} from '../../../../Class';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import NewTabLink from '../../../../Component/NewTabLink';
-import DefaultAvatar from '../../../../Component/DefaultAvatar';
 import AddMemberButton from './Component/AddMemberButton';
+import Avatar from '../../../../Component/Avatar';
 
 interface IProps
 {
@@ -49,12 +49,7 @@ function MembersView(props: Readonly<IProps>)
                                       <NewTabLink className={Style.titleWrapper}
                                                   to={RouterFunction.generatePersonalCenterRoute({username})}>
                                           <div className={Style.avatarWrapper}>
-                                              {
-                                                  avatar.length === 0 ? (
-                                                      <DefaultAvatar />) : (
-                                                      <img src={avatar} alt={'avatar'} className={Style.avatar} />
-                                                  )
-                                              }
+                                              <Avatar avatar={avatar} />
                                           </div>
                                           <div className={Style.name}>{nickname}({username})</div>
                                           <div className={Style.isAdminTagWrapper}>

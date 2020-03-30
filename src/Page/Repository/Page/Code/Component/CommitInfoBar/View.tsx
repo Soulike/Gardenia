@@ -5,6 +5,7 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../..
 import {Commit} from '../../../../../../Class';
 import {Tooltip} from 'antd';
 import {Date} from '../../../../../../Function';
+import PersonalCenterLink from '../../../../../../Component/PersonalCenterLink';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -14,16 +15,13 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 function CommitInfoBar(props: IProps)
 {
     const {
-        lastCommit: {committerName, commitHash, message, timestamp},
+        lastCommit: {committerName, commitHash, message, timestamp, committerEmail},
         match: {params: {username, repository: repositoryName}},
     } = props;
     return (
         <div className={Style.CommitInfoBar}>
             <div className={Style.left}>
-                <Link className={Style.name}
-                      to={RouterFunction.generatePersonalCenterRoute({username: committerName})}>
-                    {committerName}
-                </Link>
+                <PersonalCenterLink committerEmail={committerEmail} committerName={committerName} />
                 <div className={Style.message}>{message}</div>
             </div>
             <div className={Style.right}>

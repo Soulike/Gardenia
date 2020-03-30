@@ -30,11 +30,12 @@
         padding-top: 10px;
 
         .info {
+            display: flex;
+            align-items: center;
 
-            .username {
-                display: inline-block;
-                margin-right: 5px;
-                font-weight: bolder;
+            .committerWrapper {
+                font-weight: bold;
+                margin-right: 0.5em;
             }
         }
 

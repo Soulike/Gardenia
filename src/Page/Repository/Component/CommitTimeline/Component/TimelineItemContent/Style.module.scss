@@ -24,6 +24,11 @@
             }
         }
 
+        .commitInfo {
+            display: flex;
+            align-items: center;
+        }
+
         .body {
             width: 600px;
             white-space: pre-wrap;

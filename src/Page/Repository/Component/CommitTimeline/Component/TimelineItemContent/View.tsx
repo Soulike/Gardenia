@@ -9,6 +9,7 @@ import {ObjectType} from '../../../../../../CONSTANT';
 import {ButtonProps} from 'antd/lib/button';
 import {Date} from '../../../../../../Function';
 import {CodeOutlined, CopyOutlined} from '@ant-design/icons';
+import PersonalCenterLink from '../../../../../../Component/PersonalCenterLink';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
 {
@@ -19,7 +20,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
 
 function TimelineItemContent(props: IProps)
 {
-    const {showBody, onShowBodyButtonClick, commit: {commitHash, committerName, message, body, timestamp}, match: {params: {username, repository: repositoryName}}} = props;
+    const {showBody, onShowBodyButtonClick, commit: {commitHash, committerName, message, body, timestamp, committerEmail}, match: {params: {username, repository: repositoryName}}} = props;
     return (
         <div className={Style.TimelineItemContent}>
             <div className={Style.left}>
@@ -29,7 +30,7 @@ function TimelineItemContent(props: IProps)
                 </div>
                 <div className={Style.commitInfo}>
                     <div className={Style.committer}>
-                        <Link to={RouterFunction.generatePersonalCenterRoute({username: committerName})}>{committerName}</Link>
+                        <PersonalCenterLink committerEmail={committerEmail} committerName={committerName} />
                     </div>
                     <div className={Style.commitTime}>
                         在 {Date.parseTimestampToDate(timestamp)} 提交
