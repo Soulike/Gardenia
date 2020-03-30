@@ -1,7 +1,7 @@
 import {Account, Profile, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
 import {notification} from 'antd';
-import {GET, SET, UPLOAD_AVATAR} from './ROUTE';
+import {GET, GET_BY_EMAIL, SET, UPLOAD_AVATAR} from './ROUTE';
 import nProgress from 'nprogress';
 
 export async function get(account?: Readonly<Pick<Account, 'username'>>): Promise<Readonly<Profile> | null>
@@ -12,6 +12,31 @@ export async function get(account?: Readonly<Pick<Account, 'username'>>): Promis
             await axios.get(GET, {
                 params: {
                     json: JSON.stringify({account}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function getByEmail(email: Profile['email']): Promise<Profile | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Profile | null>> =
+            await axios.get(GET_BY_EMAIL, {
+                params: {
+                    json: JSON.stringify({email}),
                 },
             });
         if (isSuccessful)

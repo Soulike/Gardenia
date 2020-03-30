@@ -6,6 +6,7 @@ import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import {ObjectType} from '../../../../../../CONSTANT';
 import {Button} from 'antd';
+import PersonalCenterLink from '../../../../../../Component/PersonalCenterLink';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommit>
 {
@@ -15,7 +16,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommit>
 function CommitInfoCard(props: IProps)
 {
     const {
-        commit: {message, body, committerName, timestamp, commitHash},
+        commit: {message, body, committerName, timestamp, commitHash, committerEmail},
         match: {params: {username, repository: repositoryName}},
     } = props;
     return (
@@ -28,8 +29,9 @@ function CommitInfoCard(props: IProps)
             </div>
             <div className={Style.infoWrapper}>
                 <div className={Style.info}>
-                    <Link to={RouterFunction.generatePersonalCenterRoute({username: committerName})}
-                          className={Style.username}>{committerName}</Link>
+                    <div className={Style.committerWrapper}>
+                        <PersonalCenterLink committerEmail={committerEmail} committerName={committerName} />
+                    </div>
                     在 {Date.parseTimestampToDifference(timestamp)}提交
                 </div>
                 <div className={Style.hashWrapper}>
