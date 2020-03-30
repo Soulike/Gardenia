@@ -124,7 +124,7 @@ export async function get(issue: Readonly<Pick<Issue, 'repositoryUsername' | 're
 {
     try
     {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Issue>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Issue | null>> =
             await axios.get(GET, {
                 params: {
                     json: JSON.stringify(issue),

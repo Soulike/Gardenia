@@ -54,6 +54,10 @@ class Issue extends PureComponent<IProps, IState>
             {
                 await loadedIssue(issue);
             }
+            else
+            {
+                return history.push(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+            }
         }
     };
 

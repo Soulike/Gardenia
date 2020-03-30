@@ -83,11 +83,15 @@ class Group extends PureComponent<Readonly<IProps>, IState>
 
     loadGroup = async () =>
     {
-        const {match: {params: {id}}} = this.props;
+        const {match: {params: {id}}, history} = this.props;
         const group = await GroupApi.info({id: Number.parseInt(id)});
         if (group !== null)
         {
             this.setState({group});
+        }
+        else
+        {
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 

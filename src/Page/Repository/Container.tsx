@@ -3,14 +3,15 @@ import View from './View';
 import {RouteComponentProps} from 'react-router-dom';
 import {Profile, Repository as RepositoryClass} from '../../Class';
 import {Issue as IssueApi, Profile as ProfileApi, PullRequest as PullRequestApi, RepositoryInfo} from '../../Api';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
+import {CONFIG as ROUTER_CONFIG, Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {TabsProps} from 'antd/lib/tabs';
 import TAB_KEY from './TAB_KEY';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
 import {connect} from 'react-redux';
 import {IRootState, IState as StoreState} from '../../Store';
 import CONFIG from '../../CONFIG';
 import {ISSUE_STATUS, PULL_REQUEST_STATUS} from '../../CONSTANT';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode
     | RouterInterface.IRepositoryIssues
@@ -125,12 +126,16 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     loadRepository = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repository: repositoryName}}, history} = this.props;
         const repository = await RepositoryInfo.repository({username}, {name: repositoryName});
         // 设置仓库基本信息
         if (repository !== null)
         {
             this.setState({repository});
+        }
+        else
+        {
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 

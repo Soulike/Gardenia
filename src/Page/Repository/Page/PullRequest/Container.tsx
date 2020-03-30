@@ -76,6 +76,10 @@ class PullRequest extends PureComponent<IProps, IState>
         {
             await loadedPullRequest(pullRequest);
         }
+        else
+        {
+            return history.push(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+        }
     };
 
     loadCommitAmount = async () =>

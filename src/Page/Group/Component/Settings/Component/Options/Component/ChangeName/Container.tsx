@@ -3,11 +3,13 @@ import View from './View';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Interface as RouterInterface} from '../../../../../../../../Router';
+import {CONFIG as ROUTER_CONFIG, Interface as RouterInterface} from '../../../../../../../../Router';
 import {promisify} from 'util';
 import {Group as GroupApi} from '../../../../../../../../Api';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../../../../../../../Validator';
 import {notification} from 'antd';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 export interface IChangeNameProps extends RouteComponentProps<RouterInterface.IGroupSettings> {}
 
@@ -39,12 +41,16 @@ class ChangeName extends PureComponent<IChangeNameProps, IState>
 
     loadGroupName = async () =>
     {
-        const {match: {params: {id}}} = this.props;
+        const {match: {params: {id}}, history} = this.props;
         const group = await GroupApi.info({id: Number.parseInt(id)});
         if (group !== null)
         {
             const {name} = group;
             await this.setStatePromise({groupName: name});
+        }
+        else
+        {
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 

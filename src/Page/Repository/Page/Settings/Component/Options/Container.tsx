@@ -1,9 +1,12 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router';
-import {Interface as RouterInterface} from '../../../../../../Router';
+import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
 import {Repository} from '../../../../../../Class';
 import {RepositoryInfo as RepositoryInfoApi} from '../../../../../../Api/RepositoryInfo';
+import {promisify} from 'util';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings> {}
 
@@ -15,6 +18,8 @@ interface IState
 
 class Options extends PureComponent<Readonly<IProps>, IState>
 {
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: Readonly<IProps>)
     {
         super(props);
@@ -26,18 +31,22 @@ class Options extends PureComponent<Readonly<IProps>, IState>
 
     async componentDidMount()
     {
-        this.setState({loading: true});
+        await this.setStatePromise({loading: true});
         await this.loadRepository();
-        this.setState({loading: false});
+        await this.setStatePromise({loading: false});
     }
 
     loadRepository = async () =>
     {
-        const {match: {params: {repository, username}}} = this.props;
+        const {match: {params: {repository, username}}, history} = this.props;
         const repositoryInfo = await RepositoryInfoApi.repository({username}, {name: repository});
         if (repositoryInfo !== null)
         {
-            this.setState({repository: repositoryInfo});
+            await this.setStatePromise({repository: repositoryInfo});
+        }
+        else
+        {
+            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     };
 

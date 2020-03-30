@@ -97,6 +97,7 @@ class Conflict extends PureComponent<IConflictProps, IState>
             else
             {
                 resolve();
+                return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
             }
         });
     };
