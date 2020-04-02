@@ -7,6 +7,9 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../Router';
 import {IPullRequestState, IState as StoreState} from '../../../../../../Store';
 import {connect} from 'react-redux';
+import {promisify} from 'util';
+import {notification} from 'antd';
+import {ButtonProps} from 'antd/lib/button';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequest>
 {
@@ -23,6 +26,9 @@ interface IState
 
 class Comments extends Component<IProps, IState>
 {
+    private static COMMENT_AMOUNT_PER_PAGE = 25;
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: IProps)
     {
         super(props);
@@ -36,12 +42,15 @@ class Comments extends Component<IProps, IState>
     async componentDidMount()
     {
         const {loading} = this.props;
+        await this.init();
         if (!loading)
         {
-            this.setState({loading: true});
-            await this.loadIsMergeable();
-            await this.loadPullRequestComments();
-            this.setState({loading: false});
+            await this.setStatePromise({loading: true});
+            await Promise.all([
+                this.loadIsMergeable(),
+                this.loadMorePullRequestComments(),
+            ]);
+            await this.setStatePromise({loading: false});
         }
     }
 
@@ -55,17 +64,39 @@ class Comments extends Component<IProps, IState>
         }
     }
 
-    loadPullRequestComments = async () =>
+    init = async () =>
+    {
+        await this.setStatePromise({pullRequestComments: []});
+    };
+
+    onLoadMoreClick: ButtonProps['onClick'] = async () =>
+    {
+        await this.setStatePromise({loading: true});
+        await this.loadMorePullRequestComments();
+        await this.setStatePromise({loading: false});
+    };
+
+    loadMorePullRequestComments = async () =>
     {
         const {pullRequest: {targetRepositoryUsername, targetRepositoryName, no}} = this.props;
+        const {pullRequestComments} = this.state;
         const pullRequestCommentsWrapper = await PullRequestApi.getComments(
             {username: targetRepositoryUsername, name: targetRepositoryName},
             {no},
+            pullRequestComments.length, Comments.COMMENT_AMOUNT_PER_PAGE,
         );
         if (pullRequestCommentsWrapper !== null)
         {
+            const {pullRequestComments} = this.state;
             const {comments} = pullRequestCommentsWrapper;
-            this.setState({pullRequestComments: comments});
+            if (comments.length > 0)
+            {
+                await this.setStatePromise({pullRequestComments: [...pullRequestComments, ...comments]});
+            }
+            else if (pullRequestComments.length > 0)
+            {
+                notification.success({message: '已加载所有评论'});
+            }
         }
     };
 
@@ -78,7 +109,7 @@ class Comments extends Component<IProps, IState>
             if (isMergeableWrapper !== null)
             {
                 const {isMergeable} = isMergeableWrapper;
-                this.setState({isMergeable});
+                await this.setStatePromise({isMergeable});
             }
         }
     };
@@ -90,7 +121,7 @@ class Comments extends Component<IProps, IState>
         return (<View isMergeable={isMergeable}
                       loading={loading || pullRequestIsLoading}
                       pullRequestComments={pullRequestComments}
-                      pullRequest={pullRequest} />);
+                      pullRequest={pullRequest} onLoadMoreClick={this.onLoadMoreClick} />);
     }
 }
 

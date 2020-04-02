@@ -2,11 +2,12 @@ import React from 'react';
 import {PullRequest, PullRequestComment} from '../../../../../../Class';
 import Style from './Style.module.scss';
 import Comment from '../../../../Component/Comment';
-import {Alert, Spin} from 'antd';
+import {Alert, Button, Spin} from 'antd';
 import {PULL_REQUEST_STATUS} from '../../../../../../CONSTANT';
 import OperationButton from './Component/OperationButton';
 import {LoadingOutlined} from '@ant-design/icons';
 import CommentPoster from './Component/CommentPoster';
+import {ButtonProps} from 'antd/lib/button';
 
 interface IProps
 {
@@ -14,6 +15,7 @@ interface IProps
     pullRequestComments: PullRequestComment[];
     loading: boolean;
     isMergeable: boolean;
+    onLoadMoreClick: ButtonProps['onClick'];
 }
 
 function Comments(props: IProps)
@@ -22,6 +24,7 @@ function Comments(props: IProps)
         pullRequest: {sourceRepositoryUsername, modificationTime, content, creationTime, status},
         pullRequest,
         pullRequestComments, loading, isMergeable,
+        onLoadMoreClick,
     } = props;
     return (
         <div className={Style.Comments}>
@@ -60,17 +63,23 @@ function Comments(props: IProps)
                             </div>
                         ))
                     }
+                    <div className={Style.loadMoreButtonWrapper}>
+                        <Button type={'primary'}
+                                onClick={onLoadMoreClick}
+                                loading={loading}
+                                disabled={loading}>加载更多</Button>
+                    </div>
+                </div>
+                {
+                    status === PULL_REQUEST_STATUS.OPEN ?
+                        (<div className={Style.commentPosterWrapper}>
+                            <CommentPoster pullRequest={pullRequest} loading={loading} />
+                        </div>) : null
+                }
+                <div className={Style.operationButtonWrapper}>
+                    <OperationButton isMergeable={isMergeable} />
                 </div>
             </Spin>
-            {
-                status === PULL_REQUEST_STATUS.OPEN ?
-                    (<div className={Style.commentPosterWrapper}>
-                        <CommentPoster pullRequest={pullRequest} loading={loading} />
-                    </div>) : null
-            }
-            <div className={Style.operationButtonWrapper}>
-                <OperationButton isMergeable={isMergeable} />
-            </div>
         </div>
     );
 }
