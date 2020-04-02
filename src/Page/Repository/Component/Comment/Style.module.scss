@@ -6,13 +6,25 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 25px;
+        padding: 10px 15px;
         border-bottom: 1px solid #DDD;
         background-color: #F1F8FF;
 
-        .usernameAndCreationTime {
+        .profileAndCreationTime {
             display: flex;
             align-items: center;
+
+            .profileWrapper {
+                display: flex;
+                align-items: center;
+
+                .avatarWrapper {
+                    height: 3ex;
+                    width: 3ex;
+                    margin-right: 5px;
+                }
+            }
+
 
             .tag {
                 margin-left: 5px;
