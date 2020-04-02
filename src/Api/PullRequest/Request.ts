@@ -270,14 +270,15 @@ export async function updateComment(primaryKey: Readonly<Pick<PullRequestComment
     }
 }
 
-export async function getComments(repository: Readonly<Pick<Repository, 'username' | 'name'>>, pullRequest: Readonly<Pick<PullRequest, 'no'>>): Promise<{ comments: PullRequestComment[] } | null>
+export async function getComments(repository: Readonly<Pick<Repository, 'username' | 'name'>>, pullRequest: Readonly<Pick<PullRequest, 'no'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ comments: PullRequestComment[] } | null>
 {
+    nProgress.start();
     try
     {
         const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ comments: PullRequestComment[] }>> =
             await axios.get(GET_COMMENTS, {
                 params: {
-                    json: JSON.stringify({repository, pullRequest}),
+                    json: JSON.stringify({repository, pullRequest, offset, limit}),
                 },
             });
         if (isSuccessful)
@@ -292,6 +293,10 @@ export async function getComments(repository: Readonly<Pick<Repository, 'usernam
     catch (e)
     {
         return null;
+    }
+    finally
+    {
+        nProgress.done();
     }
 }
 

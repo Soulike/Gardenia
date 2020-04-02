@@ -1,11 +1,18 @@
 .Comments {
 
-    .commentWrapper {
+    .commentsWrapper {
+        margin-top: 15px;
 
+        .commentWrapper {
+            margin-top: 15px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
     }
 
-
-    .isMergeableWrapper {
+    .commentPosterWrapper {
         margin-top: 15px;
     }
 
@@ -13,5 +20,11 @@
         margin-top: 15px;
         display: flex;
         justify-content: flex-end;
+    }
+
+    .loadMoreButtonWrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
     }
 }
