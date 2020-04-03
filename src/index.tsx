@@ -1,4 +1,4 @@
-import 'core-js';
+import 'react-app-polyfill/stable';
 import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
