@@ -1,5 +1,4 @@
-const {override, fixBabelImports, addWebpackPlugin} = require('customize-cra');
-const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+const {override, fixBabelImports} = require('customize-cra');
 
 module.exports = override(
     fixBabelImports('import', {
@@ -7,5 +6,4 @@ module.exports = override(
         libraryDirectory: 'es',
         style: 'css',
     }),
-    addWebpackPlugin(new AntdDayjsWebpackPlugin()),
 );
