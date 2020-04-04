@@ -1,9 +1,9 @@
 import 'react-app-polyfill/stable';
 import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
 import Store from './Store';
 import './ModuleConfig';
+import './GlobalStyle';
 import {ConfigProvider} from 'antd';
 import {Provider} from 'react-redux';
 import zhCN from 'antd/es/locale/zh_CN';

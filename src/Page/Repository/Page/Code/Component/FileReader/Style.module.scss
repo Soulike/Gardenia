@@ -1,18 +1,19 @@
 .FileReader {
+    @import "../../../../../../GlobalStyle/COLOR.css";
 
     .commitInfoBar {
         margin-bottom: 15px;
-        border: 1px solid #DDD;
+        border: 1px solid var(--GLOBAL_BORDER_COLOR);
         border-radius: 3px;
     }
 
     .contentWrapper {
-        border: 1px solid #DDD;
+        border: 1px solid var(--GLOBAL_BORDER_COLOR);
         border-radius: 3px;
 
         .fileInfoBar {
             padding: 10px;
-            border-bottom: 1px solid #DDD;
+            border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
             display: flex;
             justify-content: space-between;
             align-items: center;

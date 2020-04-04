@@ -1,4 +1,5 @@
 .Avatar {
+    @import "../../../../GlobalStyle/COLOR.css";
 
     .body {
         width: 250px;
@@ -8,7 +9,7 @@
             width: 250px;
             height: 250px;
             border-radius: 5px;
-            border: 1px solid #DDD;
+            border: 1px solid var(--GLOBAL_BORDER_COLOR);
             display: flex;
             justify-content: center;
             align-items: center;

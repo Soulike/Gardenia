@@ -1,5 +1,7 @@
 .PullRequest {
-    border-bottom: 1px solid #DDD;
+    @import "../../../../../../../../GlobalStyle/COLOR.css";
+
+    border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
     padding: 10px 20px;
 
     &:last-child {
@@ -18,6 +20,6 @@
     }
 
     .info {
-        color: #666;
+        color: var(--GLOBAL_LIGHT_TEXT_COLOR);
     }
 }

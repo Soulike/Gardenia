@@ -1,8 +1,10 @@
 .InfoBar {
+    @import "../../../../../../GlobalStyle/COLOR.css";
+
     display: flex;
     justify-content: stretch;
     align-items: center;
-    border: 1px solid #DDD;
+    border: 1px solid var(--GLOBAL_BORDER_COLOR);
     padding: 10px 0;
     border-radius: 3px;
 

@@ -1,4 +1,4 @@
-import 'highlight.js/scss/github-gist.scss';
+import './Style.css';
 
 // 为了按需加载，使用 require
 const hljs = require('highlight.js/lib/highlight');

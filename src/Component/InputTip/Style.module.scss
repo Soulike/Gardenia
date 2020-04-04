@@ -1,5 +1,7 @@
 .InputTip {
+    @import "../../GlobalStyle/COLOR.css";
+
     font-size: 14px;
-    color: #666;
+    color: var(--GLOBAL_LIGHT_TEXT_COLOR);
     margin-top: 0.5em;
 }

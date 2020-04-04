@@ -1,0 +1,3 @@
+@import "~codemirror/lib/codemirror.css";
+@import url('~codemirror/theme/xq-light.css') (prefers-color-scheme: light);
+@import url('~codemirror/theme/material-darker.css') (prefers-color-scheme: dark);

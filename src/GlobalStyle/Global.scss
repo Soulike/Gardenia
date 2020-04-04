@@ -1,0 +1,10 @@
+html {
+    font-size: 18px;
+}
+
+body {
+    @import "COLOR.css";
+
+    background-color: var(--GLOBAL_BACKGROUND_COLOR);
+    color: var(--GLOBAL_TEXT_COLOR);
+}

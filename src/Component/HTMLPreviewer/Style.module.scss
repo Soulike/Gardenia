@@ -1,18 +1,20 @@
 .HTMLPreviewer {
+    @import "../../GlobalStyle/COLOR.css";
+
     padding: 0;
 
     h1 {
-        border-bottom: 1px solid #DDD;
+        border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
     }
 
     blockquote {
         padding-left: 15px;
-        border-left: 5px solid #6CF;
+        border-left: 5px solid var(--GLOBAL_BLOCKQUOTE_LEFT_BORDER_COLOR);
     }
 
     code {
         border-radius: 2px;
-        background-color: #F6F6F6;
+        background-color: var(--GLOBAL_CODE_BLOCK_BACKGROUND_COLOR);
         padding: 2px 5px;
     }
 
@@ -29,14 +31,14 @@
         border-collapse: collapse;
 
         thead {
-            border-top: 2px solid #666;
-            border-bottom: 2px solid #666;
+            border-top: 2px solid var(--GLOBAL_BORDER_COLOR);
+            border-bottom: 2px solid var(--GLOBAL_BORDER_COLOR);
         }
 
         th, td {
             line-height: 1em;
             padding: 6px 8px;
-            color: #666;
+            color: var(--GLOBAL_BORDER_COLOR);
         }
 
         tbody {
@@ -44,7 +46,7 @@
             tr {
 
                 &:last-child {
-                    border-bottom: 2px solid #666;
+                    border-bottom: 2px solid var(--GLOBAL_BORDER_COLOR);
                 }
             }
         }

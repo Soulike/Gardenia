@@ -1,4 +1,6 @@
 .CreateRepository {
+    @import "../../GlobalStyle/COLOR.css";
+
     width: 600px;
     margin: 5vh auto;
 
@@ -11,7 +13,7 @@
             vertical-align: middle;
             font-size: 1rem;
             margin-left: 15px;
-            color: #AAA;
+            color: var(--GLOBAL_LIGHT_TEXT_COLOR);
         }
     }
 

@@ -1,3 +1,5 @@
 .PageTitle {
-    border-bottom: 1px solid #DDD;
+    @import "../../GlobalStyle/COLOR.css";
+
+    border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
 }

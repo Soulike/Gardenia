@@ -1,0 +1,2 @@
+@import "~highlight.js/scss/github-gist.scss";
+@import url("~highlight.js/scss/vs2015.scss") (prefers-color-scheme: dark);

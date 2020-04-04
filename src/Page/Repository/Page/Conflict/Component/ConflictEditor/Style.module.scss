@@ -1,13 +1,15 @@
 .ConflictEditor {
-    border: 1px solid #DDD;
+    @import "../../../../../../GlobalStyle/COLOR.css";
+
+    border: 1px solid var(--GLOBAL_BORDER_COLOR);
     border-radius: 2px;
 
     .header {
-        border-bottom: 1px solid #DDD;
+        border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
         padding: 10px 20px;
         display: flex;
         justify-content: space-between;
-        background-color: #FAFBFC;
+        background-color: var(--GLOBAL_CARD_HEADER_BACKGROUND_COLOR);
 
         .filePath {
             font-size: 16px;

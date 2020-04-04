@@ -1,4 +1,5 @@
 .Line {
+    @import "../../../../../../../../../../../../GlobalStyle/COLOR.css";
 
     %fontStyle {
         line-height: 1.5em;
@@ -11,14 +12,14 @@
         width: 1%;
         min-width: 50px;
         @extend %fontStyle;
-        color: #AAA;
+        color: var(--GLOBAL_LIGHT_TEXT_COLOR);
 
         &.addition {
-            background-color: #CDFFD8;
+            background-color: var(--GLOBAL_CODE_DIFF_ADDITION_BACKGROUND_COLOR);
         }
 
         &.deletion {
-            background-color: #FFDCE0;
+            background-color: var(--GLOBAL_CODE_DIFF_DELETION_BACKGROUND_COLOR);
         }
     }
 
@@ -32,26 +33,12 @@
             margin: 0;
         }
 
-        &:hover {
-            background-color: #EEE;
-        }
-
         &.addition {
-            background-color: #E6FFED;
-
-            &:hover {
-                background-color: #CDFFD8;
-            }
+            background-color: var(--GLOBAL_CODE_DIFF_ADDITION_BACKGROUND_COLOR);
         }
 
         &.deletion {
-            background-color: #FFEEF0;
-
-            &:hover {
-                background-color: #FFDCE0;
-            }
+            background-color: var(--GLOBAL_CODE_DIFF_DELETION_BACKGROUND_COLOR);
         }
     }
-
-
 }

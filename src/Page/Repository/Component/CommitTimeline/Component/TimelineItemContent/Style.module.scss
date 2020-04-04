@@ -1,9 +1,11 @@
 .TimelineItemContent {
+    @import "../../../../../../GlobalStyle/COLOR.css";
+
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
-    border: 1px solid #DDD;
+    border: 1px solid var(--GLOBAL_BORDER_COLOR);
     border-radius: 2px;
     transform: translateY(-12px);
 
@@ -34,7 +36,7 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             font-size: 14px;
-            color: #666;
+            color: var(--GLOBAL_TEXT_COLOR);
             margin: 10px 0 0;
         }
 

@@ -1,8 +1,10 @@
 .BlockDiff {
+    @import "../../../../../../../../GlobalStyle/COLOR.css";
+
     .infoWrapper {
         padding: 5px 10px;
-        background-color: #F1F8FF;
-        color: #666;
+        background-color: var(--GLOBAL_CARD_HEADER_BACKGROUND_COLOR);
+        color: var(--GLOBAL_LIGHT_TEXT_COLOR);
         font-size: 14px;
         font-weight: bolder;
     }

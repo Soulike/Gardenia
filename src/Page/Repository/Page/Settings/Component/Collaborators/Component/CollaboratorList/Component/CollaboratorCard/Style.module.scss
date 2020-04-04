@@ -1,4 +1,6 @@
 .CollaboratorCard {
+    @import "../../../../../../../../../../GlobalStyle/COLOR.css";
+
     border-top: 1px solid #DDD;
 
     &:last-child {
@@ -15,7 +17,7 @@
             align-items: center;
 
             .avatarWrapper, .username, .nickname {
-                color: #000;
+                color: var(--GLOBAL_TEXT_COLOR);
             }
 
             .avatarWrapper {
@@ -30,7 +32,7 @@
             .username {
                 font-size: 18px;
                 font-weight: lighter;
-                color: #666;
+                color: var(--GLOBAL_LIGHT_TEXT_COLOR);
             }
 
             .nickname {

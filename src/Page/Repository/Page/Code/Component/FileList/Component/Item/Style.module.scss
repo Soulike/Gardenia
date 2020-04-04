@@ -1,4 +1,5 @@
 .Item {
+    @import "../../../../../../../../GlobalStyle/COLOR.css";
     padding: 7px 10px;
 
     .icon, .fileName, .message, .time {
@@ -23,7 +24,7 @@
         width: 60%;
         padding: 0 5px;
         box-sizing: border-box;
-        color: #666;
+        color: var(--GLOBAL_LIGHT_TEXT_COLOR);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

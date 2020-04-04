@@ -1,8 +1,10 @@
 .PullRequests {
+    @import "../../../../GlobalStyle/COLOR.css";
+
     margin: 15px 0;
 
     .list {
-        border: 1px solid #DDD;
+        border: 1px solid var(--GLOBAL_BORDER_COLOR);
         border-radius: 3px;
 
         .header {
@@ -10,7 +12,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 10px;
-            border-bottom: 1px solid #DDD;
+            border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
 
             .statusFilter {
                 display: flex;

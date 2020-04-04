@@ -1,4 +1,6 @@
 .CodeReader {
+    @import "../../GlobalStyle/COLOR.css";
+
     font-size: 12px;
 
     .line {
@@ -8,7 +10,7 @@
             width: 1%;
             min-width: 50px;
             padding: 0 10px;
-            color: #AAA;
+            color: var(--GLOBAL_LIGHT_TEXT_COLOR);
         }
 
         .code {

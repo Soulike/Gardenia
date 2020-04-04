@@ -1,4 +1,6 @@
 .Root {
+    @import "../../GlobalStyle/COLOR.css";
+
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -25,7 +27,7 @@
         justify-content: center;
         align-items: center;
         padding: 20px 0;
-        border-top: 1px solid #DDD;
+        border-top: 1px solid var(--GLOBAL_BORDER_COLOR);
 
         .announce, .bugReport {
             line-height: 2;

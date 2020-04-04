@@ -1,10 +1,12 @@
 .CommitInfoCard {
-    border: 1px solid #CCC;
+    @import "../../../../../../GlobalStyle/COLOR.css";
+
+    border: 1px solid var(--GLOBAL_BORDER_COLOR);
     border-radius: 5px;
     padding: 10px 15px;
 
     .messageWrapper {
-        border-bottom: 1px solid #CCC;
+        border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
 
         .message {
             font-size: 18px;
