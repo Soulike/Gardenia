@@ -45,10 +45,10 @@ function RepositoryView(props: Readonly<IProps>)
             <div className={Style.Repository}>
                 <div className={Style.header}>
                     <div className={Style.basicInfo}>
-                        <div className={Style.tag}>
-                            <AccessibilityTag isPublic={isPublic} />
-                        </div>
-                        <div className={Style.usernameAndNameWrapper}>
+                        <div className={Style.tagAndRepository}>
+                            <div className={Style.tag}>
+                                <AccessibilityTag isPublic={isPublic} />
+                            </div>
                             <div className={Style.usernameAndName}>
                                 <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
                                     {username}
@@ -59,24 +59,22 @@ function RepositoryView(props: Readonly<IProps>)
                                 <b>{name}</b>
                             </Link>
                             </div>
-                            <div className={Style.forkFrom}>
-                                {
-                                    forkFrom === null ? null : (
-                                        <div className={Style.forkFrom}>
-                                            <div className={Style.text}>fork 自</div>
-                                            <Link to={RouterFunction.generatePersonalCenterRoute({username: forkFrom.username})}>
-                                                {forkFrom.username}
-                                            </Link> / <Link to={RouterFunction.generateRepositoryCodeRoute({
-                                            username: forkFrom.username,
-                                            repository: forkFrom.name,
-                                        })}>
-                                            <b>{forkFrom.name}</b>
-                                        </Link>
-                                        </div>
-                                    )
-                                }
-                            </div>
                         </div>
+                        {
+                            forkFrom === null ? null : (
+                                <div className={Style.forkFrom}>
+                                    <div className={Style.text}>fork 自</div>
+                                    <Link to={RouterFunction.generatePersonalCenterRoute({username: forkFrom.username})}>
+                                        {forkFrom.username}
+                                    </Link> / <Link to={RouterFunction.generateRepositoryCodeRoute({
+                                    username: forkFrom.username,
+                                    repository: forkFrom.name,
+                                })}>
+                                    <b>{forkFrom.name}</b>
+                                </Link>
+                                </div>
+                            )
+                        }
                     </div>
                     <div className={Style.buttonArea}>
                         {

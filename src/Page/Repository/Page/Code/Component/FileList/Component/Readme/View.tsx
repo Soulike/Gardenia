@@ -2,6 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Spin} from 'antd';
 import RepositoryMarkdownPreviewer from '../../../RepositoryMarkdownPreviewer';
+import {FileTextOutlined} from '@ant-design/icons';
 
 interface IProps
 {
@@ -16,7 +17,10 @@ function ReadmeView(props: Readonly<IProps>)
     return exists ?
         (<div className={Style.Readme}>
             <Spin spinning={loading}>
-                <div className={Style.title}>README.md</div>
+                <div className={Style.titleWrapper}>
+                    <FileTextOutlined />
+                    <div className={Style.title}>README.md</div>
+                </div>
                 <div className={Style.contentWrapper}>
                     <RepositoryMarkdownPreviewer markdown={readme} />
                 </div>

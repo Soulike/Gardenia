@@ -4,10 +4,16 @@
     border: 1px solid var(--GLOBAL_BORDER_COLOR);
     border-radius: 3px;
 
-    .title {
-        font-weight: bold;
+    .titleWrapper {
         padding: 10px;
         border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
+        display: flex;
+        align-items: center;
+
+        .title {
+            margin-left: 0.5ch;
+            font-weight: bold;
+        }
     }
 
     .contentWrapper {

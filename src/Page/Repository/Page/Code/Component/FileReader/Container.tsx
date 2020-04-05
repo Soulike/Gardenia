@@ -6,6 +6,7 @@ import {RepositoryInfo} from '../../../../../../Api';
 import {basename} from 'path';
 import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
 import {File} from '../../../../../../Function';
+import {promisify} from 'util';
 
 const {PAGE_ID_TO_ROUTE, PAGE_ID} = CONFIG;
 
@@ -18,10 +19,13 @@ interface IState
     lastCommit: Commit,
     loading: boolean,
     fileContent: string,
+    fileSize: number,
 }
 
 class FileReader extends PureComponent<Readonly<IProps>, IState>
 {
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: Readonly<IProps>)
     {
         super(props);
@@ -31,12 +35,13 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             lastCommit: new Commit('', '', '', 0, '', ''),
             loading: true,
             fileContent: '',
+            fileSize: 0,
         };
     }
 
     async componentDidMount()
     {
-        this.setState({loading: true});
+        await this.setStatePromise({loading: true});
         await this.loadLastCommit();
         await this.loadFileInfo();
         const {isBinary, isOversize} = this.state;
@@ -44,7 +49,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         {
             await this.loadFileContent();
         }
-        this.setState({loading: false});
+        await this.setStatePromise({loading: false});
     }
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
@@ -59,44 +64,39 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
 
     loadLastCommit = async () =>
     {
-        return new Promise(async resolve =>
+        const {match: {params: {username, repository: name, path, branch}}} = this.props;
+        const lastCommit = await RepositoryInfo.lastBranchCommit({username}, {name}, branch!, path);
+        if (lastCommit !== null)
         {
-            const {match: {params: {username, repository: name, path, branch}}} = this.props;
-            const lastCommit = await RepositoryInfo.lastBranchCommit({username}, {name}, branch!, path);
-            if (lastCommit !== null)
-            {
-                this.setState({lastCommit}, () => resolve());
-            }
-        });
+            await this.setStatePromise({lastCommit});
+        }
     };
 
     loadFileInfo = async () =>
     {
-        return new Promise(async resolve =>
+        const {lastCommit: {commitHash}} = this.state;
+        const {match: {params: {username, repository: name, path}}, history} = this.props;
+        const fileInfo = await RepositoryInfo.fileInfo({username}, {name}, path!, commitHash);
+        if (fileInfo !== null)
         {
-            const {lastCommit: {commitHash}} = this.state;
-            const {match: {params: {username, repository: name, path}}, history} = this.props;
-            const fileInfo = await RepositoryInfo.fileInfo({username}, {name}, path!, commitHash);
-            if (fileInfo !== null)
+            const {exists, size, isBinary} = fileInfo;
+            if (!exists)
             {
-                const {exists, size, isBinary} = fileInfo;
-                if (!exists)
+                return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+            }
+            else
+            {
+                await this.setStatePromise({fileSize: size!});
+                if (!isBinary && size! > 1024 * 1024)   // 不是二进制文件，但大小超过 1M
                 {
-                    return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+                    await this.setStatePromise({isOversize: true, isBinary: isBinary!});
                 }
                 else
                 {
-                    if (!isBinary && size! > 1024 * 1024)   // 不是二进制文件，但大小超过 1M
-                    {
-                        this.setState({isOversize: true, isBinary: isBinary!}, () => resolve());
-                    }
-                    else
-                    {
-                        this.setState({isOversize: false, isBinary: isBinary!}, () => resolve());
-                    }
+                    await this.setStatePromise({isOversize: false, isBinary: isBinary!});
                 }
             }
-        });
+        }
     };
 
     loadFileContent = async () =>
@@ -106,7 +106,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         const rawFile = await RepositoryInfo.rawFile({username}, {name: repository}, path!, commitHash);
         if (rawFile !== null)
         {
-            this.setState({fileContent: await File.transformBlobToString(rawFile)});
+            await this.setStatePromise({fileContent: await File.transformBlobToString(rawFile)});
         }
     };
 
@@ -138,11 +138,11 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
     render()
     {
         const {match: {params: {path}}} = this.props;
-        const {isBinary, isOversize, lastCommit, loading, fileContent} = this.state;
+        const {isBinary, isOversize, lastCommit, loading, fileContent, fileSize} = this.state;
         const fileName = this.getFileNameFromPath(path!);
 
         return (
-            <View fileContent={fileContent}
+            <View fileSize={fileSize} fileContent={fileContent}
                   isBinary={isBinary} isOversize={isOversize} lastCommit={lastCommit}
                   fileName={fileName} loading={loading}
                   onRawFileButtonClick={this.onRawFileButtonClick} />

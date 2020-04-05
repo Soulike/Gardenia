@@ -11,6 +11,8 @@ import Oversize from './Component/Oversize';
 import {extname} from 'path';
 import CodeReader from '../../../../../../Component/CodeReader';
 import MarkdownReader from './Component/MarkdownReader';
+import {File as FileFunction} from '../../../../../../Function';
+import {FileTextOutlined} from '@ant-design/icons';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -21,6 +23,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
     loading: boolean,
     onRawFileButtonClick: ButtonProps['onClick'],
     fileContent: string;
+    fileSize: number;
 }
 
 function FileReader(props: Readonly<IProps>)
@@ -36,6 +39,7 @@ function FileReader(props: Readonly<IProps>)
         loading,
         onRawFileButtonClick,
         fileContent,
+        fileSize,
         match: {params: {username, repository: repositoryName, branch, path}},
     } = props;
     const ext = extname(fileName).toLowerCase();
@@ -47,7 +51,13 @@ function FileReader(props: Readonly<IProps>)
                 </div>
                 <div className={Style.contentWrapper}>
                     <div className={Style.fileInfoBar}>
-                        <div className={Style.fileName}>{fileName}</div>
+                        <div className={Style.fileInfoWrapper}>
+                            <div className={Style.fileNameWrapper}>
+                                <FileTextOutlined />
+                                <div className={Style.fileName}> {fileName}</div>
+                            </div>
+                            <div className={Style.fileSize}>{FileFunction.parseFileSize(fileSize)}</div>
+                        </div>
                         <Button.Group className={Style.buttonWrapper}>
                             <Button>
                                 <Link to={RouterFunction.generateRepositoryCommitsRoute({

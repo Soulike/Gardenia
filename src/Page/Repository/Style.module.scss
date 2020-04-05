@@ -14,34 +14,36 @@
 
         .basicInfo {
             display: flex;
-            align-items: flex-start;
+            flex-direction: column;
+            justify-content: flex-start;
 
-            .tag {
-                margin-right: 5px;
-            }
-
-            .usernameAndNameWrapper {
+            .tagAndRepository {
                 display: flex;
-                flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
+
+                .tag {
+                    margin-right: 5px;
+                }
 
                 .usernameAndName {
-                    font-size: 1rem;
-                    line-height: 1em;
+                    font-size: 18px;
+                    line-height: 1;
                 }
+            }
 
-                .forkFrom {
-                    margin-top: 5px;
-                    font-size: 0.6rem;
-                    line-height: 1em;
-                    display: flex;
-                    align-items: center;
+            .forkFrom {
+                margin-top: 5px;
+                margin-left: 45px;
+                font-size: 12px;
+                line-height: 1em;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                color: var(--GLOBAL_LIGHT_TEXT_COLOR);
 
-                    .text {
-                        margin-right: 2px;
-                    }
+                .text {
+                    margin-right: 2px;
                 }
-
             }
         }
 
