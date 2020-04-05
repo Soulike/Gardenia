@@ -1,9 +1,15 @@
 .CodeReader {
     @import "../../GlobalStyle/COLOR.css";
 
-    font-size: 12px;
+    padding: 0;
+    font-size: 14px;
 
     .line {
+        cursor: pointer;
+
+        &:hover {
+            outline: 1px solid var(--GLOBAL_BORDER_COLOR);
+        }
 
         .lineNumber {
             text-align: right;
@@ -13,10 +19,12 @@
             color: var(--GLOBAL_LIGHT_TEXT_COLOR);
         }
 
-        .code {
-            margin: 0;
+        .codeWrapper {
+            width: 100%;
+
+            .code {
+                margin: 0;
+            }
         }
     }
-
-
 }

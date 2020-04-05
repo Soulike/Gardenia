@@ -21,7 +21,7 @@ function CodeReader(props: IProps)
                         <td>
                             <div className={Style.lineNumber}>{i + 1}</div>
                         </td>
-                        <td>
+                        <td className={Style.codeWrapper}>
                             <pre className={Style.code}>
                                 <code dangerouslySetInnerHTML={{__html: codeline}} />
                             </pre>
