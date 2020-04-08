@@ -11,10 +11,15 @@
             outline: 1px solid var(--GLOBAL_BORDER_COLOR);
         }
 
+        .commentIcon {
+            text-align: center;
+            padding: 0 5px;
+            color: var(--GLOBAL_LIGHT_TEXT_COLOR);
+        }
+
         .lineNumber {
             text-align: right;
             width: 1%;
-            min-width: 50px;
             padding: 0 10px;
             color: var(--GLOBAL_LIGHT_TEXT_COLOR);
         }

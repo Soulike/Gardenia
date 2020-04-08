@@ -12,3 +12,4 @@ export * from './PullRequestComment';
 export * from './Conflict';
 export * from './Issue';
 export * from './IssueComment';
+export * from './CodeComment';

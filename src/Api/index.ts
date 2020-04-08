@@ -9,3 +9,4 @@ export * from './Collaborator';
 export * from './PullRequest';
 export * from './Issue';
 export * from './Star';
+export * from './CodeComment';

@@ -1,0 +1,1 @@
+export const REFRESH = 'REFRESH'; // 列表内容发生了变化
