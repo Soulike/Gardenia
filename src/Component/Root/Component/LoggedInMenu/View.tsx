@@ -26,21 +26,23 @@ function LoggedInMenu(props: IProps)
                     <CaretDownOutlined />
                 </>
             }>
-                <Menu.Item>
-                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}>
-                        <PlusOutlined />创建仓库
-                    </Link>
-                </Menu.Item>
-                <Menu.Item>
-                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}>
-                        <PlusOutlined />创建小组
-                    </Link>
-                </Menu.Item>
-                <Menu.Item>
-                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION]}>
-                        <PlusOutlined />成为仓库合作者
-                    </Link>
-                </Menu.Item>
+                <Menu theme={'dark'} selectable={false}>
+                    <Menu.Item>
+                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}>
+                            <PlusOutlined />创建仓库
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP]}>
+                            <PlusOutlined />创建小组
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION]}>
+                            <PlusOutlined />成为仓库合作者
+                        </Link>
+                    </Menu.Item>
+                </Menu>
             </Menu.SubMenu>
             <Menu.SubMenu title={
                 <>
@@ -50,32 +52,34 @@ function LoggedInMenu(props: IProps)
                     <CaretDownOutlined />
                 </>
             }>
-                <Menu.Item>
-                    <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
-                        以 <strong>{username}</strong> 身份登录
-                    </Link>
-                </Menu.Item>
-                <MenuDivider />
-                <Menu.Item>
-                    <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
-                        <UserOutlined />个人中心
-                    </Link>
-                </Menu.Item>
-                <Menu.Item>
-                    <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}>
-                        <SettingOutlined />设置
-                    </Link>
-                </Menu.Item>
-                <MenuDivider />
-                <Menu.Item onClick={() =>
-                {
-                    Modal.confirm({
-                        title: '确定退出登录？',
-                        onOk: onLogoutClick,
-                    });
-                }}>
-                    <LogoutOutlined />退出登录
-                </Menu.Item>
+                <Menu theme={'dark'} selectable={false}>
+                    <Menu.Item>
+                        <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
+                            以 <strong>{username}</strong> 身份登录
+                        </Link>
+                    </Menu.Item>
+                    <MenuDivider />
+                    <Menu.Item>
+                        <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
+                            <UserOutlined />个人中心
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}>
+                            <SettingOutlined />设置
+                        </Link>
+                    </Menu.Item>
+                    <MenuDivider />
+                    <Menu.Item onClick={() =>
+                    {
+                        Modal.confirm({
+                            title: '确定退出登录？',
+                            onOk: onLogoutClick,
+                        });
+                    }}>
+                        <LogoutOutlined />退出登录
+                    </Menu.Item>
+                </Menu>
             </Menu.SubMenu>
         </Menu>
     );
