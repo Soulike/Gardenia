@@ -1,12 +1,13 @@
-import React, {PureComponent} from 'react';
+import React, {HTMLAttributes, PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Commit} from '../../../../../../Class';
-import {RepositoryInfo} from '../../../../../../Api';
+import {CodeComment, Commit} from '../../../../../../Class';
+import {CodeComment as CodeCommentApi, RepositoryInfo} from '../../../../../../Api';
 import {basename} from 'path';
 import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
 import {File} from '../../../../../../Function';
 import {promisify} from 'util';
+import {DrawerProps} from 'antd/lib/drawer';
 
 const {PAGE_ID_TO_ROUTE, PAGE_ID} = CONFIG;
 
@@ -20,6 +21,11 @@ interface IState
     loading: boolean,
     fileContent: string,
     fileSize: number,
+    codeComments: CodeComment[],
+
+    drawerVisible: DrawerProps['visible'];
+    drawerCode: string;
+    drawerLineNumber: number;
 }
 
 class FileReader extends PureComponent<Readonly<IProps>, IState>
@@ -36,6 +42,11 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             loading: true,
             fileContent: '',
             fileSize: 0,
+            codeComments: [],
+
+            drawerCode: '',
+            drawerLineNumber: 1,
+            drawerVisible: false,
         };
     }
 
@@ -43,7 +54,10 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
     {
         await this.setStatePromise({loading: true});
         await this.loadLastCommit();
-        await this.loadFileInfo();
+        await Promise.all([
+            this.loadFileInfo(),
+            this.loadCodeComments(),
+        ]);
         const {isBinary, isOversize} = this.state;
         if (!isBinary && !isOversize)
         {
@@ -110,6 +124,22 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         }
     };
 
+    loadCodeComments = async () =>
+    {
+        const {match: {params: {username, repository, path}}} = this.props;
+        const {lastCommit: {commitHash}} = this.state;
+        const codeCommentsWrapper = await CodeCommentApi.get({
+            repositoryUsername: username,
+            repositoryName: repository,
+            filePath: path!,
+        }, commitHash);
+        if (codeCommentsWrapper !== null)
+        {
+            const {codeComments} = codeCommentsWrapper;
+            await this.setStatePromise({codeComments});
+        }
+    };
+
     onRawFileButtonClick = async () =>
     {
         const {match: {params: {username, repository, path}}} = this.props;
@@ -135,17 +165,46 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         return pathSplit[pathSplit.length - 1];
     };
 
+    onCodeLineClickFactory: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'] = lineNumber =>
+    {
+        return async () =>
+        {
+            await this.setStatePromise({drawerLineNumber: lineNumber});
+            const {fileContent} = this.state;
+            const codeLines = fileContent.split('\n');
+            await this.setStatePromise({drawerCode: codeLines[lineNumber - 1], drawerVisible: true});
+        };
+    };
+
+    onDrawerClose: DrawerProps['onClose'] = async () =>
+    {
+        await this.setStatePromise({drawerVisible: false});
+    };
+
     render()
     {
         const {match: {params: {path}}} = this.props;
-        const {isBinary, isOversize, lastCommit, loading, fileContent, fileSize} = this.state;
+        const {
+            isBinary, isOversize, lastCommit, loading, fileContent, fileSize, codeComments,
+            drawerVisible, drawerLineNumber, drawerCode,
+        } = this.state;
         const fileName = this.getFileNameFromPath(path!);
+        const hasCommentLineNumbers = codeComments.map(({columnNumber}) => columnNumber);
 
         return (
-            <View fileSize={fileSize} fileContent={fileContent}
-                  isBinary={isBinary} isOversize={isOversize} lastCommit={lastCommit}
-                  fileName={fileName} loading={loading}
-                  onRawFileButtonClick={this.onRawFileButtonClick} />
+            <View fileSize={fileSize}
+                  fileContent={fileContent}
+                  isBinary={isBinary}
+                  isOversize={isOversize}
+                  lastCommit={lastCommit}
+                  fileName={fileName}
+                  loading={loading}
+                  onRawFileButtonClick={this.onRawFileButtonClick}
+                  hasCommentLineNumbers={hasCommentLineNumbers}
+                  onCodeLineClickFactory={this.onCodeLineClickFactory}
+                  drawerCode={drawerCode}
+                  drawerLineNumber={drawerLineNumber}
+                  drawerVisible={drawerVisible} onDrawerClose={this.onDrawerClose} />
         );
 
     }

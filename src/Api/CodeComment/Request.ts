@@ -42,7 +42,7 @@ export async function del(codeComment: Pick<CodeComment, 'id'>): Promise<true | 
     }
 }
 
-export async function get(codeComment: Readonly<Pick<CodeComment, 'repositoryUsername' | 'repositoryName' | 'filePath'>>,
+export async function get(codeComment: Readonly<Pick<CodeComment, 'repositoryUsername' | 'repositoryName' | 'filePath'> & Partial<Pick<CodeComment, 'columnNumber'>>>,
                           commitHash: string): Promise<{ codeComments: CodeComment[] } | null>
 {
     try

@@ -1,0 +1,12 @@
+.CardTitle {
+    @import "../../../../../../../../../../../../../../GlobalStyle/COLOR.css";
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .modificationTimeWrapper {
+        font-size: 12px;
+        color: var(--GLOBAL_LIGHT_TEXT_COLOR)
+    }
+}

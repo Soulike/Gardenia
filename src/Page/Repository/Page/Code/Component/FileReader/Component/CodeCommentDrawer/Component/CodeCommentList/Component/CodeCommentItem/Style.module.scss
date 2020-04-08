@@ -1,0 +1,12 @@
+.CodeCommentItem {
+    @import "../../../../../../../../../../../../GlobalStyle/COLOR.css";
+
+    .contentWrapper {
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
+    }
+
+    .bottomWrapper {
+        padding-top: 10px;
+    }
+}
