@@ -6,7 +6,7 @@ import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import Style from './Style.module.scss';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../../Router';
 import {Date} from '../../../../../../../../Function';
-import {FileTextOutlined, FolderOutlined} from '@ant-design/icons';
+import {ContainerOutlined, FileTextOutlined, FolderOutlined} from '@ant-design/icons';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -22,20 +22,24 @@ function Item(props: Readonly<IProps>)
         <List.Item className={Style.Item}>
             {
                 type === ObjectType.BLOB ?
-                    <FileTextOutlined className={Style.icon} /> :
-                    <FolderOutlined className={Style.icon} />
+                    <FileTextOutlined className={Style.icon} /> : (
+                        type === ObjectType.TREE ? <FolderOutlined className={Style.icon} /> :
+                            <ContainerOutlined className={Style.icon} />)
             }
             <div className={Style.fileName}>
-                <Link to={
-                    RouterFunction.generateRepositoryCodeRoute({
-                        username,
-                        repository,
-                        objectType: type,
-                        branch: branch ? branch : masterBranchName,
-                        path,
-                    })}>
-                    {fileName}
-                </Link>
+                {
+                    type === ObjectType.COMMIT ? fileName :
+                        <Link to={
+                            RouterFunction.generateRepositoryCodeRoute({
+                                username,
+                                repository,
+                                objectType: type,
+                                branch: branch ? branch : masterBranchName,
+                                path,
+                            })}>
+                            {fileName}
+                        </Link>
+                }
             </div>
             <Link className={Style.message} to={
                 RouterFunction.generateRepositoryCommitRoute({username, repository, commitHash})
