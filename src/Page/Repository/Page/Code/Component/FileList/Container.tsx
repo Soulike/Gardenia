@@ -4,7 +4,10 @@ import {RepositoryInfo} from '../../../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {ObjectType} from '../../../../../../CONSTANT';
 import {Commit} from '../../../../../../Class';
-import {Interface as RouterInterface} from '../../../../../../Router';
+import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
+import {promisify} from 'util';
+
+const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 
@@ -18,6 +21,8 @@ interface IState
 
 class FileList extends Component<IProps, IState>
 {
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: Readonly<IProps>)
     {
         super(props);
@@ -89,23 +94,20 @@ class FileList extends Component<IProps, IState>
 
     loadDirectory = async () =>
     {
-        return new Promise(async resolve =>
+        const {match: {params: {username, repository: name, path, branch}}, history} = this.props;
+        const {masterBranchName} = this.state;
+        const fileList = await RepositoryInfo.directory(
+            {username}, {name},
+            branch ? branch : masterBranchName,
+            path === undefined ? '' : path + '/');
+        if (fileList !== null)
         {
-            const {match: {params: {username, repository: name, path, branch}}} = this.props;
-            const {masterBranchName} = this.state;
-            const fileList = await RepositoryInfo.directory(
-                {username}, {name},
-                branch ? branch : masterBranchName,
-                path === undefined ? '' : path + '/');
-            if (fileList !== null)
-            {
-                this.setState({fileList: [...fileList]}, () => resolve());
-            }
-            else
-            {
-                resolve();
-            }
-        });
+            await this.setStatePromise({fileList: [...fileList]});
+        }
+        else
+        {
+            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+        }
     };
 
     loadLastCommit = async () =>
