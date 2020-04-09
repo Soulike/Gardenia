@@ -172,7 +172,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             await this.setStatePromise({drawerLineNumber: lineNumber});
             const {fileContent} = this.state;
             const codeLines = fileContent.split('\n');
-            await this.setStatePromise({drawerCode: codeLines[lineNumber - 1], drawerVisible: true});
+            await this.setStatePromise({drawerCode: codeLines[lineNumber - 1].trim(), drawerVisible: true});
         };
     };
 
