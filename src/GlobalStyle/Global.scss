@@ -91,4 +91,10 @@ body {
 
     background-color: var(--GLOBAL_BACKGROUND_COLOR);
     color: var(--GLOBAL_TEXT_COLOR);
+
+    font-family: "Source Han Sans", sans-serif !important;
+
+    pre, code {
+        font-family: "Source Code Pro", monospace, sans-serif !important;
+    }
 }
