@@ -1,3 +1,3 @@
 import './moment';
 import './nprogress';
-import './antd.scss';
+import './antd.less';
