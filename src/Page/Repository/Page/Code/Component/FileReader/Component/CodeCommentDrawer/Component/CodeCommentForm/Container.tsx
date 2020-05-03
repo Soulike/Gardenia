@@ -7,6 +7,7 @@ import {Interface as RouterInterface} from '../../../../../../../../../../Router
 import {notification} from 'antd';
 import {CodeComment as CodeCommentApi} from '../../../../../../../../../../Api';
 import eventEmitter, {EVENT} from '../../Event';
+import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../../../../../../../Validator';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -62,9 +63,9 @@ class CodeCommentForm extends PureComponent<IProps, IState>
     {
         e.preventDefault();
         const {codeComment} = this.state;
-        if (codeComment.length === 0)
+        if (!ValidatorFunction.Repository.codeCommentContent(codeComment))
         {
-            notification.error({message: '代码标注不能为空'});
+            notification.error({message: ERROR_MESSAGE.Repository.CODE_COMMENT_CONTENT});
         }
         else
         {
@@ -83,7 +84,7 @@ class CodeCommentForm extends PureComponent<IProps, IState>
             });
             if (result !== null)
             {
-                notification.success({message: '代码标注添加成功'});
+                notification.success({message: '代码批注添加成功'});
                 await this.init();
                 eventEmitter.emit(EVENT.REFRESH);
 

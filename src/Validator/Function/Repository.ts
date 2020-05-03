@@ -14,3 +14,8 @@ export function pullRequestTitle(title: string): boolean
 {
     return Repository.PULL_REQUEST_TITLE.test(title);
 }
+
+export function codeCommentContent(content: string): boolean
+{
+    return Repository.CODE_COMMENT_CONTENT.test(content);
+}
