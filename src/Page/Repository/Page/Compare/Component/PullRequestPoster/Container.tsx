@@ -7,6 +7,7 @@ import {PullRequest} from '../../../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
 import {notification} from 'antd';
+import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../../../Validator';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCompare> {}
 
@@ -53,9 +54,9 @@ class PullRequestPoster extends PureComponent<IProps, IState>
     onSubmitButtonClick: ButtonProps['onClick'] = async () =>
     {
         const {title, content} = this.state;
-        if (title.length === 0)
+        if (!ValidatorFunction.Repository.pullRequestTitle(title))
         {
-            notification.warn({message: '标题不能为空'});
+            notification.warn({message: ERROR_MESSAGE.Repository.PULL_REQUEST_TITLE});
         }
         else
         {
