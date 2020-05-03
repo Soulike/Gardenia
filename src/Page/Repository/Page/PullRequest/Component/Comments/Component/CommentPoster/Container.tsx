@@ -9,6 +9,7 @@ import {notification} from 'antd';
 import {PullRequest as PullRequestApi} from '../../../../../../../../Api';
 import {promisify} from 'util';
 import {PullRequest} from '../../../../../../../../Class';
+import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../../../../../Validator';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequest>
 {
@@ -54,9 +55,9 @@ class CommentPoster extends PureComponent<IProps, IState>
     onSubmitButtonClick: ButtonProps['onClick'] = async () =>
     {
         const {content} = this.state;
-        if (content.length === 0)
+        if (!ValidatorFunction.Repository.pullRequestComment(content))
         {
-            notification.warn({message: '评论内容不能为空'});
+            notification.warn({message: ERROR_MESSAGE.Repository.PULL_REQUEST_COMMENT});
         }
         else
         {

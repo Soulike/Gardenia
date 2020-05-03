@@ -7,6 +7,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
 import {notification} from 'antd';
 import {Issue as IssueApi} from '../../../../../../Api';
+import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../../../Validator';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
@@ -48,9 +49,9 @@ class CommentPoster extends PureComponent<IProps, IState>
     onSubmitButtonClick: ButtonProps['onClick'] = async () =>
     {
         const {content} = this.state;
-        if (content.length === 0)
+        if (!ValidatorFunction.Repository.issueComment(content))
         {
-            notification.warn({message: '评论内容不能为空'});
+            notification.warn({message: ERROR_MESSAGE.Repository.ISSUE_COMMENT});
         }
         else
         {

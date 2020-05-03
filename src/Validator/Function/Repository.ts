@@ -15,6 +15,16 @@ export function pullRequestTitle(title: string): boolean
     return Repository.PULL_REQUEST_TITLE.test(title);
 }
 
+export function issueComment(comment: string): boolean
+{
+    return Repository.ISSUE_COMMENT.test(comment);
+}
+
+export function pullRequestComment(comment: string): boolean
+{
+    return Repository.PULL_REQUEST_COMMENT.test(comment);
+}
+
 export function codeCommentContent(content: string): boolean
 {
     return Repository.CODE_COMMENT_CONTENT.test(content);
