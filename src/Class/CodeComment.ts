@@ -32,16 +32,16 @@ export class CodeComment
             repositoryUsername, repositoryName, filePath, columnNumber, content,
             creatorUsername, creationCommitHash, creationTimestamp, modificationTimestamp,
         } = codeComment;
-        return typeof id === 'number'
+        return Number.isInteger(id)
             && typeof repositoryUsername === 'string'
             && typeof repositoryName === 'string'
             && typeof filePath === 'string'
-            && typeof columnNumber === 'number' && columnNumber > 0
+            && Number.isInteger(columnNumber) && columnNumber > 0
             && typeof content === 'string'
             && typeof creatorUsername === 'string'
             && typeof creationCommitHash === 'string'
-            && typeof creationTimestamp === 'number'
-            && typeof modificationTimestamp === 'number';
+            && Number.isInteger(creationTimestamp)
+            && Number.isInteger(modificationTimestamp);
     }
 
     public static from(codeComment: Readonly<Record<keyof CodeComment, any>>): CodeComment

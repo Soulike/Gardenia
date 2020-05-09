@@ -22,6 +22,6 @@ export class Group
     public static validate(obj: Readonly<Record<keyof Group, any>>): boolean
     {
         const {id, name} = obj;
-        return typeof id === 'number' && typeof name === 'string';
+        return Number.isInteger(id) && typeof name === 'string';
     }
 }

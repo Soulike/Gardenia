@@ -28,15 +28,15 @@ export class Issue
     public static validate(issue: Readonly<Record<keyof Issue, any>>): boolean
     {
         const {id, username, repositoryUsername, repositoryName, no, title, status, creationTime, modificationTime} = issue;
-        return (typeof id === 'number' || id === undefined)
+        return (Number.isInteger(id) || id === undefined)
             && typeof username === 'string'
             && typeof repositoryUsername === 'string'
             && typeof repositoryName === 'string'
-            && typeof no === 'number'
+            && Number.isInteger(no)
             && typeof title === 'string'
             && Object.values(ISSUE_STATUS).includes(status)
-            && typeof creationTime === 'number'
-            && typeof modificationTime === 'number';
+            && Number.isInteger(creationTime)
+            && Number.isInteger(modificationTime);
     }
 
     public static from(issue: Readonly<Record<keyof Issue, any>>): Issue

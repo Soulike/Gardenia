@@ -46,8 +46,8 @@ export class PullRequest
             targetRepositoryUsername, targetRepositoryName, targetRepositoryBranchName, targetRepositoryCommitHash,
             creationTime, modificationTime, title, content, status,
         } = pullRequest;
-        return (typeof id === 'number' || id === undefined)
-            && typeof no === 'number'
+        return (Number.isInteger(id) || id === undefined)
+            && Number.isInteger(no)
             && typeof sourceRepositoryUsername === 'string'
             && typeof sourceRepositoryName === 'string'
             && typeof sourceRepositoryBranchName === 'string'
@@ -56,8 +56,8 @@ export class PullRequest
             && typeof targetRepositoryName === 'string'
             && typeof targetRepositoryBranchName === 'string'
             && typeof targetRepositoryCommitHash === 'string'
-            && typeof creationTime === 'number'
-            && typeof modificationTime === 'number'
+            && Number.isInteger(creationTime)
+            && Number.isInteger(modificationTime)
             && typeof title === 'string'
             && typeof content === 'string'
             && Object.values(PULL_REQUEST_STATUS).includes(status);

@@ -20,12 +20,12 @@ export class IssueComment
     public static validate(issueComment: Readonly<Record<keyof IssueComment, any>>): boolean
     {
         const {id, username, belongsTo, content, creationTime, modificationTime} = issueComment;
-        return (typeof id === 'number' || id === undefined)
+        return (Number.isInteger(id) || id === undefined)
             && typeof username === 'string'
-            && typeof belongsTo === 'number'
+            && Number.isInteger(belongsTo)
             && typeof content === 'string'
-            && typeof creationTime === 'number'
-            && typeof modificationTime === 'number';
+            && Number.isInteger(creationTime)
+            && Number.isInteger(modificationTime);
     }
 
     public static from(issueComment: Readonly<Record<keyof IssueComment, any>>): IssueComment

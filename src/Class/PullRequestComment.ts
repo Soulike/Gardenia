@@ -20,12 +20,12 @@ export class PullRequestComment
     public static validate(pullRequestComment: Readonly<Record<keyof PullRequestComment, any>>): boolean
     {
         const {id, username, belongsTo, content, creationTime, modificationTime} = pullRequestComment;
-        return (typeof id === 'number' || id === undefined)
+        return (Number.isInteger(id) || id === undefined)
             && typeof username === 'string'
-            && typeof belongsTo === 'number'
+            && Number.isInteger(belongsTo)
             && typeof content === 'string'
-            && typeof creationTime === 'number'
-            && typeof modificationTime === 'number';
+            && Number.isInteger(creationTime)
+            && Number.isInteger(modificationTime);
     }
 
     public static from(pullRequestComment: Readonly<Record<keyof PullRequestComment, any>>): PullRequestComment

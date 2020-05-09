@@ -27,7 +27,7 @@ export class Commit
         return typeof commitHash === 'string'
             && typeof committerName === 'string'
             && typeof committerEmail === 'string'
-            && typeof timestamp === 'number'
+            && Number.isInteger(timestamp)
             && typeof message === 'string'
             && typeof body === 'string';
     }
