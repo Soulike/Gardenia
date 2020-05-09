@@ -355,7 +355,7 @@ export async function setIsPublic(repository: Readonly<Pick<Repository, 'name' |
     }
 }
 
-export async function commitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string, offset?: number, limit?: number): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function commitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string, offset: number, limit: number): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     nProgress.start();
     try
@@ -385,7 +385,7 @@ export async function commitHistoryBetweenCommits(repository: Pick<Repository, '
     }
 }
 
-export async function commitHistory(repository: Pick<Repository, 'username' | 'name'>, targetCommitHash: string, offset?: number, limit?: number): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function commitHistory(repository: Pick<Repository, 'username' | 'name'>, targetCommitHash: string, offset: number, limit: number): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     nProgress.start();
     try
@@ -415,7 +415,7 @@ export async function commitHistory(repository: Pick<Repository, 'username' | 'n
     }
 }
 
-export async function fileCommitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function fileCommitHistoryBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, filePath: string, baseCommitHash: string, targetCommitHash: string, offset: number, limit: number): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     nProgress.start();
     try
@@ -445,7 +445,7 @@ export async function fileCommitHistoryBetweenCommits(repository: Pick<Repositor
     }
 }
 
-export async function fileCommitHistory(repository: Pick<Repository, 'username' | 'name'>, filePath: string, targetCommitHash: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function fileCommitHistory(repository: Pick<Repository, 'username' | 'name'>, filePath: string, targetCommitHash: string, offset: number, limit: number): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     nProgress.start();
     try
@@ -475,7 +475,7 @@ export async function fileCommitHistory(repository: Pick<Repository, 'username' 
     }
 }
 
-export async function diffBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ diff: FileDiff[] }> | null>
+export async function diffBetweenCommits(repository: Pick<Repository, 'username' | 'name'>, baseCommitHash: string, targetCommitHash: string, offset: number, limit: number): Promise<Readonly<{ diff: FileDiff[] }> | null>
 {
     nProgress.start();
     try
@@ -587,7 +587,7 @@ export async function commit(repository: Pick<Repository, 'username' | 'name'>, 
     }
 }
 
-export async function commitDiff(repository: Pick<Repository, 'username' | 'name'>, commitHash: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ diff: FileDiff[] }> | null>
+export async function commitDiff(repository: Pick<Repository, 'username' | 'name'>, commitHash: string, offset: number, limit: number): Promise<Readonly<{ diff: FileDiff[] }> | null>
 {
     nProgress.start();
     try
@@ -754,7 +754,7 @@ export async function forkFrom(repository: Readonly<Pick<RepositoryClass, 'usern
     }
 }
 
-export async function forkCommitHistory(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ commits: Commit[] }> | null>
+export async function forkCommitHistory(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string, offset: number, limit: number): Promise<Readonly<{ commits: Commit[] }> | null>
 {
     nProgress.start();
     try
@@ -820,7 +820,7 @@ export async function forkCommitAmount(sourceRepository: Readonly<Pick<Repositor
     }
 }
 
-export async function forkFileDiff(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<Readonly<{ fileDiffs: FileDiff[] }> | null>
+export async function forkFileDiff(sourceRepository: Readonly<Pick<Repository, 'username' | 'name'>>, sourceRepositoryBranch: string, targetRepository: Readonly<Pick<Repository, 'username' | 'name'>>, targetRepositoryBranch: string, offset: number, limit: number): Promise<Readonly<{ fileDiffs: FileDiff[] }> | null>
 {
     nProgress.start();
     try

@@ -270,7 +270,7 @@ export async function updateComment(primaryKey: Readonly<Pick<PullRequestComment
     }
 }
 
-export async function getComments(repository: Readonly<Pick<Repository, 'username' | 'name'>>, pullRequest: Readonly<Pick<PullRequest, 'no'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ comments: PullRequestComment[] } | null>
+export async function getComments(repository: Readonly<Pick<Repository, 'username' | 'name'>>, pullRequest: Readonly<Pick<PullRequest, 'no'>>, offset: number, limit: number): Promise<{ comments: PullRequestComment[] } | null>
 {
     nProgress.start();
     try
@@ -351,7 +351,7 @@ export async function resolveConflicts(pullRequest: Readonly<Pick<PullRequest, '
     }
 }
 
-export async function getCommits(pullRequest: Readonly<Pick<PullRequest, 'id'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ commits: Commit[] } | null>
+export async function getCommits(pullRequest: Readonly<Pick<PullRequest, 'id'>>, offset: number, limit: number): Promise<{ commits: Commit[] } | null>
 {
     nProgress.start();
     try
@@ -402,7 +402,7 @@ export async function getCommitAmount(pullRequest: Readonly<Pick<PullRequest, 'i
     }
 }
 
-export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>>, offset: number = 0, limit: number = Number.MAX_SAFE_INTEGER): Promise<{ fileDiffs: FileDiff[] } | null>
+export async function getFileDiffs(pullRequest: Readonly<Pick<PullRequest, 'id'>>, offset: number, limit: number): Promise<{ fileDiffs: FileDiff[] } | null>
 {
     nProgress.start();
     try

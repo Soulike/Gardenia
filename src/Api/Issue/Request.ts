@@ -68,8 +68,7 @@ export async function reopen(issue: Readonly<Pick<Issue, 'repositoryUsername' | 
 }
 
 export async function getByRepository(repository: Pick<Repository, 'username' | 'name'>, status: ISSUE_STATUS | undefined,
-                                      offset: number = 0,
-                                      limit: number = Number.MAX_SAFE_INTEGER): Promise<{ issues: Issue[] } | null>
+                                      offset: number, limit: number): Promise<{ issues: Issue[] } | null>
 {
     try
     {
@@ -146,8 +145,7 @@ export async function get(issue: Readonly<Pick<Issue, 'repositoryUsername' | 're
 }
 
 export async function getComments(issue: Readonly<Pick<Issue, 'repositoryUsername' | 'repositoryName' | 'no'>>,
-                                  offset: number = 0,
-                                  limit: number = Number.MAX_SAFE_INTEGER): Promise<{ comments: IssueComment[] } | null>
+                                  offset: number, limit: number): Promise<{ comments: IssueComment[] } | null>
 {
     try
     {
