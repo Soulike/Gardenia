@@ -74,7 +74,7 @@ class Avatar extends PureComponent<IProps, IState>
             {
                 const file = files[0];
                 const {type, size} = file;
-                if (size <= 5 * 1024 * 1024 && type.slice(0, 6) === 'image/')
+                if (size <= 2 * 1024 * 1024 && type.slice(0, 6) === 'image/')
                 {
                     this.setState({
                         file,
@@ -83,7 +83,7 @@ class Avatar extends PureComponent<IProps, IState>
                 }
                 else
                 {
-                    notification.error({message: '只能上传 5M 以内的图像文件作为头像'});
+                    notification.error({message: '只能上传 2M 以内的图像文件作为头像'});
                 }
             }
             else

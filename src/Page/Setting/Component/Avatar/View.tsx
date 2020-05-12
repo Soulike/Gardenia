@@ -28,7 +28,10 @@ function Avatar(props: IProps)
         <div className={Style.Avatar}>
             <SettingsTitle>头像</SettingsTitle>
             <div className={Style.alertWrapper}>
-                <Alert message={'点击图片选择新的头像'} banner={true} type={'info'} showIcon={true} />
+                <Alert message={'点击图片选择新的头像，图像文件大小 2M 以内。推荐上传方形图像，否则图像会被拉伸。'}
+                       banner={true}
+                       type={'info'}
+                       showIcon={true} />
             </div>
             <div className={Style.body}>
                 <Spin spinning={loading}>
