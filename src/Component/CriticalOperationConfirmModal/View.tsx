@@ -47,16 +47,21 @@ function CriticalOperationConfirmModal(props: Readonly<IProps>)
                onCancel={onCancel}
                destroyOnClose={true}>
             <div className={Style.content}>
+                <div className={Style.fuckAutocomplete}>
+                    <Input type={'text'} value={'fuck autocomplete'} />
+                    <Input.Password value={'fuck autocomplete'} />
+                </div>
                 <div className={Style.warningWrapper}>{warning}</div>
                 <Input className={Style.input} value={validateText}
                        onChange={onValidateInputChange}
                        placeholder={validateInputPlaceholder}
-                       autoFocus={true} />
-                <Input className={Style.input}
-                       placeholder={'账户密码'}
-                       type={'password'}
-                       value={password}
-                       onChange={onPasswordInputChange} />
+                       autoFocus={true}
+                       autoComplete={'off'} />
+                <Input.Password className={Style.input}
+                                placeholder={'账户密码'}
+                                value={password}
+                                onChange={onPasswordInputChange}
+                                autoComplete={'off'} />
             </div>
         </Modal>
     );
