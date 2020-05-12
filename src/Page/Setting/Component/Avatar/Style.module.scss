@@ -1,6 +1,10 @@
 .Avatar {
     @import "../../../../GlobalStyle/COLOR.css";
 
+    .alertWrapper {
+        margin-bottom: 15px;
+    }
+
     .body {
         width: 250px;
         margin: 0 auto;

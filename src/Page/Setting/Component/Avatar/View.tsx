@@ -2,7 +2,7 @@ import React, {MouseEventHandler} from 'react';
 import Style from './Style.module.scss';
 import SettingsTitle from '../../../../Component/SettingsTitle';
 import DefaultAvatar from '../../../../Component/DefaultAvatar';
-import {Button, Spin, Tooltip} from 'antd';
+import {Alert, Button, Spin, Tooltip} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 
@@ -27,6 +27,9 @@ function Avatar(props: IProps)
     return (
         <div className={Style.Avatar}>
             <SettingsTitle>头像</SettingsTitle>
+            <div className={Style.alertWrapper}>
+                <Alert message={'点击图片选择新的头像'} banner={true} type={'info'} showIcon={true} />
+            </div>
             <div className={Style.body}>
                 <Spin spinning={loading}>
                     <Tooltip title={'点击更换头像'}>
