@@ -5,7 +5,10 @@ import {Interface as RouterInterface} from '../../../../Router';
 import {Repository} from '../../../../Class';
 import {Collaborator as CollaboratorApi} from '../../../../Api';
 
-interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
+interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter>
+{
+    showAddCollaborationButton: boolean,
+}
 
 interface IState
 {
@@ -55,7 +58,10 @@ class Collaborations extends PureComponent<IProps, IState>
     render()
     {
         const {repositories, loading} = this.state;
-        return (<View repositories={repositories} loading={loading} />);
+        const {showAddCollaborationButton} = this.props;
+        return (<View repositories={repositories}
+                      loading={loading}
+                      showAddCollaborationButton={showAddCollaborationButton} />);
     }
 }
 

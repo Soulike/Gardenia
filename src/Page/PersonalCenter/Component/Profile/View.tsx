@@ -11,12 +11,13 @@ const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps
 {
-    profile: Readonly<ProfileClass>
+    profile: Readonly<ProfileClass>,
+    showModifyButton: boolean,
 }
 
 function ProfileView(props: Readonly<IProps>)
 {
-    const {profile: {username, nickname, email, avatar}} = props;
+    const {profile: {username, nickname, email, avatar}, showModifyButton} = props;
     return (
         <div className={Style.Profile}>
             <div className={Style.avatarWrapper}>
@@ -31,9 +32,12 @@ function ProfileView(props: Readonly<IProps>)
             </div>
             <div className={Style.divideLine} />
             <div className={Style.editButtonWrapper}>
-                <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}>
-                    <Button block={true}>编辑</Button>
-                </Link>
+                {
+                    showModifyButton ? (
+                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}>
+                            <Button block={true}>编辑</Button>
+                        </Link>) : null
+                }
             </div>
             <div className={Style.infoWrapper}>
                 <div className={Style.info}>

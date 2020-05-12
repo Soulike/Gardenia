@@ -6,7 +6,10 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Repository as RepositoryApi} from '../../../../Api';
 import {ButtonProps} from 'antd/lib/button';
 
-interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
+interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter>
+{
+    showCreateRepositoryButton: boolean,
+}
 
 interface IState
 {
@@ -148,12 +151,14 @@ class Repositories extends PureComponent<Readonly<IProps>, IState>
     render()
     {
         const {repositories, loading, hasNextPage, hasPrevPage} = this.state;
+        const {showCreateRepositoryButton} = this.props;
         return (<View repositories={repositories}
                       loading={loading}
                       onPrevPageButtonClick={this.onPrevPageButtonClick}
                       onNextPageButtonClick={this.onNextPageButtonClick}
                       hasNextPage={hasNextPage}
-                      hasPrevPage={hasPrevPage} />);
+                      hasPrevPage={hasPrevPage}
+                      showCreateRepositoryButton={showCreateRepositoryButton} />);
     }
 }
 

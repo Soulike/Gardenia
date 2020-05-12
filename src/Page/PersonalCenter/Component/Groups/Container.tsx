@@ -5,7 +5,10 @@ import {RouteComponentProps, withRouter} from 'react-router';
 import {Interface as RouterInterface} from '../../../../Router';
 import {Group as GroupApi} from '../../../../Api';
 
-interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
+interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter>
+{
+    showCreateGroupButton: boolean,
+}
 
 interface IState
 {
@@ -71,7 +74,11 @@ class Groups extends PureComponent<Readonly<IProps>, IState>
     render()
     {
         const {groups, loading, administratingGroups} = this.state;
-        return (<View groups={groups} loading={loading} administratingGroups={administratingGroups} />);
+        const {showCreateGroupButton} = this.props;
+        return (<View showCreateGroupButton={showCreateGroupButton}
+                      groups={groups}
+                      loading={loading}
+                      administratingGroups={administratingGroups} />);
     }
 }
 

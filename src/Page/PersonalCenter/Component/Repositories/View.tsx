@@ -16,17 +16,22 @@ interface IProps
     onPrevPageButtonClick: ButtonProps['onClick'],
     hasNextPage: boolean,
     hasPrevPage: boolean,
+    showCreateRepositoryButton: boolean,
 }
 
 function RepositoriesView(props: Readonly<IProps>)
 {
-    const {repositories, loading, onNextPageButtonClick, onPrevPageButtonClick, hasNextPage, hasPrevPage} = props;
+    const {repositories, loading, onNextPageButtonClick, onPrevPageButtonClick, hasNextPage, hasPrevPage, showCreateRepositoryButton} = props;
     return (
         <div className={Style.Repositories}>
             <div className={Style.tools}>
-                <NewTabLink to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}>
-                    <Button type={'primary'}><PlusOutlined />添加仓库</Button>
-                </NewTabLink>
+                {
+                    showCreateRepositoryButton ? (
+                        <NewTabLink to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}>
+                            <Button type={'primary'}><PlusOutlined />添加仓库</Button>
+                        </NewTabLink>
+                    ) : null
+                }
             </div>
             <RepositoryList repositories={repositories} loading={loading} showUsername={false} />
             <div className={Style.buttonWrapper}>

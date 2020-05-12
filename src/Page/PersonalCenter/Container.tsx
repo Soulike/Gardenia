@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../Router';
-import {Tab} from './Interface';
 import qs from 'querystring';
 import {TabsProps} from 'antd/lib/tabs';
 import CONFIG from '../../CONFIG';
@@ -10,54 +9,39 @@ import Repositories from './Component/Repositories';
 import Groups from './Component/Groups';
 import Collaborations from './Component/Collaborations';
 import Stars from './Component/Stars';
+import {Profile as ProfileApi} from '../../Api/Profile';
+import {promisify} from 'util';
+import {Tab} from './Interface';
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
 
 interface IState
 {
     activeTabKey: string,
+    isOwnProfile: boolean,
 }
 
 class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
 {
-    private static TABS: Tab[] = [
-        {
-            key: 'repositories',
-            title: '仓库',
-            component: <Repositories />,
-        },
-        {
-            key: 'collaborations',
-            title: '合作仓库',
-            component: <Collaborations />,
-        },
-        {
-            key: 'stars',
-            title: 'Stars',
-            component: <Stars />,
-        },
-        {
-            key: 'groups',
-            title: '小组',
-            component: <Groups />,
-        },
-    ];
+    private setStatePromise = promisify(this.setState);
 
     constructor(props: Readonly<IProps>)
     {
         super(props);
         this.state = {
             activeTabKey: '',
+            isOwnProfile: false,
         };
     }
 
-    componentDidMount()
+    async componentDidMount()
     {
-        this.setActiveTabKey();
         this.setTitle();
+        await this.loadIsOwnProfile();
+        this.setActiveTabKey();
     }
 
-    componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {location: {search}, match: {params: {username}}} = this.props;
         const {location: {search: prevSearch}, match: {params: {username: prevUsername}}} = prevProps;
@@ -67,9 +51,23 @@ class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
         }
         if (username !== prevUsername)
         {
-            this.componentDidMount();
+            await this.componentDidMount();
         }
     }
+
+    loadIsOwnProfile = async () =>
+    {
+        const {match: {params: {username}}} = this.props;
+        const profile = await ProfileApi.get();
+        if (profile === null || username !== profile.username)
+        {
+            await this.setStatePromise({isOwnProfile: false});
+        }
+        else
+        {
+            await this.setStatePromise({isOwnProfile: true});
+        }
+    };
 
     setTitle = () =>
     {
@@ -83,7 +81,7 @@ class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
         const {tab} = qs.decode(search.slice(1));
         if (typeof tab === 'undefined')
         {
-            this.setState({activeTabKey: PersonalCenter.TABS[0].key});
+            this.setState({activeTabKey: 'repositories'});  // 参考 render 里面 tabs 数组内容的 key
         }
         else if (Array.isArray(tab))
         {
@@ -104,8 +102,33 @@ class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {activeTabKey} = this.state;
-        return (<View tabs={PersonalCenter.TABS} activeTabKey={activeTabKey} onTabChange={this.onTabChange} />);
+        const {activeTabKey, isOwnProfile} = this.state;
+        const tabs: Readonly<Readonly<Tab>[]> = [
+            {
+                key: 'repositories',
+                title: '仓库',
+                component: <Repositories showCreateRepositoryButton={isOwnProfile} />,
+            },
+            {
+                key: 'collaborations',
+                title: '合作仓库',
+                component: <Collaborations showAddCollaborationButton={isOwnProfile} />,
+            },
+            {
+                key: 'stars',
+                title: 'Stars',
+                component: <Stars />,
+            },
+            {
+                key: 'groups',
+                title: '小组',
+                component: <Groups showCreateGroupButton={isOwnProfile} />,
+            },
+        ];
+        return (<View isOwnProfile={isOwnProfile}
+                      tabs={tabs}
+                      activeTabKey={activeTabKey}
+                      onTabChange={this.onTabChange} />);
     }
 }
 

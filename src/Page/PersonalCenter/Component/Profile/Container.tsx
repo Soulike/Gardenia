@@ -9,7 +9,7 @@ const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter>
 {
-
+    showModifyButton: boolean,
 }
 
 interface IState
@@ -60,7 +60,8 @@ class Profile extends PureComponent<Readonly<IProps>, IState>
     render()
     {
         const {profile} = this.state;
-        return (<View profile={profile} />);
+        const {showModifyButton} = this.props;
+        return (<View profile={profile} showModifyButton={showModifyButton} />);
     }
 }
 

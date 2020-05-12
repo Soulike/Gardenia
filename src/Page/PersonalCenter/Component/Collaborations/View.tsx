@@ -11,17 +11,22 @@ interface IProps
 {
     repositories: Repository[];
     loading: boolean;
+    showAddCollaborationButton: boolean;
 }
 
 function Collaborations(props: IProps)
 {
-    const {repositories, loading} = props;
+    const {repositories, loading, showAddCollaborationButton} = props;
     return (
         <div className={Style.Collaborations}>
             <div className={Style.tools}>
-                <NewTabLink to={PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION]}>
-                    <Button type={'primary'}><PlusOutlined />成为仓库合作者</Button>
-                </NewTabLink>
+                {
+                    showAddCollaborationButton ? (
+                        <NewTabLink to={PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION]}>
+                            <Button type={'primary'}><PlusOutlined />成为仓库合作者</Button>
+                        </NewTabLink>
+                    ) : null
+                }
             </div>
             <RepositoryList repositories={repositories}
                             loading={loading} showUsername={true} />

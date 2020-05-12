@@ -9,16 +9,17 @@ interface IProps
 {
     tabs: Readonly<Readonly<Tab>[]>,
     activeTabKey: string,
-    onTabChange: TabsProps['onChange']
+    onTabChange: TabsProps['onChange'],
+    isOwnProfile: boolean,
 }
 
 function PersonalCenterView(props: Readonly<IProps>)
 {
-    const {tabs, activeTabKey, onTabChange} = props;
+    const {tabs, activeTabKey, onTabChange, isOwnProfile} = props;
     return (
         <div className={Style.PersonalCenter}>
             <div className={Style.profileWrapper}>
-                <Profile />
+                <Profile showModifyButton={isOwnProfile} />
             </div>
             <div className={Style.tabWrapper}>
                 <Tabs animated={false} activeKey={activeTabKey} onChange={onTabChange}>
