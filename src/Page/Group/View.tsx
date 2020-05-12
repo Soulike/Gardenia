@@ -28,7 +28,7 @@ function GroupView(props: Readonly<IProps>)
                             <TeamOutlined />
                         </div>
                         <div className={Style.groupName}>{name}</div>
-                        <div className={Style.groupId}>({id})</div>
+                        <div className={Style.groupId}>(ID: {id})</div>
                     </div>
                 </div>
                 <Tabs type={'card'} className={Style.tab} tabBarStyle={{
