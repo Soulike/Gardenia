@@ -68,13 +68,28 @@ class Avatar extends PureComponent<IProps, IState>
     onAvatarInputChange: InputProps['onChange'] = e =>
     {
         const {files} = e.target;
-        if (files !== null && files.length > 0)
+        if (files !== null)
         {
-            const file = files[0];
-            this.setState({
-                file,
-                avatar: URL.createObjectURL(file),
-            });
+            if (files.length === 1)
+            {
+                const file = files[0];
+                const {type, size} = file;
+                if (size <= 5 * 1024 * 1024 && type.slice(0, 6) === 'image/')
+                {
+                    this.setState({
+                        file,
+                        avatar: URL.createObjectURL(file),
+                    });
+                }
+                else
+                {
+                    notification.error({message: '只能上传 5M 以内的图像文件作为头像'});
+                }
+            }
+            else
+            {
+                notification.error({message: '只能上传一个文件作为头像'});
+            }
         }
     };
 
