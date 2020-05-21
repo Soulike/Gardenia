@@ -36,7 +36,7 @@ function CollaboratorCard(props: IProps)
                     <Popconfirm disabled={loading}
                                 title={<>确认取消 <b>{username}</b> 的合作者身份？</>}
                                 onConfirm={onRemoveButtonClick}>
-                        <Button type={'danger'} disabled={loading} loading={loading}>移除</Button>
+                        <Button type={'primary'} danger={true} disabled={loading} loading={loading}>移除</Button>
                     </Popconfirm>
                 </div>
 

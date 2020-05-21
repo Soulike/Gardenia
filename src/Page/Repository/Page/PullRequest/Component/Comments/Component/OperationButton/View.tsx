@@ -61,7 +61,7 @@ function OperationButton(props: IProps)
                                         <Popconfirm title={'确认关闭 Pull Request'}
                                                     onConfirm={onCloseButtonClick}
                                                     disabled={loading}>
-                                            <Button type={'danger'} loading={loading} disabled={loading}>
+                                            <Button type={'primary'} danger={true} loading={loading} disabled={loading}>
                                                 <CloseOutlined />关闭 Pull Request
                                             </Button>
                                         </Popconfirm>

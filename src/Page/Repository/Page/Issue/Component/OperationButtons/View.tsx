@@ -20,7 +20,7 @@ function OperationButtons(props: IProps)
     return (
         issueStatus === ISSUE_STATUS.OPEN ? (
             <Popconfirm title={'确定关闭 Issue？'} onConfirm={onCloseButtonClick} disabled={loading}>
-                <Button type={'danger'} loading={loading} disabled={loading}>
+                <Button type={'primary'} danger={true} loading={loading} disabled={loading}>
                     <IssuesCloseOutlined />关闭 Issue
                 </Button>
             </Popconfirm>

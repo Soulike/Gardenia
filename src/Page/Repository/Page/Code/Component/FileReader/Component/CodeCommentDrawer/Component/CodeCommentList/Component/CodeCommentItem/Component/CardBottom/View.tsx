@@ -19,7 +19,11 @@ function CardBottom(props: IProps)
                             placement={'topLeft'}
                             onConfirm={onDeleteButtonClick}
                             disabled={loading}>
-                    <Button size={'small'} type={'danger'} disabled={loading} loading={loading}>删除</Button>
+                    <Button size={'small'}
+                            type={'primary'}
+                            danger={true}
+                            disabled={loading}
+                            loading={loading}>删除</Button>
                 </Popconfirm>
             </div>
         </div>

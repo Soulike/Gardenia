@@ -85,7 +85,7 @@ function MembersView(props: Readonly<IProps>)
                                                       <Popconfirm title={`确认移除成员 ${username}？`}
                                                                   onConfirm={onRemoveAccountConfirm(username)}
                                                                   disabled={loading}>
-                                                          <Button type={'danger'}
+                                                          <Button type={'primary'} danger={true}
                                                                   loading={loading}
                                                                   disabled={loading}>移除</Button>
                                                       </Popconfirm>

@@ -1,19 +1,44 @@
 import React, {Component} from 'react';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {Button} from 'antd';
 
-interface IProps extends RouteComponentProps {}
+interface IProps {}
 
-class Test extends Component<IProps>
+interface IState
 {
+    loading: boolean;
+}
+
+class Test extends Component<IProps, IState>
+{
+    constructor(props: IProps)
+    {
+        super(props);
+        this.state = {
+            loading: true,
+        };
+    }
+
+    componentDidMount(): void
+    {
+        setTimeout(() =>
+        {
+            const {loading} = this.state;
+            this.setState({
+                loading: !loading,
+            });
+        }, 100);
+    }
+
+
     render()
     {
-        const {match} = this.props;
+        const {loading} = this.state;
         return (
             <div>
-                {JSON.stringify(match)}
+                <Button size={'small'} loading={loading}>测试</Button>
             </div>
         );
     }
 }
 
-export default withRouter(Test);
+export default Test;

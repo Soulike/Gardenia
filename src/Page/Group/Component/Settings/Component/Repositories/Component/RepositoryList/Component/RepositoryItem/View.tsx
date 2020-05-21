@@ -42,7 +42,7 @@ function RepositoryItem(props: IProps)
                     <Popconfirm title={`确认从小组中删除仓库 ${username}/${name} ？`}
                                 onConfirm={onRemoveButtonClick}
                                 disabled={loading}>
-                        <Button type={'danger'}
+                        <Button type={'primary'} danger={true}
                                 disabled={loading}
                                 loading={loading}>从小组中删除</Button>
                     </Popconfirm>

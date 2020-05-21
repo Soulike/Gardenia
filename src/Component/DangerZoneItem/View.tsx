@@ -17,7 +17,7 @@ function DangerZoneItem(props: Readonly<IDangerZoneItemProps>)
 {
     const {title, description, onButtonClick, buttonText} = props;
     return (
-        <List.Item extra={<Button type={'danger'} onClick={onButtonClick}>{buttonText}</Button>}>
+        <List.Item extra={<Button type={'primary'} danger={true} onClick={onButtonClick}>{buttonText}</Button>}>
             <List.Item.Meta title={title} description={description} />
         </List.Item>
     );
