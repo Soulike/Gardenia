@@ -1,29 +1,25 @@
 import React, {HTMLAttributes} from 'react';
 import Style from './Style.module.scss';
 import {Commit} from '../../../../../../Class';
-import {Button, Spin} from 'antd';
-import {ButtonProps} from 'antd/lib/button';
+import {Spin} from 'antd';
 import CommitInfoBar from '../CommitInfoBar';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
-import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
+import {Interface as RouterInterface} from '../../../../../../Router';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import Binary from './Component/Binary';
 import Oversize from './Component/Oversize';
-import {extname} from 'path';
+import {basename, extname} from 'path';
 import CodeReader from '../../../../../../Component/CodeReader';
 import MarkdownReader from './Component/MarkdownReader';
-import {File as FileFunction} from '../../../../../../Function';
-import {FileTextOutlined} from '@ant-design/icons';
 import {DrawerProps} from 'antd/lib/drawer';
 import CodeCommentDrawer from './Component/CodeCommentDrawer';
+import FileInfoBar from './Component/FileInfoBar';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
     isBinary: boolean,
     isOversize: boolean,
-    fileName: string,
     lastCommit: Readonly<Commit>,
     loading: boolean,
-    onRawFileButtonClick: ButtonProps['onClick'],
     fileContent: string;
     fileSize: number;
     onCodeLineClickFactory: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'];
@@ -43,13 +39,11 @@ function FileReader(props: Readonly<IProps>)
     const {
         isBinary,
         isOversize,
-        fileName,
         lastCommit,
         loading,
-        onRawFileButtonClick,
         fileContent,
         fileSize,
-        match: {params: {username, repository: repositoryName, branch, path}},
+        match: {params: {path}},
         onCodeLineClickFactory,
         hasCommentLineNumbers,
         drawerCode,
@@ -57,6 +51,7 @@ function FileReader(props: Readonly<IProps>)
         drawerVisible,
         onDrawerClose,
     } = props;
+    const fileName = basename(path!);
     const ext = extname(fileName).toLowerCase();
     return (
         <>
@@ -66,26 +61,8 @@ function FileReader(props: Readonly<IProps>)
                         <CommitInfoBar lastCommit={lastCommit} />
                     </div>
                     <div className={Style.contentWrapper}>
-                        <div className={Style.fileInfoBar}>
-                            <div className={Style.fileInfoWrapper}>
-                                <div className={Style.fileNameWrapper}>
-                                    <FileTextOutlined />
-                                    <div className={Style.fileName}> {fileName}</div>
-                                </div>
-                                <div className={Style.fileSize}>{FileFunction.parseFileSize(fileSize)}</div>
-                            </div>
-                            <Button.Group className={Style.buttonWrapper}>
-                                <Button>
-                                    <Link to={RouterFunction.generateRepositoryCommitsRoute({
-                                        username,
-                                        repository: repositoryName,
-                                        branch: branch!,
-                                        path,
-                                    })}>历史
-                                    </Link>
-                                </Button>
-                                <Button onClick={onRawFileButtonClick}>下载</Button>
-                            </Button.Group>
+                        <div className={Style.fileInfoBarWrapper}>
+                            <FileInfoBar fileSize={fileSize} lastCommitHash={lastCommit.commitHash} />
                         </div>
                         <div className={Style.readerWrapper}>
                             {

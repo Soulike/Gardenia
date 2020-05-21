@@ -1,0 +1,39 @@
+.FileInfoBar {
+    padding: 10px;
+    border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .fileInfoWrapper {
+        display: flex;
+        align-items: center;
+
+        & > div {
+            border-right: 1px solid var(--GLOBAL_BORDER_COLOR);
+            padding: 0 10px;
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:last-child {
+                border-right: none;
+                padding-right: 0;
+            }
+        }
+
+        .fileNameWrapper {
+            display: flex;
+            align-items: center;
+
+            .fileName {
+                margin-left: 0.5ch;
+                font-weight: bold;
+            }
+        }
+
+        .fileSize {
+        }
+    }
+}

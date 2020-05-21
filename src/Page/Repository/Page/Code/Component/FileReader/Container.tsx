@@ -3,7 +3,6 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {CodeComment, Commit} from '../../../../../../Class';
 import {CodeComment as CodeCommentApi, RepositoryInfo} from '../../../../../../Api';
-import {basename} from 'path';
 import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
 import {File} from '../../../../../../Function';
 import {promisify} from 'util';
@@ -155,31 +154,6 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         await this.setStatePromise({loading: false});
     };
 
-    onRawFileButtonClick = async () =>
-    {
-        const {match: {params: {username, repository, path}}} = this.props;
-        const {lastCommit: {commitHash}} = this.state;
-        const rawFile = await RepositoryInfo.rawFile({username}, {name: repository}, path!, commitHash);
-        if (rawFile !== null)
-        {
-            this.startDownload(rawFile);
-        }
-    };
-
-    startDownload = (blob: Blob) =>
-    {
-        const {match: {params: {path}}} = this.props;
-        const url = URL.createObjectURL(blob);
-        File.startDownload(url, basename(path!));
-        URL.revokeObjectURL(url);
-    };
-
-    getFileNameFromPath = (path: string) =>
-    {
-        const pathSplit = path.split('/');
-        return pathSplit[pathSplit.length - 1];
-    };
-
     onCodeLineClickFactory: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'] = lineNumber =>
     {
         return async () =>
@@ -198,12 +172,10 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {match: {params: {path}}} = this.props;
         const {
             isBinary, isOversize, lastCommit, loading, fileContent, fileSize, codeComments,
             drawerVisible, drawerLineNumber, drawerCode,
         } = this.state;
-        const fileName = this.getFileNameFromPath(path!);
         const hasCommentLineNumbers = codeComments.map(({columnNumber}) => columnNumber);
 
         return (
@@ -212,9 +184,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
                   isBinary={isBinary}
                   isOversize={isOversize}
                   lastCommit={lastCommit}
-                  fileName={fileName}
                   loading={loading}
-                  onRawFileButtonClick={this.onRawFileButtonClick}
                   hasCommentLineNumbers={hasCommentLineNumbers}
                   onCodeLineClickFactory={this.onCodeLineClickFactory}
                   drawerCode={drawerCode}

@@ -40,7 +40,7 @@ function CodeReader(props: IProps)
                             {
                                 hasLineNumber ? (
                                     <td>
-                                        <div className={Style.lineNumber}>{i + 1}</div>
+                                        <code className={Style.lineNumber}>{i + 1}</code>
                                     </td>
                                 ) : null
                             }
