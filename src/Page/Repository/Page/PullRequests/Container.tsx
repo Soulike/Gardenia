@@ -109,6 +109,7 @@ class PullRequests extends PureComponent<IProps, IState>
             this.setState({loading: true});
             await this.loadPullRequests(currentStatus, (currentPageNumber - 1) * PullRequests.SIZE_PER_PAGE, PullRequests.SIZE_PER_PAGE);
             this.setState({currentPageNumber: currentPageNumber - 1, loading: false});
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
     };
 
@@ -118,6 +119,7 @@ class PullRequests extends PureComponent<IProps, IState>
         this.setState({loading: true});
         await this.loadPullRequests(currentStatus, (currentPageNumber + 1) * PullRequests.SIZE_PER_PAGE, PullRequests.SIZE_PER_PAGE);
         this.setState({currentPageNumber: currentPageNumber + 1, loading: false});
+        window.scrollTo({top: 0, behavior: 'smooth'});
     };
 
     loadPullRequests = async (status: PULL_REQUEST_STATUS | undefined, offset: number, limit: number) =>

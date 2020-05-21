@@ -132,6 +132,7 @@ class Issues extends PureComponent<IProps, IState>
             this.setState({loading: true});
             await this.loadIssues(currentStatus, (currentPageNumber - 1) * Issues.SIZE_PER_PAGE, Issues.SIZE_PER_PAGE);
             this.setState({currentPageNumber: currentPageNumber - 1, loading: false});
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
     };
 
@@ -141,6 +142,7 @@ class Issues extends PureComponent<IProps, IState>
         this.setState({loading: true});
         await this.loadIssues(currentStatus, (currentPageNumber + 1) * Issues.SIZE_PER_PAGE, Issues.SIZE_PER_PAGE);
         this.setState({currentPageNumber: currentPageNumber + 1, loading: false});
+        window.scrollTo({top: 0, behavior: 'smooth'});
     };
 
     setNoNextPage = (): boolean =>
