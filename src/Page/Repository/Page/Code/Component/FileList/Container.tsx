@@ -136,7 +136,7 @@ class FileList extends Component<IProps, IState>
         return (<View fileList={fileList} masterBranchName={masterBranchName}
                       lastCommit={lastCommit}
                       loading={loading}
-                      showPreviousFolderItem={path !== undefined} />);
+                      showPreviousFolderItem={path !== undefined && path !== '.'} />);
     }
 }
 

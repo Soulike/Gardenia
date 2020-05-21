@@ -5,8 +5,9 @@ import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../../Router';
 import {File as FileFunction} from '../../../../../../../../Function';
 import {Button} from 'antd';
-import {FileTextOutlined} from '@ant-design/icons';
+import {FileTextOutlined, LeftOutlined} from '@ant-design/icons';
 import path from 'path';
+import {ObjectType} from '../../../../../../../../CONSTANT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -28,6 +29,15 @@ function FileInfoBar(props: IProps)
     return (
         <div className={Style.FileInfoBar}>
             <div className={Style.fileInfoWrapper}>
+                <div className={Style.backLinkWrapper}>
+                    <Link to={RouterFunction.generateRepositoryCodeRoute({
+                        username, repository, branch,
+                        objectType: ObjectType.TREE,
+                        path: path.join(filePath!, '..'),
+                    })}>
+                        <Button size={'small'}><LeftOutlined /></Button>
+                    </Link>
+                </div>
                 <div className={Style.fileNameWrapper}>
                     <FileTextOutlined />
                     <div className={Style.fileName}> {fileName}</div>
