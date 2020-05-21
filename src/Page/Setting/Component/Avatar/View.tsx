@@ -1,4 +1,4 @@
-import React, {MouseEventHandler} from 'react';
+import React, {InputHTMLAttributes, MouseEventHandler} from 'react';
 import Style from './Style.module.scss';
 import SettingsTitle from '../../../../Component/SettingsTitle';
 import DefaultAvatar from '../../../../Component/DefaultAvatar';
@@ -15,6 +15,7 @@ interface IProps
     onAvatarClick: MouseEventHandler<HTMLDivElement>,
     onAvatarInputChange: InputProps['onChange'],
     onUploadButtonClick: ButtonProps['onClick'],
+    accept: InputHTMLAttributes<HTMLInputElement>['accept'],    // 'type/a,type/b'
 }
 
 function Avatar(props: IProps)
@@ -23,6 +24,7 @@ function Avatar(props: IProps)
         avatar, loading,
         fileInputRef, onAvatarClick,
         onAvatarInputChange, fileChanged, onUploadButtonClick,
+        accept,
     } = props;
     return (
         <div className={Style.Avatar}>
@@ -44,7 +46,7 @@ function Avatar(props: IProps)
                         </div>
                     </Tooltip>
                 </Spin>
-                <input type="file" accept={'image/*'} multiple={false}
+                <input type="file" accept={accept} multiple={false}
                        className={Style.fileInput} ref={fileInputRef}
                        onChange={onAvatarInputChange} />
                 <div className={Style.buttonWrapper}>

@@ -1,6 +1,5 @@
 import {Account, Profile, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
-import {notification} from 'antd';
 import {GET, GET_BY_EMAIL, SET, UPLOAD_AVATAR} from './ROUTE';
 import nProgress from 'nprogress';
 
@@ -82,7 +81,7 @@ export async function uploadAvatar(avatar: File): Promise<true | null>
     {
         const formData = new FormData();
         formData.append('avatar', avatar);
-        const {data: {isSuccessful, message}}: AxiosResponse<ResponseBody> =
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
             await axios.post(UPLOAD_AVATAR, formData);
         if (isSuccessful)
         {
@@ -90,7 +89,6 @@ export async function uploadAvatar(avatar: File): Promise<true | null>
         }
         else
         {
-            notification.error({message});
             return null;
         }
     }

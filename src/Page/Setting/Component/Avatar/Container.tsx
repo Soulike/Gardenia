@@ -21,6 +21,11 @@ interface IState
 
 class Avatar extends PureComponent<IProps, IState>
 {
+    // 允许上传的图像类型
+    private static ALLOWED_MIME_TYPE: Readonly<string[]> = [
+        'image/jpeg',
+        'image/png',
+    ];
     private fileInputRef = React.createRef<HTMLInputElement>();
     private setStatePromise = promisify(this.setState);
 
@@ -74,7 +79,7 @@ class Avatar extends PureComponent<IProps, IState>
             {
                 const file = files[0];
                 const {type, size} = file;
-                if (size <= 2 * 1024 * 1024 && type.slice(0, 6) === 'image/')
+                if (size <= 2 * 1024 * 1024 && Avatar.ALLOWED_MIME_TYPE.includes(type))
                 {
                     this.setState({
                         file,
@@ -83,7 +88,7 @@ class Avatar extends PureComponent<IProps, IState>
                 }
                 else
                 {
-                    notification.error({message: '只能上传 2M 以内的图像文件作为头像'});
+                    notification.error({message: '只能上传 2M 以内的 JPG 或 PNG 图像文件作为头像'});
                 }
             }
             else
@@ -124,7 +129,8 @@ class Avatar extends PureComponent<IProps, IState>
                       fileInputRef={this.fileInputRef}
                       avatar={avatar}
                       loading={loading} fileChanged={file !== null}
-                      onUploadButtonClick={this.onUploadButtonClick} />);
+                      onUploadButtonClick={this.onUploadButtonClick}
+                      accept={Avatar.ALLOWED_MIME_TYPE.join(',')} />);
     }
 }
 
