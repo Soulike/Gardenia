@@ -5,7 +5,7 @@ import {CodeComment as CodeCommentApi} from '../../../../../../../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../../../../../Router';
 import {promisify} from 'util';
-import eventEmitter, {EVENT} from '../../Event';
+import eventEmitter, {EVENT} from '../../../../Event';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -31,7 +31,7 @@ class CodeCommentList extends PureComponent<IProps, IState>
             loading: false,
         };
 
-        eventEmitter.on(EVENT.REFRESH, this.onListRefresh);
+        eventEmitter.on(EVENT.CODE_COMMENT_CHANGE, this.onListChange);
     }
 
     async componentDidMount()
@@ -53,10 +53,10 @@ class CodeCommentList extends PureComponent<IProps, IState>
 
     componentWillUnmount()
     {
-        eventEmitter.removeListener(EVENT.REFRESH, this.onListRefresh);
+        eventEmitter.removeListener(EVENT.CODE_COMMENT_CHANGE, this.onListChange);
     }
 
-    onListRefresh = async () => await this.componentDidMount();
+    onListChange = async () => await this.componentDidMount();
 
     loadCodeComments = async () =>
     {

@@ -15,7 +15,10 @@ function CardBottom(props: IProps)
     return (
         <div className={Style.CardBottom}>
             <div className={Style.buttonWrapper}>
-                <Popconfirm title={'确认删除代码标注'} onConfirm={onDeleteButtonClick} disabled={loading}>
+                <Popconfirm title={'确认删除代码标注？'}
+                            placement={'topLeft'}
+                            onConfirm={onDeleteButtonClick}
+                            disabled={loading}>
                     <Button size={'small'} type={'danger'} disabled={loading} loading={loading}>删除</Button>
                 </Popconfirm>
             </div>

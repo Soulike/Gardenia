@@ -6,7 +6,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../../../../../Router';
 import {notification} from 'antd';
 import {CodeComment as CodeCommentApi} from '../../../../../../../../../../Api';
-import eventEmitter, {EVENT} from '../../Event';
+import eventEmitter, {EVENT} from '../../../../Event';
 import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../../../../../../../Validator';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
@@ -86,7 +86,7 @@ class CodeCommentForm extends PureComponent<IProps, IState>
             {
                 notification.success({message: '代码批注添加成功'});
                 await this.init();
-                eventEmitter.emit(EVENT.REFRESH);
+                eventEmitter.emit(EVENT.CODE_COMMENT_CHANGE);
 
             }
             await this.setStatePromise({submitting: false});

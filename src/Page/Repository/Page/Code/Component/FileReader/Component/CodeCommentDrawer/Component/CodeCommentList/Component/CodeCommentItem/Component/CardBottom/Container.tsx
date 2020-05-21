@@ -5,7 +5,7 @@ import {CodeComment} from '../../../../../../../../../../../../../../Class';
 import {promisify} from 'util';
 import {CodeComment as CodeCommentApi} from '../../../../../../../../../../../../../../Api';
 import {notification} from 'antd';
-import eventEmitter, {EVENT} from '../../../../../../Event';
+import eventEmitter, {EVENT} from '../../../../../../../../Event';
 
 interface IProps
 {
@@ -37,7 +37,7 @@ class CardBottom extends PureComponent<IProps, IState>
         if (result !== null)
         {
             notification.success({message: '删除标注成功'});
-            eventEmitter.emit(EVENT.REFRESH);
+            eventEmitter.emit(EVENT.CODE_COMMENT_CHANGE);
         }
         await this.setStatePromise({loading: false});
     };

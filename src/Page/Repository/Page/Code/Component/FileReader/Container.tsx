@@ -8,6 +8,7 @@ import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
 import {File} from '../../../../../../Function';
 import {promisify} from 'util';
 import {DrawerProps} from 'antd/lib/drawer';
+import eventEmitter, {EVENT} from './Event';
 
 const {PAGE_ID_TO_ROUTE, PAGE_ID} = CONFIG;
 
@@ -64,6 +65,13 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             await this.loadFileContent();
         }
         await this.setStatePromise({loading: false});
+
+        eventEmitter.on(EVENT.CODE_COMMENT_CHANGE, this.onCodeCommentChange);
+    }
+
+    componentWillUnmount()
+    {
+        eventEmitter.removeListener(EVENT.CODE_COMMENT_CHANGE, this.onCodeCommentChange);
     }
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
@@ -138,6 +146,13 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             const {codeComments} = codeCommentsWrapper;
             await this.setStatePromise({codeComments});
         }
+    };
+
+    onCodeCommentChange = async () =>
+    {
+        await this.setStatePromise({loading: true});
+        await this.loadCodeComments();
+        await this.setStatePromise({loading: false});
     };
 
     onRawFileButtonClick = async () =>
