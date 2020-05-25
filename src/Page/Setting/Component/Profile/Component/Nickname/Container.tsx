@@ -53,7 +53,7 @@ class Nickname extends PureComponent<IProps, IState>
         if (ValidatorFunction.Profile.nickname(nickname))
         {
             await this.setStatePromise({loading: true});
-            const result = await ProfileApi.set({nickname});
+            const result = await ProfileApi.setNickname(nickname);
             if (result !== null)
             {
                 notification.success({message: '昵称修改成功'});

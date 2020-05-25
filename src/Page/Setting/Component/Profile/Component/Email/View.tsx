@@ -41,7 +41,7 @@ function Email(props: IProps)
                            disabled={loading}
                            className={Style.emailInput} />
                     <Input type={'text'} onChange={onVerificationCodeInputChange}
-                           value={verificationCode}
+                           value={verificationCode} placeholder={'邮箱验证码'}
                            addonAfter={(
                                <Button type={'link'} size={'small'}
                                        disabled={disableGetVerificationCodeButton || loading}

@@ -1,6 +1,13 @@
 import {Account, Profile, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
-import {GET, GET_BY_EMAIL, SEND_SET_EMAIL_VERIFICATION_CODE_TO_EMAIL, SET, SET_EMAIL, UPLOAD_AVATAR} from './ROUTE';
+import {
+    GET,
+    GET_BY_EMAIL,
+    SEND_SET_EMAIL_VERIFICATION_CODE_TO_EMAIL,
+    SET_EMAIL,
+    SET_NICKNAME,
+    UPLOAD_AVATAR,
+} from './ROUTE';
 import nProgress from 'nprogress';
 
 export async function get(account?: Readonly<Pick<Account, 'username'>>): Promise<Profile | null>
@@ -53,12 +60,12 @@ export async function getByEmail(email: Profile['email']): Promise<Profile | nul
     }
 }
 
-export async function set(profile: Readonly<Partial<Omit<Profile, 'avatar' | 'username'>>>): Promise<true | null>
+export async function setNickname(nickname: Profile['nickname']): Promise<true | null>
 {
     try
     {
         const {data: {isSuccessful}}: AxiosResponse<ResponseBody> =
-            await axios.post(SET, profile);
+            await axios.post(SET_NICKNAME, {nickname});
         if (isSuccessful)
         {
             return true;
