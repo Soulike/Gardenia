@@ -4,7 +4,7 @@ import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {Profile as ProfileApi} from '../../../../Api';
 import {notification} from 'antd';
-import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../../../Validator';
+import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../Validator';
 import {promisify} from 'util';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG as ROUTER_CONFIG} from '../../../../Router';
@@ -15,7 +15,7 @@ interface IProps extends RouteComponentProps {}
 
 interface IState
 {
-    nickname: string,
+    defaultNickname: string,
     email: string,
     loading: boolean,
 }
@@ -28,7 +28,7 @@ class Profile extends PureComponent<IProps, IState>
     {
         super(props);
         this.state = {
-            nickname: '',
+            defaultNickname: '',
             email: '',
             loading: false,
         };
@@ -47,7 +47,7 @@ class Profile extends PureComponent<IProps, IState>
         if (result !== null)
         {
             const {nickname, email} = result;
-            await this.setStatePromise({nickname, email});
+            await this.setStatePromise({defaultNickname: nickname, email});
         }
         else
         {
@@ -56,36 +56,9 @@ class Profile extends PureComponent<IProps, IState>
         }
     };
 
-    onNicknameInputChange: InputProps['onChange'] = e =>
-    {
-        this.setState({nickname: e.target.value});
-    };
-
     onEmailInputChange: InputProps['onChange'] = e =>
     {
         this.setState({email: e.target.value});
-    };
-
-    onNicknameSubmit: ButtonProps['onClick'] = async () =>
-    {
-        const {nickname} = this.state;
-        if (ValidatorFunction.Profile.nickname(nickname))
-        {
-            this.setState({loading: true});
-            const result = await ProfileApi.set({nickname});
-            if (result !== null)
-            {
-                notification.success({message: '昵称修改成功'});
-            }
-            this.setState({loading: false});
-        }
-        else
-        {
-            notification.warn({
-                message: ERROR_MESSAGE.Profile.NICKNAME,
-                description: HINT.Profile.NICKNAME,
-            });
-        }
     };
 
     onEmailSubmit: ButtonProps['onClick'] = async () =>
@@ -111,15 +84,12 @@ class Profile extends PureComponent<IProps, IState>
 
     render()
     {
-        const {nickname, email, loading} = this.state;
-        return (
-            <View nickname={nickname}
-                  email={email}
-                  loading={loading}
-                  onEmailInputChange={this.onEmailInputChange}
-                  onEmailSubmit={this.onEmailSubmit}
-                  onNicknameInputChange={this.onNicknameInputChange}
-                  onNicknameSubmit={this.onNicknameSubmit} />);
+        const {defaultNickname, email, loading} = this.state;
+        return (<View defaultNickname={defaultNickname}
+                      email={email}
+                      loading={loading}
+                      onEmailInputChange={this.onEmailInputChange}
+                      onEmailSubmit={this.onEmailSubmit} />);
     }
 }
 

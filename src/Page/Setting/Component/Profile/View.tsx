@@ -2,22 +2,20 @@ import React from 'react';
 import Style from './Style.module.scss';
 import SettingsTitle from '../../../../Component/SettingsTitle';
 import InputLabel from '../../../../Component/InputLabel';
-import {Alert, Button, Input, Tooltip} from 'antd';
+import {Alert, Button, Input} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
-import {HINT} from '../../../../Validator';
 import NewTabLink from '../../../../Component/NewTabLink';
 import {CONFIG} from '../../../../Router';
+import Nickname from './Component/Nickname';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps
 {
-    nickname: string,
+    defaultNickname: string,
     email: string,
-    onNicknameInputChange: InputProps['onChange'],
     onEmailInputChange: InputProps['onChange'],
-    onNicknameSubmit: ButtonProps['onClick'],
     onEmailSubmit: ButtonProps['onClick'],
 
     loading: boolean,
@@ -26,31 +24,17 @@ interface IProps
 function Profile(props: IProps)
 {
     const {
-        nickname, email,
-        onEmailInputChange, onNicknameInputChange,
-        onEmailSubmit, onNicknameSubmit,
+        defaultNickname,
+        email,
+        onEmailInputChange,
+        onEmailSubmit,
         loading,
     } = props;
     return (
         <div className={Style.Profile}>
             <SettingsTitle>个人资料</SettingsTitle>
             <div className={Style.item}>
-                <InputLabel>昵称</InputLabel>
-                <div className={Style.form}>
-                    <div className={Style.inputWrapper}>
-                        <Tooltip title={HINT.Profile.NICKNAME} trigger={'focus'}>
-                            <Input onChange={onNicknameInputChange}
-                                   value={nickname}
-                                   disabled={loading} />
-                        </Tooltip>
-                    </div>
-                    <div className={Style.saveButtonWrapper}>
-                        <Button type={'primary'}
-                                onClick={onNicknameSubmit}
-                                loading={loading}
-                                disabled={loading}>保存</Button>
-                    </div>
-                </div>
+                <Nickname defaultNickname={defaultNickname} loadingDefaultNickname={loading} />
             </div>
             <div className={Style.item}>
                 <InputLabel>邮箱</InputLabel>

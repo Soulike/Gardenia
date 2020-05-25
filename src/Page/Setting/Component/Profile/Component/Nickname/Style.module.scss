@@ -1,0 +1,15 @@
+.Nickname {
+
+    .form {
+        display: flex;
+        justify-content: space-between;
+
+        .inputWrapper {
+            width: 100%;
+        }
+
+        .saveButtonWrapper {
+            margin-left: 10px;
+        }
+    }
+}
