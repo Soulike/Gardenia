@@ -9,20 +9,47 @@ interface IProps
 {
     email: string,
     onEmailInputChange: InputProps['onChange'],
-    onEmailSubmit: ButtonProps['onClick'],
 
+    verificationCode: string,
+    onVerificationCodeInputChange: InputProps['onChange'],
+    getVerificationCodeButtonText: string,
+    onGetVerificationCodeButtonClick: ButtonProps['onClick'],
+    disableGetVerificationCodeButton: boolean,
+
+    onEmailSubmit: ButtonProps['onClick'],
     loading: boolean,
 }
 
 function Email(props: IProps)
 {
-    const {email, loading, onEmailInputChange, onEmailSubmit} = props;
+    const {
+        email, loading,
+        onEmailInputChange, onEmailSubmit,
+        disableGetVerificationCodeButton,
+        getVerificationCodeButtonText,
+        onGetVerificationCodeButtonClick,
+        onVerificationCodeInputChange, verificationCode,
+    } = props;
     return (
         <div className={Style.Email}>
             <InputLabel>邮箱</InputLabel>
-            <div className={`${Style.form} ${Style.emailForm}`}>
-                <div className={`${Style.inputWrapper} ${Style.emailInputWrapper}`}>
-                    <Input type={'email'} onChange={onEmailInputChange} value={email} disabled={loading} />
+            <div className={Style.form}>
+                <div className={Style.inputWrapper}>
+                    <Input type={'email'}
+                           onChange={onEmailInputChange}
+                           value={email}
+                           disabled={loading}
+                           className={Style.emailInput} />
+                    <Input type={'text'} onChange={onVerificationCodeInputChange}
+                           value={verificationCode}
+                           addonAfter={(
+                               <Button type={'link'} size={'small'}
+                                       disabled={disableGetVerificationCodeButton || loading}
+                                       className={Style.getVerificationCodeButton}
+                                       onClick={onGetVerificationCodeButtonClick}>
+                                   {getVerificationCodeButtonText}
+                               </Button>)}
+                           className={Style.verificationCodeInput} />
                 </div>
                 <div className={Style.saveButtonWrapper}>
                     <Button type={'primary'}

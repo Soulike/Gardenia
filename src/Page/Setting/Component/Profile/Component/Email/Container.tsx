@@ -7,6 +7,8 @@ import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../../../Va
 import {Profile as ProfileApi} from '../../../../../../Api/Profile';
 import {notification} from 'antd';
 
+const {Profile: ProfileValidator} = ValidatorFunction;
+
 interface IProps
 {
     defaultEmail?: string,   // 默认显示 email
@@ -16,6 +18,9 @@ interface IProps
 interface IState
 {
     email: string,
+    verificationCode: string,
+    getVerificationCodeButtonText: string,
+    disableGetVerificationCodeButton: boolean,
     loading: boolean,
 }
 
@@ -28,6 +33,9 @@ class Email extends PureComponent<IProps, IState>
         super(props);
         this.state = {
             email: '',
+            verificationCode: '',
+            getVerificationCodeButtonText: '获取验证码',
+            disableGetVerificationCodeButton: false,
             loading: false,
         };
     }
@@ -47,33 +55,95 @@ class Email extends PureComponent<IProps, IState>
         await this.setStatePromise({email: e.target.value});
     };
 
-    onEmailSubmit: ButtonProps['onClick'] = async () =>
+
+    onVerificationCodeInputChange: InputProps['onChange'] = async e =>
     {
-        const {email} = this.state;
-        if (ValidatorFunction.Profile.email(email))
+        await this.setStatePromise({verificationCode: e.target.value});
+    };
+
+    onGetVerificationCodeButtonClick: ButtonProps['onClick'] = async () =>
+    {
+        const DISABLE_SECONDS = 30;
+        const {getVerificationCodeButtonText: originalGetVerificationCodeButtonText, email} = this.state;
+        if (!ProfileValidator.email(email))
         {
-            await this.setStatePromise({loading: true});
-            const result = await ProfileApi.set({email});
-            if (result !== null)
-            {
-                notification.success({message: '邮箱修改成功'});
-            }
-            await this.setStatePromise({loading: false});
+            notification.warn({message: ERROR_MESSAGE.Profile.EMAIL});
         }
         else
+        {
+            await this.setStatePromise({disableGetVerificationCodeButton: true});
+            let passedSeconds = 0;
+            const timer = setInterval(() =>
+            {
+                passedSeconds++;
+                this.setState({
+                    getVerificationCodeButtonText: `${DISABLE_SECONDS - passedSeconds} 秒后再获取`,
+                });
+            }, 1000);
+            const timeout = setTimeout(() =>
+            {
+                clearInterval(timer);
+                this.setState({
+                    disableGetVerificationCodeButton: false,
+                    getVerificationCodeButtonText: originalGetVerificationCodeButtonText,
+                });
+            }, DISABLE_SECONDS * 1000);
+            const result = await ProfileApi.sendSetEmailVerificationCodeToEmail(email);
+            if (result !== null)
+            {
+                notification.success({message: '获取验证码成功', description: `请到 ${email} 查看`});
+            }
+            else
+            {
+                clearInterval(timer);
+                clearTimeout(timeout);
+                await this.setStatePromise({
+                    disableGetVerificationCodeButton: false,
+                    getVerificationCodeButtonText: originalGetVerificationCodeButtonText,
+                });
+            }
+        }
+    };
+
+    onEmailSubmit: ButtonProps['onClick'] = async () =>
+    {
+        const {email, verificationCode} = this.state;
+        if (!ValidatorFunction.Account.verificationCode(verificationCode))
+        {
+            notification.warn({
+                message: ERROR_MESSAGE.Account.VERIFICATION_CODE,
+            });
+        }
+        else if (!ValidatorFunction.Profile.email(email))
         {
             notification.warn({
                 message: ERROR_MESSAGE.Profile.EMAIL,
             });
+        }
+        else
+        {
+            await this.setStatePromise({loading: true});
+            const result = await ProfileApi.setEmail(email, verificationCode);
+            if (result !== null)
+            {
+                notification.success({message: '邮箱修改成功'});
+                await this.setStatePromise({verificationCode: ''});
+            }
+            await this.setStatePromise({loading: false});
         }
     };
 
     render()
     {
         const {loadingDefaultEmail} = this.props;
-        const {email, loading} = this.state;
+        const {email, loading, verificationCode, disableGetVerificationCodeButton, getVerificationCodeButtonText} = this.state;
         return (<View email={email}
                       loading={loading || !!loadingDefaultEmail}
+                      disableGetVerificationCodeButton={disableGetVerificationCodeButton}
+                      getVerificationCodeButtonText={getVerificationCodeButtonText}
+                      onGetVerificationCodeButtonClick={this.onGetVerificationCodeButtonClick}
+                      onVerificationCodeInputChange={this.onVerificationCodeInputChange}
+                      verificationCode={verificationCode}
                       onEmailInputChange={this.onEmailInputChange}
                       onEmailSubmit={this.onEmailSubmit} />);
     }

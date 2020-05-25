@@ -2,23 +2,29 @@
 
     .form {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
 
         .inputWrapper {
-            width: 100%;
+            display: flex;
+            align-items: center;
+            width: 500px;
+
+            .emailInput {
+                flex-shrink: 0;
+                width: 250px;
+            }
+
+            .verificationCodeInput {
+                margin-left: 10px;
+
+                .getVerificationCodeButton {
+                    cursor: pointer;
+                }
+            }
         }
 
         .saveButtonWrapper {
             margin-left: 10px;
-        }
-    }
-
-    .emailForm {
-        display: flex;
-        justify-content: flex-start;
-
-        .inputWrapper {
-            width: 250px;
         }
     }
 }
