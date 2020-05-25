@@ -2,22 +2,18 @@ import React from 'react';
 import Style from './Style.module.scss';
 import SettingsTitle from '../../../../Component/SettingsTitle';
 import InputLabel from '../../../../Component/InputLabel';
-import {Alert, Button, Input} from 'antd';
-import {InputProps} from 'antd/lib/input';
-import {ButtonProps} from 'antd/lib/button';
+import {Alert} from 'antd';
 import NewTabLink from '../../../../Component/NewTabLink';
 import {CONFIG} from '../../../../Router';
 import Nickname from './Component/Nickname';
+import Email from './Component/Email';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps
 {
     defaultNickname: string,
-    email: string,
-    onEmailInputChange: InputProps['onChange'],
-    onEmailSubmit: ButtonProps['onClick'],
-
+    defaultEmail: string,
     loading: boolean,
 }
 
@@ -25,9 +21,7 @@ function Profile(props: IProps)
 {
     const {
         defaultNickname,
-        email,
-        onEmailInputChange,
-        onEmailSubmit,
+        defaultEmail,
         loading,
     } = props;
     return (
@@ -37,18 +31,7 @@ function Profile(props: IProps)
                 <Nickname defaultNickname={defaultNickname} loadingDefaultNickname={loading} />
             </div>
             <div className={Style.item}>
-                <InputLabel>邮箱</InputLabel>
-                <div className={`${Style.form} ${Style.emailForm}`}>
-                    <div className={`${Style.inputWrapper} ${Style.emailInputWrapper}`}>
-                        <Input type={'email'} onChange={onEmailInputChange} value={email} disabled={loading} />
-                    </div>
-                    <div className={Style.saveButtonWrapper}>
-                        <Button type={'primary'}
-                                onClick={onEmailSubmit}
-                                loading={loading}
-                                disabled={loading}>保存</Button>
-                    </div>
-                </div>
+                <Email defaultEmail={defaultEmail} loadingDefaultEmail={loading} />
             </div>
             <div className={Style.item}>
                 <InputLabel>密码</InputLabel>

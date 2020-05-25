@@ -1,13 +1,10 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {InputProps} from 'antd/lib/input';
-import {ButtonProps} from 'antd/lib/button';
 import {Profile as ProfileApi} from '../../../../Api';
-import {notification} from 'antd';
-import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../Validator';
 import {promisify} from 'util';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG as ROUTER_CONFIG} from '../../../../Router';
+import {Profile as ProfileClass} from '../../../../Class';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -15,8 +12,7 @@ interface IProps extends RouteComponentProps {}
 
 interface IState
 {
-    defaultNickname: string,
-    email: string,
+    currentProfile: ProfileClass,
     loading: boolean,
 }
 
@@ -28,8 +24,7 @@ class Profile extends PureComponent<IProps, IState>
     {
         super(props);
         this.state = {
-            defaultNickname: '',
-            email: '',
+            currentProfile: new ProfileClass('', '', '', ''),
             loading: false,
         };
     }
@@ -46,8 +41,7 @@ class Profile extends PureComponent<IProps, IState>
         const result = await ProfileApi.get();
         if (result !== null)
         {
-            const {nickname, email} = result;
-            await this.setStatePromise({defaultNickname: nickname, email});
+            await this.setStatePromise({currentProfile: result});
         }
         else
         {
@@ -56,40 +50,12 @@ class Profile extends PureComponent<IProps, IState>
         }
     };
 
-    onEmailInputChange: InputProps['onChange'] = e =>
-    {
-        this.setState({email: e.target.value});
-    };
-
-    onEmailSubmit: ButtonProps['onClick'] = async () =>
-    {
-        const {email} = this.state;
-        if (ValidatorFunction.Profile.email(email))
-        {
-            this.setState({loading: true});
-            const result = await ProfileApi.set({email});
-            if (result !== null)
-            {
-                notification.success({message: '邮箱修改成功'});
-            }
-            this.setState({loading: false});
-        }
-        else
-        {
-            notification.warn({
-                message: ERROR_MESSAGE.Profile.EMAIL,
-            });
-        }
-    };
-
     render()
     {
-        const {defaultNickname, email, loading} = this.state;
-        return (<View defaultNickname={defaultNickname}
-                      email={email}
-                      loading={loading}
-                      onEmailInputChange={this.onEmailInputChange}
-                      onEmailSubmit={this.onEmailSubmit} />);
+        const {currentProfile: {nickname, email}, loading} = this.state;
+        return (<View defaultNickname={nickname}
+                      defaultEmail={email}
+                      loading={loading} />);
     }
 }
 
