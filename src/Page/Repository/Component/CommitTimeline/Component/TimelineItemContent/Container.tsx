@@ -1,12 +1,11 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Interface as RouterInterface} from '../../../../../../Router';
-import {Commit} from '../../../../../../Class';
+import {Commit, Repository} from '../../../../../../Class';
 import {ButtonProps} from 'antd/lib/button';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
+interface IProps
 {
+    repository: Pick<Repository, 'username' | 'name'>;
     commit: Commit;
 }
 
@@ -34,10 +33,12 @@ class TimelineItemContent extends PureComponent<IProps, IState>
     render()
     {
         const {showBody} = this.state;
-        return (<View {...this.props}
+        const {repository, commit} = this.props;
+        return (<View repository={repository}
+                      commit={commit}
                       showBody={showBody}
                       onShowBodyButtonClick={this.onShowBodyButtonClick} />);
     }
 }
 
-export default withRouter(React.memo(TimelineItemContent));
+export default React.memo(TimelineItemContent);

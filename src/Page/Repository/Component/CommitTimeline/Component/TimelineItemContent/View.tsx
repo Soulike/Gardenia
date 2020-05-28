@@ -1,18 +1,19 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Commit} from '../../../../../../Class';
+import {Commit, Repository} from '../../../../../../Class';
 import {Button} from 'antd';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
+import {Function as RouterFunction} from '../../../../../../Router';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {ObjectType} from '../../../../../../CONSTANT';
 import {ButtonProps} from 'antd/lib/button';
 import {Date} from '../../../../../../Function';
 import {CodeOutlined, CopyOutlined} from '@ant-design/icons';
 import PersonalCenterLink from '../../../../../../Component/PersonalCenterLink';
+import NewTabLink from '../../../../../../Component/NewTabLink';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
+interface IProps
 {
+    repository: Pick<Repository, 'username' | 'name'>;
     commit: Commit;
     showBody: boolean;
     onShowBodyButtonClick: ButtonProps['onClick'];
@@ -20,7 +21,11 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
 
 function TimelineItemContent(props: IProps)
 {
-    const {showBody, onShowBodyButtonClick, commit: {commitHash, committerName, message, body, timestamp, committerEmail}, match: {params: {username, repository: repositoryName}}} = props;
+    const {
+        showBody, onShowBodyButtonClick,
+        commit: {commitHash, committerName, message, body, timestamp, committerEmail},
+        repository: {username, name: repositoryName},
+    } = props;
     return (
         <div className={Style.TimelineItemContent}>
             <div className={Style.left}>
@@ -46,23 +51,23 @@ function TimelineItemContent(props: IProps)
                         <Button><CopyOutlined /></Button>
                     </CopyToClipboard>
                     <Button>
-                        <Link to={RouterFunction.generateRepositoryCommitRoute({
+                        <NewTabLink to={RouterFunction.generateRepositoryCommitRoute({
                             username,
                             repository: repositoryName,
                             commitHash,
                         })}>
                             <code>{commitHash.slice(0, 7)}</code>
-                        </Link>
+                        </NewTabLink>
                     </Button>
                 </Button.Group>
-                <Link to={RouterFunction.generateRepositoryCodeRoute({
+                <NewTabLink to={RouterFunction.generateRepositoryCodeRoute({
                     username,
                     repository: repositoryName,
                     branch: commitHash,
                     objectType: ObjectType.TREE,
                 })}>
                     <Button><CodeOutlined /></Button>
-                </Link>
+                </NewTabLink>
             </div>
         </div>
     );

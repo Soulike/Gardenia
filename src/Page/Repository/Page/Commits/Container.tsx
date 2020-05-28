@@ -111,12 +111,12 @@ class Commits extends PureComponent<IProps, IState>
     render()
     {
         const {branches, loading, commits} = this.state;
-        const {match: {params: {repository: repositoryName, path}}} = this.props;
+        const {match: {params: {repository: repositoryName, path, username}}} = this.props;
         return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick} branches={branches}
                       loading={loading}
                       commits={commits}
                       path={path}
-                      repositoryName={repositoryName} />);
+                      repository={{username, name: repositoryName}} />);
     }
 }
 

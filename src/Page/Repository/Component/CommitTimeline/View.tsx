@@ -1,17 +1,18 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Empty, Timeline} from 'antd';
-import {Commit} from '../../../../Class';
+import {Commit, Repository} from '../../../../Class';
 import TimelineItemContent from './Component/TimelineItemContent';
 
 interface IProps
 {
-    commits: Readonly<Commit[]>
+    repository: Pick<Repository, 'username' | 'name'>,  // 指定这些提交历史是哪一个仓库的
+    commits: Readonly<Commit[]>,
 }
 
 function CommitTimeline(props: IProps)
 {
-    const {commits} = props;
+    const {commits, repository} = props;
     return (
         <div className={Style.CommitTimeline}>
             {
@@ -20,7 +21,7 @@ function CommitTimeline(props: IProps)
                         {
                             commits.map(commit =>
                                 <Timeline.Item key={commit.commitHash}>
-                                    <TimelineItemContent commit={commit} />
+                                    <TimelineItemContent commit={commit} repository={repository} />
                                 </Timeline.Item>)
                         }
                     </Timeline>

@@ -95,7 +95,17 @@ class PullRequestCommits extends PureComponent<IProps, IState>
     render()
     {
         const {commits, loading} = this.state;
-        return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick} commits={commits} loading={loading} />);
+        const {
+            match: {
+                params: {
+                    sourceRepositoryUsername, sourceRepositoryName,
+                },
+            },
+        } = this.props;
+        return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick}
+                      commits={commits}
+                      loading={loading}
+                      sourceRepository={{username: sourceRepositoryUsername, name: sourceRepositoryName}} />);
     }
 }
 

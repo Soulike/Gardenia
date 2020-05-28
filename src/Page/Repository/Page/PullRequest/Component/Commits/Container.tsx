@@ -93,8 +93,9 @@ class Commits extends Component<IProps, IState>
     render()
     {
         const {commits, loading} = this.state;
-        const {loading: pullRequestIsLoading} = this.props;
-        return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick}
+        const {loading: pullRequestIsLoading, pullRequest: {sourceRepositoryUsername, sourceRepositoryName}} = this.props;
+        return (<View sourceRepository={{username: sourceRepositoryUsername, name: sourceRepositoryName}}
+                      onLoadMoreButtonClick={this.onLoadMoreButtonClick}
                       commits={commits}
                       loading={loading || pullRequestIsLoading} />);
     }
