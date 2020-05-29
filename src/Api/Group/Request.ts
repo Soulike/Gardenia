@@ -3,7 +3,7 @@ import axios, {AxiosResponse} from 'axios';
 import {
     ACCOUNTS,
     ADD,
-    ADD_ACCOUNTS,
+    ADD_ACCOUNT,
     ADD_ADMINS,
     ADD_REPOSITORY,
     ADMINS,
@@ -139,12 +139,12 @@ export async function accounts(group: Readonly<Pick<Group, 'id'>>): Promise<Read
     }
 }
 
-export async function addAccounts(group: Readonly<Pick<Group, 'id'>>, usernames: Readonly<string[]>): Promise<true | null>
+export async function addAccount(group: Readonly<Pick<Group, 'id'>>, account: Readonly<Pick<Account, 'username'>>): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(ADD_ACCOUNTS,
-            {group, usernames});
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(ADD_ACCOUNT,
+            {group, account});
         if (isSuccessful)
         {
             return true;

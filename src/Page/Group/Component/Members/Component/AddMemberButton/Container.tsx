@@ -57,7 +57,7 @@ class AddMemberButton extends PureComponent<IAddMemberButtonProps, IState>
         else
         {
             await this.setStatePromise({loading: true});
-            const result = await GroupApi.addAccounts({id: Number.parseInt(id)}, [username]);
+            const result = await GroupApi.addAccount({id: Number.parseInt(id)}, {username});
             if (result !== null)
             {
                 notification.success({message: `添加成员 ${username} 成功`});
