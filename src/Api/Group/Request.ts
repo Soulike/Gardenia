@@ -4,7 +4,7 @@ import {
     ACCOUNTS,
     ADD,
     ADD_ACCOUNT,
-    ADD_ADMINS,
+    ADD_ADMIN,
     ADD_REPOSITORY,
     ADMINS,
     CHANGE_NAME,
@@ -255,12 +255,12 @@ export async function admins(group: Readonly<Pick<Group, 'id'>>): Promise<Readon
     }
 }
 
-export async function addAdmins(group: Readonly<Pick<Group, 'id'>>, usernames: Readonly<string[]>): Promise<true | null>
+export async function addAdmin(group: Readonly<Pick<Group, 'id'>>, account: Readonly<Pick<Account, 'username'>>): Promise<true | null>
 {
     try
     {
-        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(ADD_ADMINS,
-            {group, usernames});
+        const {data: {isSuccessful}}: AxiosResponse<ResponseBody> = await axios.post(ADD_ADMIN,
+            {group, account});
         if (isSuccessful)
         {
             return true;

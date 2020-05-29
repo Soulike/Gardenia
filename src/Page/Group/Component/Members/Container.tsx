@@ -165,7 +165,7 @@ class Members extends PureComponent<Readonly<IProps>, IState>
         return async () =>
         {
             await this.setStatePromise({loading: true});
-            const result = await GroupApi.addAdmins({id: Number.parseInt(id)}, [username]);
+            const result = await GroupApi.addAdmin({id: Number.parseInt(id)}, {username});
             if (result !== null)
             {
                 notification.success({message: `成功设置 ${username} 为管理员`});
