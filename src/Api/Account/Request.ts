@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from 'axios';
 import {Account, Profile, ResponseBody} from '../../Class';
 import {
     CHANGE_PASSWORD,
+    CHECK_IF_USERNAME_AVAILABLE,
     CHECK_PASSWORD,
     CHECK_SESSION,
     LOGIN,
@@ -41,6 +42,30 @@ export async function register(account: Readonly<Account>, profile: Readonly<Omi
         if (isSuccessful)
         {
             return true;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function checkIfUsernameAvailable(username: Account['username']): Promise<{ isAvailable: boolean } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ isAvailable: boolean }>> = await axios.get(CHECK_IF_USERNAME_AVAILABLE, {
+            params: {
+                json: JSON.stringify({username}),
+            },
+        });
+        if (isSuccessful)
+        {
+            return data!;
         }
         else
         {

@@ -9,6 +9,7 @@ import {Account} from '../../Class';
 import CONFIG from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 import {ButtonProps} from 'antd/lib/button';
+import {promisify} from 'util';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 const {Account: AccountValidator, Profile: ProfileValidator} = ValidatorFunction;
@@ -29,6 +30,8 @@ interface IState
 
 class Register extends PureComponent<Readonly<IProps>, IState>
 {
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: Readonly<IProps>)
     {
         super(props);
@@ -57,6 +60,36 @@ class Register extends PureComponent<Readonly<IProps>, IState>
     onUsernameInputChange: InputProps['onChange'] = e =>
     {
         this.setState({username: e.target.value});
+    };
+
+    onUsernameInputBlur: InputProps['onBlur'] = async () =>
+    {
+        const {username} = this.state;
+        if (username !== '')
+        {
+            if (!ValidatorFunction.Account.username(username))
+            {
+                notification.warn({
+                    message: ERROR_MESSAGE.Account.USERNAME,
+                    description: HINT.Account.USERNAME,
+                });
+            }
+            else
+            {
+                await this.setStatePromise({loading: true});
+                const result = await AccountApi.checkIfUsernameAvailable(username);
+                if (result !== null)
+                {
+                    const {isAvailable} = result;
+                    if (!isAvailable)
+                    {
+                        notification.warn({message: `用户名 ${username} 已存在`});
+                    }
+                }
+                await this.setStatePromise({loading: false});
+            }
+        }
+
     };
 
     onPasswordInputChange: InputProps['onChange'] = e =>
@@ -206,6 +239,7 @@ class Register extends PureComponent<Readonly<IProps>, IState>
                   onFormSubmit={this.onFormSubmit}
                   onPasswordInputChange={this.onPasswordInputChange}
                   onUsernameInputChange={this.onUsernameInputChange}
+                  onUsernameInputBlur={this.onUsernameInputBlur}
                   onEmailInputChange={this.onEmailInputChange}
                   onRepeatPasswordInputChange={this.onRepeatPasswordInputChange}
                   repeatPassword={repeatPassword}

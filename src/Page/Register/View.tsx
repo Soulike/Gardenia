@@ -17,6 +17,7 @@ interface IProps
     email: string,
     verificationCode: string,
     onUsernameInputChange: InputProps['onChange'],
+    onUsernameInputBlur: InputProps['onBlur'],
     onPasswordInputChange: InputProps['onChange'],
     onRepeatPasswordInputChange: InputProps['onChange'],
     onEmailInputChange: InputProps['onChange'],
@@ -36,6 +37,7 @@ function RegisterView(props: Readonly<IProps>)
         repeatPassword,
         email,
         onUsernameInputChange,
+        onUsernameInputBlur,
         onPasswordInputChange,
         onRepeatPasswordInputChange,
         onEmailInputChange,
@@ -56,6 +58,7 @@ function RegisterView(props: Readonly<IProps>)
                     <Input type={'text'}
                            size={'large'}
                            onChange={onUsernameInputChange}
+                           onBlur={onUsernameInputBlur}
                            autoFocus={true}
                            value={username}
                            prefix={<UserOutlined />} disabled={loading} />
