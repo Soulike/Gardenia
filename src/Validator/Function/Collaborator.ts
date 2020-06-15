@@ -1,6 +1,14 @@
 import {Collaborator} from '../REGEXP';
+import {IValidatorFunction} from '../Interface';
 
-export function code(code: string): boolean
+export const code: IValidatorFunction = code =>
 {
-    return Collaborator.CODE.test(code);
-}
+    if (typeof code !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Collaborator.CODE.test(code);
+    }
+};

@@ -1,21 +1,50 @@
 import {Account} from '../REGEXP';
+import {IValidatorFunction} from '../Interface';
 
-export function username(username: string): boolean
+export const username: IValidatorFunction = username =>
 {
-    return Account.USERNAME.test(username);
-}
+    if (typeof username !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Account.USERNAME.test(username);
+    }
+};
 
-export function password(password: string): boolean
+export const password: IValidatorFunction = password =>
 {
-    return Account.PASSWORD.test(password);
-}
+    if (typeof password !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Account.PASSWORD.test(password);
+    }
+};
 
-export function hash(hash: string): boolean
+export const hash: IValidatorFunction = hash =>
 {
-    return Account.HASH.test(hash);
-}
+    if (typeof hash !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Account.HASH.test(hash);
+    }
+};
 
-export function verificationCode(verificationCode: string): boolean
+export const verificationCode: IValidatorFunction = verificationCode =>
 {
-    return Account.VERIFICATION_CODE.test(verificationCode);
-}
+    if (typeof verificationCode !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Account.VERIFICATION_CODE.test(verificationCode);
+    }
+};

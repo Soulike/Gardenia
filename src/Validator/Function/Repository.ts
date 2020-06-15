@@ -1,31 +1,74 @@
 import {Repository} from '../REGEXP';
+import {IValidatorFunction} from '../Interface';
 
-export function name(name: string): boolean
+export const name: IValidatorFunction = name =>
 {
-    return Repository.NAME.test(name);
-}
+    if (typeof name !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Repository.NAME.test(name);
+    }
+};
 
-export function issueTitle(title: string): boolean
+export const issueTitle: IValidatorFunction = title =>
 {
-    return Repository.ISSUE_TITLE.test(title);
-}
+    if (typeof title !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Repository.ISSUE_TITLE.test(title);
+    }
+};
 
-export function pullRequestTitle(title: string): boolean
+export const pullRequestTitle: IValidatorFunction = title =>
 {
-    return Repository.PULL_REQUEST_TITLE.test(title);
-}
+    if (typeof title !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Repository.PULL_REQUEST_TITLE.test(title);
+    }
+};
 
-export function issueComment(comment: string): boolean
+export const issueComment: IValidatorFunction = comment =>
 {
-    return Repository.ISSUE_COMMENT.test(comment);
-}
+    if (typeof comment !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Repository.ISSUE_COMMENT.test(comment);
+    }
+};
 
-export function pullRequestComment(comment: string): boolean
+export const pullRequestComment: IValidatorFunction = comment =>
 {
-    return Repository.PULL_REQUEST_COMMENT.test(comment);
-}
+    if (typeof comment !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Repository.PULL_REQUEST_COMMENT.test(comment);
+    }
+};
 
-export function codeCommentContent(content: string): boolean
+export const codeCommentContent: IValidatorFunction = content =>
 {
-    return Repository.CODE_COMMENT_CONTENT.test(content);
-}
+    if (typeof content !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Repository.CODE_COMMENT_CONTENT.test(content);
+    }
+};

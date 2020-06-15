@@ -1,11 +1,26 @@
 import {Profile} from '../REGEXP';
+import {IValidatorFunction} from '../Interface';
 
-export function nickname(nickname: string): boolean
+export const nickname: IValidatorFunction = nickname =>
 {
-    return Profile.NICKNAME.test(nickname);
-}
+    if (typeof nickname !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Profile.NICKNAME.test(nickname);
+    }
+};
 
-export function email(email: string): boolean
+export const email: IValidatorFunction = email =>
 {
-    return Profile.EMAIL.test(email);
-}
+    if (typeof email !== 'string')
+    {
+        return false;
+    }
+    else
+    {
+        return Profile.EMAIL.test(email);
+    }
+};
