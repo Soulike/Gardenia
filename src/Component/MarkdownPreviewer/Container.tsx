@@ -1,6 +1,8 @@
 import React, {PureComponent} from 'react';
 import View from '../HTMLPreviewer';
 import {hljs, mdConverter} from '../../Singleton';
+import {promisify} from 'util';
+import {setImmediatePromise} from '../../Function/Util';
 
 interface IProps
 {
@@ -17,6 +19,8 @@ interface IState
 
 class MarkdownPreviewer extends PureComponent<IProps, IState>
 {
+    private setStatePromise = promisify(this.setState);
+
     constructor(props: IProps)
     {
         super(props);
@@ -53,43 +57,41 @@ class MarkdownPreviewer extends PureComponent<IProps, IState>
 
     markdownToHTML = async () =>
     {
-        return new Promise(resolve =>
-        {
-            const {markdown} = this.props;
-            const html = mdConverter.makeHtml(markdown);
-            this.setState({html}, () => resolve());
-        });
+        const {markdown} = this.props;
+        const html = mdConverter.makeHtml(markdown);
+        await this.setStatePromise({html});
     };
 
     processHTML = async () =>
     {
-        return new Promise(async resolve =>
+        const {processHTML, loading} = this.props;
+        if (processHTML && !loading)    // 这里要确保外层组件需要的信息都加载完成再调用 processHTML
         {
-            const {processHTML, loading} = this.props;
-            if (processHTML && !loading)    // 这里要确保外层组件需要的信息都加载完成再调用 processHTML
-            {
-                const {html} = this.state;
-                const newHTML = await processHTML(html);
-                this.setState({html: newHTML}, () => resolve());
-            }
-            else
-            {
-                resolve();
-            }
-        });
+            const {html} = this.state;
+            const newHTML = await processHTML(html);
+            await this.setStatePromise({html: newHTML});
+        }
     };
 
     processCodes = async () =>
     {
-        return new Promise(resolve =>
-        {
-            const {html} = this.state;
-            const node = document.createElement('div');
-            node.innerHTML = html;
-            node.querySelectorAll('pre code')
-                .forEach(block => hljs.highlightBlock(block));
-            this.setState({html: node.innerHTML}, () => resolve());
-        });
+        const {html} = this.state;
+        const node = document.createElement('div');
+        node.innerHTML = html;
+        const pres = Array.from(node.getElementsByTagName('pre'));
+        await Promise.all(pres.map(async pre =>
+            {
+                // 任务拆分，防止长时间阻塞页面
+                const codes = Array.from(pre.getElementsByTagName('code'));
+                await Promise.all(codes.map(async code =>
+                {
+                    hljs.highlightBlock(code);
+                    await setImmediatePromise();
+                }));
+                await setImmediatePromise();
+            },
+        ));
+        await this.setStatePromise({html: node.innerHTML});
     };
 
     render()

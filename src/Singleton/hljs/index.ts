@@ -1,7 +1,8 @@
 import './Style.css';
+import 'highlight.js';
 
 // 为了按需加载，使用 require
-const hljs = require('highlight.js/lib/core');
+const hljs: HLJSApi = require('highlight.js/lib/core');
 
 hljs.registerLanguage('actionscript', require(`highlight.js/lib/languages/actionscript.js`));
 hljs.registerLanguage('ada', require(`highlight.js/lib/languages/ada.js`));

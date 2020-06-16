@@ -108,7 +108,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             else
             {
                 await this.setStatePromise({fileSize: size!});
-                if (!isBinary && size! > 1024 * 1024)   // 不是二进制文件，但大小超过 1M
+                if (!isBinary && size! > 256 * 1024)   // 不是二进制文件，但大小超过 256K
                 {
                     await this.setStatePromise({isOversize: true, isBinary: isBinary!});
                 }
