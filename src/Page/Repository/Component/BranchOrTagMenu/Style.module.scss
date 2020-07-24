@@ -1,0 +1,28 @@
+@import "../../../../GlobalStyle/COLOR.css";
+
+.BranchOrTagMenu {
+
+}
+
+.menuWrapper {
+
+    .menu {
+        border: none;
+        min-width: 250px;
+
+        .menuItem {
+            display: flex;
+            align-items: center;
+
+            .checkIconWrapper {
+                width: 1em;
+                margin-right: 0.5em;
+                text-align: center;
+            }
+
+            .name {
+
+            }
+        }
+    }
+}

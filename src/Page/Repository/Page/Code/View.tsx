@@ -6,7 +6,7 @@ import {Button, Skeleton} from 'antd';
 import {Link} from 'react-router-dom';
 import {Function as RouterFunction} from '../../../../Router';
 
-const BranchMenu = React.lazy(() => import('./Component/BranchMenu'));
+const BranchOrTagMenu = React.lazy(() => import('./Component/BranchOrTagMenu'));
 const FileList = React.lazy(() => import('./Component/FileList'));
 const CloneButton = React.lazy(() => import('./Component/CloneButton'));
 const Empty = React.lazy(() => import('./Component/Empty'));
@@ -17,6 +17,7 @@ interface IProps
 {
     repository: Readonly<RepositoryClass>,
     branches: Readonly<Branch[]>,
+    tags: Readonly<string[]>,
     commitCount: number,
     objectType: ObjectType,
     loading: boolean,
@@ -27,6 +28,7 @@ function CodeView(props: Readonly<IProps>)
     const {
         repository: {username, name, description},
         branches,
+        tags,
         commitCount,
         objectType,
         loading,
@@ -52,7 +54,7 @@ function CodeView(props: Readonly<IProps>)
                         <>
                             <div className={Style.buttonWrapper}>
                                 <div className={Style.leftButtonWrapper}>
-                                    <BranchMenu branches={branches} />
+                                    <BranchOrTagMenu branches={branches} tags={tags} />
                                     <div className={Style.newPullRequestButtonWrapper}>
                                         <Link to={RouterFunction.generateRepositoryCompareRoute({
                                             sourceRepositoryUsername: username,

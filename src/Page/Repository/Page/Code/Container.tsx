@@ -14,6 +14,7 @@ interface IState
 {
     repository: RepositoryClass,
     branches: Readonly<Branch[]>,
+    tags: Readonly<string[]>,
     commitCount: number,
     loading: boolean,
 }
@@ -28,6 +29,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
         this.state = {
             repository: new RepositoryClass('', '', '', true),
             branches: [],
+            tags: [],    // TODO: 获取 tag
             commitCount: 0,
             loading: true,
         };
@@ -113,11 +115,11 @@ class Code extends PureComponent<Readonly<IProps>, IState>
 
     render()
     {
-        const {repository, branches, commitCount, loading} = this.state;
+        const {repository, branches, commitCount, loading, tags} = this.state;
         const {match: {params: {objectType}}} = this.props;
         return (<View repository={repository}
                       commitCount={commitCount}
-                      branches={branches}
+                      branches={branches} tags={tags}
                       objectType={objectType!} loading={loading} />);
     }
 

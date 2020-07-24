@@ -1,30 +1,29 @@
 import React, {PureComponent} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../Router';
-import {ObjectType} from '../../../../../../CONSTANT';
-import BranchMenu from '../../../../Component/BranchMenu';
 import {MenuItemProps} from 'antd/lib/menu/MenuItem';
 import {Branch} from '../../../../../../Class';
+import View from '../../../../Component/BranchOrTagMenu';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
     branches: Readonly<Branch[]>,
+    tags: Readonly<string[]>,
 }
 
-class BranchButton extends PureComponent<IProps>
+class BranchOrTagMenu extends PureComponent<IProps>
 {
-    onBranchClick: (branch: Readonly<Branch>) => MenuItemProps['onClick'] = (branch: Readonly<Branch>) =>
+    onBranchOrTagClickFactory: (branchOrTagName: string) => MenuItemProps['onClick'] = (branchOrTagName: Readonly<string>) =>
     {
         return () =>
         {
-            const {history, match: {params: {username, repository, objectType, path}}} = this.props;
+            const {history, match: {params: {username, repository, path}}} = this.props;
             return history.replace(
-                RouterFunction.generateRepositoryCodeRoute(
+                RouterFunction.generateRepositoryCommitsRoute(
                     {
                         username,
                         repository,
-                        objectType: objectType ? objectType : ObjectType.TREE,
-                        branch: branch.name,
+                        branch: branchOrTagName,
                         path,
                     }));
         };
@@ -32,7 +31,7 @@ class BranchButton extends PureComponent<IProps>
 
     render()
     {
-        const {match: {params: {branch: branchName}}, branches} = this.props;
+        const {match: {params: {branch: branchName}}, branches, tags} = this.props;
         let defaultBranchName: string = '';
         if (branchName === undefined)
         {
@@ -45,11 +44,11 @@ class BranchButton extends PureComponent<IProps>
             }
         }
         return (
-            <BranchMenu branches={branches}
-                        currentBranch={branchName ? branchName : defaultBranchName}
-                        onBranchClick={this.onBranchClick} />
+            <View branches={branches} tags={tags}
+                  currentBranchOrTagOrCommitHash={branchName ? branchName : defaultBranchName}
+                  onBranchOrTagClickFactory={this.onBranchOrTagClickFactory} />
         );
     }
 }
 
-export default withRouter(BranchButton);
+export default withRouter(BranchOrTagMenu);

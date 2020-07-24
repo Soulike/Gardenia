@@ -1,16 +1,17 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import BranchMenu from './Component/BranchMenu';
 import {Button, Spin} from 'antd';
 import {Branch, Commit, Repository} from '../../../../Class';
 import CommitTimeline from '../../Component/CommitTimeline';
 import {ButtonProps} from 'antd/lib/button';
+import BranchOrTagMenu from './Component/BranchOrTagMenu';
 
 
 interface IProps
 {
     repository: Pick<Repository, 'username' | 'name'>;
     branches: Readonly<Branch[]>;
+    tags: Readonly<string[]>;
     loading: boolean;
     commits: Readonly<Commit[]>;
     path?: string;
@@ -20,7 +21,7 @@ interface IProps
 function Commits(props: IProps)
 {
     const {
-        branches, loading, commits, path, repository,
+        branches, tags, loading, commits, path, repository,
         repository: {name: repositoryName},
         onLoadMoreButtonClick,
     } = props;
@@ -28,7 +29,7 @@ function Commits(props: IProps)
         <div className={Style.Commits}>
             <Spin spinning={loading}>
                 <div className={Style.infoWrapper}>
-                    <BranchMenu branches={branches} />
+                    <BranchOrTagMenu branches={branches} tags={tags} />
                     {typeof path === 'string' ? <div className={Style.path}>{repositoryName}/{path}</div> : null}
                 </div>
                 <div className={Style.timeLineWrapper}>
