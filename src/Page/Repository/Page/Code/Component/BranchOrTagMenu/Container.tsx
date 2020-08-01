@@ -9,7 +9,7 @@ import View from '../../../../Component/BranchOrTagMenu';
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
     branches: Readonly<Branch[]>,
-    tags: Readonly<string[]>,
+    tagNames: Readonly<string[]>,
 }
 
 class BranchOrTagMenu extends PureComponent<IProps>
@@ -33,7 +33,7 @@ class BranchOrTagMenu extends PureComponent<IProps>
 
     render()
     {
-        const {match: {params: {branch: branchName}}, branches, tags} = this.props;
+        const {match: {params: {branch: branchName}}, branches, tagNames} = this.props;
         let defaultBranchName: string = '';
         if (branchName === undefined)
         {
@@ -46,7 +46,7 @@ class BranchOrTagMenu extends PureComponent<IProps>
             }
         }
         return (
-            <View branches={branches} tags={tags}
+            <View branches={branches} tagNames={tagNames}
                   currentBranchOrTagOrCommitHash={branchName ? branchName : defaultBranchName}
                   onBranchOrTagClickFactory={this.onBranchOrTagClickFactory} />
         );

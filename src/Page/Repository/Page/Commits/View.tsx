@@ -11,7 +11,7 @@ interface IProps
 {
     repository: Pick<Repository, 'username' | 'name'>;
     branches: Readonly<Branch[]>;
-    tags: Readonly<string[]>;
+    tagNames: Readonly<string[]>;
     loading: boolean;
     commits: Readonly<Commit[]>;
     path?: string;
@@ -21,7 +21,7 @@ interface IProps
 function Commits(props: IProps)
 {
     const {
-        branches, tags, loading, commits, path, repository,
+        branches, tagNames, loading, commits, path, repository,
         repository: {name: repositoryName},
         onLoadMoreButtonClick,
     } = props;
@@ -29,7 +29,7 @@ function Commits(props: IProps)
         <div className={Style.Commits}>
             <Spin spinning={loading}>
                 <div className={Style.infoWrapper}>
-                    <BranchOrTagMenu branches={branches} tags={tags} />
+                    <BranchOrTagMenu branches={branches} tagNames={tagNames} />
                     {typeof path === 'string' ? <div className={Style.path}>{repositoryName}/{path}</div> : null}
                 </div>
                 <div className={Style.timeLineWrapper}>

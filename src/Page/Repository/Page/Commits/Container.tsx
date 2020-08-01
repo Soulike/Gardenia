@@ -13,7 +13,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits>
 interface IState
 {
     branches: Readonly<Branch[]>;
-    tags: Readonly<string[]>;
+    tagNames: Readonly<string[]>;
     loading: boolean;
     commits: Commit[];
 }
@@ -28,7 +28,7 @@ class Commits extends PureComponent<IProps, IState>
         super(props);
         this.state = {
             branches: [],
-            tags: [],   // TODO: tag 获取
+            tagNames: [],
             loading: false,
             commits: [],
         };
@@ -38,7 +38,10 @@ class Commits extends PureComponent<IProps, IState>
     {
         await this.init();
         await this.setStatePromise({loading: true});
-        await this.loadBranches();
+        await Promise.all([
+            this.loadBranches(),
+            this.loadTagNames(),
+        ]);
         await this.loadMoreCommits();
         await this.setStatePromise({loading: false});
     }
@@ -61,7 +64,7 @@ class Commits extends PureComponent<IProps, IState>
 
     init = async () =>
     {
-        await this.setStatePromise({branches: [], tags: [], commits: []});
+        await this.setStatePromise({branches: [], tagNames: [], commits: []});
     };
 
     loadBranches = async () =>
@@ -72,6 +75,17 @@ class Commits extends PureComponent<IProps, IState>
         {
             const {branches} = result;
             await this.setStatePromise({branches});
+        }
+    };
+
+    loadTagNames = async () =>
+    {
+        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const result = await RepositoryInfo.tagNames({username, name: repositoryName});
+        if (result !== null)
+        {
+            const {tagNames} = result;
+            await this.setStatePromise({tagNames});
         }
     };
 
@@ -117,11 +131,11 @@ class Commits extends PureComponent<IProps, IState>
 
     render()
     {
-        const {branches, loading, commits, tags} = this.state;
+        const {branches, loading, commits, tagNames} = this.state;
         const {match: {params: {repository: repositoryName, path, username}}} = this.props;
         return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick} branches={branches}
                       loading={loading}
-                      commits={commits} tags={tags}
+                      commits={commits} tagNames={tagNames}
                       path={path}
                       repository={{username, name: repositoryName}} />);
     }

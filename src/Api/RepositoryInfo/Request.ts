@@ -33,6 +33,7 @@ import {
     SET_DESCRIPTION,
     SET_IS_PUBLIC,
     SET_NAME,
+    TAG_NAMES,
 } from './ROUTE';
 import {ObjectType} from '../../CONSTANT';
 import nProgress from 'nprogress';
@@ -93,6 +94,31 @@ export async function branchNames(repository: Readonly<Pick<RepositoryClass, 'us
     {
         const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ branchNames: string[] }>> =
             await axios.get(BRANCH_NAMES, {
+                params: {
+                    json: JSON.stringify({repository}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function tagNames(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>): Promise<Readonly<{ tagNames: string[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ tagNames: string[] }>> =
+            await axios.get(TAG_NAMES, {
                 params: {
                     json: JSON.stringify({repository}),
                 },

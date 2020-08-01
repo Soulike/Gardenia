@@ -17,7 +17,7 @@ interface IProps
 {
     repository: Readonly<RepositoryClass>,
     branches: Readonly<Branch[]>,
-    tags: Readonly<string[]>,
+    tagNames: Readonly<string[]>,
     commitCount: number,
     objectType: ObjectType,
     loading: boolean,
@@ -28,7 +28,7 @@ function CodeView(props: Readonly<IProps>)
     const {
         repository: {username, name, description},
         branches,
-        tags,
+        tagNames,
         commitCount,
         objectType,
         loading,
@@ -54,7 +54,7 @@ function CodeView(props: Readonly<IProps>)
                         <>
                             <div className={Style.buttonWrapper}>
                                 <div className={Style.leftButtonWrapper}>
-                                    <BranchOrTagMenu branches={branches} tags={tags} />
+                                    <BranchOrTagMenu branches={branches} tagNames={tagNames} />
                                     <div className={Style.newPullRequestButtonWrapper}>
                                         <Link to={RouterFunction.generateRepositoryCompareRoute({
                                             sourceRepositoryUsername: username,
