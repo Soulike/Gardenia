@@ -1,4 +1,13 @@
-import {Account, Branch, Commit, FileDiff, Repository as RepositoryClass, Repository, ResponseBody} from '../../Class';
+import {
+    Account,
+    Branch,
+    Commit,
+    FileDiff,
+    Repository as RepositoryClass,
+    Repository,
+    ResponseBody,
+    Tag,
+} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
 import {
     BRANCH_NAMES,
@@ -34,6 +43,7 @@ import {
     SET_IS_PUBLIC,
     SET_NAME,
     TAG_NAMES,
+    TAGS,
 } from './ROUTE';
 import {ObjectType} from '../../CONSTANT';
 import nProgress from 'nprogress';
@@ -121,6 +131,56 @@ export async function tagNames(repository: Readonly<Pick<RepositoryClass, 'usern
             await axios.get(TAG_NAMES, {
                 params: {
                     json: JSON.stringify({repository}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function tags(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>, offset: number, limit: number): Promise<Readonly<{ tags: Tag[] }> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ tags: Tag[] }>> =
+            await axios.get(TAGS, {
+                params: {
+                    json: JSON.stringify({repository, offset, limit}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+}
+
+export async function tag(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>, tagName: string): Promise<Readonly<Tag> | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<Tag>> =
+            await axios.get(TAG_NAMES, {
+                params: {
+                    json: JSON.stringify({repository, tagName}),
                 },
             });
         if (isSuccessful)

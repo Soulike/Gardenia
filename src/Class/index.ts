@@ -13,3 +13,4 @@ export * from './Conflict';
 export * from './Issue';
 export * from './IssueComment';
 export * from './CodeComment';
+export * from './Tag';
