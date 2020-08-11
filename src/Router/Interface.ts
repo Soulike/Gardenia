@@ -57,6 +57,8 @@ export interface IRepositoryCommit extends IRepository
 
 export interface IRepositoryBranches extends IRepository {}
 
+export interface IRepositoryTags extends IRepository {}
+
 export interface IRepositorySettings extends IRepository {}
 
 export interface IGroup

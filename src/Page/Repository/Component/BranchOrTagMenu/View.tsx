@@ -8,7 +8,6 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../..
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {ButtonProps} from 'antd/lib/button';
 
-// TODO: 标签列表页面
 interface IProps extends RouteComponentProps<RouterInterface.IRepository>
 {
     branches: Readonly<Branch[]>,
@@ -141,7 +140,11 @@ function BranchOrTagMenu(props: IProps)
                             }
                         </Menu.SubMenu>
                         <Menu.Item>
-                            <div className={Style.fullListLinkWrapper}><Link to={'#'}>查看所有标签</Link></div>
+                            <div className={Style.fullListLinkWrapper}>
+                                <Link to={RouterFunction.generateRepositoryTagsRoute({
+                                    username, repository,
+                                })}>查看所有标签</Link>
+                            </div>
                         </Menu.Item>
                     </Menu>
                 </div>

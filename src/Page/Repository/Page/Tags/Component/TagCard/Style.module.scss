@@ -1,0 +1,47 @@
+@import "../../../../../../GlobalStyle/COLOR.css";
+
+.TagCard {
+
+    .content {
+        .top {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .bottom {
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            color: var(--GLOBAL_LIGHT_TEXT_COLOR);
+        }
+
+        .showBodyButtonWrapper {
+            margin-left: 5px;
+        }
+
+        .subjectWrapper {
+            font-weight: bold;
+            word-break: break-all;
+        }
+
+        .annotationBodyWrapper {
+            margin-top: 5px;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .timeWrapper {
+
+        }
+
+        .commitHashWrapper {
+            margin-left: 10px;
+        }
+
+        .iconWrapper {
+            margin-right: 3px;
+        }
+    }
+}

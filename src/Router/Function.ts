@@ -16,6 +16,7 @@ import {
     IRepositoryPullRequest,
     IRepositoryPullRequests,
     IRepositorySettings,
+    IRepositoryTags,
 } from './Interface';
 
 export function generatePersonalCenterRoute(parameter: IPersonalCenter): string
@@ -148,6 +149,14 @@ export function generateRepositoryBranchesRoute(parameter: IRepositoryBranches)
 {
     const {username, repository} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.BRANCHES]
+        .replace(':username', username)
+        .replace(':repository', repository);
+}
+
+export function generateRepositoryTagsRoute(parameter: IRepositoryTags)
+{
+    const {username, repository} = parameter;
+    return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.TAGS]
         .replace(':username', username)
         .replace(':repository', repository);
 }
