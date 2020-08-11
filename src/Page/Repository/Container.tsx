@@ -14,9 +14,9 @@ import {ISSUE_STATUS, PULL_REQUEST_STATUS} from '../../CONSTANT';
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode
-    | RouterInterface.IRepositoryIssues
-    | RouterInterface.IRepositoryPullRequests
-    | RouterInterface.IRepositorySettings>
+    & RouterInterface.IRepositoryIssues
+    & RouterInterface.IRepositoryPullRequests
+    & RouterInterface.IRepositorySettings>
 {
     isLoggedIn: IRootState['isLoggedIn'],
     children: ReactNode
@@ -38,6 +38,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
     constructor(props: Readonly<IProps>)
     {
         super(props);
+        this.checkURLParameter();
         this.state = {
             repository: new RepositoryClass('', '', '', true),
             loading: true,
@@ -48,6 +49,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
             openIssueAmount: 0,
         };
     }
+
 
     async componentDidMount()
     {
@@ -93,6 +95,23 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
             await this.loadVisitorProfile();
         }
     }
+
+    checkURLParameter = () =>
+    {
+        // objectType 和 branch 两个参数要么都存在，要么都不存在。如果不满足则跳转到 404
+        const {
+            history, match: {
+                params: {
+                    objectType, branch,
+                },
+            },
+        } = this.props;
+        if ((objectType !== undefined && branch === undefined)
+            || (objectType === undefined && branch !== undefined))
+        {
+            history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+        }
+    };
 
     setTitle = () =>
     {
