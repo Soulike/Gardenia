@@ -64,15 +64,12 @@ class Tags extends PureComponent<IProps, IState>
             {username, name: repository}, offset, limit);
         if (tagsWrapper !== null)
         {
-            if (tagsWrapper.tags.length === 0)
+            if (tagsWrapper.tags.length < this.TAG_AMOUNT_PER_PAGE)
             {
                 await this.setStatePromise({allTagsLoaded: true});
             }
-            else
-            {
-                const {tags} = this.state;
-                await this.setStatePromise({tags: [...tags, ...tagsWrapper.tags]});
-            }
+            const {tags} = this.state;
+            await this.setStatePromise({tags: [...tags, ...tagsWrapper.tags]});
         }
         await this.setStatePromise({loading: false});
     };
@@ -81,7 +78,7 @@ class Tags extends PureComponent<IProps, IState>
     {
         const {nextLoadOffset} = this.state;
         await Promise.all([
-            this.loadTags(nextLoadOffset, nextLoadOffset + this.TAG_AMOUNT_PER_PAGE),
+            this.loadTags(nextLoadOffset, this.TAG_AMOUNT_PER_PAGE),
             this.setStatePromise({
                 nextLoadOffset: nextLoadOffset + this.TAG_AMOUNT_PER_PAGE,
             }),
