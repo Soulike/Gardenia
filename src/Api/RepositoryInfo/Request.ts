@@ -150,6 +150,7 @@ export async function tagNames(repository: Readonly<Pick<RepositoryClass, 'usern
 
 export async function tags(repository: Readonly<Pick<RepositoryClass, 'username' | 'name'>>, offset: number, limit: number): Promise<Readonly<{ tags: Tag[] }> | null>
 {
+    nProgress.start();
     try
     {
         const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ tags: Tag[] }>> =
@@ -170,6 +171,10 @@ export async function tags(repository: Readonly<Pick<RepositoryClass, 'username'
     catch (e)
     {
         return null;
+    }
+    finally
+    {
+        nProgress.done();
     }
 }
 
