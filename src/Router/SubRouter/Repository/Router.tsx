@@ -26,6 +26,7 @@ export default () =>
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMIT],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMITS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.BRANCHES],
+                    PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.TAGS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE],
                     PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.REPOSITORY],
@@ -57,6 +58,9 @@ export default () =>
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.BRANCHES]}
                                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.BRANCHES]}
+                                       exact={true} />
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.TAGS]}
+                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.REPOSITORY.TAGS]}
                                        exact={true} />
                                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.SETTINGS.SETTINGS]}
                                        component={SettingsRouter} />

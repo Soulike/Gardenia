@@ -23,6 +23,7 @@ export const PAGE_ID_TO_ROUTE = Object.freeze({
     [PAGE_ID.REPOSITORY.COMMITS]: '/repository/:username/:repository/:branch/commits/:path*',
     [PAGE_ID.REPOSITORY.COMMIT]: '/repository/:username/:repository/commit/:commitHash',
     [PAGE_ID.REPOSITORY.BRANCHES]: '/repository/:username/:repository/branches',
+    [PAGE_ID.REPOSITORY.TAGS]: '/repository/:username/:repository/tags',
 
     [PAGE_ID.REPOSITORY.SETTINGS.SETTINGS]: '/repository/:username/:repository/settings',
     [PAGE_ID.REPOSITORY.SETTINGS.OPTIONS]: '/repository/:username/:repository/settings',

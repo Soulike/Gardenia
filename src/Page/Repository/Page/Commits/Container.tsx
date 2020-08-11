@@ -6,12 +6,14 @@ import {Interface as RouterInterface} from '../../../../Router';
 import {Branch, Commit} from '../../../../Class';
 import {notification} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
+import {promisify} from 'util';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits> {}
 
 interface IState
 {
     branches: Readonly<Branch[]>;
+    tagNames: Readonly<string[]>;
     loading: boolean;
     commits: Commit[];
 }
@@ -19,12 +21,14 @@ interface IState
 class Commits extends PureComponent<IProps, IState>
 {
     private static COMMIT_AMOUNT_PER_PAGE = 50;
+    private setStatePromise = promisify(this.setState);
 
     constructor(props: IProps)
     {
         super(props);
         this.state = {
             branches: [],
+            tagNames: [],
             loading: false,
             commits: [],
         };
@@ -33,28 +37,34 @@ class Commits extends PureComponent<IProps, IState>
     async componentDidMount()
     {
         await this.init();
-        this.setState({loading: true});
-        await this.loadBranches();
+        await this.setStatePromise({loading: true});
+        await Promise.all([
+            this.loadBranches(),
+            this.loadTagNames(),
+        ]);
         await this.loadMoreCommits();
-        this.setState({loading: false});
+        await this.setStatePromise({loading: false});
     }
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {location: {pathname}} = prevProps;
-        const {location: {pathname: prePathName}} = this.props;
-        if (pathname !== prePathName)
+        const {match: {params: {username, repository: repositoryName, branch}}} = this.props;
+        const {match: {params: {username: prevUsername, repository: prevRepositoryName, branch: prevBranch}}} = prevProps;
+        if (username !== prevUsername || repositoryName !== prevRepositoryName)
         {
             await this.componentDidMount();
+        }
+        else if (branch !== prevBranch)
+        {
+            await this.setStatePromise({loading: true, commits: []});
+            await this.loadMoreCommits();
+            await this.setStatePromise({loading: false});
         }
     }
 
     init = async () =>
     {
-        return new Promise(resolve =>
-        {
-            this.setState({branches: [], commits: []}, () => resolve());
-        });
+        await this.setStatePromise({branches: [], tagNames: [], commits: []});
     };
 
     loadBranches = async () =>
@@ -64,7 +74,18 @@ class Commits extends PureComponent<IProps, IState>
         if (result !== null)
         {
             const {branches} = result;
-            this.setState({branches});
+            await this.setStatePromise({branches});
+        }
+    };
+
+    loadTagNames = async () =>
+    {
+        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const result = await RepositoryInfo.tagNames({username, name: repositoryName});
+        if (result !== null)
+        {
+            const {tagNames} = result;
+            await this.setStatePromise({tagNames});
         }
     };
 
@@ -96,25 +117,25 @@ class Commits extends PureComponent<IProps, IState>
             }
             else
             {
-                this.setState({commits: [...commits, ...moreCommits]});
+                await this.setStatePromise({commits: [...commits, ...moreCommits]});
             }
         }
     };
 
     onLoadMoreButtonClick: ButtonProps['onClick'] = async () =>
     {
-        await this.setState({loading: true});
+        await this.setStatePromise({loading: true});
         await this.loadMoreCommits();
-        await this.setState({loading: false});
+        await this.setStatePromise({loading: false});
     };
 
     render()
     {
-        const {branches, loading, commits} = this.state;
+        const {branches, loading, commits, tagNames} = this.state;
         const {match: {params: {repository: repositoryName, path, username}}} = this.props;
         return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick} branches={branches}
                       loading={loading}
-                      commits={commits}
+                      commits={commits} tagNames={tagNames}
                       path={path}
                       repository={{username, name: repositoryName}} />);
     }

@@ -14,6 +14,7 @@ interface IState
 {
     repository: RepositoryClass,
     branches: Readonly<Branch[]>,
+    tagNames: Readonly<string[]>,
     commitCount: number,
     loading: boolean,
 }
@@ -28,6 +29,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
         this.state = {
             repository: new RepositoryClass('', '', '', true),
             branches: [],
+            tagNames: [],
             commitCount: 0,
             loading: true,
         };
@@ -39,6 +41,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
         await this.loadBranches();
         await Promise.all([
             this.loadRepository(),
+            this.loadTagNames(),
             this.loadCommitCount(),
         ]);
         await this.setStatePromise({loading: false});
@@ -111,13 +114,24 @@ class Code extends PureComponent<Readonly<IProps>, IState>
         }
     };
 
+    loadTagNames = async () =>
+    {
+        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const result = await RepositoryInfo.tagNames({username, name: repositoryName});
+        if (result !== null)
+        {
+            const {tagNames} = result;
+            await this.setStatePromise({tagNames});
+        }
+    };
+
     render()
     {
-        const {repository, branches, commitCount, loading} = this.state;
+        const {repository, branches, commitCount, loading, tagNames} = this.state;
         const {match: {params: {objectType}}} = this.props;
         return (<View repository={repository}
                       commitCount={commitCount}
-                      branches={branches}
+                      branches={branches} tagNames={tagNames}
                       objectType={objectType!} loading={loading} />);
     }
 
