@@ -49,7 +49,7 @@ function FileInfoBar(props: IProps)
                     <Link to={RouterFunction.generateRepositoryCommitsRoute({
                         username,
                         repositoryName,
-                        branch: commitHash!,
+                        commitHash: commitHash!,
                         path: filePath,
                     })}>历史
                     </Link>

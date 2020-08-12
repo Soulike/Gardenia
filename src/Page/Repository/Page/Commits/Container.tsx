@@ -48,13 +48,13 @@ class Commits extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username, repositoryName, branch}}} = this.props;
-        const {match: {params: {username: prevUsername, repositoryName: prevRepositoryName, branch: prevBranch}}} = prevProps;
+        const {match: {params: {username, repositoryName, commitHash}}} = this.props;
+        const {match: {params: {username: prevUsername, repositoryName: prevRepositoryName, commitHash: prevCommitHash}}} = prevProps;
         if (username !== prevUsername || repositoryName !== prevRepositoryName)
         {
             await this.componentDidMount();
         }
-        else if (branch !== prevBranch)
+        else if (commitHash !== prevCommitHash)
         {
             await this.setStatePromise({loading: true, commits: []});
             await this.loadMoreCommits();
@@ -91,7 +91,7 @@ class Commits extends PureComponent<IProps, IState>
 
     loadMoreCommits = async () =>
     {
-        const {match: {params: {username, repositoryName, branch, path}}} = this.props;
+        const {match: {params: {username, repositoryName, commitHash, path}}} = this.props;
         let result: { commits: Commit[] } | null;
         const {commits} = this.state;
         if (typeof path === 'string')
@@ -99,14 +99,14 @@ class Commits extends PureComponent<IProps, IState>
             result = await RepositoryInfo.fileCommitHistory({
                 username,
                 name: repositoryName,
-            }, path, branch, commits.length, Commits.COMMIT_AMOUNT_PER_PAGE);
+            }, path, commitHash, commits.length, Commits.COMMIT_AMOUNT_PER_PAGE);
         }
         else
         {
             result = await RepositoryInfo.commitHistory({
                 username,
                 name: repositoryName,
-            }, branch, commits.length, Commits.COMMIT_AMOUNT_PER_PAGE);
+            }, commitHash, commits.length, Commits.COMMIT_AMOUNT_PER_PAGE);
         }
         if (result !== null)
         {

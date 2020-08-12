@@ -23,7 +23,7 @@ class BranchOrTagMenu extends PureComponent<IProps>
                     {
                         username,
                         repositoryName,
-                        branch: branchOrTagName,
+                        commitHash: branchOrTagName,
                         path,
                     }));
         };

@@ -28,7 +28,7 @@ function InfoBar(props: Readonly<IProps>)
                 ? RouterFunction.generateRepositoryCommitsRoute({
                     username,
                     repositoryName,
-                    branch: branchName ? branchName : defaultBranchName,
+                    commitHash: branchName ? branchName : defaultBranchName,
                 })
                 : '#'}
                   className={Style.info}>

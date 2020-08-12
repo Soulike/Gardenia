@@ -98,7 +98,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     checkURLParameter = () =>
     {
-        // objectType 和 branch 两个参数要么都存在，要么都不存在。如果不满足则跳转到 404
+        // objectType 和 commitHash 两个参数要么都存在，要么都不存在。如果不满足则跳转到 404
         const {
             history, match: {
                 params: {
