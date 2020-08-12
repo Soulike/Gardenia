@@ -39,7 +39,7 @@ function CommitInfoCard(props: IProps)
                           to={RouterFunction.generateRepositoryCodeRoute({
                               username,
                               repositoryName,
-                              commitHash: commitHash,
+                              commitHash,
                               objectType: ObjectType.TREE,
                           })}>
                         <Button size={'small'}>

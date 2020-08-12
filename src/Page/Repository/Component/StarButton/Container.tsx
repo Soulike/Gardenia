@@ -45,8 +45,8 @@ class StarButton extends PureComponent<IProps, IState>
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
         const {match: {params: {username, repositoryName}}} = this.props;
-        const {match: {params: {username: prevUsername, repositoryName: prevRepository}}} = prevProps;
-        if (username !== prevUsername || repositoryName !== prevRepository)
+        const {match: {params: {username: prevUsername, repositoryName: prevRepositoryName}}} = prevProps;
+        if (username !== prevUsername || repositoryName !== prevRepositoryName)
         {
             await this.componentDidMount();
         }

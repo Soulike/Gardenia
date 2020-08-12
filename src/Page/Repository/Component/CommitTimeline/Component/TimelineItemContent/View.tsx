@@ -63,7 +63,7 @@ function TimelineItemContent(props: IProps)
                 <NewTabLink to={RouterFunction.generateRepositoryCodeRoute({
                     username,
                     repositoryName,
-                    commitHash: commitHash,
+                    commitHash,
                     objectType: ObjectType.TREE,
                 })}>
                     <Button><CodeOutlined /></Button>

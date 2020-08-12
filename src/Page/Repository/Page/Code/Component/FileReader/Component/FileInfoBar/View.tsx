@@ -31,7 +31,7 @@ function FileInfoBar(props: IProps)
             <div className={Style.fileInfoWrapper}>
                 <div className={Style.backLinkWrapper}>
                     <Link to={RouterFunction.generateRepositoryCodeRoute({
-                        username, repositoryName, commitHash: commitHash,
+                        username, repositoryName, commitHash,
                         objectType: ObjectType.TREE,
                         path: path.join(filePath!, '..'),
                     })}>

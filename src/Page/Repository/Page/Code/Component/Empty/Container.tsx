@@ -26,7 +26,7 @@ class Empty extends PureComponent<Readonly<IProps>, IState>
     render()
     {
         const {match: {params: {username, repositoryName}}} = this.props;
-        return (<View username={username} repository={repositoryName} onCopy={this.onCopy} />);
+        return (<View username={username} repositoryName={repositoryName} onCopy={this.onCopy} />);
     }
 }
 
