@@ -82,7 +82,7 @@ class Compare extends PureComponent<IProps, IState>
             match: {
                 params: {
                     sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                    username: targetRepositoryUsername, repository: targetRepositoryName, targetRepositoryBranch,
+                    username: targetRepositoryUsername, repositoryName: targetRepositoryName, targetRepositoryBranch,
                 },
             },
         } = this.props;
@@ -112,7 +112,7 @@ class Compare extends PureComponent<IProps, IState>
             match: {
                 params: {
                     sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                    username: targetRepositoryUsername, repository: targetRepositoryName, targetRepositoryBranch,
+                    username: targetRepositoryUsername, repositoryName: targetRepositoryName, targetRepositoryBranch,
                 },
             },
         } = this.props;
@@ -143,7 +143,7 @@ class Compare extends PureComponent<IProps, IState>
             match: {
                 params: {
                     sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                    username: targetRepositoryUsername, repository: targetRepositoryName, targetRepositoryBranch,
+                    username: targetRepositoryUsername, repositoryName: targetRepositoryName, targetRepositoryBranch,
                 },
             },
         } = this.props;

@@ -56,8 +56,8 @@ class PullRequests extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username, repository: name}}} = this.props;
-        const {match: {params: {username: prevUsername, repository: prevName}}} = prevProps;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
+        const {match: {params: {username: prevUsername, repositoryName: prevName}}} = prevProps;
         if (username !== prevUsername || name !== prevName)
         {
             await this.componentDidMount();
@@ -124,7 +124,7 @@ class PullRequests extends PureComponent<IProps, IState>
 
     loadPullRequests = async (status: PULL_REQUEST_STATUS | undefined, offset: number, limit: number) =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const pullRequestsWrapper = await PullRequestApi.getByRepository({
             username, name: repositoryName,
         }, status, offset, limit);
@@ -137,7 +137,7 @@ class PullRequests extends PureComponent<IProps, IState>
 
     loadBranches = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const result = await RepositoryInfo.branches({username, name: repositoryName});
         if (result !== null)
         {
@@ -148,7 +148,7 @@ class PullRequests extends PureComponent<IProps, IState>
 
     loadOpenAmount = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const amountWrapper = await PullRequestApi.getPullRequestAmount({
             username,
             name: repositoryName,
@@ -162,7 +162,7 @@ class PullRequests extends PureComponent<IProps, IState>
 
     loadClosedAmount = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const amountWrapper = await PullRequestApi.getPullRequestAmount({
             username,
             name: repositoryName,
@@ -176,7 +176,7 @@ class PullRequests extends PureComponent<IProps, IState>
 
     loadMergedAmount = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const amountWrapper = await PullRequestApi.getPullRequestAmount({
             username,
             name: repositoryName,

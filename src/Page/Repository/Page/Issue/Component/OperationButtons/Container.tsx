@@ -34,7 +34,7 @@ class OperationButtons extends PureComponent<IProps, IState>
     onCloseButtonClick: PopconfirmProps['onConfirm'] = async () =>
     {
         const {
-            match: {params: {username, repository: repositoryName, no: noString}},
+            match: {params: {username, repositoryName, no: noString}},
             history, modifyIssue,
         } = this.props;
         const no = Number.parseInt(noString);
@@ -59,7 +59,7 @@ class OperationButtons extends PureComponent<IProps, IState>
     onReopenButtonClick: PopconfirmProps['onConfirm'] = async () =>
     {
         const {
-            match: {params: {username, repository: repositoryName, no: noString}},
+            match: {params: {username, repositoryName, no: noString}},
             history, modifyIssue,
         } = this.props;
         const no = Number.parseInt(noString);

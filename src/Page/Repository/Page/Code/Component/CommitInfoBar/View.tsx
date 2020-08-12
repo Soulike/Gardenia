@@ -16,7 +16,7 @@ function CommitInfoBar(props: IProps)
 {
     const {
         lastCommit: {committerName, commitHash, message, timestamp, committerEmail},
-        match: {params: {username, repository: repositoryName}},
+        match: {params: {username, repositoryName}},
     } = props;
     return (
         <div className={Style.CommitInfoBar}>
@@ -31,7 +31,7 @@ function CommitInfoBar(props: IProps)
                         最后提交：
                         <Link to={RouterFunction.generateRepositoryCommitRoute({
                             username,
-                            repository: repositoryName,
+                            repositoryName,
                             commitHash,
                         })}>
                             {commitHash.slice(0, 7)}

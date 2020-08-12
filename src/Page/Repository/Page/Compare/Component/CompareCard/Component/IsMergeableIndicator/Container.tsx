@@ -35,7 +35,7 @@ class IsMergeableIndicator extends PureComponent<IProps, IState>
         const {
             match: {
                 params: {
-                    username: targetRepositoryUsername, repository: targetRepositoryName,
+                    username: targetRepositoryUsername, repositoryName: targetRepositoryName,
                     targetRepositoryBranch,
                     sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
                 },
@@ -44,7 +44,7 @@ class IsMergeableIndicator extends PureComponent<IProps, IState>
         const {
             match: {
                 params: {
-                    username: prevTargetRepositoryUsername, repository: prevTargetRepositoryName,
+                    username: prevTargetRepositoryUsername, repositoryName: prevTargetRepositoryName,
                     targetRepositoryBranch: prevTargetRepositoryBranch,
                     sourceRepositoryUsername: prevSourceRepositoryUsername,
                     sourceRepositoryName: prevSourceRepositoryName,
@@ -68,7 +68,7 @@ class IsMergeableIndicator extends PureComponent<IProps, IState>
         const {
             match: {
                 params: {
-                    username: targetRepositoryUsername, repository: targetRepositoryName,
+                    username: targetRepositoryUsername, repositoryName: targetRepositoryName,
                     targetRepositoryBranch,
                     sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
                 },

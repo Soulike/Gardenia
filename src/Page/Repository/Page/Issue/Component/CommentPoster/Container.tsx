@@ -56,7 +56,7 @@ class CommentPoster extends PureComponent<IProps, IState>
         else
         {
             this.setState({submitting: true});
-            const {match: {params: {username, repository, no: noString}}, history} = this.props;
+            const {match: {params: {username, repositoryName, no: noString}}, history} = this.props;
             const no = Number.parseInt(noString);
             if (Number.isNaN(no) || no <= 0)
             {
@@ -66,7 +66,7 @@ class CommentPoster extends PureComponent<IProps, IState>
             {
                 const result = await IssueApi.addComments({
                     repositoryUsername: username,
-                    repositoryName: repository, no,
+                    repositoryName, no,
                 }, {content});
                 if (result !== null)
                 {

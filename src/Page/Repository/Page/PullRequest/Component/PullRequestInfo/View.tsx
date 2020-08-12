@@ -39,8 +39,8 @@ function PullRequestInfo(props: IProps)
                         </Link></b> 想要将
                         <Link to={RouterFunction.generateRepositoryCodeRoute({
                             username: sourceRepositoryUsername,
-                            repository: sourceRepositoryName,
-                            branch: sourceRepositoryBranchName,
+                            repositoryName: sourceRepositoryName,
+                            commitHash: sourceRepositoryBranchName,
                             objectType: ObjectType.TREE,
                         })}>
                             <Tag color={'blue'}
@@ -49,8 +49,8 @@ function PullRequestInfo(props: IProps)
                                     合并到
                         <Link to={RouterFunction.generateRepositoryCodeRoute({
                             username: targetRepositoryUsername,
-                            repository: targetRepositoryName,
-                            branch: targetRepositoryBranchName,
+                            repositoryName: targetRepositoryName,
+                            commitHash: targetRepositoryBranchName,
                             objectType: ObjectType.TREE,
                         })}>
                             <Tag color={'blue'}

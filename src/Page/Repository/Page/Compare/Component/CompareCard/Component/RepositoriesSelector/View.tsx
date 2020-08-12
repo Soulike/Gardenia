@@ -28,7 +28,7 @@ function RepositoriesSelector(props: IProps)
             params: {
                 sourceRepositoryUsername, sourceRepositoryName,
                 sourceRepositoryBranch, targetRepositoryBranch,
-                username: targetRepositoryUsername, repository: targetRepositoryName,
+                username: targetRepositoryUsername, repositoryName: targetRepositoryName,
             },
         },
     } = props;

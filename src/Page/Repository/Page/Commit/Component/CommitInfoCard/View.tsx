@@ -17,7 +17,7 @@ function CommitInfoCard(props: IProps)
 {
     const {
         commit: {message, body, committerName, timestamp, commitHash, committerEmail},
-        match: {params: {username, repository: repositoryName}},
+        match: {params: {username, repositoryName}},
     } = props;
     return (
         <div className={Style.CommitInfoCard}>
@@ -38,8 +38,8 @@ function CommitInfoCard(props: IProps)
                     <Link className={Style.hash}
                           to={RouterFunction.generateRepositoryCodeRoute({
                               username,
-                              repository: repositoryName,
-                              branch: commitHash,
+                              repositoryName,
+                              commitHash: commitHash,
                               objectType: ObjectType.TREE,
                           })}>
                         <Button size={'small'}>

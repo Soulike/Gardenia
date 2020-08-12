@@ -74,9 +74,9 @@ class AccessibilitySwitch extends PureComponent<Readonly<IProps>, IState>
 
     onModalOk: ModalProps['onOk'] = async () =>
     {
-        const {match: {params: {repository, username}}} = this.props;
+        const {match: {params: {repositoryName, username}}} = this.props;
         const {modalRepositoryName, modalPassword, isPublic} = this.state;
-        if (repository !== modalRepositoryName)
+        if (repositoryName !== modalRepositoryName)
         {
             notification.warn({message: '仓库名不正确'});
         }
@@ -107,12 +107,12 @@ class AccessibilitySwitch extends PureComponent<Readonly<IProps>, IState>
 
     setIsPublic = async (isPublic: boolean) =>
     {
-        const {match: {params: {repository}}} = this.props;
+        const {match: {params: {repositoryName}}} = this.props;
         const {isPublic: prevIsPublic} = this.state;
         if (prevIsPublic !== isPublic)
         {
             this.setState({submitting: true});
-            const result = await RepositoryInfoApi.setIsPublic({name: repository, isPublic});
+            const result = await RepositoryInfoApi.setIsPublic({name: repositoryName, isPublic});
             if (result !== null)
             {
                 window.location.reload();

@@ -29,7 +29,7 @@ function PullRequests(props: IProps)
 {
     const {
         branches, loading,
-        match: {params: {username, repository: name}},
+        match: {params: {username, repositoryName: name}},
         openAmount, closedAmount, mergedAmount, onStatusButtonClick, currentStatus,
         currentPageNumber, pullRequests, onNextButtonClick, onPrevButtonClick, noNextPage,
     } = props;
@@ -92,7 +92,7 @@ function PullRequests(props: IProps)
                                 sourceRepositoryName: name,
                                 sourceRepositoryBranch: masterBranchName,
                                 targetRepositoryBranch: masterBranchName,
-                                repository: name,
+                                repositoryName: name,
                                 username,
                             })}>
                                 <Button type={'primary'}>

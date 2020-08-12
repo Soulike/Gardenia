@@ -34,7 +34,7 @@ class ForkButton extends PureComponent<IProps, IState>
 
     loadForkAmount = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const result = await RepositoryInfo.forkAmount({username, name: repositoryName});
         if (result !== null)
         {
@@ -46,7 +46,7 @@ class ForkButton extends PureComponent<IProps, IState>
     onClick: ButtonProps['onClick'] = async () =>
     {
         this.setState({loading: true});
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const result = await Repository.fork({username, name: repositoryName});
         if (result !== null)
         {

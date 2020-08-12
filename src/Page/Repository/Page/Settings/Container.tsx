@@ -48,26 +48,26 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
     {
         return new Promise(resolve =>
         {
-            const {match: {params: {username, repository}}} = this.props;
+            const {match: {params: {username, repositoryName}}} = this.props;
             this.setState({
                 menuItems: [
                     {
                         icon: <SettingOutlined />,
                         title: '选项',
                         key: PAGE_ID.REPOSITORY.SETTINGS.OPTIONS,
-                        to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repository}),
+                        to: RouterFunction.generateRepositorySettingsOptionsRoute({username, repositoryName}),
                     },
                     {
                         icon: <ProjectOutlined />,
                         title: '合作者',
                         key: PAGE_ID.REPOSITORY.SETTINGS.COLLABORATORS,
-                        to: RouterFunction.generateRepositorySettingsCollaboratorsRoute({username, repository}),
+                        to: RouterFunction.generateRepositorySettingsCollaboratorsRoute({username, repositoryName}),
                     },
                     {
                         icon: <TeamOutlined />,
                         title: '小组',
                         key: PAGE_ID.REPOSITORY.SETTINGS.GROUPS,
-                        to: RouterFunction.generateRepositorySettingsGroupsRoute({username, repository}),
+                        to: RouterFunction.generateRepositorySettingsGroupsRoute({username, repositoryName}),
                     },
                 ],
             }, resolve);

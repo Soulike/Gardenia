@@ -61,7 +61,7 @@ class CreateIssue extends PureComponent<IProps, IState>
         else
         {
             this.setState({submitting: true});
-            const {match: {params: {username, repository: name}}, history} = this.props;
+            const {match: {params: {username, repositoryName: name}}, history} = this.props;
             const result = await IssueApi.add({
                 repositoryUsername: username,
                 repositoryName: name, title,
@@ -70,7 +70,7 @@ class CreateIssue extends PureComponent<IProps, IState>
             {
                 notification.success({message: 'Issue 创建成功'});
                 return history.replace(RouterFunction.generateRepositoryIssuesRoute({
-                    username, repository: name,
+                    username, repositoryName: name,
                 }));
             }
             this.setState({submitting: false});

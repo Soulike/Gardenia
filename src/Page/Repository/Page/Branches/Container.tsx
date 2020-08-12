@@ -33,7 +33,7 @@ class Branches extends PureComponent<IProps, IState>
 
     async loadBranches()
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const result = await RepositoryInfo.branches({username, name: repositoryName});
         if (result !== null)
         {

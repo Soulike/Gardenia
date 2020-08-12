@@ -48,8 +48,8 @@ class Commits extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username, repository: repositoryName, branch}}} = this.props;
-        const {match: {params: {username: prevUsername, repository: prevRepositoryName, branch: prevBranch}}} = prevProps;
+        const {match: {params: {username, repositoryName, branch}}} = this.props;
+        const {match: {params: {username: prevUsername, repositoryName: prevRepositoryName, branch: prevBranch}}} = prevProps;
         if (username !== prevUsername || repositoryName !== prevRepositoryName)
         {
             await this.componentDidMount();
@@ -69,7 +69,7 @@ class Commits extends PureComponent<IProps, IState>
 
     loadBranches = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const result = await RepositoryInfo.branches({username, name: repositoryName});
         if (result !== null)
         {
@@ -80,7 +80,7 @@ class Commits extends PureComponent<IProps, IState>
 
     loadTagNames = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const result = await RepositoryInfo.tagNames({username, name: repositoryName});
         if (result !== null)
         {
@@ -91,7 +91,7 @@ class Commits extends PureComponent<IProps, IState>
 
     loadMoreCommits = async () =>
     {
-        const {match: {params: {username, repository: repositoryName, branch, path}}} = this.props;
+        const {match: {params: {username, repositoryName, branch, path}}} = this.props;
         let result: { commits: Commit[] } | null;
         const {commits} = this.state;
         if (typeof path === 'string')
@@ -132,7 +132,7 @@ class Commits extends PureComponent<IProps, IState>
     render()
     {
         const {branches, loading, commits, tagNames} = this.state;
-        const {match: {params: {repository: repositoryName, path, username}}} = this.props;
+        const {match: {params: {repositoryName, path, username}}} = this.props;
         return (<View onLoadMoreButtonClick={this.onLoadMoreButtonClick} branches={branches}
                       loading={loading}
                       commits={commits} tagNames={tagNames}

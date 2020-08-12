@@ -27,10 +27,10 @@ export function generatePersonalCenterRoute(parameter: IPersonalCenter): string
 
 export function generateRepositoryCodeRoute(parameter: IRepositoryCode)
 {
-    const {username, branch, objectType, path, repository} = parameter;
+    const {username, commitHash, objectType, path, repositoryName} = parameter;
     let url = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CODE]
         .replace(':username', username)
-        .replace(':repository', repository);
+        .replace(':repositoryName', repositoryName);
     if (objectType !== undefined)
     {
         url = url.replace(':objectType?', objectType);
@@ -39,13 +39,13 @@ export function generateRepositoryCodeRoute(parameter: IRepositoryCode)
     {
         url = url.replace('/:objectType?', '');
     }
-    if (branch !== undefined)
+    if (commitHash !== undefined)
     {
-        url = url.replace(':branch?', branch);
+        url = url.replace(':commitHash?', commitHash);
     }
     else
     {
-        url = url.replace('/:branch?', '');
+        url = url.replace('/:commitHash?', '');
     }
     if (path !== undefined)
     {
@@ -60,65 +60,65 @@ export function generateRepositoryCodeRoute(parameter: IRepositoryCode)
 
 export function generateRepositoryIssuesRoute(parameter: IRepositoryIssues)
 {
-    const {username, repository} = parameter;
+    const {username, repositoryName} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUES]
         .replace(':username', username)
-        .replace(':repository', repository);
+        .replace(':repositoryName', repositoryName);
 }
 
 export function generateRepositoryCreateIssueRoute(parameter: IRepositoryCreateIssue)
 {
-    const {username, repository} = parameter;
+    const {username, repositoryName} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CREATE_ISSUE]
         .replace(':username', username)
-        .replace(':repository', repository);
+        .replace(':repositoryName', repositoryName);
 }
 
 export function generateRepositoryIssueRoute(parameter: IRepositoryIssue)
 {
-    const {username, repository, no} = parameter;
+    const {username, repositoryName, no} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.ISSUE]
         .replace(':username', username)
-        .replace(':repository', repository)
+        .replace(':repositoryName', repositoryName)
         .replace(':no', no);
 }
 
 export function generateRepositoryPullRequestsRoute(parameter: IRepositoryPullRequests)
 {
-    const {username, repository} = parameter;
+    const {username, repositoryName} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUESTS]
         .replace(':username', username)
-        .replace(':repository', repository);
+        .replace(':repositoryName', repositoryName);
 }
 
 export function generateRepositoryPullRequestRoute(parameter: IRepositoryPullRequest)
 {
-    const {username, repository, no} = parameter;
+    const {username, repositoryName, no} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.PULL_REQUEST]
         .replace(':username', username)
-        .replace(':repository', repository)
+        .replace(':repositoryName', repositoryName)
         .replace(':no', no);
 }
 
 export function generateRepositoryConflictRoute(parameter: IRepositoryConflict)
 {
-    const {username, repository, no} = parameter;
+    const {username, repositoryName, no} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.CONFLICT]
         .replace(':username', username)
-        .replace(':repository', repository)
+        .replace(':repositoryName', repositoryName)
         .replace(':no', no);
 }
 
 export function generateRepositoryCompareRoute(parameter: IRepositoryCompare)
 {
     const {
-        username, repository,
+        username, repositoryName,
         sourceRepositoryUsername, sourceRepositoryName,
         sourceRepositoryBranch, targetRepositoryBranch,
     } = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMPARE]
         .replace(':username', username)
-        .replace(':repository', repository)
+        .replace(':repositoryName', repositoryName)
         .replace(':sourceRepositoryUsername', sourceRepositoryUsername)
         .replace(':sourceRepositoryName', sourceRepositoryName)
         .replace(':sourceRepositoryBranch', sourceRepositoryBranch)
@@ -127,46 +127,46 @@ export function generateRepositoryCompareRoute(parameter: IRepositoryCompare)
 
 export function generateRepositoryCommitsRoute(parameter: IRepositoryCommits)
 {
-    const {username, repository, branch, path} = parameter;
+    const {username, repositoryName, branch, path} = parameter;
     const replacedStringWithoutPath = PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMITS]
         .replace(':username', username)
-        .replace(':repository', repository)
-        .replace(':branch', branch);
+        .replace(':repositoryName', repositoryName)
+        .replace(':commitHash', branch);
     return replacedStringWithoutPath.replace('/:path*',
         typeof path === 'string' ? `/${path}` : '');
 }
 
 export function generateRepositoryCommitRoute(parameter: IRepositoryCommit)
 {
-    const {username, repository, commitHash} = parameter;
+    const {username, repositoryName, commitHash} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.COMMIT]
         .replace(':username', username)
-        .replace(':repository', repository)
+        .replace(':repositoryName', repositoryName)
         .replace(':commitHash', commitHash);
 }
 
 export function generateRepositoryBranchesRoute(parameter: IRepositoryBranches)
 {
-    const {username, repository} = parameter;
+    const {username, repositoryName} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.BRANCHES]
         .replace(':username', username)
-        .replace(':repository', repository);
+        .replace(':repositoryName', repositoryName);
 }
 
 export function generateRepositoryTagsRoute(parameter: IRepositoryTags)
 {
-    const {username, repository} = parameter;
+    const {username, repositoryName} = parameter;
     return PAGE_ID_TO_ROUTE[PAGE_ID.REPOSITORY.TAGS]
         .replace(':username', username)
-        .replace(':repository', repository);
+        .replace(':repositoryName', repositoryName);
 }
 
 function generateRepositorySettingsRouteHelper(route: string, parameter: IRepositorySettings)
 {
-    const {username, repository} = parameter;
+    const {username, repositoryName} = parameter;
     return route
         .replace(':username', username)
-        .replace(':repository', repository);
+        .replace(':repositoryName', repositoryName);
 }
 
 export function generateRepositorySettingsRoute(parameter: IRepositorySettings)

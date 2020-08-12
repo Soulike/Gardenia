@@ -17,12 +17,12 @@ class BranchOrTagMenu extends PureComponent<IProps>
     {
         return () =>
         {
-            const {history, match: {params: {username, repository, path}}} = this.props;
+            const {history, match: {params: {username, repositoryName, path}}} = this.props;
             return history.replace(
                 RouterFunction.generateRepositoryCommitsRoute(
                     {
                         username,
-                        repository,
+                        repositoryName,
                         branch: branchOrTagName,
                         path,
                     }));
@@ -31,7 +31,7 @@ class BranchOrTagMenu extends PureComponent<IProps>
 
     render()
     {
-        const {match: {params: {branch: branchName}}, branches, tagNames} = this.props;
+        const {match: {params: {commitHash: branchName}}, branches, tagNames} = this.props;
         let defaultBranchName: string = '';
         if (branchName === undefined)
         {

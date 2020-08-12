@@ -44,9 +44,9 @@ class StarButton extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username, repository}}} = this.props;
-        const {match: {params: {username: prevUsername, repository: prevRepository}}} = prevProps;
-        if (username !== prevUsername || repository !== prevRepository)
+        const {match: {params: {username, repositoryName}}} = this.props;
+        const {match: {params: {username: prevUsername, repositoryName: prevRepository}}} = prevProps;
+        if (username !== prevUsername || repositoryName !== prevRepository)
         {
             await this.componentDidMount();
         }
@@ -54,8 +54,8 @@ class StarButton extends PureComponent<IProps, IState>
 
     loadHasStared = async () =>
     {
-        const {match: {params: {username, repository}}} = this.props;
-        const hasStaredWrapper = await StarApi.isStaredRepository({username, name: repository});
+        const {match: {params: {username, repositoryName}}} = this.props;
+        const hasStaredWrapper = await StarApi.isStaredRepository({username, name: repositoryName});
         if (hasStaredWrapper !== null)
         {
             const {isStared} = hasStaredWrapper;
@@ -65,8 +65,8 @@ class StarButton extends PureComponent<IProps, IState>
 
     loadStarAmount = async () =>
     {
-        const {match: {params: {username, repository}}} = this.props;
-        const starAmountWrapper = await StarApi.getRepositoryStarAmount({username, name: repository});
+        const {match: {params: {username, repositoryName}}} = this.props;
+        const starAmountWrapper = await StarApi.getRepositoryStarAmount({username, name: repositoryName});
         if (starAmountWrapper !== null)
         {
             const {amount} = starAmountWrapper;
@@ -77,11 +77,11 @@ class StarButton extends PureComponent<IProps, IState>
     onClick: ButtonProps['onClick'] = async () =>
     {
         const {hasStared, starAmount} = this.state;
-        const {match: {params: {username, repository}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         await this.setStatePromise({loading: true});
         if (hasStared)
         {
-            const result = await StarApi.remove({username, name: repository});
+            const result = await StarApi.remove({username, name: repositoryName});
             if (result !== null)
             {
                 await this.setStatePromise({hasStared: false, starAmount: starAmount - 1});
@@ -89,7 +89,7 @@ class StarButton extends PureComponent<IProps, IState>
         }
         else
         {
-            const result = await StarApi.add({username, name: repository});
+            const result = await StarApi.add({username, name: repositoryName});
             if (result !== null)
             {
                 await this.setStatePromise({hasStared: true, starAmount: starAmount + 1});

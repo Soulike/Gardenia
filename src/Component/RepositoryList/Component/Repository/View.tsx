@@ -21,7 +21,7 @@ function Repository(props: IProps)
     const {username, name, isPublic, description} = repository;
     return (
         <div className={Style.Repository}>
-            <NewTabLink to={RouterFunction.generateRepositoryCodeRoute({username, repository: name})}>
+            <NewTabLink to={RouterFunction.generateRepositoryCodeRoute({username, repositoryName: name})}>
                 <Card className={Style.repository}>
                     <Card.Meta title={
                         <div className={Style.title}>

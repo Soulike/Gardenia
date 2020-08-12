@@ -29,7 +29,7 @@ function BranchOrTagMenu(props: IProps)
         branches, tagNames, visible,
         currentBranchOrTagOrCommitHash,
         onButtonClick,
-        onBranchOrTagClickFactory, match: {params: {username, repository}},
+        onBranchOrTagClickFactory, match: {params: {username, repositoryName}},
     } = props;
 
     const branchNames = branches.map(branch => branch.name);
@@ -119,7 +119,7 @@ function BranchOrTagMenu(props: IProps)
                             <div className={Style.fullListLinkWrapper}>
                                 <Link to={RouterFunction.generateRepositoryBranchesRoute({
                                     username,
-                                    repository,
+                                    repositoryName,
                                 })}>查看所有分支</Link></div>
                         </Menu.Item>
                         <Menu.Divider />
@@ -142,7 +142,7 @@ function BranchOrTagMenu(props: IProps)
                         <Menu.Item>
                             <div className={Style.fullListLinkWrapper}>
                                 <Link to={RouterFunction.generateRepositoryTagsRoute({
-                                    username, repository,
+                                    username, repositoryName,
                                 })}>查看所有标签</Link>
                             </div>
                         </Menu.Item>

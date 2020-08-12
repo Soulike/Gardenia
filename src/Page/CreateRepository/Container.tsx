@@ -128,7 +128,7 @@ class CreateRepository extends PureComponent<Readonly<IProps>, IState>
         {
             const {history} = this.props;
             notification.success({message: '仓库创建成功'});
-            return history.push(RouterFunction.generateRepositoryCodeRoute({username, repository: name}));
+            return history.push(RouterFunction.generateRepositoryCodeRoute({username, repositoryName: name}));
         }
     };
 

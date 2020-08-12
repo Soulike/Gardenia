@@ -38,8 +38,8 @@ class Options extends PureComponent<Readonly<IProps>, IState>
 
     loadRepository = async () =>
     {
-        const {match: {params: {repository, username}}, history} = this.props;
-        const repositoryInfo = await RepositoryInfoApi.repository({username}, {name: repository});
+        const {match: {params: {repositoryName, username}}, history} = this.props;
+        const repositoryInfo = await RepositoryInfoApi.repository({username}, {name: repositoryName});
         if (repositoryInfo !== null)
         {
             await this.setStatePromise({repository: repositoryInfo});

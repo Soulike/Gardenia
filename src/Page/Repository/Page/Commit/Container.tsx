@@ -64,7 +64,7 @@ class Commit extends PureComponent<IProps, IState>
 
     loadCommit = async () =>
     {
-        const {match: {params: {username, repository: repositoryName, commitHash}}} = this.props;
+        const {match: {params: {username, repositoryName, commitHash}}} = this.props;
         const result = await RepositoryInfo.commit({username, name: repositoryName}, commitHash);
         if (result !== null)
         {
@@ -75,7 +75,7 @@ class Commit extends PureComponent<IProps, IState>
 
     loadMoreCommitDiff = async () =>
     {
-        const {match: {params: {username, repository: repositoryName, commitHash}}} = this.props;
+        const {match: {params: {username, repositoryName, commitHash}}} = this.props;
         const {diff} = this.state;
         const result = await RepositoryInfo.commitDiff({
             username,
@@ -97,7 +97,7 @@ class Commit extends PureComponent<IProps, IState>
 
     loadCommitDiffAmount = async () =>
     {
-        const {match: {params: {username, repository: repositoryName, commitHash}}} = this.props;
+        const {match: {params: {username, repositoryName, commitHash}}} = this.props;
         const result = await RepositoryInfo.commitDiffAmount({username, name: repositoryName}, commitHash);
         if (result !== null)
         {

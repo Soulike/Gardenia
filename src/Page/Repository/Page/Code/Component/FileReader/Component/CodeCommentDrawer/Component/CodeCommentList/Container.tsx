@@ -60,10 +60,10 @@ class CodeCommentList extends PureComponent<IProps, IState>
 
     loadCodeComments = async () =>
     {
-        const {lineNumber, commitHash, match: {params: {repository, path, username}}} = this.props;
+        const {lineNumber, commitHash, match: {params: {repositoryName, path, username}}} = this.props;
         const codeCommentsWrapper = await CodeCommentApi.get({
             repositoryUsername: username,
-            repositoryName: repository, columnNumber: lineNumber, filePath: path!,
+            repositoryName, columnNumber: lineNumber, filePath: path!,
         }, commitHash);
         if (codeCommentsWrapper !== null)
         {
