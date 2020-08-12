@@ -41,15 +41,15 @@ class Tags extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username, repository}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const {
             match: {
                 params: {
-                    username: prevUsername, repository: prevRepository,
+                    username: prevUsername, repositoryName: prevRepository,
                 },
             },
         } = this.props;
-        if (username !== prevUsername || repository !== prevRepository)
+        if (username !== prevUsername || repositoryName !== prevRepository)
         {
             await this.setStatePromise({nextLoadOffset: 0});
             await this.componentDidMount();
@@ -58,10 +58,10 @@ class Tags extends PureComponent<IProps, IState>
 
     loadTags = async (offset: number, limit: number) =>
     {
-        const {match: {params: {username, repository}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         await this.setStatePromise({loading: true});
         const tagsWrapper = await RepositoryInfoApi.tags(
-            {username, name: repository}, offset, limit);
+            {username, name: repositoryName}, offset, limit);
         if (tagsWrapper !== null)
         {
             if (tagsWrapper.tags.length < this.TAG_AMOUNT_PER_PAGE)

@@ -21,7 +21,7 @@ function FileInfoBar(props: IProps)
         fileSize, onRawFileButtonClick,
         match: {
             params: {
-                username, repository, branch, path: filePath,
+                username, repositoryName, commitHash, path: filePath,
             },
         },
     } = props;
@@ -31,7 +31,7 @@ function FileInfoBar(props: IProps)
             <div className={Style.fileInfoWrapper}>
                 <div className={Style.backLinkWrapper}>
                     <Link to={RouterFunction.generateRepositoryCodeRoute({
-                        username, repository, branch,
+                        username, repositoryName, commitHash,
                         objectType: ObjectType.TREE,
                         path: path.join(filePath!, '..'),
                     })}>
@@ -48,8 +48,8 @@ function FileInfoBar(props: IProps)
                 <Button>
                     <Link to={RouterFunction.generateRepositoryCommitsRoute({
                         username,
-                        repository,
-                        branch: branch!,
+                        repositoryName,
+                        commitHash: commitHash!,
                         path: filePath,
                     })}>历史
                     </Link>

@@ -8,20 +8,20 @@ import {CopyOutlined} from '@ant-design/icons';
 interface IProps
 {
     username: string,
-    repository: string,
+    repositoryName: string,
     onCopy: CopyToClipboard.Props['onCopy']
 }
 
 function EmptyView(props: Readonly<IProps>)
 {
-    const {username, repository, onCopy} = props;
+    const {username, repositoryName, onCopy} = props;
     return (
         <Card className={Style.Empty}>
             <img className={Style.img} src={svg} alt="icon" />
             <p><strong>该仓库没有进行过提交。</strong></p>
             <p>可复制以下链接，在本地克隆本仓库并开始您的工作。</p>
-            <Input value={`${window.location.origin}/${username}/${repository}.git`} size={'large'} addonAfter={
-                <CopyToClipboard text={`${window.location.origin}/${username}/${repository}.git`} onCopy={onCopy}>
+            <Input value={`${window.location.origin}/${username}/${repositoryName}.git`} size={'large'} addonAfter={
+                <CopyToClipboard text={`${window.location.origin}/${username}/${repositoryName}.git`} onCopy={onCopy}>
                     <CopyOutlined />
                 </CopyToClipboard>
             } />

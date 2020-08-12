@@ -49,7 +49,7 @@ class Description extends PureComponent<Readonly<IProps>, IState>
     onSubmit: ButtonProps['onClick'] = async () =>
     {
         const {description} = this.state;
-        const {match: {params: {repository: repositoryName}}} = this.props;
+        const {match: {params: {repositoryName}}} = this.props;
         this.setState({submitting: true});
         const result = await RepositoryInfo.setDescription({name: repositoryName, description});
         this.setState({submitting: false});

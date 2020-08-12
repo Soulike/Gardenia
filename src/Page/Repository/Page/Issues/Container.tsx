@@ -50,8 +50,8 @@ class Issues extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username, repository: name}}} = this.props;
-        const {match: {params: {username: prevUsername, repository: prevName}}} = prevProps;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
+        const {match: {params: {username: prevUsername, repositoryName: prevName}}} = prevProps;
         if (username !== prevUsername || name !== prevName)
         {
             await this.componentDidMount();
@@ -60,7 +60,7 @@ class Issues extends PureComponent<IProps, IState>
 
     loadOpenAmount = async () =>
     {
-        const {match: {params: {username, repository: name}}} = this.props;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
         const amountWrapper = await IssueApi.getAmountByRepository({username, name}, ISSUE_STATUS.OPEN);
         if (amountWrapper !== null)
         {
@@ -71,7 +71,7 @@ class Issues extends PureComponent<IProps, IState>
 
     loadClosedAmount = async () =>
     {
-        const {match: {params: {username, repository: name}}} = this.props;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
         const amountWrapper = await IssueApi.getAmountByRepository({username, name}, ISSUE_STATUS.CLOSED);
         if (amountWrapper !== null)
         {
@@ -113,7 +113,7 @@ class Issues extends PureComponent<IProps, IState>
 
     loadIssues = async (status: ISSUE_STATUS | undefined, offset: number, limit: number) =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const issuesWrapper = await IssueApi.getByRepository({
             username, name: repositoryName,
         }, status, offset, limit);

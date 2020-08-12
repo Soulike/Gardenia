@@ -17,15 +17,15 @@ function BranchItem(props: IProps)
 {
     const {
         branch: {name, isDefault, lastCommit: {timestamp, committerName, committerEmail}},
-        match: {params: {username, repository: repositoryName}},
+        match: {params: {username, repositoryName}},
     } = props;
     return (
         <div className={Style.BranchItem}>
             <div className={Style.branchInfo}>
                 <Link to={RouterFunction.generateRepositoryCodeRoute({
                     username,
-                    repository: repositoryName,
-                    branch: name,
+                    repositoryName,
+                    commitHash: name,
                     objectType: ObjectType.TREE,
                 })}>
                     <Tag color={'blue'}>{name}</Tag>

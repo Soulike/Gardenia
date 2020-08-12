@@ -18,8 +18,8 @@ class FileInfoBar extends PureComponent<IProps, IState>
 {
     onRawFileButtonClick = async () =>
     {
-        const {match: {params: {username, repository, path}}, lastCommitHash} = this.props;
-        const rawFile = await RepositoryInfo.rawFile({username}, {name: repository}, path!, lastCommitHash);
+        const {match: {params: {username, repositoryName, path}}, lastCommitHash} = this.props;
+        const rawFile = await RepositoryInfo.rawFile({username}, {name: repositoryName}, path!, lastCommitHash);
         if (rawFile !== null)
         {
             this.startDownload(rawFile);

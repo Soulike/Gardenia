@@ -13,7 +13,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 
 function InfoBar(props: Readonly<IProps>)
 {
-    const {commitCount, branches, match: {params: {username, repository, branch: branchName}}} = props;
+    const {commitCount, branches, match: {params: {username, repositoryName, commitHash: branchName}}} = props;
     let defaultBranchName = '';
     for (const branch of branches)
     {
@@ -27,8 +27,8 @@ function InfoBar(props: Readonly<IProps>)
             <Link to={commitCount > 0
                 ? RouterFunction.generateRepositoryCommitsRoute({
                     username,
-                    repository,
-                    branch: branchName ? branchName : defaultBranchName,
+                    repositoryName,
+                    commitHash: branchName ? branchName : defaultBranchName,
                 })
                 : '#'}
                   className={Style.info}>
@@ -37,7 +37,7 @@ function InfoBar(props: Readonly<IProps>)
             <Link className={Style.info} to={commitCount > 0
                 ? RouterFunction.generateRepositoryBranchesRoute({
                     username,
-                    repository,
+                    repositoryName,
                 })
                 : '#'}>
                 <BranchesOutlined /> {branches.length} 个分支

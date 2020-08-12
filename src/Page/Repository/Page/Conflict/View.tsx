@@ -39,16 +39,16 @@ function Conflict(props: IConflictProps)
                                <div>
                                    正在解决 <NewTabLink to={RouterFunction.generateRepositoryCodeRoute({
                                    username: sourceRepositoryUsername,
-                                   repository: sourceRepositoryName,
+                                   repositoryName: sourceRepositoryName,
                                    objectType: ObjectType.TREE,
-                                   branch: sourceRepositoryBranchName,
+                                   commitHash: sourceRepositoryBranchName,
                                })}>
                                    <code>{sourceRepositoryUsername}/{sourceRepositoryName}:{sourceRepositoryBranchName}</code>
                                </NewTabLink> 到 <NewTabLink to={RouterFunction.generateRepositoryCodeRoute({
                                    username: targetRepositoryUsername,
-                                   repository: targetRepositoryName,
+                                   repositoryName: targetRepositoryName,
                                    objectType: ObjectType.TREE,
-                                   branch: targetRepositoryBranchName,
+                                   commitHash: targetRepositoryBranchName,
                                })}>
                                    <code>{targetRepositoryUsername}/{targetRepositoryName}:{targetRepositoryBranchName}</code>
                                </NewTabLink> 的合并冲突

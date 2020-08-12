@@ -45,8 +45,8 @@ class PullRequest extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {no, repository: repositoryName, username}}, loading, pullRequest} = this.props;
-        const {match: {params: {no: prevNo, repository: prevRepositoryName, username: prevUsername}}, pullRequest: prevPullRequest} = prevProps;
+        const {match: {params: {no, repositoryName, username}}, loading, pullRequest} = this.props;
+        const {match: {params: {no: prevNo, repositoryName: prevRepositoryName, username: prevUsername}}, pullRequest: prevPullRequest} = prevProps;
         if (no !== prevNo || repositoryName !== prevRepositoryName || username !== prevUsername)
         {
             await this.componentDidMount();
@@ -64,7 +64,7 @@ class PullRequest extends PureComponent<IProps, IState>
 
     loadPullRequest = async () =>
     {
-        const {match: {params: {no: noString, repository: repositoryName, username}}, history, loadedPullRequest, loadingPullRequest} = this.props;
+        const {match: {params: {no: noString, repositoryName, username}}, history, loadedPullRequest, loadingPullRequest} = this.props;
         const no = Number.parseInt(noString);
         if (Number.isNaN(no) || no <= 0)
         {

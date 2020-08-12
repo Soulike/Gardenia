@@ -61,7 +61,7 @@ function CodeView(props: Readonly<IProps>)
                                             sourceRepositoryName: name,
                                             sourceRepositoryBranch: masterBranchName,
                                             targetRepositoryBranch: masterBranchName,
-                                            repository: name,
+                                            repositoryName: name,
                                             username,
                                         })}>
                                             <Button>创建 Pull Request</Button>

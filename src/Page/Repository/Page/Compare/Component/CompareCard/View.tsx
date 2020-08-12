@@ -15,7 +15,7 @@ function CompareCard(props: IProps)
         match: {
             params: {
                 sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                username: targetRepositoryUsername, repository: targetRepositoryName, targetRepositoryBranch,
+                username: targetRepositoryUsername, repositoryName: targetRepositoryName, targetRepositoryBranch,
             },
         },
     } = props;

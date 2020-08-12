@@ -28,7 +28,7 @@ class AddCollaborationButton extends PureComponent<IProps, IState>
 
     onClick: ButtonProps['onClick'] = async () =>
     {
-        const {match: {params: {username, repository: name}}} = this.props;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
         this.setState({loading: true});
         const result = await CollaboratorApi.generateCode({username, name});
         if (result !== null)

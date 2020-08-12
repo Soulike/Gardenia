@@ -53,7 +53,7 @@ class JoinGroupButton extends PureComponent<Readonly<IProps>, IState>
         }
         else
         {
-            const {match: {params: {repository: name, username}}} = this.props;
+            const {match: {params: {repositoryName: name, username}}} = this.props;
             const result = await GroupApi.addRepository({username, name}, {id: Number.parseInt(groupId)});
             if (result !== null)
             {

@@ -72,7 +72,7 @@ class CodeCommentForm extends PureComponent<IProps, IState>
             const {
                 match: {
                     params: {
-                        username, repository: repositoryName, path,
+                        username, repositoryName, path,
                     },
                 }, lineNumber, commitHash,
             } = this.props;

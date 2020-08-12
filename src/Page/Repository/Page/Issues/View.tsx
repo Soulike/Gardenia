@@ -28,7 +28,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryIssues>
 function Issues(props: IProps)
 {
     const {
-        match: {params: {username, repository: repositoryName}},
+        match: {params: {username, repositoryName}},
         loading, openAmount, closedAmount, currentStatus, onStatusButtonClick,
         currentPageNumber, onPrevButtonClick, onNextButtonClick, noNextPage, issues,
     } = props;
@@ -69,7 +69,7 @@ function Issues(props: IProps)
                             </Button.Group>
                         </div>
                         <Link to={RouterFunction.generateRepositoryCreateIssueRoute({
-                            username, repository: repositoryName,
+                            username, repositoryName,
                         })}>
                             <Button type={'primary'}>
                                 <PlusOutlined />

@@ -42,8 +42,8 @@ class Comments extends PureComponent<IProps, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username, repository: repositoryName, no}}} = this.props;
-        const {match: {params: {username: prevUsername, repository: prevRepositoryName, no: prevNo}}} = prevProps;
+        const {match: {params: {username, repositoryName, no}}} = this.props;
+        const {match: {params: {username: prevUsername, repositoryName: prevRepositoryName, no: prevNo}}} = prevProps;
         if (username !== prevUsername || repositoryName !== prevRepositoryName || no !== prevNo)
         {
             await this.componentDidMount();
@@ -63,7 +63,7 @@ class Comments extends PureComponent<IProps, IState>
         return new Promise(async resolve =>
         {
             const {
-                match: {params: {username, repository: repositoryName, no: noString}},
+                match: {params: {username, repositoryName, no: noString}},
                 history,
             } = this.props;
             const no = Number.parseInt(noString);

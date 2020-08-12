@@ -75,14 +75,14 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         const {
             location: {pathname},
             isLoggedIn, match:
-                {params: {repository, username}},
+                {params: {repositoryName, username}},
         } = this.props;
         const {
             location: {pathname: prevPathName},
             isLoggedIn: preIsLoggedIn,
-            match: {params: {repository: prevRepository, username: prevUsername}},
+            match: {params: {repositoryName: prevRepository, username: prevUsername}},
         } = prevProps;
-        if (repository !== prevRepository || username !== prevUsername)
+        if (repositoryName !== prevRepository || username !== prevUsername)
         {
             await this.componentDidMount();
         }
@@ -98,16 +98,16 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     checkURLParameter = () =>
     {
-        // objectType 和 branch 两个参数要么都存在，要么都不存在。如果不满足则跳转到 404
+        // objectType 和 commitHash 两个参数要么都存在，要么都不存在。如果不满足则跳转到 404
         const {
             history, match: {
                 params: {
-                    objectType, branch,
+                    objectType, commitHash,
                 },
             },
         } = this.props;
-        if ((objectType !== undefined && branch === undefined)
-            || (objectType === undefined && branch !== undefined))
+        if ((objectType !== undefined && commitHash === undefined)
+            || (objectType === undefined && commitHash !== undefined))
         {
             history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
@@ -115,13 +115,13 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     setTitle = () =>
     {
-        const {match: {params: {username, repository: name}}} = this.props;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
         document.title = `${username}/${name} - ${CONFIG.NAME}`;
     };
 
     loadOpenIssueAmount = async () =>
     {
-        const {match: {params: {username, repository: name}}} = this.props;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
         const amountWrapper = await IssueApi.getAmountByRepository(
             {username, name}, ISSUE_STATUS.OPEN,
         );
@@ -134,7 +134,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     loadOpenPullRequestAmount = async () =>
     {
-        const {match: {params: {username, repository: name}}} = this.props;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
         const amountWrapper = await PullRequestApi.getPullRequestAmount({username, name}, PULL_REQUEST_STATUS.OPEN);
         if (amountWrapper !== null)
         {
@@ -145,7 +145,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     loadRepository = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}, history} = this.props;
+        const {match: {params: {username, repositoryName}}, history} = this.props;
         const repository = await RepositoryInfo.repository({username}, {name: repositoryName});
         // 设置仓库基本信息
         if (repository !== null)
@@ -160,7 +160,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     loadForkFrom = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const result = await RepositoryInfo.forkFrom({username, name: repositoryName});
         if (result !== null)
         {
@@ -230,19 +230,22 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
         {
             case TAB_KEY.CODE:
             {
-                return history.push(RouterFunction.generateRepositoryCodeRoute({username, repository: name}));
+                return history.push(RouterFunction.generateRepositoryCodeRoute({username, repositoryName: name}));
             }
             case TAB_KEY.ISSUES:
             {
-                return history.push(RouterFunction.generateRepositoryIssuesRoute({username, repository: name}));
+                return history.push(RouterFunction.generateRepositoryIssuesRoute({username, repositoryName: name}));
             }
             case TAB_KEY.PULL_REQUESTS:
             {
-                return history.push(RouterFunction.generateRepositoryPullRequestsRoute({username, repository: name}));
+                return history.push(RouterFunction.generateRepositoryPullRequestsRoute({
+                    username,
+                    repositoryName: name,
+                }));
             }
             case TAB_KEY.SETTINGS:
             {
-                return history.push(RouterFunction.generateRepositorySettingsRoute({username, repository: name}));
+                return history.push(RouterFunction.generateRepositorySettingsRoute({username, repositoryName: name}));
             }
             default:
             {

@@ -21,9 +21,9 @@ class RepositoryName extends PureComponent<Readonly<IProps>, IState>
     constructor(props: Readonly<IProps>)
     {
         super(props);
-        const {match: {params: {repository}}} = props;
+        const {match: {params: {repositoryName}}} = props;
         this.state = {
-            repositoryName: repository,
+            repositoryName,
             submitting: false,
         };
     }
@@ -60,7 +60,7 @@ class RepositoryName extends PureComponent<Readonly<IProps>, IState>
     submit = async () =>
     {
         const {repositoryName: newRepositoryName} = this.state;
-        const {match: {params: {repository: repositoryName}}} = this.props;
+        const {match: {params: {repositoryName}}} = this.props;
         const result = await RepositoryInfo.setName({name: repositoryName}, {name: newRepositoryName});
         if (result !== null)
         {
@@ -76,7 +76,7 @@ class RepositoryName extends PureComponent<Readonly<IProps>, IState>
         const {repositoryName: newRepositoryName} = this.state;
         return history.replace(RouterFunction.generateRepositorySettingsOptionsRoute({
             username,
-            repository: newRepositoryName,
+            repositoryName: newRepositoryName,
         }));
     };
 

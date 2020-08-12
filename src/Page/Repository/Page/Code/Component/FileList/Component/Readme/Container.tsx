@@ -61,13 +61,13 @@ class Readme extends PureComponent<Readonly<IProps>, IState>
             'README.md', 'readme.md', 'readMe.md', 'ReadMe.md',
             'README.MD', 'readme.MD', 'readMe.MD', 'ReadMe.MD',
         ];
-        const {match: {params: {username, repository, path}}, commitHash} = this.props;
+        const {match: {params: {username, repositoryName, path}}, commitHash} = this.props;
         for (const readmeName of readmeNames)
         {
-            const info = await RepositoryInfo.fileInfo({username}, {name: repository}, join(path ? path : '', readmeName), commitHash);
+            const info = await RepositoryInfo.fileInfo({username}, {name: repositoryName}, join(path ? path : '', readmeName), commitHash);
             if (info !== null && info.exists)
             {
-                const raw = await RepositoryInfo.rawFile({username}, {name: repository}, join(path ? path : '', readmeName), commitHash);
+                const raw = await RepositoryInfo.rawFile({username}, {name: repositoryName}, join(path ? path : '', readmeName), commitHash);
                 if (raw !== null)
                 {
                     await this.setStatePromise({

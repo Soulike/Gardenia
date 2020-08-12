@@ -28,7 +28,7 @@ function PullRequest(props: IProps)
                 </div>
                 <NewTabLink to={RouterFunction.generateRepositoryPullRequestRoute({
                     username: targetRepositoryUsername,
-                    repository: targetRepositoryName,
+                    repositoryName: targetRepositoryName,
                     no: no!.toString(),
                 })}>
                     <div className={Style.title}>{title}</div>

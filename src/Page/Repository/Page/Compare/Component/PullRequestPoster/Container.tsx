@@ -65,7 +65,7 @@ class PullRequestPoster extends PureComponent<IProps, IState>
                 match: {
                     params: {
                         sourceRepositoryUsername, sourceRepositoryName, sourceRepositoryBranch,
-                        repository: targetRepositoryName, username: targetRepositoryUsername, targetRepositoryBranch,
+                        repositoryName: targetRepositoryName, username: targetRepositoryUsername, targetRepositoryBranch,
                     },
                 },
             } = this.props;
@@ -85,7 +85,7 @@ class PullRequestPoster extends PureComponent<IProps, IState>
                 notification.success({message: '创建 Pull Request 成功'});
                 return history.replace(RouterFunction.generateRepositoryPullRequestsRoute({
                     username: targetRepositoryUsername,
-                    repository: targetRepositoryName,
+                    repositoryName: targetRepositoryName,
                 }));
             }
             this.setState({submitting: false});

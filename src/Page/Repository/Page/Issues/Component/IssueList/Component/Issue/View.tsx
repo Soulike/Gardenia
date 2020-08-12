@@ -27,7 +27,7 @@ function Issue(props: IProps)
                 </div>
                 <NewTabLink to={RouterFunction.generateRepositoryIssueRoute({
                     username: repositoryUsername,
-                    repository: repositoryName,
+                    repositoryName,
                     no: no!.toString(),
                 })}>
                     <div className={Style.title}>{title}</div>

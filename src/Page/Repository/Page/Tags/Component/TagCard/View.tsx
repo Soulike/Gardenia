@@ -21,7 +21,7 @@ function TagCard(props: IProps)
     const {
         showBody,
         tag: {name, annotation: {subject, body}, lastCommit: {commitHash, timestamp}},
-        match: {params: {username, repository}},
+        match: {params: {username, repositoryName}},
         onShowBodyButtonClick,
     } = props;
     return (
@@ -58,7 +58,7 @@ function TagCard(props: IProps)
                         </Tooltip>
                         <span className={Style.commitHashWrapper}>
                             <NewTabLink to={RouterFunction.generateRepositoryCommitRoute(
-                                {username, repository, commitHash},
+                                {username, repositoryName, commitHash},
                             )}>
                             <span className={Style.iconWrapper}>
                                 <NodeIndexOutlined />

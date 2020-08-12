@@ -49,13 +49,13 @@ class Code extends PureComponent<Readonly<IProps>, IState>
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {match: {params: {username: prevUsername, repository: prevRepository, branch: preBranch}}} = prevProps;
-        const {match: {params: {username, repository, branch}}} = this.props;
-        if (prevUsername !== username || prevRepository !== repository)
+        const {match: {params: {username: prevUsername, repositoryName: prevRepository, commitHash: preBranch}}} = prevProps;
+        const {match: {params: {username, repositoryName, commitHash}}} = this.props;
+        if (prevUsername !== username || prevRepository !== repositoryName)
         {
             await this.componentDidMount();
         }
-        else if (preBranch !== branch)    // 分支切换，重新获取提交相关信息
+        else if (preBranch !== commitHash)    // 分支切换，重新获取提交相关信息
         {
             await this.setStatePromise({loading: true});
             await this.loadCommitCount();
@@ -65,7 +65,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
 
     loadRepository = async () =>
     {
-        const {match: {params: {username, repository: name}}, history} = this.props;
+        const {match: {params: {username, repositoryName: name}}, history} = this.props;
         const repository = await RepositoryInfo.repository({username}, {name});
         // 设置仓库基本信息
         if (repository !== null)
@@ -80,10 +80,10 @@ class Code extends PureComponent<Readonly<IProps>, IState>
 
     loadCommitCount = async () =>
     {
-        const {match: {params: {username, repository: repositoryName, branch}}} = this.props;
+        const {match: {params: {username, repositoryName, commitHash}}} = this.props;
         const {branches} = this.state;
         let masterBranchName = '';
-        if (!branch)
+        if (!commitHash)
         {
             for (const {isDefault, name} of branches)
             {
@@ -95,7 +95,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
         }
         // 在仓库还没有提交的时候 commitHash 参数写什么都是无所谓的，所以即使是空字符串也不会出错
         const commitCountWrapper = await RepositoryInfo.commitCount(
-            {username}, {name: repositoryName}, branch ? branch : masterBranchName);
+            {username}, {name: repositoryName}, commitHash ? commitHash : masterBranchName);
         if (commitCountWrapper !== null)
         {
             const {commitCount} = commitCountWrapper;
@@ -105,7 +105,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
 
     loadBranches = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const result = await RepositoryInfo.branches({username, name: repositoryName});
         if (result !== null)
         {
@@ -116,7 +116,7 @@ class Code extends PureComponent<Readonly<IProps>, IState>
 
     loadTagNames = async () =>
     {
-        const {match: {params: {username, repository: repositoryName}}} = this.props;
+        const {match: {params: {username, repositoryName}}} = this.props;
         const result = await RepositoryInfo.tagNames({username, name: repositoryName});
         if (result !== null)
         {

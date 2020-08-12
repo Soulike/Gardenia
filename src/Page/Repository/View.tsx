@@ -54,7 +54,7 @@ function RepositoryView(props: Readonly<IProps>)
                                     {username}
                                 </Link> / <Link to={RouterFunction.generateRepositoryCodeRoute({
                                 username,
-                                repository: name,
+                                repositoryName: name,
                             })}>
                                 <b>{name}</b>
                             </Link>
@@ -68,7 +68,7 @@ function RepositoryView(props: Readonly<IProps>)
                                         {forkFrom.username}
                                     </Link> / <Link to={RouterFunction.generateRepositoryCodeRoute({
                                     username: forkFrom.username,
-                                    repository: forkFrom.name,
+                                    repositoryName: forkFrom.name,
                                 })}>
                                     <b>{forkFrom.name}</b>
                                 </Link>

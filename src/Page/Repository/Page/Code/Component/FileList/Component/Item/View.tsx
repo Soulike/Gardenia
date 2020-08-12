@@ -16,7 +16,10 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 
 function Item(props: Readonly<IProps>)
 {
-    const {masterBranchName, fileInfo: {type, path, commit: {message, timestamp, commitHash}}, match: {params: {username, repository, branch}}} = props;
+    const {
+        masterBranchName, fileInfo: {type, path, commit: {message, timestamp, commitHash: commitHashOfFile}},
+        match: {params: {username, repositoryName, commitHash}},
+    } = props;
     const fileName = getFileNameFromPath(path);
     return (
         <List.Item className={Style.Item}>
@@ -32,9 +35,9 @@ function Item(props: Readonly<IProps>)
                         <Link to={
                             RouterFunction.generateRepositoryCodeRoute({
                                 username,
-                                repository,
+                                repositoryName,
                                 objectType: type,
-                                branch: branch ? branch : masterBranchName,
+                                commitHash: commitHash ? commitHash : masterBranchName,
                                 path,
                             })}>
                             {fileName}
@@ -42,7 +45,7 @@ function Item(props: Readonly<IProps>)
                 }
             </div>
             <Link className={Style.message} to={
-                RouterFunction.generateRepositoryCommitRoute({username, repository, commitHash})
+                RouterFunction.generateRepositoryCommitRoute({username, repositoryName, commitHash: commitHashOfFile})
             }>{message}</Link>
             <div className={Style.time}>{Date.parseTimestampToDifference(timestamp)}</div>
         </List.Item>

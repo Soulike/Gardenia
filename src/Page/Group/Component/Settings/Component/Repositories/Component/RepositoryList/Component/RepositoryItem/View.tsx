@@ -33,7 +33,7 @@ function RepositoryItem(props: IProps)
                             {username}
                         </NewTabLink>
                         /
-                        <NewTabLink to={RouterFunction.generateRepositoryCodeRoute({username, repository: name})}>
+                        <NewTabLink to={RouterFunction.generateRepositoryCodeRoute({username, repositoryName: name})}>
                             <span style={{fontWeight: 'bold'}}>{name}</span>
                         </NewTabLink>
                     </div>

@@ -39,7 +39,7 @@ class Groups extends PureComponent<Readonly<IProps>, IState>
 
     loadGroups = async () =>
     {
-        const {match: {params: {username, repository: name}}} = this.props;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
         this.setState({loading: true});
         const groups = await GroupApi.getByRepository({username, name});
         if (groups !== null)

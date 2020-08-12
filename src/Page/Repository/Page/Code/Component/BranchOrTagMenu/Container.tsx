@@ -18,14 +18,14 @@ class BranchOrTagMenu extends PureComponent<IProps>
     {
         return () =>
         {
-            const {history, match: {params: {username, repository, objectType, path}}} = this.props;
+            const {history, match: {params: {username, repositoryName, objectType, path}}} = this.props;
             return history.replace(
                 RouterFunction.generateRepositoryCodeRoute(
                     {
                         username,
-                        repository,
+                        repositoryName,
                         objectType: objectType ? objectType : ObjectType.TREE,
-                        branch: branchOrTagName,
+                        commitHash: branchOrTagName,
                         path,
                     }));
         };
@@ -33,7 +33,7 @@ class BranchOrTagMenu extends PureComponent<IProps>
 
     render()
     {
-        const {match: {params: {branch: branchName}}, branches, tagNames} = this.props;
+        const {match: {params: {commitHash: branchName}}, branches, tagNames} = this.props;
         let defaultBranchName: string = '';
         if (branchName === undefined)
         {

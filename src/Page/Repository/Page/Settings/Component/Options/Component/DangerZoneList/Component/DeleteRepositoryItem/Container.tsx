@@ -53,9 +53,9 @@ class DeleteRepositoryItem extends PureComponent<Readonly<IProps>, IState>
 
     onModalOk: ModalProps['onOk'] = async () =>
     {
-        const {match: {params: {repository, username}}, history} = this.props;
+        const {match: {params: {repositoryName, username}}, history} = this.props;
         const {modalRepositoryName, modalPassword} = this.state;
-        if (repository !== modalRepositoryName)
+        if (repositoryName !== modalRepositoryName)
         {
             notification.warn({message: '仓库名不正确'});
         }
@@ -69,7 +69,7 @@ class DeleteRepositoryItem extends PureComponent<Readonly<IProps>, IState>
                 const {isCorrect} = result;
                 if (isCorrect)
                 {
-                    const result = await RepositoryApi.del({name: repository});
+                    const result = await RepositoryApi.del({name: repositoryName});
                     if (result !== null)
                     {
                         notification.success({message: '仓库删除成功'});

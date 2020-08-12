@@ -85,8 +85,8 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
 
     loadLastCommit = async () =>
     {
-        const {match: {params: {username, repository: name, path, branch}}} = this.props;
-        const lastCommit = await RepositoryInfo.lastBranchCommit({username}, {name}, branch!, path);
+        const {match: {params: {username, repositoryName: name, path, commitHash}}} = this.props;
+        const lastCommit = await RepositoryInfo.lastBranchCommit({username}, {name}, commitHash!, path);
         if (lastCommit !== null)
         {
             await this.setStatePromise({lastCommit});
@@ -96,7 +96,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
     loadFileInfo = async () =>
     {
         const {lastCommit: {commitHash}} = this.state;
-        const {match: {params: {username, repository: name, path}}, history} = this.props;
+        const {match: {params: {username, repositoryName: name, path}}, history} = this.props;
         const fileInfo = await RepositoryInfo.fileInfo({username}, {name}, path!, commitHash);
         if (fileInfo !== null)
         {
@@ -122,9 +122,9 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
 
     loadFileContent = async () =>
     {
-        const {match: {params: {username, repository, path}}} = this.props;
+        const {match: {params: {username, repositoryName, path}}} = this.props;
         const {lastCommit: {commitHash}} = this.state;
-        const rawFile = await RepositoryInfo.rawFile({username}, {name: repository}, path!, commitHash);
+        const rawFile = await RepositoryInfo.rawFile({username}, {name: repositoryName}, path!, commitHash);
         if (rawFile !== null)
         {
             await this.setStatePromise({fileContent: await File.transformBlobToString(rawFile)});
@@ -133,11 +133,11 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
 
     loadCodeComments = async () =>
     {
-        const {match: {params: {username, repository, path}}} = this.props;
+        const {match: {params: {username, repositoryName, path}}} = this.props;
         const {lastCommit: {commitHash}} = this.state;
         const codeCommentsWrapper = await CodeCommentApi.get({
             repositoryUsername: username,
-            repositoryName: repository,
+            repositoryName,
             filePath: path!,
         }, commitHash);
         if (codeCommentsWrapper !== null)

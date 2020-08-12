@@ -33,7 +33,7 @@ class CollaboratorList extends PureComponent<IProps, IState>
 
     loadCollaborators = async () =>
     {
-        const {match: {params: {username, repository: name}}} = this.props;
+        const {match: {params: {username, repositoryName: name}}} = this.props;
         const result = await CollaboratorApi.getCollaborators({username, name});
         if (result !== null)
         {

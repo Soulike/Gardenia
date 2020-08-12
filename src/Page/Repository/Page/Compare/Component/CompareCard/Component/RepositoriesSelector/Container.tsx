@@ -90,7 +90,7 @@ class RepositoriesSelector extends PureComponent<IProps, IState>
         const {
             match: {
                 params: {
-                    repository: targetRepositoryName, username: targetRepositoryUsername,
+                    repositoryName: targetRepositoryName, username: targetRepositoryUsername,
                 },
             },
         } = this.props;
@@ -111,7 +111,7 @@ class RepositoriesSelector extends PureComponent<IProps, IState>
         const {match: {params}, history} = this.props;
         const [targetRepositoryUsername, targetRepositoryName] = value.toString().split('/');
         return history.push(RouterFunction.generateRepositoryCompareRoute({
-            ...params, username: targetRepositoryUsername, repository: targetRepositoryName,
+            ...params, username: targetRepositoryUsername, repositoryName: targetRepositoryName,
         }));
     };
 

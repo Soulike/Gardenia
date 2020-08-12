@@ -31,7 +31,7 @@ class CollaboratorCard extends PureComponent<IProps, IState>
     {
         const {
             profile: {username: removedUsername},
-            match: {params: {username, repository: name}},
+            match: {params: {username, repositoryName: name}},
         } = this.props;
         this.setState({loading: true});
         const result = await CollaboratorApi.remove(

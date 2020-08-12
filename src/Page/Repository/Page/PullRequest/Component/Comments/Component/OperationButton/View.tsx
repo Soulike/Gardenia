@@ -24,7 +24,7 @@ function OperationButton(props: IProps)
         pullRequest: {status},
         onCloseButtonClick, onMergeButtonClick, onReopenButtonClick, loading, isMergeable,
         match: {
-            params: {username, repository, no},
+            params: {username, repositoryName, no},
         },
     } = props;
     return (
@@ -52,7 +52,7 @@ function OperationButton(props: IProps)
                                                 </Popconfirm>) :
                                                 (<Button type={'primary'}>
                                                     <Link to={RouterFunction.generateRepositoryConflictRoute({
-                                                        username, repository, no,
+                                                        username, repositoryName, no,
                                                     })}>
                                                         <ToolOutlined /> 解决冲突
                                                     </Link>

@@ -33,9 +33,9 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
 
     async componentDidMount()
     {
-        const {match: {params: {branch}}} = this.props;
+        const {match: {params: {commitHash}}} = this.props;
         this.setState({loading: true});
-        if (typeof branch !== 'string')
+        if (typeof commitHash !== 'string')
         {
             await this.loadMainBranchName();
         }
@@ -61,7 +61,7 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
     {
         return new Promise(async resolve =>
         {
-            const {match: {params: {username, repository: name}}} = this.props;
+            const {match: {params: {username, repositoryName: name}}} = this.props;
             const branchesWrapper = await RepositoryInfo.branches({username, name});
             if (branchesWrapper !== null)
             {
@@ -124,14 +124,14 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
         }
         else // 如果是相对路径，进行处理
         {
-            const {match: {params: {username, repository, objectType, branch, path: filePath}}} = this.props;
+            const {match: {params: {username, repositoryName, objectType, commitHash, path: filePath}}} = this.props;
             const {mainBranchName} = this.state;
             const absoluteFilePath = filePath ? (
                 objectType === ObjectType.BLOB
                     ? path.join(path.dirname(filePath), link)   // 如果当前页面是 BLOB，退到所在文件夹作为基础
                     : path.join(filePath, link) // 如果当前页面是 TREE，当前文件夹就是基础
             ) : path.join('', link);
-            const fileInfo = await RepositoryInfo.fileInfo({username}, {name: repository}, absoluteFilePath, branch ? branch : mainBranchName);
+            const fileInfo = await RepositoryInfo.fileInfo({username}, {name: repositoryName}, absoluteFilePath, commitHash ? commitHash : mainBranchName);
             if (fileInfo !== null)
             {
                 const {exists, type} = fileInfo;
@@ -139,8 +139,8 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
                 {
                     return RouterFunction.generateRepositoryCodeRoute({
                         username,
-                        repository,
-                        branch: branch ? branch : mainBranchName,
+                        repositoryName,
+                        commitHash: commitHash ? commitHash : mainBranchName,
                         path: absoluteFilePath,
                         objectType: ObjectType.BLOB,
                     });
@@ -149,8 +149,8 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
                 {
                     return RouterFunction.generateRepositoryCodeRoute({
                         username,
-                        repository,
-                        branch: branch ? branch : mainBranchName,
+                        repositoryName,
+                        commitHash: commitHash ? commitHash : mainBranchName,
                         path: absoluteFilePath,
                         objectType: ObjectType.TREE,
                     });
@@ -160,8 +160,8 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
             {
                 return RouterFunction.generateRepositoryCodeRoute({
                     username,
-                    repository,
-                    branch: branch ? branch : mainBranchName,
+                    repositoryName,
+                    commitHash: commitHash ? commitHash : mainBranchName,
                     path: absoluteFilePath,
                     objectType: ObjectType.BLOB,
                 });
@@ -178,14 +178,14 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
         }
         else // 如果是相对路径，进行处理
         {
-            const {match: {params: {username, repository, objectType, branch, path: filePath}}} = this.props;
+            const {match: {params: {username, repositoryName, objectType, commitHash, path: filePath}}} = this.props;
             const {mainBranchName} = this.state;
             const absoluteFilePath = filePath ? (
                 objectType === ObjectType.BLOB
                     ? path.join(path.dirname(filePath), src)   // 如果当前页面是 BLOB，退到所在文件夹作为基础
                     : path.join(filePath, src) // 如果当前页面是 TREE，当前文件夹就是基础
             ) : path.join('', src);
-            const rawFile = await RepositoryInfo.rawFile({username}, {name: repository}, absoluteFilePath, branch ? branch : mainBranchName);
+            const rawFile = await RepositoryInfo.rawFile({username}, {name: repositoryName}, absoluteFilePath, commitHash ? commitHash : mainBranchName);
             if (rawFile !== null)
             {
                 return URL.createObjectURL(rawFile);
