@@ -1,1 +1,3 @@
-export * as Notification from './Request';
+import * as Notification from './Request';
+
+export {Notification};
