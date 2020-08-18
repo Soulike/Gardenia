@@ -98,7 +98,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
 
     checkURLParameter = () =>
     {
-        // objectType 和 commitHash 两个参数要么都存在，要么都不存在。如果不满足则跳转到 404
+        // 只要 objectType 存在，commitHash 一定存在。如果不满足则跳转到 404
         const {
             history, match: {
                 params: {
@@ -106,8 +106,7 @@ class Repository extends PureComponent<Readonly<IProps>, IState>
                 },
             },
         } = this.props;
-        if ((objectType !== undefined && commitHash === undefined)
-            || (objectType === undefined && commitHash !== undefined))
+        if (objectType !== undefined && commitHash === undefined)
         {
             history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
