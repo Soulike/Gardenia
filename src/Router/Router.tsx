@@ -36,6 +36,7 @@ export default () =>
                                component={PAGE_ID_TO_COMPONENT[PAGE_ID.PERSONAL_CENTER]}
                                exact={true} />
                         <Route path={[
+                            PAGE_ID_TO_ROUTE[PAGE_ID.NOTIFICATIONS],
                             PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY],
                             PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_GROUP],
                             PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION],

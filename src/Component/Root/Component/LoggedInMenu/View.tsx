@@ -31,13 +31,15 @@ function LoggedInMenu(props: IProps)
             <Menu mode={'horizontal'} theme={'dark'} selectable={false}>
                 <Menu.Item>
                     <Tooltip title={'消息中心'}>
-                        <div className={Style.notificationWrapper}>
-                            <Badge count={unconfirmedNotificationCount}>
-                                <div className={Style.notificationIconWrapper}>
-                                    <BellOutlined />
-                                </div>
-                            </Badge>
-                        </div>
+                        <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.NOTIFICATIONS]}>
+                            <div className={Style.notificationWrapper}>
+                                <Badge count={unconfirmedNotificationCount}>
+                                    <div className={Style.notificationIconWrapper}>
+                                        <BellOutlined />
+                                    </div>
+                                </Badge>
+                            </div>
+                        </Link>
                     </Tooltip>
                 </Menu.Item>
                 <Menu.SubMenu title={
