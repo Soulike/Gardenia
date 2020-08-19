@@ -10,6 +10,7 @@ export const PAGE_ID_TO_ROUTE = Object.freeze({
     [PAGE_ID.CREATE_GROUP]: '/createGroup',
     [PAGE_ID.ADD_COLLABORATION]: '/addCollaboration',
     [PAGE_ID.PERSONAL_CENTER]: '/personalCenter/:username',
+    [PAGE_ID.NOTIFICATIONS]: '/notifications',
 
     [PAGE_ID.REPOSITORY.REPOSITORY]: '/repository/:username/:repositoryName',
     [PAGE_ID.REPOSITORY.ISSUES]: '/repository/:username/:repositoryName/issues',

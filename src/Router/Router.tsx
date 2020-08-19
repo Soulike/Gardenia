@@ -68,6 +68,9 @@ function RequireLoginRoute()
                 <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.ADD_COLLABORATION]}
                        component={PAGE_ID_TO_COMPONENT[PAGE_ID.ADD_COLLABORATION]}
                        exact={true} />
+                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.NOTIFICATIONS]}
+                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.NOTIFICATIONS]}
+                       exact={true} />
                 <Route component={NotFound} />
             </Switch>
         </RequireLogin>
