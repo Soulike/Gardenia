@@ -1,0 +1,64 @@
+@import "../../../../GlobalStyle/COLOR.css";
+
+.Notification {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .left, .right {
+        display: flex;
+        align-items: center;
+    }
+
+    .left {
+        width: 60%;
+
+        .unconfirmedDotWrapper {
+            $DOT_RADIUS: 4px;
+
+            width: 20px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            .unconfirmedDot {
+                height: $DOT_RADIUS*2;
+                width: $DOT_RADIUS*2;
+                border: $DOT_RADIUS solid red;
+                border-radius: $DOT_RADIUS;
+            }
+        }
+
+        .iconWrapper {
+            width: 25px;
+        }
+
+        .contentWrapper {
+            max-width: calc(100% - 20px - 25px); // 100% - dot - icon
+        }
+    }
+
+    .right {
+        justify-content: flex-end;
+        width: 40%;
+        color: var(--GLOBAL_LIGHT_TEXT_COLOR);
+
+        .typeWrapper {
+            width: calc(100% - 75px - 80px); // 100% - time - button
+            padding-left: 5px;
+        }
+
+        .timeWrapper {
+            width: 75px;
+            padding-left: 5px;
+        }
+
+        .buttonWrapper {
+            display: flex;
+            justify-content: flex-end;
+            width: 80px;
+            padding-left: 5px;
+        }
+    }
+}

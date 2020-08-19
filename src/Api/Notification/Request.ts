@@ -2,7 +2,7 @@ import {Notification, ResponseBody} from '../../Class';
 import axios, {AxiosResponse} from 'axios';
 import {GET, GET_COUNT, SET_CONFIRMED} from './ROUTE';
 
-export async function get(notification: Readonly<Pick<Notification, 'confirmed'>>,
+export async function get(notification: Readonly<Partial<Pick<Notification, 'confirmed'>>>,
                           offset: number, limit: number): Promise<{ notifications: Notification[] } | null>
 {
     try
@@ -28,7 +28,7 @@ export async function get(notification: Readonly<Pick<Notification, 'confirmed'>
     }
 }
 
-export async function getCount(notification: Readonly<Pick<Notification, 'confirmed'>>): Promise<{ count: number } | null>
+export async function getCount(notification: Readonly<Partial<Pick<Notification, 'confirmed'>>>): Promise<{ count: number } | null>
 {
     try
     {

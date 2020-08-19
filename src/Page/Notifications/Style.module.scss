@@ -1,3 +1,11 @@
 .Notifications {
+    margin: 15px auto;
+    width: 75vw;
 
+    .loadMoreButtonWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+    }
 }
