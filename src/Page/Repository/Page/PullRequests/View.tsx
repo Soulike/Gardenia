@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Spin, Tag} from 'antd';
+import {Button, Space, Spin, Tag} from 'antd';
 import {Branch, PullRequest} from '../../../../Class';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
@@ -47,8 +47,8 @@ function PullRequests(props: IProps)
                 <div className={Style.list}>
                     <div className={Style.header}>
                         <div className={Style.statusFilter}>
-                            <Button.Group size={'small'}>
-                                <Button type={'link'}
+                            <Space size={-1}>
+                                <Button size={'small'} type={'link'}
                                         style={{
                                             color: 'unset',
                                             fontWeight: currentStatus === undefined ? 'bolder' : 'inherit',
@@ -57,7 +57,7 @@ function PullRequests(props: IProps)
                                     <EllipsisOutlined /> 所有
                                     <Tag className={Style.tag}>{openAmount + closedAmount + mergedAmount}</Tag>
                                 </Button>
-                                <Button type={'link'}
+                                <Button size={'small'} type={'link'}
                                         style={{
                                             color: 'green',
                                             fontWeight: currentStatus === PULL_REQUEST_STATUS.OPEN ? 'bolder' : 'inherit',
@@ -66,7 +66,7 @@ function PullRequests(props: IProps)
                                     <ForkOutlined /> 开启的
                                     <Tag className={Style.tag}>{openAmount}</Tag>
                                 </Button>
-                                <Button type={'link'}
+                                <Button size={'small'} type={'link'}
                                         style={{
                                             color: 'red',
                                             fontWeight: currentStatus === PULL_REQUEST_STATUS.CLOSED ? 'bolder' : 'inherit',
@@ -75,7 +75,7 @@ function PullRequests(props: IProps)
                                     <CloseOutlined /> 已关闭
                                     <Tag className={Style.tag}>{closedAmount}</Tag>
                                 </Button>
-                                <Button type={'link'}
+                                <Button size={'small'} type={'link'}
                                         style={{
                                             color: 'purple',
                                             fontWeight: currentStatus === PULL_REQUEST_STATUS.MERGED ? 'bolder' : 'inherit',
@@ -84,7 +84,7 @@ function PullRequests(props: IProps)
                                     <PullRequestOutlined /> 已合并
                                     <Tag className={Style.tag}>{mergedAmount}</Tag>
                                 </Button>
-                            </Button.Group>
+                            </Space>
                         </div>
                         <div className={Style.buttonWrapper}>
                             <Link to={RouterFunction.generateRepositoryCompareRoute({
@@ -107,10 +107,10 @@ function PullRequests(props: IProps)
                     </div>
                 </div>
                 <div className={Style.pageButtonWrapper}>
-                    <Button.Group>
+                    <Space size={-1}>
                         <Button disabled={currentPageNumber === 0} onClick={onPrevButtonClick}>上一页</Button>
                         <Button onClick={onNextButtonClick} disabled={noNextPage}>下一页</Button>
-                    </Button.Group>
+                    </Space>
                 </div>
             </Spin>
         </div>

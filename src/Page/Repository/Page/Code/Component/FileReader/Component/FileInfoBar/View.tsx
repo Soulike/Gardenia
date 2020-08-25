@@ -4,7 +4,7 @@ import {ButtonProps} from 'antd/lib/button';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../../../../../Router';
 import {File as FileFunction} from '../../../../../../../../Function';
-import {Button} from 'antd';
+import {Button, Space} from 'antd';
 import {FileTextOutlined, LeftOutlined} from '@ant-design/icons';
 import path from 'path';
 import {ObjectType} from '../../../../../../../../CONSTANT';
@@ -44,7 +44,7 @@ function FileInfoBar(props: IProps)
                 </div>
                 <div className={Style.fileSize}>{FileFunction.parseFileSize(fileSize)}</div>
             </div>
-            <Button.Group className={Style.buttonWrapper}>
+            <Space size={-1} className={Style.buttonWrapper}>
                 <Button>
                     <Link to={RouterFunction.generateRepositoryCommitsRoute({
                         username,
@@ -55,7 +55,7 @@ function FileInfoBar(props: IProps)
                     </Link>
                 </Button>
                 <Button onClick={onRawFileButtonClick}>下载</Button>
-            </Button.Group>
+            </Space>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Spin, Tag} from 'antd';
+import {Button, Space, Spin, Tag} from 'antd';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {ISSUE_STATUS} from '../../../../CONSTANT';
@@ -38,8 +38,8 @@ function Issues(props: IProps)
                 <div className={Style.list}>
                     <div className={Style.header}>
                         <div className={Style.statusFilter}>
-                            <Button.Group size={'small'}>
-                                <Button type={'link'}
+                            <Space size={-1}>
+                                <Button size={'small'} type={'link'}
                                         style={{
                                             color: 'unset',
                                             fontWeight: currentStatus === undefined ? 'bolder' : 'inherit',
@@ -48,7 +48,7 @@ function Issues(props: IProps)
                                     <EllipsisOutlined /> 所有
                                     <Tag className={Style.tag}>{openAmount + closedAmount}</Tag>
                                 </Button>
-                                <Button type={'link'}
+                                <Button size={'small'} type={'link'}
                                         style={{
                                             color: 'green',
                                             fontWeight: currentStatus === ISSUE_STATUS.OPEN ? 'bolder' : 'inherit',
@@ -57,7 +57,7 @@ function Issues(props: IProps)
                                     <InfoCircleOutlined /> 开启的
                                     <Tag className={Style.tag}>{openAmount}</Tag>
                                 </Button>
-                                <Button type={'link'}
+                                <Button size={'small'} type={'link'}
                                         style={{
                                             color: 'red',
                                             fontWeight: currentStatus === ISSUE_STATUS.CLOSED ? 'bolder' : 'inherit',
@@ -66,7 +66,7 @@ function Issues(props: IProps)
                                     <IssuesCloseOutlined /> 已关闭
                                     <Tag className={Style.tag}>{closedAmount}</Tag>
                                 </Button>
-                            </Button.Group>
+                            </Space>
                         </div>
                         <Link to={RouterFunction.generateRepositoryCreateIssueRoute({
                             username, repositoryName,
@@ -81,10 +81,10 @@ function Issues(props: IProps)
                         <IssueList issues={issues} />
                     </div>
                     <div className={Style.pageButtonWrapper}>
-                        <Button.Group>
+                        <Space size={-1}>
                             <Button disabled={currentPageNumber === 0} onClick={onPrevButtonClick}>上一页</Button>
                             <Button onClick={onNextButtonClick} disabled={noNextPage}>下一页</Button>
-                        </Button.Group>
+                        </Space>
                     </div>
                 </div>
             </Spin>

@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import RepositoryList from '../../../../Component/RepositoryList';
 import {Repository} from '../../../../Class';
-import {Button} from 'antd';
+import {Button, Space} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 import {PlusOutlined} from '@ant-design/icons';
@@ -37,10 +37,10 @@ function RepositoriesView(props: Readonly<IProps>)
             <div className={Style.buttonWrapper}>
                 {
                     hasNextPage || hasPrevPage ? (
-                            <Button.Group>
+                            <Space size={-1}>
                                 <Button onClick={onPrevPageButtonClick} disabled={!hasPrevPage}>上一页</Button>
                                 <Button onClick={onNextPageButtonClick} disabled={!hasNextPage}>下一页</Button>
-                            </Button.Group>)
+                            </Space>)
                         : null
                 }
             </div>

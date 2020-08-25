@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Button, Popconfirm} from 'antd';
+import {Button, Popconfirm, Space} from 'antd';
 import {PullRequest} from '../../../../../../../../Class';
 import {PULL_REQUEST_STATUS} from '../../../../../../../../CONSTANT';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
@@ -29,7 +29,7 @@ function OperationButton(props: IProps)
     } = props;
     return (
         <div className={Style.OperationButton}>
-            <Button.Group size={'large'}>
+            <Space size={-1}>
                 {
                     (() =>
                     {
@@ -89,7 +89,7 @@ function OperationButton(props: IProps)
                         }
                     })()
                 }
-            </Button.Group>
+            </Space>
         </div>
     );
 }

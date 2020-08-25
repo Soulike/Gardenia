@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Commit, Repository} from '../../../../../../Class';
-import {Button} from 'antd';
+import {Button, Space} from 'antd';
 import {Function as RouterFunction} from '../../../../../../Router';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {ObjectType} from '../../../../../../CONSTANT';
@@ -46,7 +46,7 @@ function TimelineItemContent(props: IProps)
                 </pre>
             </div>
             <div className={Style.right}>
-                <Button.Group className={Style.commitHash}>
+                <Space className={Style.commitHash} size={-1}>
                     <CopyToClipboard text={commitHash}>
                         <Button><CopyOutlined /></Button>
                     </CopyToClipboard>
@@ -59,7 +59,7 @@ function TimelineItemContent(props: IProps)
                             <code>{commitHash.slice(0, 7)}</code>
                         </NewTabLink>
                     </Button>
-                </Button.Group>
+                </Space>
                 <NewTabLink to={RouterFunction.generateRepositoryCodeRoute({
                     username,
                     repositoryName,

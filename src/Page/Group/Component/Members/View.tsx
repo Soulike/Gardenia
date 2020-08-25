@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Alert, Button, Card, Empty, List, Popconfirm, Tag} from 'antd';
+import {Alert, Button, Card, Empty, List, Popconfirm, Space, Tag} from 'antd';
 import {Profile} from '../../../../Class';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
@@ -63,7 +63,7 @@ function MembersView(props: Readonly<IProps>)
                                       {
                                           isAdmin ? (
                                               <div className={Style.buttonWrapper}>
-                                                  <Button.Group>
+                                                  <Space size={-1}>
                                                       {
                                                           adminUsernames.includes(username) ? (
                                                               <Popconfirm title={`确认撤销成员 ${username} 的管理员权限？`}
@@ -89,7 +89,7 @@ function MembersView(props: Readonly<IProps>)
                                                                   loading={loading}
                                                                   disabled={loading}>移除</Button>
                                                       </Popconfirm>
-                                                  </Button.Group>
+                                                  </Space>
                                               </div>
                                           ) : null
                                       }

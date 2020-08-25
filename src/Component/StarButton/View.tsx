@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Tooltip} from 'antd';
+import {Button, Space, Tooltip} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 import {StarFilled, StarOutlined} from '@ant-design/icons';
 import {String} from '../../Function';
@@ -17,8 +17,8 @@ function StarButton(props: IProps)
     const {hasStared, starAmount, loading, onClick} = props;
     // TODO: star 人员列表
     return (
-        <Button.Group size={'small'}>
-            <Button onClick={async e =>
+        <Space size={-1}>
+            <Button size={'small'} onClick={async e =>
             {
                 e.preventDefault();
                 if (typeof onClick === 'function')
@@ -37,11 +37,11 @@ function StarButton(props: IProps)
                 }
             </Button>
             <Tooltip title={starAmount}>
-                <Button onClick={async e => e.preventDefault()}>
+                <Button size={'small'} onClick={async e => e.preventDefault()}>
                     {String.getNumberAbbreviation(starAmount)}
                 </Button>
             </Tooltip>
-        </Button.Group>
+        </Space>
     );
 }
 

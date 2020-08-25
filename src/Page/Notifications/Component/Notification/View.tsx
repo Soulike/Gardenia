@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Notification as NotificationClass} from '../../../../Class';
 import {ButtonProps} from 'antd/lib/button';
-import {Button, List, Tooltip} from 'antd';
+import {Button, List, Space, Tooltip} from 'antd';
 import {CheckOutlined, MessageOutlined, ReloadOutlined} from '@ant-design/icons';
 import {Date} from '../../../../Function';
 
@@ -43,7 +43,7 @@ function Notification(props: IProps)
                         </Tooltip>
                     </div>
                     <div className={Style.buttonWrapper}>
-                        <Button.Group>
+                        <Space size={-1}>
                             <Tooltip title={'确认消息'}>
                                 <Button onClick={onConfirmButtonClickFactory(id)} size={'small'}
                                         disabled={confirmed}>
@@ -56,7 +56,7 @@ function Notification(props: IProps)
                                     <ReloadOutlined />
                                 </Button>
                             </Tooltip>
-                        </Button.Group>
+                        </Space>
                     </div>
                 </div>
             </div>
