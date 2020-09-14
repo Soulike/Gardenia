@@ -91,7 +91,7 @@ function FileReader(props: Readonly<IProps>)
                                     }
                                     else if (PDF.includes(ext))
                                     {
-                                        return <PDFReader pdf={fileContent} />;
+                                        return <PDFReader fileContent={fileContent} />;
                                     }
                                     else
                                     {

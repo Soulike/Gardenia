@@ -1,17 +1,25 @@
-import React, {HTMLAttributes, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import View from './View';
 import {Props as DocumentProps} from 'react-pdf/dist/Document';
+import {PaginationProps} from 'antd/lib/pagination';
 
 interface IProps
 {
-    pdf: Blob,
+    fileContent: Blob,
 }
 
 function PDFReader(props: IProps)
 {
-    const {pdf} = props;
+    const {fileContent} = props;
     const [pageAmount, setPageAmount] = useState(0);
     const [pageNumber, setPageNumber] = useState(1);
+    const [pdfURL, setPdfURL] = useState('');
+
+    useEffect(() =>
+    {
+        setPdfURL(URL.createObjectURL(fileContent));
+        return () => URL.revokeObjectURL(pdfURL);
+    }, [fileContent]);
 
     const onPDFLoadSuccess: DocumentProps['onLoadSuccess'] = pdf =>
     {
@@ -19,21 +27,15 @@ function PDFReader(props: IProps)
         setPageAmount(numPages);
     };
 
-    const toPreviousPage: HTMLAttributes<HTMLButtonElement>['onClick'] = () =>
+    const onPaginationChange: PaginationProps['onChange'] = page =>
     {
-        setPageNumber(pageNumber - 1);
-    };
-
-    const toNextPage: HTMLAttributes<HTMLButtonElement>['onClick'] = () =>
-    {
-        setPageNumber(pageNumber + 1);
+        setPageNumber(page);
     };
 
     return (<View pageNumber={pageNumber}
-                  pdfURL={URL.createObjectURL(pdf)}
+                  pdfURL={pdfURL}
                   pageAmount={pageAmount}
-                  toNextPage={toNextPage}
-                  toPreviousPage={toPreviousPage}
+                  onPaginationChange={onPaginationChange}
                   onPDFLoadSuccess={onPDFLoadSuccess} />);
 }
 
