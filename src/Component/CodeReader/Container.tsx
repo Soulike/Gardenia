@@ -1,12 +1,12 @@
 import React, {HTMLAttributes, PureComponent} from 'react';
 import View from './View';
 import {promisify} from 'util';
-import {Code} from '../../Function';
+import {Code, File} from '../../Function';
 
 interface IProps
 {
     hasLineNumber: boolean;
-    code: string;
+    fileContent: Blob;
     hasComment: boolean,
     onCodeLineClickFactory?: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'];
     hasCommentLineNumbers?: number[];   // 需要显示批注图标行的行数
@@ -33,17 +33,18 @@ class CodeReader extends PureComponent<IProps, IState>
 
     async componentDidMount()
     {
-        const {code} = this.props;
+        const {fileContent} = this.props;
         await this.setStatePromise({processing: true});
+        const code = await File.transformBlobToString(fileContent);
         const highlightedCodeLines = await Code.getHighlightedCodeLines(code);
         await this.setStatePromise({highlightedCodeLines, processing: false});
     }
 
     async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
     {
-        const {code} = this.props;
-        const {code: prevCode} = prevProps;
-        if (code !== prevCode)
+        const {fileContent} = this.props;
+        const {fileContent: prevFileContent} = prevProps;
+        if (fileContent !== prevFileContent)
         {
             await this.componentDidMount();
         }
