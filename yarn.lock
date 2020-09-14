@@ -1666,6 +1666,11 @@
   resolved "https://registry.npm.taobao.org/@types/parse-json/download/@types/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha1-L4u0QUNNFjs1+4/9zNcTiSf/uMA=
 
+"@types/pdfjs-dist@*":
+  version "2.1.5"
+  resolved "https://registry.npm.taobao.org/@types/pdfjs-dist/download/@types/pdfjs-dist-2.1.5.tgz#98d7c8796919828bbdcdf364ca6bf82105b9246e"
+  integrity sha1-mNfIeWkZgou9zfNkymv4IQW5JG4=
+
 "@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
@@ -1695,6 +1700,14 @@
   resolved "https://registry.npm.taobao.org/@types/react-infinite-scroller/download/@types/react-infinite-scroller-1.2.1.tgz#1cd747ef8f50d3c883e375c0491a906e5436fcb2"
   integrity sha1-HNdH749Q08iD43XASRqQblQ2/LI=
   dependencies:
+    "@types/react" "*"
+
+"@types/react-pdf@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.npm.taobao.org/@types/react-pdf/download/@types/react-pdf-4.0.5.tgz#d0d380eaa7202c079fd38f392ea5cf3b1c3c81aa"
+  integrity sha1-0NOA6qcgLAef0485LqXPOxw8gao=
+  dependencies:
+    "@types/pdfjs-dist" "*"
     "@types/react" "*"
 
 "@types/react-redux@^7.1.2":
@@ -7266,6 +7279,11 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+make-cancellable-promise@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/make-cancellable-promise/download/make-cancellable-promise-1.0.0.tgz#826214115b0827ca7a45ba204df7c31546243870"
+  integrity sha1-gmIUEVsIJ8p6RbogTffDFUYkOHA=
+
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/make-dir/download/make-dir-2.1.0.tgz?cache=0&sync_timestamp=1587567711102&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmake-dir%2Fdownload%2Fmake-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"
@@ -7285,6 +7303,11 @@ make-error@^1.1.1:
   version "1.3.6"
   resolved "https://registry.npm.taobao.org/make-error/download/make-error-1.3.6.tgz?cache=0&sync_timestamp=1582105487630&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmake-error%2Fdownload%2Fmake-error-1.3.6.tgz#2eb2e37ea9b67c4891f684a1394799af484cf7a2"
   integrity sha1-LrLjfqm2fEiR9oShOUeZr0hM96I=
+
+make-event-props@^1.1.0:
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/make-event-props/download/make-event-props-1.2.0.tgz#96b87d88919533b8f8934b58b4c3d5679459a0cf"
+  integrity sha1-lrh9iJGVM7j4k0tYtMPVZ5RZoM8=
 
 makeerror@1.0.x:
   version "1.0.11"
@@ -7370,6 +7393,11 @@ meow@^3.7.0:
     read-pkg-up "^1.0.1"
     redent "^1.0.0"
     trim-newlines "^1.0.0"
+
+merge-class-names@^1.1.1:
+  version "1.3.0"
+  resolved "https://registry.npm.taobao.org/merge-class-names/download/merge-class-names-1.3.0.tgz#c4cdc1a981a81dd9afc27aa4287e912a337c5dee"
+  integrity sha1-xM3BqYGoHdmvwnqkKH6RKjN8Xe4=
 
 merge-deep@^3.0.2:
   version "3.0.2"
@@ -8368,6 +8396,11 @@ pbkdf2@^3.0.3:
     ripemd160 "^2.0.1"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+pdfjs-dist@2.4.456:
+  version "2.4.456"
+  resolved "https://registry.npm.taobao.org/pdfjs-dist/download/pdfjs-dist-2.4.456.tgz#0eaad2906cda866bbb393e79a0e5b4e68bd75520"
+  integrity sha1-DqrSkGzahmu7OT55oOW05ovXVSA=
 
 performance-now@^2.1.0:
   version "2.1.0"
@@ -9861,6 +9894,19 @@ react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-i
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.13.1.tgz?cache=0&sync_timestamp=1598612915869&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-is%2Fdownload%2Freact-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=
 
+react-pdf@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npm.taobao.org/react-pdf/download/react-pdf-5.0.0.tgz#baddeecd5c5ef92ae57aed1ee141203ad14d4b5d"
+  integrity sha1-ut3uzVxe+Srleu0e4UEgOtFNS10=
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    make-cancellable-promise "^1.0.0"
+    make-event-props "^1.1.0"
+    merge-class-names "^1.1.1"
+    pdfjs-dist "2.4.456"
+    prop-types "^15.6.2"
+    worker-loader "^3.0.0"
+
 react-redux@^7.1.1:
   version "7.2.1"
   resolved "https://registry.npm.taobao.org/react-redux/download/react-redux-7.2.1.tgz#8dedf784901014db2feca1ab633864dee68ad985"
@@ -10514,7 +10560,7 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.1, schema-utils@^2.6.5, schema-utils@^2.6.6, schema-utils@^2.7.1:
+schema-utils@^2.5.0, schema-utils@^2.6.0, schema-utils@^2.6.1, schema-utils@^2.6.5, schema-utils@^2.6.6, schema-utils@^2.7.0, schema-utils@^2.7.1:
   version "2.7.1"
   resolved "https://registry.npm.taobao.org/schema-utils/download/schema-utils-2.7.1.tgz?cache=0&sync_timestamp=1598871845041&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fschema-utils%2Fdownload%2Fschema-utils-2.7.1.tgz#1ca4f32d1b24c590c203b8e7a50bf0ea4cd394d7"
   integrity sha1-HKTzLRskxZDCA7jnpQvw6kzTlNc=
@@ -12267,6 +12313,14 @@ worker-farm@^1.7.0:
   integrity sha1-JqlMU5G7ypJhUgAvabhKS/dy5ag=
   dependencies:
     errno "~0.1.7"
+
+worker-loader@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.npm.taobao.org/worker-loader/download/worker-loader-3.0.2.tgz#f82386a96366d24dbf6c2420f5bed04d3fe5a229"
+  integrity sha1-+COGqWNm0k2/bCQg9b7QTT/loik=
+  dependencies:
+    loader-utils "^2.0.0"
+    schema-utils "^2.7.0"
 
 worker-rpc@^0.1.0:
   version "0.1.1"

@@ -1,18 +1,22 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import RepositoryMarkdownPreviewer from '../../../RepositoryMarkdownPreviewer';
+import {Spin} from 'antd';
 
 interface IProps
 {
     markdown: string;
+    loading: boolean;
 }
 
 function MarkdownReader(props: IProps)
 {
-    const {markdown} = props;
+    const {markdown, loading} = props;
     return (
         <div className={Style.MarkdownReader}>
-            <RepositoryMarkdownPreviewer markdown={markdown} />
+            <Spin spinning={loading}>
+                <RepositoryMarkdownPreviewer markdown={markdown} />
+            </Spin>
         </div>
     );
 }

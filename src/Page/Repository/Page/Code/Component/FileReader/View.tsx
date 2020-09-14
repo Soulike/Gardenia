@@ -13,6 +13,7 @@ import MarkdownReader from './Component/MarkdownReader';
 import {DrawerProps} from 'antd/lib/drawer';
 import CodeCommentDrawer from './Component/CodeCommentDrawer';
 import FileInfoBar from './Component/FileInfoBar';
+import PDFReader from './Component/PDFReader';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -20,7 +21,7 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
     isOversize: boolean,
     lastCommit: Readonly<Commit>,
     loading: boolean,
-    fileContent: string;
+    fileContent: Blob;
     fileSize: number;
     onCodeLineClickFactory: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'];
     hasCommentLineNumbers: number[];
@@ -36,6 +37,7 @@ function FileReader(props: Readonly<IProps>)
     // 文件类型扩展名
     const JSON = ['.json'];
     const MARKDOWN = ['.md', '.markdown', '.mdwn'];
+    const PDF = ['.pdf'];
     const {
         isBinary,
         isOversize,
@@ -78,18 +80,22 @@ function FileReader(props: Readonly<IProps>)
                                     }
                                     else if (JSON.includes(ext))
                                     {
-                                        return <CodeReader code={fileContent}
+                                        return <CodeReader fileContent={fileContent}
                                                            hasComment={true} hasLineNumber={true}
                                                            hasCommentLineNumbers={hasCommentLineNumbers}
                                                            onCodeLineClickFactory={onCodeLineClickFactory} />;
                                     }
                                     else if (MARKDOWN.includes(ext))
                                     {
-                                        return <MarkdownReader markdown={fileContent} />;
+                                        return <MarkdownReader fileContent={fileContent} />;
+                                    }
+                                    else if (PDF.includes(ext))
+                                    {
+                                        return <PDFReader fileContent={fileContent} />;
                                     }
                                     else
                                     {
-                                        return <CodeReader code={fileContent}
+                                        return <CodeReader fileContent={fileContent}
                                                            hasComment={true} hasLineNumber={true}
                                                            onCodeLineClickFactory={onCodeLineClickFactory}
                                                            hasCommentLineNumbers={hasCommentLineNumbers} />;

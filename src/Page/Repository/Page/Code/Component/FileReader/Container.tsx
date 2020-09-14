@@ -19,7 +19,7 @@ interface IState
     isOversize: boolean,
     lastCommit: Commit,
     loading: boolean,
-    fileContent: string,
+    fileContent: Blob,
     fileSize: number,
     codeComments: CodeComment[],
 
@@ -40,7 +40,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             isOversize: false,
             lastCommit: new Commit('', '', '', 0, '', ''),
             loading: true,
-            fileContent: '',
+            fileContent: new Blob(),
             fileSize: 0,
             codeComments: [],
 
@@ -108,7 +108,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
             else
             {
                 await this.setStatePromise({fileSize: size!});
-                if (!isBinary && size! > 256 * 1024)   // 不是二进制文件，但大小超过 256K
+                if (!isBinary && size! > 5 * 1024 * 1024)   // 不是二进制文件，但大小超过 5M
                 {
                     await this.setStatePromise({isOversize: true, isBinary: isBinary!});
                 }
@@ -127,7 +127,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         const rawFile = await RepositoryInfo.rawFile({username}, {name: repositoryName}, path!, commitHash);
         if (rawFile !== null)
         {
-            await this.setStatePromise({fileContent: await File.transformBlobToString(rawFile)});
+            await this.setStatePromise({fileContent: rawFile});
         }
     };
 
@@ -160,7 +160,7 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         {
             await this.setStatePromise({drawerLineNumber: lineNumber});
             const {fileContent} = this.state;
-            const codeLines = fileContent.split('\n');
+            const codeLines = (await File.transformBlobToString(fileContent)).split('\n');
             await this.setStatePromise({drawerCode: codeLines[lineNumber - 1].trim(), drawerVisible: true});
         };
     };
