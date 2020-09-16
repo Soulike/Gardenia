@@ -42,7 +42,7 @@ function LoggedInMenu(props: IProps)
                 </Tooltip>
             </div>
             <div className={Style.itemWrapper}>
-                <Popover content={
+                <Popover placement={'bottom'} content={
                     <Menu selectable={false} style={{background: 'transparent', border: 'none'}} inlineIndent={0}>
                         <Menu.Item>
                             <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.CREATE_REPOSITORY]}>
@@ -60,12 +60,14 @@ function LoggedInMenu(props: IProps)
                             </Link>
                         </Menu.Item>
                     </Menu>}>
-                    <PlusOutlined />
-                    <CaretDownOutlined />
+                    <div className={Style.popoverContent}>
+                        <PlusOutlined />
+                        <CaretDownOutlined />
+                    </div>
                 </Popover>
             </div>
             <div className={Style.itemWrapper}>
-                <Popover content={
+                <Popover placement={'bottomLeft'} content={
                     <Menu selectable={false} style={{background: 'transparent', border: 'none'}} inlineIndent={0}>
                         <Menu.Item>
                             <Link to={RouterFunction.generatePersonalCenterRoute({username})}>
@@ -95,10 +97,12 @@ function LoggedInMenu(props: IProps)
                         </Menu.Item>
                     </Menu>
                 }>
-                    {avatar ?
-                        <Avatar shape={'square'} src={avatar} size={'small'} /> :
-                        <Avatar shape={'square'} size={'small'} src={svg} />}
-                    <CaretDownOutlined />
+                    <div className={Style.popoverContent}>
+                        {avatar ?
+                            <Avatar shape={'square'} src={avatar} size={'small'} /> :
+                            <Avatar shape={'square'} size={'small'} src={svg} />}
+                        <CaretDownOutlined />
+                    </div>
                 </Popover>
             </div>
         </div>);

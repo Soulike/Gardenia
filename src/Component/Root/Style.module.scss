@@ -7,11 +7,23 @@
     flex-direction: column;
     justify-content: space-between;
 
+    .topFiller {
+        height: 50px;
+        width: 100%;
+    }
+
     .top {
+        z-index: 1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
+        background-color: rgba(0, 0, 0, 0.8);
+        backdrop-filter: saturate(180%) blur(5px);
         padding: 5px 25px;
 
         .left {

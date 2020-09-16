@@ -27,6 +27,7 @@ function RootView(props: Readonly<IProps>)
     return (
         <div className={Style.Root}>
             <BackTop />
+            <div className={Style.topFiller} />
             <div className={Style.top}>
                 <div className={Style.left}>
                     <div className={Style.logoWrapper}>

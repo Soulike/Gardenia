@@ -1,8 +1,8 @@
 %link {
-    color: var(--GLOBAL_TEXT_COLOR);
+    color: #CCC;
     transition: 0.25s color;
 
     &:hover {
-        color: var(--GLOBAL_LIGHT_TEXT_COLOR);
+        color: #FFF;
     }
 }
