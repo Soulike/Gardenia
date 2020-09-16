@@ -1,9 +1,9 @@
 import React from 'react';
-import {Menu} from 'antd';
 import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
 import qs from 'querystring';
 import {LoginOutlined, UserAddOutlined} from '@ant-design/icons';
+import Style from './Style.module.scss';
 
 interface IProps
 {
@@ -17,20 +17,20 @@ function UnLoggedInMenu(props: IProps)
     // 格式：prev=xxxx
     const currentURLQueryString = qs.encode({prev: currentURL});
     return (
-        <Menu mode={'horizontal'} theme={'dark'} selectable={false}>
-            <Menu.Item>
-                <Link to={currentURLQueryString ?
+        <div className={Style.UnloggedInMenu}>
+            <div className={Style.loginWrapper}>
+                <Link className={Style.login} to={currentURLQueryString ?
                     `${PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]}?${currentURLQueryString}` :
                     PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]}>
-                    <LoginOutlined />登录
+                    <span className={Style.icon}><LoginOutlined /></span>登录
                 </Link>
-            </Menu.Item>
-            <Menu.Item>
-                <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.REGISTER]}>
-                    <UserAddOutlined />注册
+            </div>
+            <div className={Style.signUpWrapper}>
+                <Link className={Style.signUp} to={PAGE_ID_TO_ROUTE[PAGE_ID.REGISTER]}>
+                    <span className={Style.icon}><UserAddOutlined /></span>注册
                 </Link>
-            </Menu.Item>
-        </Menu>
+            </div>
+        </div>
     );
 }
 

@@ -1,0 +1,30 @@
+@import "../../../../GlobalStyle/COLOR.css";
+@import "../../LinkStyle";
+
+.UnloggedInMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+        margin-right: 5px;
+    }
+
+    .loginWrapper {
+        margin-right: 30px;
+
+        .login {
+            font-size: 14px;
+            @extend %link;
+        }
+
+    }
+
+    .signUpWrapper {
+
+        .signUp {
+            font-size: 14px;
+            @extend %link;
+        }
+    }
+}

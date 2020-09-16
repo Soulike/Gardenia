@@ -1,4 +1,13 @@
+@import "../../LinkStyle";
+
 .LoggedInMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+        @extend %link;
+    }
 
     .notificationWrapper {
         height: 100%;
@@ -8,5 +17,10 @@
             font-size: 1rem;
             margin-left: 10px;
         }
+    }
+
+    .itemWrapper {
+        margin-left: 30px;
+        cursor: pointer;
     }
 }

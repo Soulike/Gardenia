@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {BackTop, Menu} from 'antd';
+import {BackTop} from 'antd';
 import Style from './Style.module.scss';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG as ROUTER_CONFIG} from '../../Router';
@@ -9,6 +9,7 @@ import UnLoggedInMenu from './Component/UnloggedInMenu';
 import LoggedInMenu from './Component/LoggedInMenu';
 import NewTabAnchor from '../NewTabAnchor';
 import {SmileTwoTone} from '@ant-design/icons';
+import SearchInput from './Component/SearchInput';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -26,24 +27,27 @@ function RootView(props: Readonly<IProps>)
     return (
         <div className={Style.Root}>
             <BackTop />
-            <div>
-                <Menu mode={'horizontal'} theme={'dark'} className={Style.menu} selectable={false}>
-                    <Menu.Item>
+            <div className={Style.top}>
+                <div className={Style.left}>
+                    <div className={Style.logoWrapper}>
                         <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]}>
                             <Logo />
                         </Link>
-                    </Menu.Item>
-                    <Menu.Item className={Style.accountMenu}>
-                        {
-                            isLoggedIn && profile !== null ?
-                                <LoggedInMenu username={profile.username} avatar={profile.avatar} /> :
-                                <UnLoggedInMenu currentURL={location.pathname} />
-                        }
-                    </Menu.Item>
-                </Menu>
-                <div className={Style.childrenWrapper}>
-                    {children}
+                    </div>
+                    <div className={Style.searchInputWrapper}>
+                        <SearchInput />
+                    </div>
                 </div>
+                <div className={Style.accountMenuWrapper}>
+                    {
+                        isLoggedIn && profile !== null ?
+                            <LoggedInMenu username={profile.username} avatar={profile.avatar} /> :
+                            <UnLoggedInMenu currentURL={location.pathname} />
+                    }
+                </div>
+            </div>
+            <div className={Style.childrenWrapper}>
+                {children}
             </div>
             <footer className={Style.footer}>
                 <div className={Style.announce}>{date.getFullYear()} - Designed & Created

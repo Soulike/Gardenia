@@ -1,0 +1,8 @@
+%link {
+    color: var(--GLOBAL_TEXT_COLOR);
+    transition: 0.25s color;
+
+    &:hover {
+        color: var(--GLOBAL_LIGHT_TEXT_COLOR);
+    }
+}

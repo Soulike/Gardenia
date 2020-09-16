@@ -7,10 +7,28 @@
     flex-direction: column;
     justify-content: space-between;
 
-    .menu {
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--GLOBAL_BORDER_COLOR);
+        padding: 5px 25px;
 
-        .accountMenu {
-            float: right;
+        .left {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logoWrapper {
+            margin-right: 20px;
+        }
+
+        .searchInputWrapper {
+
+        }
+
+        .accountMenuWrapper {
         }
     }
 

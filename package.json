@@ -21,7 +21,7 @@
     "@types/react-router-dom": "^5.1.0",
     "@types/showdown": "^1.9.3",
     "@types/validator": "^13.0.0",
-    "antd": "4.5.2",
+    "antd": "^4.6.4",
     "axios": "^0.20.0",
     "babel-plugin-import": "^1.12.2",
     "codemirror": "^5.52.0",
