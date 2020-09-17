@@ -3,6 +3,7 @@ import axios, {AxiosResponse} from 'axios';
 import {
     GET,
     GET_BY_EMAIL,
+    SEARCH,
     SEND_SET_EMAIL_VERIFICATION_CODE_TO_EMAIL,
     SET_EMAIL,
     SET_NICKNAME,
@@ -135,6 +136,32 @@ export async function uploadAvatar(avatar: File): Promise<true | null>
         if (isSuccessful)
         {
             return true;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+    finally
+    {
+        nProgress.done();
+    }
+}
+
+export async function search(keyword: string): Promise<{ profiles: Profile[] } | null>
+{
+    nProgress.start();
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ profiles: Profile[] }>> =
+            await axios.post(SEARCH, {keyword});
+        if (isSuccessful)
+        {
+            return data!;
         }
         else
         {
