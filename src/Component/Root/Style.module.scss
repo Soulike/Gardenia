@@ -5,7 +5,8 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    position: relative;
 
     .topFiller {
         height: 50px;
@@ -48,10 +49,19 @@
 
     }
 
+    $FOOTER_HEIGHT: 100px;
+
+    .footerFiller {
+        height: $FOOTER_HEIGHT;
+        width: 100%;
+    }
+
     .footer {
         box-sizing: border-box;
         width: 100%;
-        height: 100px;
+        height: $FOOTER_HEIGHT;
+        position: absolute;
+        bottom: 0;
         display: flex;
         flex-direction: column;
         justify-content: center;

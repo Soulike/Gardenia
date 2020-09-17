@@ -28,7 +28,7 @@ function RootView(props: Readonly<IProps>)
         <div className={Style.Root}>
             <BackTop />
             <div className={Style.topFiller} />
-            <div className={Style.top}>
+            <nav className={Style.top}>
                 <div className={Style.left}>
                     <div className={Style.logoWrapper}>
                         <Link to={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]}>
@@ -46,10 +46,11 @@ function RootView(props: Readonly<IProps>)
                             <UnLoggedInMenu currentURL={location.pathname} />
                     }
                 </div>
-            </div>
-            <div className={Style.childrenWrapper}>
+            </nav>
+            <main className={Style.childrenWrapper}>
                 {children}
-            </div>
+            </main>
+            <div className={Style.footerFiller} />
             <footer className={Style.footer}>
                 <div className={Style.announce}>{date.getFullYear()} - Designed & Created
                                                                      by <NewTabAnchor href={'https://soulike.tech/'}>Soulike</NewTabAnchor>

@@ -15,7 +15,7 @@ export const PAGE_ID_TO_COMPONENT = Object.freeze({
 
     [PAGE_ID.NOTIFICATIONS]: React.lazy(() => import('../../Page/Notifications')),
 
-    [PAGE_ID.SEARCH]: undefined,
+    [PAGE_ID.SEARCH]: React.lazy(() => import('../../Page/Search')),
 
     [PAGE_ID.REPOSITORY.CODE]: React.lazy(() => import('../../Page/Repository/Page/Code')),
     [PAGE_ID.REPOSITORY.ISSUES]: React.lazy(() => import('../../Page/Repository/Page/Issues')),
