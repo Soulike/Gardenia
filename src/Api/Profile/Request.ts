@@ -152,13 +152,13 @@ export async function uploadAvatar(avatar: File): Promise<true | null>
     }
 }
 
-export async function search(keyword: string): Promise<{ profiles: Profile[] } | null>
+export async function search(keyword: string, offset: number, limit: number): Promise<{ profiles: Profile[] } | null>
 {
     nProgress.start();
     try
     {
         const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ profiles: Profile[] }>> =
-            await axios.post(SEARCH, {keyword});
+            await axios.post(SEARCH, {keyword, offset, limit});
         if (isSuccessful)
         {
             return data!;

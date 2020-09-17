@@ -14,16 +14,17 @@ function Search()
 
     const TYPES = Object.values(SEARCH_TYPE);
 
+    const {type, keyword}: Partial<RouterInterface.ISearch> = querystring.decode(search.slice(1));
+
     useEffect(() =>
     {
-        const {type, keyword}: Partial<RouterInterface.ISearch> = querystring.decode(search.slice(1));
         if (type === undefined || !TYPES.includes(type) || keyword === undefined)
         {
             history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
     }, [search]);
 
-    return (<View />);
+    return (<View currentType={type!} />);
 }
 
 export default React.memo(Search);

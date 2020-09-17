@@ -1,0 +1,40 @@
+@import "../../../../GlobalStyle/COLOR.css";
+
+.ProfileList {
+    $HEIGHT: 40px;
+
+    .avatarWrapper {
+        height: $HEIGHT;
+        width: $HEIGHT;
+        display: flex;
+        align-items: center;
+    }
+
+    .titleWrapper {
+        height: $HEIGHT;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .nicknameWrapper {
+            margin-right: 5px;
+        }
+
+        .usernameWrapper {
+            font-weight: bold;
+            color: var(--GLOBAL_LIGHT_TEXT_COLOR);
+        }
+    }
+
+    .emailWrapper {
+        color: var(--GLOBAL_LIGHT_TEXT_COLOR);
+    }
+
+    .loadMoreButtonWrapper {
+        margin-top: 15px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
