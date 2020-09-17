@@ -11,13 +11,14 @@ function SearchInput()
 
     const onSearch: SearchProps['onSearch'] = async value =>
     {
-        if (value.length === 0)
+        const trimmedValue = value.trim();
+        if (trimmedValue.length === 0)
         {
             notification.warn({message: '搜索关键词不能为空', key: 'search'});
         }
         else
         {
-            const url = RouterFunction.generateSearchRoute({type: SEARCH_TYPE.PROFILE, keyword: value});
+            const url = RouterFunction.generateSearchRoute({type: SEARCH_TYPE.PROFILE, keyword: trimmedValue});
             history.push(url);
         }
     };
