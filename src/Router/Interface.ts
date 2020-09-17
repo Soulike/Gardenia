@@ -76,3 +76,11 @@ export interface IGroup
 export interface IGroupSettings extends IGroup {}
 
 export interface IGroupSettingsRepositories extends IGroup {}
+
+// 这个接口对应查询字符串内容
+type ISearchType = 'profile' | 'repository';    // 可搜索的内容类型
+export interface ISearch
+{
+    keyword: string,
+    type: ISearchType,
+}
