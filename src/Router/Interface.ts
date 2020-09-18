@@ -1,4 +1,4 @@
-import {ObjectType} from '../CONSTANT';
+import {ObjectType, SEARCH_TYPE} from '../CONSTANT';
 
 /**
  * 注意：这里所有的接口 key 的名字和可选性与 CONFIG/PAGE_ID_TO_ROUTE.ts 文件中的路径参数对应
@@ -76,3 +76,10 @@ export interface IGroup
 export interface IGroupSettings extends IGroup {}
 
 export interface IGroupSettingsRepositories extends IGroup {}
+
+// 这个接口对应查询字符串内容
+export interface ISearch
+{
+    keyword: string,
+    type: SEARCH_TYPE,
+}

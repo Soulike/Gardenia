@@ -18,7 +18,10 @@ import {
     IRepositoryPullRequests,
     IRepositorySettings,
     IRepositoryTags,
+    ISearch,
 } from './Interface';
+
+import querystring from 'querystring';
 
 /**
  * @param parameterizedURL 带参数的 URL
@@ -144,4 +147,9 @@ export function generateGroupSettingsOptionsRoute(parameter: IGroupSettings)
 export function generateGroupSettingsRepositoriesRoute(parameter: IGroupSettingsRepositories)
 {
     return toPath(PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.SETTINGS.REPOSITORIES], parameter);
+}
+
+export function generateSearchRoute(parameter: ISearch)
+{
+    return `${PAGE_ID_TO_ROUTE[PAGE_ID.SEARCH]}?${querystring.encode({...parameter})}`;
 }

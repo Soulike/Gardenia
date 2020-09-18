@@ -11,3 +11,4 @@ export const SET_NICKNAME = profilePrefix('/setNickname');
 export const SET_EMAIL = profilePrefix('/setEmail');
 export const SEND_SET_EMAIL_VERIFICATION_CODE_TO_EMAIL = profilePrefix('/sendSetEmailVerificationCodeToEmail');
 export const UPLOAD_AVATAR = profilePrefix('/uploadAvatar');
+export const SEARCH = profilePrefix('/search');

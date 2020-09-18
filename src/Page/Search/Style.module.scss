@@ -1,0 +1,15 @@
+.Search {
+    width: 80%;
+    margin: 15px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .left {
+        width: 20%;
+    }
+
+    .right {
+        width: 79%;
+    }
+}
