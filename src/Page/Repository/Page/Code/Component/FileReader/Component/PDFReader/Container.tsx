@@ -18,8 +18,12 @@ function PDFReader(props: IProps)
     useEffect(() =>
     {
         setPdfURL(URL.createObjectURL(fileContent));
+    }, [fileContent]);
+
+    useEffect(() =>
+    {
         return () => URL.revokeObjectURL(pdfURL);
-    }, [fileContent, pdfURL]);
+    }, [pdfURL]);
 
     const onPDFLoadSuccess: DocumentProps['onLoadSuccess'] = pdf =>
     {
