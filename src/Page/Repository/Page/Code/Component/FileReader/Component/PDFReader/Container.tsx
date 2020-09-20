@@ -19,7 +19,7 @@ function PDFReader(props: IProps)
     {
         setPdfURL(URL.createObjectURL(fileContent));
         return () => URL.revokeObjectURL(pdfURL);
-    }, [fileContent]);
+    }, [fileContent, pdfURL]);
 
     const onPDFLoadSuccess: DocumentProps['onLoadSuccess'] = pdf =>
     {
