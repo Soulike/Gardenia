@@ -13,14 +13,14 @@ function MarkdownReader(props: IProps)
     const [loading, setLoading] = useState(true);
     const {fileContent} = props;
 
-    async function getMarkdown()
-    {
-        setMarkdown(await File.transformBlobToString(fileContent));
-        setLoading(false);
-    }
-
     useEffect(() =>
     {
+        const getMarkdown = async () =>
+        {
+            setMarkdown(await File.transformBlobToString(fileContent));
+            setLoading(false);
+        };
+
         getMarkdown()
             .then(() => setLoading(false));
         setLoading(true);

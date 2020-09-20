@@ -21,6 +21,7 @@ function ProfileList()
     useEffect(() =>
     {
         setCurrentPageNumber(0);
+        setProfiles([]);
         setAllLoaded(false);
         setLoading(false);
     }, [keyword]);
@@ -34,17 +35,10 @@ function ProfileList()
                 if (profilesWrapper !== null)
                 {
                     const {profiles: newProfiles} = profilesWrapper;
-                    if (currentPageNumber === 0)
-                    {
-                        setProfiles(newProfiles);
-                    }
-                    else
-                    {
-                        setProfiles([...profiles, ...newProfiles]);
-                    }
+                    setProfiles(profiles => profiles.concat(newProfiles));
                     if (newProfiles.length < AMOUNT_PER_PAGE)
                     {
-                        notification.success({message: '已加载所有搜索结果'});
+                        notification.success({message: '已加载所有搜索结果', key: 'profileList'});
                         setAllLoaded(true);
                     }
                 }
