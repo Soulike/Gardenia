@@ -24,7 +24,7 @@ function PersonalCenterLink(props: IProps)
                         <NameAndAvatar name={committerName} avatar={''} />
                     ) : (
                         <Link to={RouterFunction.generatePersonalCenterRoute({username: profile.username})}>
-                            <NameAndAvatar name={committerName} avatar={profile.avatar} />
+                            <NameAndAvatar name={profile.nickname} avatar={profile.avatar} />
                         </Link>)
                 }
             </div>

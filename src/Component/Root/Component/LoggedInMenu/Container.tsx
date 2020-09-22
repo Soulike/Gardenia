@@ -1,83 +1,61 @@
-import React, {PureComponent} from 'react';
-import {PopconfirmProps} from 'antd/lib/popconfirm';
+import React, {useEffect, useState} from 'react';
 import {Account, Notification as NotificationApi} from '../../../../Api';
-import {notification} from 'antd';
 import View from './View';
-import {setLoggedOutAction} from '../../Action/Action';
-import {connect} from 'react-redux';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {CONFIG} from '../../../../Router';
-import {promisify} from 'util';
+import {PopconfirmProps} from 'antd/lib/popconfirm';
+import {notification} from 'antd';
+import {useDispatch} from 'react-redux';
+import {setLoggedOutAction} from '../../Action/Action';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
-interface IState
+interface IProps
 {
-    unconfirmedNotificationCount: number,
+    readonly username: string,
+    readonly avatar: string,
 }
 
-interface IProps extends RouteComponentProps
+function LoggedInMenu(props: IProps)
 {
-    username: string,
-    avatar: string,
-    setLoggedOut: typeof setLoggedOutAction;
-}
+    const {username, avatar} = props;
+    const [unconfirmedNotificationCount,
+        setUnconfirmedNotificationCount] = useState(0);
+    const history = useHistory();
+    const dispatch = useDispatch();
 
-class LoggedInMenu extends PureComponent<IProps, IState>
-{
-    private setStatePromise = promisify(this.setState);
-
-    constructor(props: IProps)
+    // 加载通知个数
+    useEffect(() =>
     {
-        super(props);
-        this.state = {
-            unconfirmedNotificationCount: 0,
-        };
-    }
+        NotificationApi.getCount({confirmed: false})
+            .then(countWrapper =>
+            {
+                if (countWrapper !== null)
+                {
+                    const {count} = countWrapper;
+                    setUnconfirmedNotificationCount(count);
+                }
+            });
+    }, [username]);
 
-    async componentDidMount()
+    const onLogoutClick: PopconfirmProps['onConfirm'] = async () =>
     {
-        await this.loadNotificationCount();
-    }
-
-    loadNotificationCount = async () =>
-    {
-        const countWrapper = await NotificationApi.getCount({confirmed: false});
-        if (countWrapper !== null)
-        {
-            const {count} = countWrapper;
-            await this.setStatePromise({unconfirmedNotificationCount: count});
-        }
-    };
-
-    onLogoutClick: PopconfirmProps['onConfirm'] = async () =>
-    {
-        const {setLoggedOut, history} = this.props;
         const result = await Account.logout();
         if (result !== null)
         {
-            setLoggedOut();
-            notification.success({message: '退出登录成功'});
             history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]);
+            dispatch(setLoggedOutAction());
+            notification.success({message: '退出登录成功'});
         }
     };
 
-    render()
-    {
-        const {username, avatar} = this.props;
-        const {unconfirmedNotificationCount} = this.state;
-        return (
-            <View
-                username={username}
-                avatar={avatar}
-                unconfirmedNotificationCount={unconfirmedNotificationCount}
-                onLogoutClick={this.onLogoutClick} />
-        );
-    }
+    return (
+        <View
+            username={username}
+            avatar={avatar}
+            unconfirmedNotificationCount={unconfirmedNotificationCount}
+            onLogoutClick={onLogoutClick} />
+    );
 }
 
-const mapDispatchToProps = {
-    setLoggedOut: setLoggedOutAction,
-};
-
-export default connect(null, mapDispatchToProps)(withRouter(LoggedInMenu));
+export default React.memo(LoggedInMenu);
