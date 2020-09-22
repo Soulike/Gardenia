@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {Commit, Repository} from '../../../../../../Class';
+import {Commit, Repository} from '../../../../Class';
 import {promisify} from 'util';
-import {RepositoryInfo} from '../../../../../../Api';
+import {RepositoryInfo} from '../../../../Api';
 
 interface IProps
 {

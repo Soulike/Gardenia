@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Commit} from '../../../../../../Class';
-import {Date} from '../../../../../../Function';
+import {Commit} from '../../../../Class';
+import {Date} from '../../../../Function';
 import {Spin, Tooltip} from 'antd';
 import {ClockCircleOutlined} from '@ant-design/icons';
 

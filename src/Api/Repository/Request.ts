@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import {Repository, Repository as RepositoryClass, ResponseBody} from '../../Class';
-import {CREATE, DEL, FORK, GET_REPOSITORIES, IS_MERGEABLE} from './ROUTE';
+import {CREATE, DEL, FORK, GET_REPOSITORIES, IS_MERGEABLE, SEARCH} from './ROUTE';
+import nProgress from 'nprogress';
 
 export async function getRepositories(start: number, end: number, username?: Readonly<string>): Promise<Readonly<Array<Readonly<RepositoryClass>>> | null>
 {
@@ -114,5 +115,31 @@ export async function isMergeable(sourceRepository: Readonly<Pick<Repository, 'u
     catch (e)
     {
         return null;
+    }
+}
+
+export async function search(keyword: string, offset: number, limit: number): Promise<{ repositories: Repository[] } | null>
+{
+    nProgress.start();
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ repositories: Repository[] }>> =
+            await axios.post(SEARCH, {keyword, offset, limit});
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
+    }
+    finally
+    {
+        nProgress.done();
     }
 }

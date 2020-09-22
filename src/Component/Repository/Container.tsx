@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {Repository as RepositoryClass} from '../../../../Class';
+import {Repository as RepositoryClass} from '../../Class';
 
 interface IProps
 {
