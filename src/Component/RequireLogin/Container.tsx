@@ -1,53 +1,57 @@
-import React, {PureComponent, ReactNode} from 'react';
-import {Account} from '../../Api/Account';
-import {Route, RouteComponentProps, withRouter} from 'react-router-dom';
-import {IState as StoreState} from '../../Store';
-import {connect} from 'react-redux';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG';
+import React, {ReactNode, useEffect} from 'react';
+import {Account as AccountApi} from '../../Api';
+import {Route, useHistory} from 'react-router-dom';
+import {IRootState as StoreRootState, IState as StoreState} from '../../Store';
+import {useSelector} from 'react-redux';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG'; // TODO：存在循环引用
 import {notification} from 'antd';
 
-interface IProps extends RouteComponentProps
+interface IProps
 {
-    isLoggedIn: boolean,
     children?: ReactNode,
 }
 
-class RequireLogin extends PureComponent<IProps>
+function RequireLogin(props: IProps)
 {
-    async componentDidMount()
-    {
-        await this.checkWhetherLoggedIn();
-    }
+    const history = useHistory();
+    const {isLoggedIn} = useSelector<StoreState, StoreRootState>(({Root}) => Root);
 
-    checkWhetherLoggedIn = async () =>
+    useEffect(() =>
     {
-        const {isLoggedIn, history} = this.props;
-        if (!isLoggedIn)
+        const checkWhetherLoggedIn = async () =>
         {
-            const result = await Account.checkSession();
-            if (result !== null)
+            if (isLoggedIn)
             {
-                const {isValid} = result;
-                if (!isValid)
+                return true;
+            }
+            else    //!isLoggedIn
+            {
+                const result = await AccountApi.checkSession();
+                if (result !== null)
                 {
-                    notification.info({message: '请先登录'});
-                    return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
+                    const {isValid} = result;
+                    return isValid;
+                }
+                else
+                {
+                    return false;
                 }
             }
-        }
-    };
+        };
 
-    render()
-    {
-        const {children} = this.props;
-        return <Route>{children}</Route>;
-    }
+        checkWhetherLoggedIn()
+            .then(isLoggedIn =>
+            {
+                if (!isLoggedIn)
+                {
+                    notification.info({message: '请先登录'});
+                    history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.LOGIN]);
+                }
+            });
+    }, [history, isLoggedIn]);
+
+    const {children} = props;
+    return <Route>{children}</Route>;
 }
 
-const mapStateToProps = (state: StoreState) =>
-{
-    const {Root: {isLoggedIn}} = state;
-    return {isLoggedIn};
-};
-
-export default withRouter(connect(mapStateToProps)(RequireLogin));
+export default RequireLogin;
