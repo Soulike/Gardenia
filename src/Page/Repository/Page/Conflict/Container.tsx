@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {CONFIG, Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Conflict as ConflictClass, PullRequest} from '../../../../Class';
 import {PullRequest as PullRequestApi} from '../../../../Api';
@@ -8,8 +8,7 @@ import {notification} from 'antd';
 import {PULL_REQUEST_STATUS} from '../../../../CONSTANT';
 import {IConflictEditorProps} from './Component/ConflictEditor';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 
 export interface IConflictProps extends RouteComponentProps<RouterInterface.IRepositoryConflict> {}
 

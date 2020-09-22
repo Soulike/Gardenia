@@ -3,13 +3,12 @@ import View from './View';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG as ROUTER_CONFIG, Interface as RouterInterface} from '../../../../../../../../Router';
+import {Interface as RouterInterface} from '../../../../../../../../Router';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../../../CONFIG';
 import {promisify} from 'util';
 import {Group as GroupApi} from '../../../../../../../../Api';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../../../../../../../Validator';
 import {notification} from 'antd';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 export interface IChangeNameProps extends RouteComponentProps<RouterInterface.IGroupSettings> {}
 

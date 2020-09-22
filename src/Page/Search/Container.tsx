@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 import View from './View';
-import {CONFIG as ROUTER_CONFIG, Interface as RouterInterface} from '../../Router';
+import {Interface as RouterInterface} from '../../Router';
 import querystring from 'querystring';
 import {useHistory, useLocation} from 'react-router-dom';
 import {SEARCH_TYPE} from '../../CONSTANT';
 import * as CONFIG from '../../CONFIG';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 
 function Search()
 {

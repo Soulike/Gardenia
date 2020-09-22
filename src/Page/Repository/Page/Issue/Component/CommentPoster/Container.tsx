@@ -4,12 +4,11 @@ import {TextAreaProps} from 'antd/lib/input';
 import {TabsProps} from 'antd/lib/tabs';
 import {ButtonProps} from 'antd/lib/button';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
+import {Interface as RouterInterface} from '../../../../../../Router';
 import {notification} from 'antd';
 import {Issue as IssueApi} from '../../../../../../Api';
 import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../../../Validator';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryIssue> {}
 

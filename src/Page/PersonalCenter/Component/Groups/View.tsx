@@ -3,7 +3,7 @@ import Style from './Style.module.scss';
 import {Group} from '../../../../Class';
 import GroupList from '../../../../Component/GroupList';
 import {Alert, Button} from 'antd';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import {PlusOutlined} from '@ant-design/icons';
 import NewTabLink from '../../../../Component/NewTabLink';
 

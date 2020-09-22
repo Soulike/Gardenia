@@ -4,10 +4,9 @@ import {RepositoryInfo} from '../../../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {ObjectType} from '../../../../../../CONSTANT';
 import {Commit} from '../../../../../../Class';
-import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
+import {Interface as RouterInterface} from '../../../../../../Router';
 import {promisify} from 'util';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 

@@ -1,11 +1,9 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import {Menu} from 'antd';
-import {CONFIG as ROUTER_CONFIG} from '../../../../Router';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import {Link} from 'react-router-dom';
 import {ProfileOutlined, SmileOutlined} from '@ant-design/icons';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface IProps
 {

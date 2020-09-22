@@ -3,13 +3,12 @@ import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {CodeComment, Commit} from '../../../../../../Class';
 import {CodeComment as CodeCommentApi, RepositoryInfo} from '../../../../../../Api';
-import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
+import {Interface as RouterInterface} from '../../../../../../Router';
 import {File} from '../../../../../../Function';
 import {promisify} from 'util';
 import {DrawerProps} from 'antd/lib/drawer';
 import eventEmitter, {EVENT} from './Event';
-
-const {PAGE_ID_TO_ROUTE, PAGE_ID} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 

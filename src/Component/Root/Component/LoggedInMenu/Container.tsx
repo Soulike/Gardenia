@@ -2,13 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {Account, Notification as NotificationApi} from '../../../../Api';
 import View from './View';
 import {useHistory} from 'react-router-dom';
-import {CONFIG} from '../../../../Router';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import {notification} from 'antd';
 import {useDispatch} from 'react-redux';
 import {setLoggedOutAction} from '../../Action/Action';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps
 {

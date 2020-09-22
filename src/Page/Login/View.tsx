@@ -5,11 +5,9 @@ import svg from '../../Static/Login/developing_code.svg';
 import {InputProps} from 'antd/lib/input';
 import InputLabel from '../../Component/InputLabel/View';
 import {Link} from 'react-router-dom';
-import {CONFIG} from '../../Router';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import InputTip from '../../Component/InputTip';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 
 interface IProps
 {

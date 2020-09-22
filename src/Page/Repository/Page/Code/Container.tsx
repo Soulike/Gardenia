@@ -2,11 +2,10 @@ import React, {PureComponent} from 'react';
 import View from './View';
 import {Branch, Repository as RepositoryClass} from '../../../../Class';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG, Interface as RouterInterface} from '../../../../Router';
+import {Interface as RouterInterface} from '../../../../Router';
 import {RepositoryInfo} from '../../../../Api/RepositoryInfo';
 import {promisify} from 'util';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 

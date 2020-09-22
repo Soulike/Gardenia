@@ -4,11 +4,9 @@ import SettingsTitle from '../../../../Component/SettingsTitle';
 import InputLabel from '../../../../Component/InputLabel';
 import {Alert} from 'antd';
 import NewTabLink from '../../../../Component/NewTabLink';
-import {CONFIG} from '../../../../Router';
 import Nickname from './Component/Nickname';
 import Email from './Component/Email';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 
 interface IProps
 {

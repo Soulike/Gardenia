@@ -1,15 +1,14 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
+import {Interface as RouterInterface} from '../../../../../../Router';
 import {IssueComment} from '../../../../../../Class';
 import {Issue as IssueApi} from '../../../../../../Api';
 import {notification} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 import {IIssueState, IState as StoreState} from '../../../../../../Store';
 import {connect} from 'react-redux';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG';
 
 interface IProps extends IIssueState, RouteComponentProps<RouterInterface.IRepositoryIssue> {}
 

@@ -1,12 +1,11 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {SEARCH_TYPE} from '../../../../CONSTANT';
 import {useHistory, useLocation} from 'react-router-dom';
-import {CONFIG as ROUTER_CONFIG, Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import querystring from 'querystring';
 import {MenuProps} from 'antd/lib/menu';
 import View from './View';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 
 function TypeMenu()
 {

@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import {BackTop} from 'antd';
 import Style from './Style.module.scss';
 import {Link, RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG as ROUTER_CONFIG} from '../../Router';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import {Profile} from '../../Class';
 import Logo from './Component/Logo';
 import UnLoggedInMenu from './Component/UnloggedInMenu';
@@ -10,8 +10,6 @@ import LoggedInMenu from './Component/LoggedInMenu';
 import NewTabAnchor from '../NewTabAnchor';
 import {SmileTwoTone} from '@ant-design/icons';
 import SearchInput from './Component/SearchInput';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface IProps extends RouteComponentProps<{}>
 {

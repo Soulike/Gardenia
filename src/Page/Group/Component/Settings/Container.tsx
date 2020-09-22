@@ -2,12 +2,11 @@ import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {IMenuItem} from './Interface';
 import {RouteComponentProps} from 'react-router-dom';
-import {CONFIG, Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {HomeOutlined, SettingOutlined} from '@ant-design/icons';
 import {promisify} from 'util';
 import {Group as GroupApi} from '../../../../Api';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IGroupSettings>
 {

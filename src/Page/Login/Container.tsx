@@ -1,6 +1,7 @@
 import React, {HTMLAttributes, PureComponent} from 'react';
 import LoginView from './View';
-import {CONFIG as ROUTER_CONFIG} from '../../Router';
+import * as CONFIG from '../../CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Account as AccountApi} from '../../Api';
 import {notification} from 'antd';
@@ -10,10 +11,7 @@ import {connect} from 'react-redux';
 import {Account as AccountClass} from '../../Class';
 import {IRootState, IState as StoreState} from '../../Store';
 import qs from 'querystring';
-import * as CONFIG from '../../CONFIG';
 import {Function as ValidatorFunction} from '../../Validator';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 const {Account: AccountValidator} = ValidatorFunction;
 

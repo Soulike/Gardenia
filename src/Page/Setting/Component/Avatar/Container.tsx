@@ -4,11 +4,9 @@ import {Profile} from '../../../../Api';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {notification} from 'antd';
-import {CONFIG as ROUTER_CONFIG} from '../../../../Router';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import {RouteComponentProps} from 'react-router-dom';
 import {promisify} from 'util';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface IProps extends RouteComponentProps {}
 

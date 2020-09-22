@@ -1,7 +1,7 @@
 import React from 'react';
 import {Avatar, Badge, Menu, Modal, Popover, Tooltip} from 'antd';
 import {Link} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import {Function as RouterFunction} from '../../../../Router';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import svg from '../../../../Static/PersonalCenter/default.svg';

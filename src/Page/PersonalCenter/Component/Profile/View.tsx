@@ -2,12 +2,10 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Profile as ProfileClass} from '../../../../Class';
 import {Button} from 'antd';
-import {CONFIG} from '../../../../Router';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import {Link} from 'react-router-dom';
 import DefaultAvatar from '../../../../Component/DefaultAvatar';
 import {MailOutlined} from '@ant-design/icons';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
 
 interface IProps
 {

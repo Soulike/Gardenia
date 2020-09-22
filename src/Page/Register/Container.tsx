@@ -1,17 +1,16 @@
 import React, {HTMLAttributes, PureComponent} from 'react';
 import View from './View';
-import {CONFIG as ROUTER_CONFIG} from '../../Router';
+import * as CONFIG from '../../CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Account as AccountApi} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {Account} from '../../Class';
-import * as CONFIG from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 import {ButtonProps} from 'antd/lib/button';
 import {promisify} from 'util';
 
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 const {Account: AccountValidator, Profile: ProfileValidator} = ValidatorFunction;
 
 interface IProps extends RouteComponentProps {}

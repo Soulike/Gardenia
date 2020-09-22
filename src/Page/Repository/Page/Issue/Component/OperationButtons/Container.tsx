@@ -3,13 +3,12 @@ import View from './View';
 import {IIssueState, IState as StoreState} from '../../../../../../Store';
 import {connect} from 'react-redux';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG, Interface as RouterInterface} from '../../../../../../Router';
+import {Interface as RouterInterface} from '../../../../../../Router';
 import {Issue as IssueApi} from '../../../../../../Api';
 import {modifyAction} from '../../Action/Action';
 import {ISSUE_STATUS} from '../../../../../../CONSTANT';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG';
 
 interface IProps extends IIssueState, RouteComponentProps<RouterInterface.IRepositoryIssue>
 {

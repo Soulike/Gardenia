@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import Style from './Style.module.scss';
 import {Tabs} from 'antd';
 import {TabsProps} from 'antd/lib/tabs';
-import {PAGE_ID} from '../../Router/CONFIG';
+import {PAGE_ID} from '../../CONFIG';
 import {Group} from '../../Class';
 import {HomeOutlined, SettingOutlined, SmileOutlined, TeamOutlined} from '@ant-design/icons';
 

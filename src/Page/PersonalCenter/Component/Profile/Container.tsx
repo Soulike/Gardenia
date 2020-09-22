@@ -1,11 +1,10 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {CONFIG, Interface as RouterInterface} from '../../../../Router';
+import {Interface as RouterInterface} from '../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Profile as ProfileApi} from '../../../../Api';
 import {Profile as ProfileClass} from '../../../../Class';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter>
 {

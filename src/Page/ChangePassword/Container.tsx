@@ -1,6 +1,7 @@
 import React, {HTMLAttributes, PureComponent} from 'react';
 import View from './View';
 import * as CONFIG from '../../CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {Account as AccountApi} from '../../Api';
@@ -10,9 +11,6 @@ import {Account} from '../../Class';
 import {Action as RootAction} from '../../Component/Root';
 import {connect} from 'react-redux';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG as RouterConfig} from '../../Router';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = RouterConfig;
 
 interface IProps extends RouteComponentProps
 {
