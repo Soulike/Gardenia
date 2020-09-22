@@ -1,105 +1,70 @@
-import React, {PureComponent} from 'react';
+import React, {useEffect, useState} from 'react';
 import View from '../HTMLPreviewer';
 import {hljs, mdConverter} from '../../Singleton';
-import {promisify} from 'util';
 import {setImmediatePromise} from '../../Function/Util';
 
 interface IProps
 {
-    markdown: string;
-    processHTML?: (html: string) => string | Promise<string>;
-    loading: boolean;
+    readonly markdown: string;
+    readonly processHTML?: (html: string) => string | Promise<string>;
+    readonly loading: boolean;
 }
 
-interface IState
+function MarkdownPreviewer(props: IProps)
 {
-    html: string;
-    processing: boolean;
-}
+    const [html, setHtml] = useState('');   // 当前被显示的 HTML
+    const [nextHtml, setNextHtml] = useState('');   // markdown 发生变化后的新 HTML
+    const [processing, setProcessing] = useState(false);
 
-class MarkdownPreviewer extends PureComponent<IProps, IState>
-{
-    private setStatePromise = promisify(this.setState);
+    const {markdown, processHTML, loading} = props;
 
-    constructor(props: IProps)
+    useEffect(() =>
     {
-        super(props);
-        this.state = {
-            html: '',
-            processing: false,
-        };
-    }
+        setProcessing(true);
+        setNextHtml(mdConverter.makeHtml(markdown));
+        setProcessing(false);
+    }, [markdown]);
 
-    async componentDidMount()
+    useEffect(() =>
     {
-        this.setState({processing: true});
-        await this.markdownToHTML();
-        await this.processHTML();
-        await this.processCodes();
-        this.setState({processing: false});
-    }
-
-    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
-    {
-        const {markdown, loading} = this.props;
-        const {markdown: prevMarkdown, loading: prevLoading} = prevProps;
-        if (markdown !== prevMarkdown)
+        const getProcessedHTML = async (html: string) =>
         {
-            await this.componentDidMount();
-        }
-        else if (loading !== prevLoading)
-        {
-            this.setState({processing: true});
-            await this.processHTML();
-            this.setState({processing: false});
-        }
-    }
+            let processedHTML = html;
 
-    markdownToHTML = async () =>
-    {
-        const {markdown} = this.props;
-        const html = mdConverter.makeHtml(markdown);
-        await this.setStatePromise({html});
-    };
-
-    processHTML = async () =>
-    {
-        const {processHTML, loading} = this.props;
-        if (processHTML && !loading)    // 这里要确保外层组件需要的信息都加载完成再调用 processHTML
-        {
-            const {html} = this.state;
-            const newHTML = await processHTML(html);
-            await this.setStatePromise({html: newHTML});
-        }
-    };
-
-    processCodes = async () =>
-    {
-        const {html} = this.state;
-        const node = document.createElement('div');
-        node.innerHTML = html;
-        const pres = Array.from(node.getElementsByTagName('pre'));
-        await Promise.all(pres.map(async pre =>
+            // 调用外层处理 HTML 函数
+            if (processHTML && !loading)    // 这里要确保外层组件需要的信息都加载完成再调用 processHTML
             {
-                // 任务拆分，防止长时间阻塞页面
-                const codes = Array.from(pre.getElementsByTagName('code'));
-                await Promise.all(codes.map(async code =>
-                {
-                    hljs.highlightBlock(code);
-                    await setImmediatePromise();
-                }));
-                await setImmediatePromise();
-            },
-        ));
-        await this.setStatePromise({html: node.innerHTML});
-    };
+                processedHTML = await processHTML(html);
+            }
 
-    render()
-    {
-        const {html, processing} = this.state;
-        const {loading} = this.props;
-        return (<View html={html} processing={processing || loading} />);
-    }
+            // 处理 HTML 里面的代码块
+            const node = document.createElement('div');
+            node.innerHTML = processedHTML;
+            const pres = Array.from(node.getElementsByTagName('pre'));
+            await Promise.all(pres.map(async pre =>
+                {
+                    // 任务拆分，防止长时间阻塞页面
+                    const codes = Array.from(pre.getElementsByTagName('code'));
+                    await Promise.all(codes.map(async code =>
+                    {
+                        hljs.highlightBlock(code);
+                        await setImmediatePromise();
+                    }));
+                    await setImmediatePromise();
+                },
+            ));
+            processedHTML = node.innerHTML;
+            return processedHTML;
+        };
+
+        setProcessing(true);
+        getProcessedHTML(nextHtml)
+            .then(processedHTML => setHtml(processedHTML))
+            .finally(() => setProcessing(false));
+
+    }, [loading, processHTML, nextHtml]);
+
+    return (<View html={html} processing={processing || loading} />);
 }
 
-export default MarkdownPreviewer;
+export default React.memo(MarkdownPreviewer);
