@@ -1,7 +1,6 @@
-import React, {PureComponent} from 'react';
+import React, {useEffect, useState} from 'react';
 import View from '../../../StarButton';
 import {ButtonProps} from 'antd/lib/button';
-import {promisify} from 'util';
 import {Star as StarApi} from '../../../../Api';
 import {Repository} from '../../../../Class';
 
@@ -10,80 +9,53 @@ interface IProps
     repository: Readonly<Pick<Repository, 'username' | 'name'>>
 }
 
-interface IState
+function StarButton(props: IProps)
 {
-    hasStared: boolean,
-    starAmount: number,
-    loading: boolean,
-}
+    const [hasStared, setHasStared] = useState(false);
+    const [starAmount, setStarAmount] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const {repository: {username, name}} = props;
 
-class StarButton extends PureComponent<IProps, IState>
-{
-    private setStatePromise = promisify(this.setState);
-
-    constructor(props: IProps)
+    useEffect(() =>
     {
-        super(props);
-        this.state = {
-            hasStared: false,
-            starAmount: 0,
-            loading: false,
+        const loadHasStared = async () =>
+        {
+            const hasStaredWrapper = await StarApi.isStaredRepository({username, name});
+            if (hasStaredWrapper !== null)
+            {
+                const {isStared} = hasStaredWrapper;
+                setHasStared(isStared);
+            }
         };
-    }
 
-    async componentDidMount()
-    {
-        await this.setStatePromise({loading: true});
-        await Promise.all([
-            this.loadHasStared(),
-            this.loadStarAmount(),
-        ]);
-        await this.setStatePromise({loading: false});
-    }
-
-    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
-    {
-        const {repository} = this.props;
-        const {repository: prevRepository} = prevProps;
-        if (repository !== prevRepository)
+        const loadStarAmount = async () =>
         {
-            await this.componentDidMount();
-        }
-    }
+            const starAmountWrapper = await StarApi.getRepositoryStarAmount({username, name});
+            if (starAmountWrapper !== null)
+            {
+                const {amount} = starAmountWrapper;
+                setStarAmount(amount);
+            }
+        };
 
-    loadHasStared = async () =>
-    {
-        const {repository: {username, name}} = this.props;
-        const hasStaredWrapper = await StarApi.isStaredRepository({username, name});
-        if (hasStaredWrapper !== null)
-        {
-            const {isStared} = hasStaredWrapper;
-            await this.setStatePromise({hasStared: isStared});
-        }
-    };
+        setLoading(true);
+        Promise.all([
+            loadHasStared(),
+            loadStarAmount(),
+        ])
+            .finally(() => setLoading(false));
+    }, [username, name]);
 
-    loadStarAmount = async () =>
+    const onClick: ButtonProps['onClick'] = async () =>
     {
-        const {repository: {username, name}} = this.props;
-        const starAmountWrapper = await StarApi.getRepositoryStarAmount({username, name});
-        if (starAmountWrapper !== null)
-        {
-            const {amount} = starAmountWrapper;
-            await this.setStatePromise({starAmount: amount});
-        }
-    };
-
-    onClick: ButtonProps['onClick'] = async () =>
-    {
-        const {hasStared, starAmount} = this.state;
-        const {repository: {username, name}} = this.props;
-        await this.setStatePromise({loading: true});
+        setLoading(true);
         if (hasStared)
         {
             const result = await StarApi.remove({username, name});
             if (result !== null)
             {
-                await this.setStatePromise({hasStared: false, starAmount: starAmount - 1});
+                setHasStared(false);
+                setStarAmount(starAmount => starAmount - 1);
             }
         }
         else
@@ -91,20 +63,19 @@ class StarButton extends PureComponent<IProps, IState>
             const result = await StarApi.add({username, name});
             if (result !== null)
             {
-                await this.setStatePromise({hasStared: true, starAmount: starAmount + 1});
+                setHasStared(false);
+                setStarAmount(starAmount => starAmount + 1);
             }
         }
-        await this.setStatePromise({loading: false});
+        setLoading(false);
     };
 
-    render()
-    {
-        const {hasStared, loading, starAmount} = this.state;
-        return (<View hasStared={hasStared}
-                      loading={loading}
-                      starAmount={starAmount}
-                      onClick={this.onClick} />);
-    }
+    return (
+        <View hasStared={hasStared}
+              loading={loading}
+              starAmount={starAmount}
+              onClick={onClick} />
+    );
 }
 
-export default StarButton;
+export default React.memo(StarButton);
