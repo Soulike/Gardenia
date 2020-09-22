@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Empty, List} from 'antd';
 import {Repository as RepositoryClass} from '../../Class';
-import Repository from './Component/Repository';
+import Repository from '../Repository';
 
 interface IProps
 {

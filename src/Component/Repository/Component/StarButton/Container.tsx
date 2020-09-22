@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
-import View from '../../../../../StarButton';
+import View from '../../../StarButton';
 import {ButtonProps} from 'antd/lib/button';
 import {promisify} from 'util';
-import {Star as StarApi} from '../../../../../../Api';
-import {Repository} from '../../../../../../Class';
+import {Star as StarApi} from '../../../../Api';
+import {Repository} from '../../../../Class';
 
 interface IProps
 {

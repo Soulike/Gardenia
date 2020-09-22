@@ -1,12 +1,12 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Function as RouterFunction} from '../../../../Router';
+import {Function as RouterFunction} from '../../Router';
 import {Card} from 'antd';
-import AccessibilityTag from '../../../AccessibilityTag/View';
-import NewTabLink from '../../../NewTabLink/View';
-import {Repository as RepositoryClass} from '../../../../Class';
+import AccessibilityTag from '../AccessibilityTag/View';
+import NewTabLink from '../NewTabLink/View';
+import {Repository as RepositoryClass} from '../../Class';
 import StarButton from './Component/StarButton';
-import ForkAmount from '../../../ForkAmount';
+import ForkAmount from '../ForkAmount';
 import LastUpdateInfo from './Component/LastUpdateInfo';
 
 interface IProps
