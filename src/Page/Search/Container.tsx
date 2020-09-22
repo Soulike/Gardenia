@@ -18,7 +18,8 @@ function Search()
 
     useEffect(() =>
     {
-        if (type === undefined || !TYPES.includes(type) || keyword === undefined)
+        if (type === undefined || !TYPES.includes(type) || type === SEARCH_TYPE.UNKNOWN
+            || keyword === undefined)
         {
             history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
         }
