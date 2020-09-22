@@ -27,13 +27,13 @@ function ProfileItem(props: IProps)
                             title={(
                                 <div className={Style.titleWrapper}>
                                     <NewTabLink to={personalCenterLink}>
-                                                            <span className={Style.nicknameWrapper}>
-                                                                {nickname}
-                                                            </span>
+                                        <span className={Style.nicknameWrapper}>
+                                            {nickname}
+                                        </span>
                                     </NewTabLink>
                                     <span className={Style.usernameWrapper}>
-                                                              {username}
-                                                          </span>
+                                        {username}
+                                    </span>
                                 </div>)} />
             <a href={`mailto:${email}`}>
                 <div className={Style.emailWrapper}>
