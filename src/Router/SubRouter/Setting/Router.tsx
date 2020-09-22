@@ -13,31 +13,29 @@ export default () =>
      * */
     return (
         <RequireLogin>
-            <Switch>
-                <Suspense fallback={<Loading />}>
-                    <Route path={[
-                        PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING],
-                        PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.PROFILE],
-                        PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.AVATAR],
-                    ]} render={props =>
-                    {
-                        return (
-                            <Setting {...props}>
-                                <Switch>
-                                    <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}
-                                           component={PAGE_ID_TO_COMPONENT[PAGE_ID.SETTING.SETTING]}
-                                           exact={true} />
-                                    <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.PROFILE]}
-                                           component={PAGE_ID_TO_COMPONENT[PAGE_ID.SETTING.PROFILE]}
-                                           exact={true} />
-                                    <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.AVATAR]}
-                                           component={PAGE_ID_TO_COMPONENT[PAGE_ID.SETTING.AVATAR]}
-                                           exact={true} />
-                                </Switch>
-                            </Setting>);
-                    }} />
-                </Suspense>
-            </Switch>
+            <Suspense fallback={<Loading />}>
+                <Route path={[
+                    PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING],
+                    PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.PROFILE],
+                    PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.AVATAR],
+                ]} render={props =>
+                {
+                    return (
+                        <Setting {...props}>
+                            <Switch>
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.SETTING]}
+                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.SETTING.SETTING]}
+                                       exact={true} />
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.PROFILE]}
+                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.SETTING.PROFILE]}
+                                       exact={true} />
+                                <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.SETTING.AVATAR]}
+                                       component={PAGE_ID_TO_COMPONENT[PAGE_ID.SETTING.AVATAR]}
+                                       exact={true} />
+                            </Switch>
+                        </Setting>);
+                }} />
+            </Suspense>
         </RequireLogin>
     );
 };
