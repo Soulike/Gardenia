@@ -1,13 +1,12 @@
 import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {RouteComponentProps} from 'react-router';
-import {CONFIG as ROUTER_CONFIG, Function as RouterFunction, Interface as RouterInterface} from '../../Router';
+import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import {TabsProps} from 'antd/lib/tabs';
 import {Group as GroupClass} from '../../Class';
 import {Group as GroupApi} from '../../Api';
-import CONFIG from '../../CONFIG';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
+import * as CONFIG from '../../CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IGroup>
 {

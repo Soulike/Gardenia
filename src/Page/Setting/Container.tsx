@@ -1,7 +1,7 @@
 import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {RouteComponentProps} from 'react-router-dom';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 import {IState as StoreState} from '../../Store';
 import {connect} from 'react-redux';
 

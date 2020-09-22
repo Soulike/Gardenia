@@ -1,6 +1,6 @@
 import React, {Suspense} from 'react';
 import {Route, Switch} from 'react-router-dom';
-import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
+import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../../../../CONFIG';
 import Loading from '../../../../../Page/Loading';
 import RequireLogin from '../../../../../Component/RequireLogin';
 

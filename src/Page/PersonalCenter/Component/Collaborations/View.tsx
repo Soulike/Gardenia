@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import {Repository} from '../../../../Class';
 import RepositoryList from '../../../../Component/RepositoryList';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import {Button} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import NewTabLink from '../../../../Component/NewTabLink';

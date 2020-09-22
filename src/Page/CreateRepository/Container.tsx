@@ -6,12 +6,11 @@ import {notification} from 'antd';
 import {Profile} from '../../Api/Profile';
 import {Repository as RepositoryApi} from '../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG as ROUTER_CONFIG, Function as RouterFunction} from '../../Router';
-import CONFIG from '../../CONFIG';
+import {Function as RouterFunction} from '../../Router';
+import * as CONFIG from '../../CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 import {promisify} from 'util';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
 interface IProps extends RouteComponentProps {}
 

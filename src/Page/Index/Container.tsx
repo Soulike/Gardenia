@@ -2,7 +2,7 @@ import React, {HTMLAttributes, PureComponent} from 'react';
 import {Repository as RepositoryApi} from '../../Api';
 import {Repository} from '../../Class';
 import View from './View';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 import path from 'path';
 import {promisify} from 'util';
 

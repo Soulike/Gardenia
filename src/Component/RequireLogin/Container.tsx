@@ -3,7 +3,7 @@ import {Account as AccountApi} from '../../Api';
 import {Route, useHistory} from 'react-router-dom';
 import {IRootState as StoreRootState, IState as StoreState} from '../../Store';
 import {useSelector} from 'react-redux';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router/CONFIG'; // TODO：存在循环引用
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import {notification} from 'antd';
 
 interface IProps

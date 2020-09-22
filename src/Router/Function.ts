@@ -1,4 +1,4 @@
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from './CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../CONFIG';
 import {compile} from 'path-to-regexp';
 import {
     IGroup,

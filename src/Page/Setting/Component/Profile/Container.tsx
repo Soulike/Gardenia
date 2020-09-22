@@ -3,10 +3,8 @@ import View from './View';
 import {Profile as ProfileApi} from '../../../../Api';
 import {promisify} from 'util';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {CONFIG as ROUTER_CONFIG} from '../../../../Router';
 import {Profile as ProfileClass} from '../../../../Class';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 
 interface IProps extends RouteComponentProps {}
 

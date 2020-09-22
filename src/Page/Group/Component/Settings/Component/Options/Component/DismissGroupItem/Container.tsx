@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {ButtonProps} from 'antd/lib/button';
-import {CONFIG, Interface as RouterInterface} from '../../../../../../../../Router';
+import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {ModalProps} from 'antd/lib/modal';
 import {InputProps} from 'antd/lib/input';
@@ -10,8 +10,7 @@ import {notification} from 'antd';
 import {Account as AccountApi, Group as GroupApi, Profile as ProfileApi} from '../../../../../../../../Api';
 import {Account} from '../../../../../../../../Class';
 import {Function as ValidatorFunction} from '../../../../../../../../Validator';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IGroupSettings> {}
 

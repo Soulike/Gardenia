@@ -1,7 +1,7 @@
 import React, {PureComponent, ReactNode} from 'react';
 import View from './View';
 import {IMenuItem} from './Interface';
-import {PAGE_ID} from '../../../../Router/CONFIG';
+import {PAGE_ID} from '../../../../CONFIG';
 import {RouteComponentProps} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {ProjectOutlined, SettingOutlined, TeamOutlined} from '@ant-design/icons';

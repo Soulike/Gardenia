@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 
 interface IProps {}
 

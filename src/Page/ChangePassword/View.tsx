@@ -4,14 +4,12 @@ import svg from '../../Static/Login/developing_code.svg';
 import {Link} from 'react-router-dom';
 import InputLabel from '../../Component/InputLabel';
 import {Button, Input} from 'antd';
-import {CONFIG} from '../../Router';
 import {BarcodeOutlined, LockOutlined, UserOutlined} from '@ant-design/icons';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import InputTip from '../../Component/InputTip';
 import {HINT} from '../../Validator';
-
-const {PAGE_ID, PAGE_ID_TO_ROUTE} = CONFIG;
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 
 interface IProps
 {

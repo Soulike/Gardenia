@@ -4,7 +4,7 @@ import RepositoryList from '../../../../Component/RepositoryList';
 import {Repository} from '../../../../Class';
 import {Button, Space} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../Router/CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import {PlusOutlined} from '@ant-design/icons';
 import NewTabLink from '../../../../Component/NewTabLink';
 
