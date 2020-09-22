@@ -1,7 +1,6 @@
-import React, {PureComponent} from 'react';
+import React, {useEffect, useState} from 'react';
 import View from './View';
 import {Commit, Repository} from '../../../../Class';
-import {promisify} from 'util';
 import {RepositoryInfo} from '../../../../Api';
 
 interface IProps
@@ -9,54 +8,27 @@ interface IProps
     repository: Readonly<Pick<Repository, 'username' | 'name'>>
 }
 
-interface IState
+function LastUpdateInfo(props: IProps)
 {
-    lastCommit: Commit | null,
-    loading: boolean,
-}
+    const [lastCommit, setLastCommit] = useState<Commit | null>(null);
+    const [loading, setLoading] = useState(false);
 
-class LastUpdateInfo extends PureComponent<IProps, IState>
-{
-    private setStatePromise = promisify(this.setState);
+    const {repository: {username, name}} = props;
 
-    constructor(props: IProps)
+    useEffect(() =>
     {
-        super(props);
-        this.state = {
-            lastCommit: null,
-            loading: false,
-        };
-    }
-
-    async componentDidMount()
-    {
-        await this.setStatePromise({loading: true});
-        await this.loadLastCommit();
-        await this.setStatePromise({loading: false});
-    }
-
-    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
-    {
-        const {repository} = this.props;
-        const {repository: prevRepository} = prevProps;
-        if (repository !== prevRepository)
+        const loadLastCommit = async () =>
         {
-            await this.componentDidMount();
-        }
-    }
+            const lastCommit = await RepositoryInfo.lastCommit({username, name});
+            setLastCommit(lastCommit);
+        };
 
-    loadLastCommit = async () =>
-    {
-        const {repository: {username, name}} = this.props;
-        const lastCommit = await RepositoryInfo.lastCommit({username, name});
-        await this.setStatePromise({lastCommit});
-    };
+        setLoading(true);
+        loadLastCommit()
+            .finally(() => setLoading(false));
+    }, [username, name]);
 
-    render()
-    {
-        const {loading, lastCommit} = this.state;
-        return (<View lastCommit={lastCommit} loading={loading} />);
-    }
+    return (<View lastCommit={lastCommit} loading={loading} />);
 }
 
-export default LastUpdateInfo;
+export default React.memo(LastUpdateInfo);
