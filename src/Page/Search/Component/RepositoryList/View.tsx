@@ -1,9 +1,22 @@
 import React from 'react';
-import DevelopingSign from '../../../../Component/DevelopingSign';
+import Style from './Style.module.scss';
+import {Repository} from '../../../../Class';
+import {ButtonProps} from 'antd/lib/button';
 
-function RepositoryList()
+interface IProps
 {
-    return <DevelopingSign />;
+    loading: boolean,
+    allLoaded: boolean,
+    repositories: Readonly<Repository>[],
+    onNextPageButtonClick: ButtonProps['onClick'],
+}
+
+function RepositoryList(props: IProps)
+{
+    return (
+        <div className={Style.RepositoryList}>
+
+        </div>);
 }
 
 export default React.memo(RepositoryList);
