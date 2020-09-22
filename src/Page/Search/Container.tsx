@@ -4,6 +4,7 @@ import {CONFIG as ROUTER_CONFIG, Interface as RouterInterface} from '../../Route
 import querystring from 'querystring';
 import {useHistory, useLocation} from 'react-router-dom';
 import {SEARCH_TYPE} from '../../CONSTANT';
+import * as CONFIG from '../../CONFIG';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 
@@ -15,6 +16,11 @@ function Search()
     const TYPES = Object.values(SEARCH_TYPE);
 
     const {type, keyword}: Partial<RouterInterface.ISearch> = querystring.decode(search.slice(1));
+
+    useEffect(() =>
+    {
+        document.title = `${keyword} 的搜索结果 - ${CONFIG.NAME}`;
+    }, [keyword]);
 
     useEffect(() =>
     {

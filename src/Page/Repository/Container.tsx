@@ -8,7 +8,7 @@ import {TabsProps} from 'antd/lib/tabs';
 import TAB_KEY from './TAB_KEY';
 import {connect} from 'react-redux';
 import {IRootState, IState as StoreState} from '../../Store';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 import {ISSUE_STATUS, PULL_REQUEST_STATUS} from '../../CONSTANT';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;

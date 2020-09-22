@@ -6,7 +6,7 @@ import {Account as AccountApi} from '../../Api';
 import {notification} from 'antd';
 import {InputProps} from 'antd/lib/input';
 import {Account} from '../../Class';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 import {ButtonProps} from 'antd/lib/button';
 import {promisify} from 'util';

@@ -5,7 +5,7 @@ import {CONFIG as ROUTER_CONFIG, Function as RouterFunction, Interface as Router
 import {TabsProps} from 'antd/lib/tabs';
 import {Group as GroupClass} from '../../Class';
 import {Group as GroupApi} from '../../Api';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;
 

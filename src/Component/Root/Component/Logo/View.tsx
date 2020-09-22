@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import logo from '../../../../Static/logo.svg';
-import CONFIG from '../../../../CONFIG';
+import * as CONFIG from '../../../../CONFIG';
 
 function Logo()
 {

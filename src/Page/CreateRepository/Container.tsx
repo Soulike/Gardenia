@@ -7,7 +7,7 @@ import {Profile} from '../../Api/Profile';
 import {Repository as RepositoryApi} from '../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {CONFIG as ROUTER_CONFIG, Function as RouterFunction} from '../../Router';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 import {promisify} from 'util';
 

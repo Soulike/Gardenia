@@ -4,7 +4,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../Router';
 import qs from 'querystring';
 import {TabsProps} from 'antd/lib/tabs';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 import Repositories from './Component/Repositories';
 import Groups from './Component/Groups';
 import Collaborations from './Component/Collaborations';

@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {Account as AccountClass} from '../../Class';
 import {IRootState, IState as StoreState} from '../../Store';
 import qs from 'querystring';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 import {Function as ValidatorFunction} from '../../Validator';
 
 const {PAGE_ID, PAGE_ID_TO_ROUTE} = ROUTER_CONFIG;

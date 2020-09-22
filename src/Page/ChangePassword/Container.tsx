@@ -1,6 +1,6 @@
 import React, {HTMLAttributes, PureComponent} from 'react';
 import View from './View';
-import CONFIG from '../../CONFIG';
+import * as CONFIG from '../../CONFIG';
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {Account as AccountApi} from '../../Api';
