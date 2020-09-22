@@ -1,7 +1,6 @@
-import React, {PureComponent} from 'react';
+import React, {useEffect, useState} from 'react';
 import View from './View';
 import {Profile} from '../../Class';
-import {promisify} from 'util';
 import {LinkProps} from 'react-router-dom';
 import {Profile as ProfileApi} from '../../Api';
 
@@ -11,55 +10,26 @@ interface IProps extends Omit<LinkProps, 'to'>
     committerName: string,
 }
 
-interface IState
+function PersonalCenterLink(props: IProps)
 {
-    profile: Profile | null,
-    loading: boolean,
-}
+    const [profile, setProfile] = useState<Profile | null>(null);
+    const [loading, setLoading] = useState(false);
+    const {committerEmail, ...rest} = props;
 
-class PersonalCenterLink extends PureComponent<IProps, IState>
-{
-    private setStatePromise = promisify(this.setState);
-
-    constructor(props: IProps)
+    useEffect(() =>
     {
-        super(props);
-        this.state = {
-            profile: null,
-            loading: false,
-        };
-    }
-
-    async componentDidMount()
-    {
-        await this.setStatePromise({loading: true});
-        await this.loadProfile();
-        await this.setStatePromise({loading: false});
-    }
-
-    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
-    {
-        const {committerEmail} = this.props;
-        const {committerEmail: prevCommitterEmail} = prevProps;
-        if (committerEmail !== prevCommitterEmail)
+        const loadProfile = async () =>
         {
-            await this.componentDidMount();
-        }
-    }
+            const profile = await ProfileApi.getByEmail(committerEmail);
+            setProfile(profile);
+        };
 
-    loadProfile = async () =>
-    {
-        const {committerEmail} = this.props;
-        const profile = await ProfileApi.getByEmail(committerEmail);
-        await this.setStatePromise({profile});
-    };
+        setLoading(true);
+        loadProfile()
+            .finally(() => setLoading(false));
+    }, [committerEmail]);
 
-    render()
-    {
-        const {profile, loading} = this.state;
-        const {committerEmail, ...rest} = this.props;
-        return (<View profile={profile} loading={loading} {...rest} />);
-    }
+    return (<View profile={profile} loading={loading} {...rest} />);
 }
 
-export default PersonalCenterLink;
+export default React.memo(PersonalCenterLink);
