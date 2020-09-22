@@ -12,7 +12,7 @@ function AccessibilityTag(props: Readonly<IProps>)
 {
     const {isPublic, ...rest} = props;
     return isPublic ?
-        <Tag className={Style.AccessibilityTag} color={'blue'} {...rest}>公共</Tag> :
+        <Tag className={Style.AccessibilityTag} color={'blue'} {...rest}>公开</Tag> :
         <Tag className={Style.AccessibilityTag} color={'gold'} {...rest}>私人</Tag>;
 }
 
