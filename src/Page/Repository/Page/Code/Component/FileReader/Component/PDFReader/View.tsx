@@ -1,5 +1,5 @@
 import React from 'react';
-import {Document, Page} from 'react-pdf';
+import {Document, Page} from '../../../../../../../../Component/react-pdf';
 import {Props as DocumentProps} from 'react-pdf/dist/Document';
 import Style from './Style.module.scss';
 import {Alert, Pagination, Spin} from 'antd';

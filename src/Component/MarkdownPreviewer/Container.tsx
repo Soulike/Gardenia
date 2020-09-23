@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import View from '../HTMLPreviewer';
-import {hljs, mdConverter} from '../../Singleton';
-import {setImmediatePromise} from '../../Function/Util';
+import mdConverter from '../../Singleton/mdConverter';
+import {Util} from '../../Function';
 
 interface IProps
 {
@@ -29,6 +29,7 @@ function MarkdownPreviewer(props: IProps)
     {
         const getProcessedHTML = async (html: string) =>
         {
+            const {default: hljs} = await import('../../Singleton/hljs');
             let processedHTML = html;
 
             // 调用外层处理 HTML 函数
@@ -48,9 +49,9 @@ function MarkdownPreviewer(props: IProps)
                     await Promise.all(codes.map(async code =>
                     {
                         hljs.highlightBlock(code);
-                        await setImmediatePromise();
+                        await Util.setImmediatePromise();
                     }));
-                    await setImmediatePromise();
+                    await Util.setImmediatePromise();
                 },
             ));
             processedHTML = node.innerHTML;

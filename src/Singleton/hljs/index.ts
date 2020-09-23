@@ -53,4 +53,4 @@ hljs.registerLanguage('xml', require(`highlight.js/lib/languages/xml.js`));
 hljs.registerLanguage('html', require(`highlight.js/lib/languages/xml.js`));
 hljs.registerLanguage('yaml', require(`highlight.js/lib/languages/yaml.js`));
 
-export default hljs;
+export default hljs;    // 推荐使用 import()
