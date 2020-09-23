@@ -1,139 +1,40 @@
-import React, {HTMLAttributes, PureComponent} from 'react';
+import React, {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
 import View from './View';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {useHistory, useRouteMatch} from 'react-router-dom';
 import {CodeComment, Commit} from '../../../../../../Class';
 import {CodeComment as CodeCommentApi, RepositoryInfo} from '../../../../../../Api';
 import {Interface as RouterInterface} from '../../../../../../Router';
-import {File} from '../../../../../../Function';
-import {promisify} from 'util';
 import {DrawerProps} from 'antd/lib/drawer';
 import eventEmitter, {EVENT} from './Event';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG/ROUTER';
+import {File} from '../../../../../../Function';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
 
-interface IState
+function FileReader()
 {
-    isBinary: boolean,
-    isOversize: boolean,
-    lastCommit: Commit,
-    loading: boolean,
-    fileContent: Blob,
-    fileSize: number,
-    codeComments: CodeComment[],
+    const [isBinary, setIsBinary] = useState(false);
+    const [isOversize, setIsOversize] = useState(false);
+    const [lastCommit, setLastCommit] = useState(new Commit('', '', '', 0, '', ''));
+    const [lastCommitLoaded, setLastCommitLoaded] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [fileContent, setFileContent] = useState(new Blob());
+    const [fileSize, setFileSize] = useState(0);
+    const [codeComments, setCodeComments] = useState<CodeComment[]>([]);
 
-    drawerVisible: DrawerProps['visible'];
-    drawerCode: string;
-    drawerLineNumber: number;
-}
+    const [drawerVisible, setDrawerVisible] = useState<DrawerProps['visible']>(false);
+    const [drawerCode, setDrawerCode] = useState('');
+    const [drawerLineNumber, setDrawerLineNumber] = useState(0);
 
-class FileReader extends PureComponent<Readonly<IProps>, IState>
-{
-    private setStatePromise = promisify(this.setState);
+    const {params: {username, repositoryName, path, commitHash}} = useRouteMatch<RouterInterface.IRepositoryCode>();
 
-    constructor(props: Readonly<IProps>)
+    const history = useHistory();
+
+    const hasCommentLineNumbers = useMemo(() => codeComments.map(({columnNumber}) => columnNumber), [codeComments]);
+
+    const loadCodeComments = useMemo(() => async () =>
     {
-        super(props);
-        this.state = {
-            isBinary: false,
-            isOversize: false,
-            lastCommit: new Commit('', '', '', 0, '', ''),
-            loading: true,
-            fileContent: new Blob(),
-            fileSize: 0,
-            codeComments: [],
-
-            drawerCode: '',
-            drawerLineNumber: 1,
-            drawerVisible: false,
-        };
-    }
-
-    async componentDidMount()
-    {
-        await this.setStatePromise({loading: true});
-        await this.loadLastCommit();
-        await Promise.all([
-            this.loadFileInfo(),
-            this.loadCodeComments(),
-        ]);
-        const {isBinary, isOversize} = this.state;
-        if (!isBinary && !isOversize)
-        {
-            await this.loadFileContent();
-        }
-        await this.setStatePromise({loading: false});
-
-        eventEmitter.on(EVENT.CODE_COMMENT_CHANGE, this.onCodeCommentChange);
-    }
-
-    componentWillUnmount()
-    {
-        eventEmitter.removeListener(EVENT.CODE_COMMENT_CHANGE, this.onCodeCommentChange);
-    }
-
-    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
-    {
-        const {location: {pathname}} = this.props;
-        const {location: {pathname: prePathname}} = prevProps;
-        if (pathname !== prePathname)
-        {
-            await this.componentDidMount();
-        }
-    }
-
-    loadLastCommit = async () =>
-    {
-        const {match: {params: {username, repositoryName: name, path, commitHash}}} = this.props;
-        const lastCommit = await RepositoryInfo.lastBranchCommit({username}, {name}, commitHash!, path);
-        if (lastCommit !== null)
-        {
-            await this.setStatePromise({lastCommit});
-        }
-    };
-
-    loadFileInfo = async () =>
-    {
-        const {lastCommit: {commitHash}} = this.state;
-        const {match: {params: {username, repositoryName: name, path}}, history} = this.props;
-        const fileInfo = await RepositoryInfo.fileInfo({username}, {name}, path!, commitHash);
-        if (fileInfo !== null)
-        {
-            const {exists, size, isBinary} = fileInfo;
-            if (!exists)
-            {
-                return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
-            }
-            else
-            {
-                await this.setStatePromise({fileSize: size!});
-                if (!isBinary && size! > 5 * 1024 * 1024)   // 不是二进制文件，但大小超过 5M
-                {
-                    await this.setStatePromise({isOversize: true, isBinary: isBinary!});
-                }
-                else
-                {
-                    await this.setStatePromise({isOversize: false, isBinary: isBinary!});
-                }
-            }
-        }
-    };
-
-    loadFileContent = async () =>
-    {
-        const {match: {params: {username, repositoryName, path}}} = this.props;
-        const {lastCommit: {commitHash}} = this.state;
-        const rawFile = await RepositoryInfo.rawFile({username}, {name: repositoryName}, path!, commitHash);
-        if (rawFile !== null)
-        {
-            await this.setStatePromise({fileContent: rawFile});
-        }
-    };
-
-    loadCodeComments = async () =>
-    {
-        const {match: {params: {username, repositoryName, path}}} = this.props;
-        const {lastCommit: {commitHash}} = this.state;
+        setLoading(true);
+        const {commitHash} = lastCommit;
         const codeCommentsWrapper = await CodeCommentApi.get({
             repositoryUsername: username,
             repositoryName,
@@ -142,56 +43,136 @@ class FileReader extends PureComponent<Readonly<IProps>, IState>
         if (codeCommentsWrapper !== null)
         {
             const {codeComments} = codeCommentsWrapper;
-            await this.setStatePromise({codeComments});
+            setCodeComments(codeComments);
         }
-    };
+        setLoading(false);
+    }, [lastCommit, username, repositoryName, path]);
 
-    onCodeCommentChange = async () =>
+    // 代码批注事件监听器
+    useEffect(() =>
     {
-        await this.setStatePromise({loading: true});
-        await this.loadCodeComments();
-        await this.setStatePromise({loading: false});
-    };
-
-    onCodeLineClickFactory: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'] = lineNumber =>
-    {
-        return async () =>
+        const onCodeCommentChange = async () =>
         {
-            await this.setStatePromise({drawerLineNumber: lineNumber});
-            const {fileContent} = this.state;
-            const codeLines = (await File.transformBlobToString(fileContent)).split('\n');
-            await this.setStatePromise({drawerCode: codeLines[lineNumber - 1].trim(), drawerVisible: true});
+            await loadCodeComments();
         };
+
+        eventEmitter.on(EVENT.CODE_COMMENT_CHANGE, onCodeCommentChange);
+        return () => {eventEmitter.removeListener(EVENT.CODE_COMMENT_CHANGE, onCodeCommentChange);};
+    }, [loadCodeComments]);
+
+    // loadLastCommit
+    useEffect(() =>
+    {
+        const loadLastCommit = async () =>
+        {
+            const lastCommit = await RepositoryInfo.lastBranchCommit({username}, {name: repositoryName}, commitHash!, path);
+            if (lastCommit !== null)
+            {
+                setLastCommit(lastCommit);
+            }
+        };
+
+        setLoading(true);
+        setLastCommitLoaded(false);
+        loadLastCommit()
+            .then(() => setLastCommitLoaded(true))
+            .finally(() => setLoading(false));
+    }, [username, repositoryName, path, commitHash]);
+
+    // loadFileInfo
+    useEffect(() =>
+    {
+        const loadFileInfo = async () =>
+        {
+            const {commitHash} = lastCommit;
+            const fileInfo = await RepositoryInfo.fileInfo({username}, {name: repositoryName}, path!, commitHash);
+            if (fileInfo !== null)
+            {
+                const {exists, size, isBinary} = fileInfo;
+                if (!exists)
+                {
+                    return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+                }
+                else
+                {
+                    setFileSize(size!);
+                    setIsBinary(isBinary!);
+                    // 不是二进制文件，但大小超过 5M
+                    setIsOversize(!isBinary && size! > 5 * 1024 * 1024);
+                }
+            }
+        };
+
+        if (lastCommitLoaded)
+        {
+            setLoading(true);
+            loadFileInfo()
+                .finally(() => setLoading(false));
+        }
+    }, [lastCommit, username, repositoryName, path, history, lastCommitLoaded]);
+
+    // loadCodeComments
+    useEffect(() =>
+    {
+        if (lastCommitLoaded)
+        {
+            setLoading(true);
+            loadCodeComments()
+                .finally(() => setLoading(false));
+        }
+    }, [loadCodeComments, lastCommitLoaded]);
+
+    // loadFileContent
+    useEffect(() =>
+    {
+        const loadFileContent = async () =>
+        {
+            const {commitHash} = lastCommit;
+            const rawFile = await RepositoryInfo.rawFile({username}, {name: repositoryName}, path!, commitHash);
+            if (rawFile !== null)
+            {
+                setFileContent(rawFile);
+            }
+        };
+
+        if (!isBinary && !isOversize && lastCommitLoaded)
+        {
+            setLoading(true);
+            loadFileContent()
+                .finally(() => setLoading(false));
+        }
+
+    }, [isBinary, isOversize, username, repositoryName, path, lastCommit, lastCommitLoaded]);
+
+    const onCodeLineClickFactory: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'] = useCallback(
+        lineNumber =>
+        {
+            return async () =>
+            {
+                setDrawerLineNumber(lineNumber);
+                const codeLines = (await File.transformBlobToString(fileContent)).split('\n');
+                setDrawerCode(codeLines[lineNumber - 1].trim());
+                setDrawerVisible(true);
+            };
+        }, [fileContent]);
+
+    const onDrawerClose: DrawerProps['onClose'] = () =>
+    {
+        setDrawerVisible(false);
     };
 
-    onDrawerClose: DrawerProps['onClose'] = async () =>
-    {
-        await this.setStatePromise({drawerVisible: false});
-    };
-
-    render()
-    {
-        const {
-            isBinary, isOversize, lastCommit, loading, fileContent, fileSize, codeComments,
-            drawerVisible, drawerLineNumber, drawerCode,
-        } = this.state;
-        const hasCommentLineNumbers = codeComments.map(({columnNumber}) => columnNumber);
-
-        return (
-            <View fileSize={fileSize}
-                  fileContent={fileContent}
-                  isBinary={isBinary}
-                  isOversize={isOversize}
-                  lastCommit={lastCommit}
-                  loading={loading}
-                  hasCommentLineNumbers={hasCommentLineNumbers}
-                  onCodeLineClickFactory={this.onCodeLineClickFactory}
-                  drawerCode={drawerCode}
-                  drawerLineNumber={drawerLineNumber}
-                  drawerVisible={drawerVisible} onDrawerClose={this.onDrawerClose} />
-        );
-
-    }
+    return (
+        <View fileSize={fileSize}
+              fileContent={fileContent}
+              isBinary={isBinary}
+              isOversize={isOversize}
+              lastCommit={lastCommit}
+              loading={loading}
+              hasCommentLineNumbers={hasCommentLineNumbers}
+              onCodeLineClickFactory={onCodeLineClickFactory}
+              drawerCode={drawerCode}
+              drawerLineNumber={drawerLineNumber}
+              drawerVisible={drawerVisible} onDrawerClose={onDrawerClose} />);
 }
 
-export default withRouter(FileReader);
+export default React.memo(FileReader);
