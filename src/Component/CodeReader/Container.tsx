@@ -5,7 +5,7 @@ import {Code, File} from '../../Function';
 interface IProps
 {
     readonly hasLineNumber: boolean;
-    readonly fileContent: Blob;
+    readonly fileContent: Blob | string;
     readonly hasComment: boolean,
     readonly onCodeLineClickFactory?: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'];
     readonly hasCommentLineNumbers?: number[];   // 需要显示批注图标行的行数
@@ -21,7 +21,16 @@ function CodeReader(props: IProps)
     useEffect(() =>
     {
         setProcessing(true);
-        File.transformBlobToString(fileContent)
+        let promise: Promise<string>;
+        if (fileContent instanceof Blob)
+        {
+            promise = File.transformBlobToString(fileContent);
+        }
+        else
+        {
+            promise = Promise.resolve(fileContent);
+        }
+        promise
             .then(code => Code.getHighlightedCodeLines(code))
             .then(highlightedCodeLines => setHighlightedCodeLines(highlightedCodeLines))
             .finally(() => setProcessing(false));

@@ -1,48 +1,43 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import View from './View';
-import path from 'path';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {useRouteMatch} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
 import {File} from '../../../../../../../../Function';
+import path from 'path';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
+interface IProps
 {
     fileSize: number;
     lastCommitHash: string;
 }
 
-interface IState {}
-
-class FileInfoBar extends PureComponent<IProps, IState>
+function FileInfoBar(props: IProps)
 {
-    onRawFileButtonClick = async () =>
-    {
-        const {match: {params: {username, repositoryName, path}}, lastCommitHash} = this.props;
-        const rawFile = await RepositoryInfo.rawFile({username}, {name: repositoryName}, path!, lastCommitHash);
-        if (rawFile !== null)
-        {
-            this.startDownload(rawFile);
-        }
-    };
+    const {fileSize, lastCommitHash} = props;
 
-    startDownload = (blob: Blob) =>
+    const {params: {username, repositoryName, path: filePath}} = useRouteMatch<RouterInterface.IRepositoryCode>();
+
+    const startDownload = (blob: Blob) =>
     {
-        const {match: {params: {path: filePath}}} = this.props;
         const url = URL.createObjectURL(blob);
         File.startDownload(url, path.basename(filePath!));
         URL.revokeObjectURL(url);
     };
 
-    render()
+    const onRawFileButtonClick = async () =>
     {
-        const {fileSize} = this.props;
+        const rawFile = await RepositoryInfo.rawFile({username}, {name: repositoryName}, filePath!, lastCommitHash);
+        if (rawFile !== null)
+        {
+            startDownload(rawFile);
+        }
+    };
 
-        return (
-            <View fileSize={fileSize}
-                  onRawFileButtonClick={this.onRawFileButtonClick} />
-        );
-    }
+    return (
+        <View fileSize={fileSize}
+              onRawFileButtonClick={onRawFileButtonClick} />
+    );
 }
 
-export default withRouter(FileInfoBar);
+export default React.memo(FileInfoBar);
