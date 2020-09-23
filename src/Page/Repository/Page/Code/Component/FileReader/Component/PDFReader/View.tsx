@@ -25,7 +25,7 @@ function PDFReader(props: IProps)
                 loading={<Spin spinning={true} />}
                 error={<Alert type={'error'} message={<div><ExclamationCircleOutlined /> PDF 文件加载失败</div>} />}
                 onLoadSuccess={onPDFLoadSuccess}>
-                <Page pageNumber={pageNumber} renderAnnotationLayer={false} />
+                <Page pageNumber={pageNumber} />
             </Document>
             <div className={Style.control}>
                 <Pagination pageSize={1}
