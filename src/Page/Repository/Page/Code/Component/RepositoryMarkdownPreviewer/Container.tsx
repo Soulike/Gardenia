@@ -134,8 +134,8 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
             const fileInfo = await RepositoryInfo.fileInfo({username}, {name: repositoryName}, absoluteFilePath, commitHash ? commitHash : mainBranchName);
             if (fileInfo !== null)
             {
-                const {exists, type} = fileInfo;
-                if (!exists || type === ObjectType.BLOB)    // 是文件
+                const {objectType} = fileInfo;
+                if (objectType === ObjectType.BLOB)    // 是文件
                 {
                     return RouterFunction.generateRepositoryCodeRoute({
                         username,
@@ -145,7 +145,7 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
                         objectType: ObjectType.BLOB,
                     });
                 }
-                else // 是文件夹
+                else if (objectType === ObjectType.TREE) // 是文件夹
                 {
                     return RouterFunction.generateRepositoryCodeRoute({
                         username,
@@ -153,6 +153,16 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
                         commitHash: commitHash ? commitHash : mainBranchName,
                         path: absoluteFilePath,
                         objectType: ObjectType.TREE,
+                    });
+                }
+                else    // objectType === ObjectType.COMMIT
+                {
+                    return RouterFunction.generateRepositoryCodeRoute({
+                        username,
+                        repositoryName,
+                        commitHash: commitHash ? commitHash : mainBranchName,
+                        path: absoluteFilePath,
+                        objectType: ObjectType.COMMIT,
                     });
                 }
             }

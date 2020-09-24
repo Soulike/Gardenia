@@ -6,6 +6,7 @@ import {join} from 'path';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {File} from '../../../../../../../../Function';
 import {promisify} from 'util';
+import {ObjectType} from '../../../../../../../../CONSTANT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 {
@@ -65,7 +66,7 @@ class Readme extends PureComponent<Readonly<IProps>, IState>
         for (const readmeName of readmeNames)
         {
             const info = await RepositoryInfo.fileInfo({username}, {name: repositoryName}, join(path ? path : '', readmeName), commitHash);
-            if (info !== null && info.exists)
+            if (info !== null && info.objectType === ObjectType.BLOB)
             {
                 const raw = await RepositoryInfo.rawFile({username}, {name: repositoryName}, join(path ? path : '', readmeName), commitHash);
                 if (raw !== null)
