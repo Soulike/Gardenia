@@ -1,13 +1,11 @@
 import React, {HTMLAttributes} from 'react';
 import Style from './Style.module.scss';
 import {Commit} from '../../../../../../Class';
-import {Spin} from 'antd';
+import {Skeleton} from 'antd';
 import CommitInfoBar from '../CommitInfoBar';
-import {Interface as RouterInterface} from '../../../../../../Router';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
 import Binary from './Component/Binary';
 import Oversize from './Component/Oversize';
-import {basename, extname} from 'path';
+import path from 'path';
 import CodeReader from '../../../../../../Component/CodeReader';
 import MarkdownReader from './Component/MarkdownReader';
 import {DrawerProps} from 'antd/lib/drawer';
@@ -15,14 +13,15 @@ import CodeCommentDrawer from './Component/CodeCommentDrawer';
 import FileInfoBar from './Component/FileInfoBar';
 import PDFReader from './Component/PDFReader';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
+interface IProps
 {
-    isBinary: boolean,
     isOversize: boolean,
     lastCommit: Readonly<Commit>,
     loading: boolean,
+    fileType: string,
     fileContent: Blob;
     fileSize: number;
+    fileName: string;
     onCodeLineClickFactory: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'];
     hasCommentLineNumbers: number[];
 
@@ -35,17 +34,15 @@ interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
 function FileReader(props: Readonly<IProps>)
 {
     // 文件类型扩展名
-    const JSON = ['.json'];
     const MARKDOWN = ['.md', '.markdown', '.mdwn'];
-    const PDF = ['.pdf'];
     const {
-        isBinary,
         isOversize,
         lastCommit,
         loading,
         fileContent,
+        fileType,
         fileSize,
-        match: {params: {path}},
+        fileName,
         onCodeLineClickFactory,
         hasCommentLineNumbers,
         drawerCode,
@@ -53,12 +50,14 @@ function FileReader(props: Readonly<IProps>)
         drawerVisible,
         onDrawerClose,
     } = props;
-    const fileName = basename(path!);
-    const ext = extname(fileName).toLowerCase();
+    const ext = path.extname(fileName).toLowerCase();
+
+    const lowerCasedFileType = fileType.toLowerCase();
+    const isText = lowerCasedFileType.includes('text');
     return (
         <>
             <div className={Style.FileReader}>
-                <Spin spinning={loading}>
+                <Skeleton loading={loading} active={true}>
                     <div className={Style.commitInfoBar}>
                         <CommitInfoBar lastCommit={lastCommit} />
                     </div>
@@ -70,41 +69,34 @@ function FileReader(props: Readonly<IProps>)
                             {
                                 (() =>
                                 {
-                                    if (isBinary)
-                                    {
-                                        return <Binary />;
-                                    }
-                                    else if (isOversize)
+                                    if (isOversize)
                                     {
                                         return <Oversize />;
                                     }
-                                    else if (JSON.includes(ext))
-                                    {
-                                        return <CodeReader fileContent={fileContent}
-                                                           hasComment={true} hasLineNumber={true}
-                                                           hasCommentLineNumbers={hasCommentLineNumbers}
-                                                           onCodeLineClickFactory={onCodeLineClickFactory} />;
-                                    }
-                                    else if (MARKDOWN.includes(ext))
+                                    else if (isText && MARKDOWN.includes(ext))
                                     {
                                         return <MarkdownReader fileContent={fileContent} />;
                                     }
-                                    else if (PDF.includes(ext))
+                                    else if (lowerCasedFileType.includes('pdf'))
                                     {
                                         return <PDFReader fileContent={fileContent} />;
                                     }
-                                    else
+                                    else if (isText || lowerCasedFileType.includes('json'))
                                     {
                                         return <CodeReader fileContent={fileContent}
                                                            hasComment={true} hasLineNumber={true}
                                                            onCodeLineClickFactory={onCodeLineClickFactory}
                                                            hasCommentLineNumbers={hasCommentLineNumbers} />;
                                     }
+                                    else
+                                    {
+                                        return <Binary />;
+                                    }
                                 })()
                             }
                         </div>
                     </div>
-                </Spin>
+                </Skeleton>
             </div>
             <CodeCommentDrawer lineNumber={drawerLineNumber}
                                code={drawerCode}
@@ -114,4 +106,4 @@ function FileReader(props: Readonly<IProps>)
     );
 }
 
-export default withRouter(React.memo(FileReader));
+export default React.memo(FileReader);

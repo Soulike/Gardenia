@@ -8,15 +8,19 @@ import {DrawerProps} from 'antd/lib/drawer';
 import eventEmitter, {EVENT} from './Event';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG/ROUTER';
 import {File} from '../../../../../../Function';
-
+import {basename} from 'path';
 
 function FileReader()
 {
-    const [isBinary, setIsBinary] = useState(false);
+    // 可展示文件的最大大小
+    const TEXT_FILE_MAX_SIZE = 128 * 1024;
+    const BINARY_FILE_MAX_SIZE = 5 * 1024 * 1024;
+
     const [isOversize, setIsOversize] = useState(false);
     const [lastCommit, setLastCommit] = useState(new Commit('', '', '', 0, '', ''));
     const [lastCommitLoaded, setLastCommitLoaded] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [fileType, setFileType] = useState('');
     const [fileContent, setFileContent] = useState(new Blob());
     const [fileSize, setFileSize] = useState(0);
     const [codeComments, setCodeComments] = useState<CodeComment[]>([]);
@@ -88,17 +92,20 @@ function FileReader()
             const fileInfo = await RepositoryInfo.fileInfo({username}, {name: repositoryName}, path!, commitHash);
             if (fileInfo !== null)
             {
-                const {exists, size, isBinary} = fileInfo;
-                if (!exists)
+                const {fileType, objectType, fileSize} = fileInfo;
+                if (objectType === null)
                 {
                     return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
                 }
                 else
                 {
-                    setFileSize(size!);
-                    setIsBinary(isBinary!);
-                    // 不是二进制文件，但大小超过 5M
-                    setIsOversize(!isBinary && size! > 5 * 1024 * 1024);
+                    setFileSize(fileSize!);
+                    setFileType(fileType!);
+                    const isText = fileType!.toLowerCase().includes('text');
+                    const isOversize = isText
+                        ? fileSize! > TEXT_FILE_MAX_SIZE
+                        : fileSize! > BINARY_FILE_MAX_SIZE;
+                    setIsOversize(isOversize);
                 }
             }
         };
@@ -109,7 +116,7 @@ function FileReader()
             loadFileInfo()
                 .finally(() => setLoading(false));
         }
-    }, [lastCommit, username, repositoryName, path, history, lastCommitLoaded]);
+    }, [lastCommit, username, repositoryName, path, history, lastCommitLoaded, BINARY_FILE_MAX_SIZE, TEXT_FILE_MAX_SIZE]);
 
     // loadCodeComments
     useEffect(() =>
@@ -135,14 +142,14 @@ function FileReader()
             }
         };
 
-        if (!isBinary && !isOversize && lastCommitLoaded)
+        if (!isOversize && lastCommitLoaded)
         {
             setLoading(true);
             loadFileContent()
                 .finally(() => setLoading(false));
         }
 
-    }, [isBinary, isOversize, username, repositoryName, path, lastCommit, lastCommitLoaded]);
+    }, [isOversize, username, repositoryName, path, lastCommit, lastCommitLoaded]);
 
     const onCodeLineClickFactory: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'] = useCallback(
         lineNumber =>
@@ -161,10 +168,10 @@ function FileReader()
         setDrawerVisible(false);
     };
 
+    const fileName = basename(path!);
     return (
         <View fileSize={fileSize}
-              fileContent={fileContent}
-              isBinary={isBinary}
+              fileContent={fileContent} fileType={fileType} fileName={fileName}
               isOversize={isOversize}
               lastCommit={lastCommit}
               loading={loading}

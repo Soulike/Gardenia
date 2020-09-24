@@ -333,11 +333,11 @@ export async function commitCountBetweenCommits(repository: Pick<Repository, 'us
     }
 }
 
-export async function fileInfo(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<Repository, 'name'>>, filePath: Readonly<string>, commitHash: Readonly<string>): Promise<Readonly<{ exists: boolean, type?: ObjectType, size?: number, isBinary?: boolean }> | null>
+export async function fileInfo(account: Readonly<Pick<Account, 'username'>>, repository: Readonly<Pick<Repository, 'name'>>, filePath: Readonly<string>, commitHash: Readonly<string>): Promise<Readonly<{ objectType: ObjectType | null, fileType: string | null, fileSize: number | null }> | null>
 {
     try
     {
-        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ exists: boolean, type?: ObjectType, size?: number, isBinary?: boolean }>> =
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ objectType: ObjectType | null, fileType: string | null, fileSize: number | null }>> =
             await axios.get(FILE_INFO, {
                 params: {
                     json: JSON.stringify({account, repository, filePath, commitHash}),
