@@ -1,0 +1,10 @@
+.ImageViewer {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    width: 100%;
+
+    .image {
+        max-width: 100%;
+    }
+}
