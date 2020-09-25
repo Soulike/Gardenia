@@ -20,7 +20,7 @@ function FileReader()
     const [lastCommit, setLastCommit] = useState(new Commit('', '', '', 0, '', ''));
     const [lastCommitLoaded, setLastCommitLoaded] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [fileType, setFileType] = useState('');
+    const [fileType, setFileType] = useState('text');   // 初始值认为是 text 类型，修复闪过二进制的问题
     const [fileContent, setFileContent] = useState(new Blob());
     const [fileSize, setFileSize] = useState(0);
     const [codeComments, setCodeComments] = useState<CodeComment[]>([]);

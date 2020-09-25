@@ -12,6 +12,7 @@ import {DrawerProps} from 'antd/lib/drawer';
 import CodeCommentDrawer from './Component/CodeCommentDrawer';
 import FileInfoBar from './Component/FileInfoBar';
 import PDFReader from './Component/PDFReader';
+import ImageViewer from './Component/ImageViewer';
 
 interface IProps
 {
@@ -87,6 +88,10 @@ function FileReader(props: Readonly<IProps>)
                                                            hasComment={true} hasLineNumber={true}
                                                            onCodeLineClickFactory={onCodeLineClickFactory}
                                                            hasCommentLineNumbers={hasCommentLineNumbers} />;
+                                    }
+                                    else if (lowerCasedFileType.includes('image'))
+                                    {
+                                        return <ImageViewer loading={loading} fileContent={fileContent} />;
                                     }
                                     else
                                     {
