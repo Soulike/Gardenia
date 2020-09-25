@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import View from './View';
 
 interface IProps
@@ -12,7 +12,7 @@ function ImageViewer(props: IProps)
     const [url, setUrl] = useState('');
     const {fileContent, loading} = props;
 
-    useEffect(() =>
+    useLayoutEffect(() =>
     {
         const url = URL.createObjectURL(fileContent);
         setUrl(url);
