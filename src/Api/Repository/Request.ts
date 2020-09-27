@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {Repository, Repository as RepositoryClass, ResponseBody} from '../../Class';
-import {CREATE, DEL, FORK, GET_REPOSITORIES, IS_MERGEABLE, SEARCH} from './ROUTE';
+import {CREATE, DEL, FORK, GET_REPOSITORIES, IS_MERGEABLE, SEARCH, SHOULD_SHOW_OPTIONS} from './ROUTE';
 import nProgress from 'nprogress';
 
 export async function getRepositories(start: number, end: number, username?: Readonly<string>): Promise<Readonly<Array<Readonly<RepositoryClass>>> | null>
@@ -141,5 +141,30 @@ export async function search(keyword: string, offset: number, limit: number): Pr
     finally
     {
         nProgress.done();
+    }
+}
+
+export async function shouldShowOptions(repository: Readonly<Pick<Repository, 'username' | 'name'>>): Promise<{ showOptions: boolean } | null>
+{
+    try
+    {
+        const {data: {isSuccessful, data}}: AxiosResponse<ResponseBody<{ showOptions: boolean }>> =
+            await axios.get(SHOULD_SHOW_OPTIONS, {
+                params: {
+                    json: JSON.stringify({repository}),
+                },
+            });
+        if (isSuccessful)
+        {
+            return data!;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    catch (e)
+    {
+        return null;
     }
 }
