@@ -1,8 +1,8 @@
 import React, {ReactNode, useEffect, useLayoutEffect, useState} from 'react';
 import View from './View';
 import {useHistory, useParams, useRouteMatch} from 'react-router-dom';
-import {Profile, Repository as RepositoryClass} from '../../Class';
-import {Issue as IssueApi, Profile as ProfileApi, PullRequest as PullRequestApi, RepositoryInfo} from '../../Api';
+import {Repository as RepositoryClass} from '../../Class';
+import {Issue as IssueApi, PullRequest as PullRequestApi, Repository as RepositoryApi, RepositoryInfo} from '../../Api';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../Router';
 import TAB_KEY from './TAB_KEY';
 import {useSelector} from 'react-redux';
@@ -22,10 +22,10 @@ function Repository(props: IProps)
     const [repository, setRepository] = useState(new RepositoryClass('', '', '', true));
     const [loading, setLoading] = useState(false);
     const [tabActiveKey, setTabActiveKey] = useState(TAB_KEY.CODE);
-    const [visitorProfile, setVisitorProfile] = useState<Profile | null>(null);
     const [forkFrom, setForkFrom] = useState<Readonly<Pick<RepositoryClass, 'username' | 'name'>> | null>(null);
     const [openPullRequestAmount, setOpenPullRequestAmount] = useState(0);
     const [openIssueAmount, setOpenIssueAmount] = useState(0);
+    const [showSetting, setShowSetting] = useState(false);
 
     const history = useHistory();
     const {objectType, commitHash, username, repositoryName} = useParams<RouterInterface.IRepositoryCode
@@ -58,6 +58,23 @@ function Repository(props: IProps)
     {
         document.title = `${username}/${repositoryName} - ${CONFIG.NAME}`;
     }, [username, repositoryName]);
+
+    // 检查是否应该显示设置 TAB
+    useLayoutEffect(() =>
+    {
+        const loadShouldShowOption = async () =>
+        {
+            const result = await RepositoryApi.shouldShowOptions({username, name: repositoryName});
+            if (result !== null)
+            {
+                const {showOptions} = result;
+                setShowSetting(showOptions);
+            }
+        };
+
+        setLoading(true);
+        loadShouldShowOption().finally(() => setLoading(false));
+    }, [username, repositoryName, isLoggedIn]);
 
     // 设置当前的 TAB
     useLayoutEffect(() =>
@@ -170,25 +187,6 @@ function Repository(props: IProps)
         loadOpenIssueAmount().finally(() => setLoading(false));
     }, [username, repositoryName]);
 
-    // 加载 visitorProfile
-    useEffect(() =>
-    {
-        const loadVisitorProfile = async () =>
-        {
-            const visitorProfile = await ProfileApi.get();
-            if (visitorProfile !== null)
-            {
-                setVisitorProfile(visitorProfile);
-            }
-        };
-
-        if (isLoggedIn)
-        {
-            setLoading(true);
-            loadVisitorProfile().finally(() => setLoading(false));
-        }
-    }, [isLoggedIn]);
-
     const onTabChange: TabsProps['onChange'] = activeKey =>
     {
         switch (activeKey)
@@ -221,7 +219,7 @@ function Repository(props: IProps)
 
     const {children} = props;
     return (
-        <View showSettings={isLoggedIn && visitorProfile !== null && repository.username === visitorProfile.username}
+        <View showSettings={showSetting}
               repository={repository}
               loading={loading}
               onTabChange={onTabChange}
