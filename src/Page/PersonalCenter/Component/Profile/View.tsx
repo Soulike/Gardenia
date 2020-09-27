@@ -25,8 +25,8 @@ function ProfileView(props: Readonly<IProps>)
                 </div>
             </div>
             <div className={Style.nameWrapper}>
-                <div className={Style.username}>{username}</div>
                 <div className={Style.nickname}>{nickname}</div>
+                <div className={Style.username}>{username}</div>
             </div>
             <div className={Style.divideLine} />
             <div className={Style.editButtonWrapper}>
