@@ -16,9 +16,11 @@ function FileReader()
     const TEXT_FILE_MAX_SIZE = 128 * 1024;
     const BINARY_FILE_MAX_SIZE = 5 * 1024 * 1024;
 
+    const [lastCommitLoaded, setLastCommitLoaded] = useState(false);
+    const [fileInfoLoaded, setFileInfoLoaded] = useState(false);
+
     const [isOversize, setIsOversize] = useState(false);
     const [lastCommit, setLastCommit] = useState(new Commit('', '', '', 0, '', ''));
-    const [lastCommitLoaded, setLastCommitLoaded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [fileType, setFileType] = useState('text');   // 初始值认为是 text 类型，修复闪过二进制的问题
     const [fileContent, setFileContent] = useState(new Blob());
@@ -114,6 +116,7 @@ function FileReader()
         {
             setLoading(true);
             loadFileInfo()
+                .then(() => setFileInfoLoaded(true))
                 .finally(() => setLoading(false));
         }
     }, [lastCommit, username, repositoryName, path, history, lastCommitLoaded, BINARY_FILE_MAX_SIZE, TEXT_FILE_MAX_SIZE]);
@@ -121,13 +124,13 @@ function FileReader()
     // loadCodeComments
     useEffect(() =>
     {
-        if (lastCommitLoaded)
+        if (lastCommitLoaded && fileInfoLoaded)
         {
             setLoading(true);
             loadCodeComments()
                 .finally(() => setLoading(false));
         }
-    }, [loadCodeComments, lastCommitLoaded]);
+    }, [loadCodeComments, lastCommitLoaded, fileInfoLoaded]);
 
     // loadFileContent
     useEffect(() =>
@@ -142,14 +145,14 @@ function FileReader()
             }
         };
 
-        if (!isOversize && lastCommitLoaded)
+        if (!isOversize && lastCommitLoaded && fileInfoLoaded)
         {
             setLoading(true);
             loadFileContent()
                 .finally(() => setLoading(false));
         }
 
-    }, [isOversize, username, repositoryName, path, lastCommit, lastCommitLoaded]);
+    }, [isOversize, username, repositoryName, path, lastCommit, lastCommitLoaded, fileInfoLoaded]);
 
     const onCodeLineClickFactory: (lineNumber: number) => HTMLAttributes<HTMLTableRowElement>['onClick'] = useCallback(
         lineNumber =>
