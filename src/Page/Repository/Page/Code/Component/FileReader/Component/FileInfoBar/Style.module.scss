@@ -26,10 +26,12 @@
         .fileNameWrapper {
             display: flex;
             align-items: center;
+            overflow-x: auto;
 
             .fileName {
                 margin-left: 0.5ch;
                 font-weight: bold;
+                width: 100px;
             }
         }
 
