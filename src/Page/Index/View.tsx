@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import RepositoryList from '../../Component/RepositoryList';
 import {Alert} from 'antd';
 import NewTabAnchor from '../../Component/NewTabAnchor';
-import yoyuuyoyuu from '../../Static/Index/余裕余裕.jpg';
+import meme from '../../Static/Index/alice_mana.png';
 
 interface IProps
 {
@@ -39,7 +39,7 @@ function IndexView(props: Readonly<IProps>)
                            </div>
                            {
                                showMeme ? <div className={Style.memeWrapper} onDoubleClick={onMemeDoubleClick}>
-                                   <img src={yoyuuyoyuu}
+                                   <img src={meme}
                                         alt={'meme'}
                                         className={Style.meme} />
                                </div> : <div className={Style.memeWrapper} />

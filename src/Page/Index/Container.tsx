@@ -3,7 +3,6 @@ import {Repository as RepositoryApi} from '../../Api';
 import {Repository} from '../../Class';
 import View from './View';
 import * as CONFIG from '../../CONFIG';
-import path from 'path';
 import {promisify} from 'util';
 
 interface IProps {}
@@ -65,39 +64,7 @@ class Index extends PureComponent<Readonly<IProps>, IState>
 
     onMemeDoubleClickFactory: () => HTMLAttributes<HTMLDivElement>['onDoubleClick'] = () =>
     {
-        let time = 0;
-        const rikairikai = new Audio(path.join(process.env.PUBLIC_URL, 'mp3', 'rikairikai.mp3'));
-        const subeteorikaishidawa = new Audio(path.join(process.env.PUBLIC_URL, 'mp3', 'subeteorikaishidawa.mp3'));
-        const arikairikairikairikairikai = new Audio(path.join(process.env.PUBLIC_URL, 'mp3', 'arikairikairikairikairikai.mp3'));
-        const wurusaiwurusaiwurusai = new Audio(path.join(process.env.PUBLIC_URL, 'mp3', 'wurusaiwurusaiwurusai.mp3'));
-        const damaraseteitadakimasu = new Audio(path.join(process.env.PUBLIC_URL, 'mp3', 'damaraseteitadakimasu.mp3'));
-
-        return async () =>
-        {
-            if (time === 1)
-            {
-                await rikairikai.play();
-            }
-            else if (time === 2)
-            {
-                await subeteorikaishidawa.play();
-            }
-            else if (time === 3)
-            {
-                await arikairikairikairikairikai.play();
-            }
-            else if (time > 3 && time < 6)
-            {
-                await wurusaiwurusaiwurusai.play();
-            }
-            else if (time === 6)
-            {
-                await damaraseteitadakimasu.play();
-                damaraseteitadakimasu.onended = () =>
-                    this.setState({showMeme: false});
-            }
-            time++;
-        };
+        return () => null;
     };
 
     render()
