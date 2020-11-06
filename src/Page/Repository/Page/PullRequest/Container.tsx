@@ -1,128 +1,92 @@
-import React, {PureComponent} from 'react';
+import React, {useEffect, useState} from 'react';
 import View from './View';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../Router';
 import {PullRequest as PullRequestApi} from '../../../../Api';
 import {IPullRequestState, IState as StoreState} from '../../../../Store';
 import {loadedAction, loadingAction} from './Action/Action';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 
-interface IProps extends RouteComponentProps<RouterInterface.IRepositoryPullRequest>
+function PullRequest()
 {
-    pullRequest: IPullRequestState['pullRequest'],
-    loadedPullRequest: typeof loadedAction,
-    loadingPullRequest: typeof loadingAction,
-    loading: IPullRequestState['loading'],
-}
+    const [commitAmount, setCommitAmount] = useState(0);
+    const [fileDiffAmount, setFileDiffAmount] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
+    const {no: noString, repositoryName, username} = useParams<RouterInterface.IRepositoryPullRequest>();
+    const dispatch = useDispatch();
+    const {pullRequest, loading: pullRequestIsLoading} = useSelector<StoreState, IPullRequestState>(state => state['PullRequest']);
 
-interface IState
-{
-    isMergeable: boolean,
-    commitAmount: number,
-    fileDiffAmount: number,
-    loading: boolean,
-}
-
-class PullRequest extends PureComponent<IProps, IState>
-{
-    constructor(props: IProps)
+    useEffect(() =>
     {
-        super(props);
-        this.state = {
-            isMergeable: false,
-            commitAmount: 0,
-            fileDiffAmount: 0,
-            loading: false,
+        const loadPullRequest = async () =>
+        {
+            const no = Number.parseInt(noString);
+            if (Number.isNaN(no) || no <= 0)
+            {
+                return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+            }
+            dispatch(loadingAction());
+            const pullRequest = await PullRequestApi.get({username, name: repositoryName}, {no});
+            if (pullRequest !== null)
+            {
+                dispatch(loadedAction(pullRequest));
+            }
+            else
+            {
+                return history.push(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+            }
         };
-    }
 
-    async componentDidMount()
-    {
-        await this.loadPullRequest();
-    }
+        setLoading(true);
+        loadPullRequest().finally(() => setLoading(false));
+    }, [noString, history, username, repositoryName, dispatch]);
 
-    async componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any)
+    useEffect(() =>
     {
-        const {match: {params: {no, repositoryName, username}}, loading, pullRequest} = this.props;
-        const {match: {params: {no: prevNo, repositoryName: prevRepositoryName, username: prevUsername}}, pullRequest: prevPullRequest} = prevProps;
-        if (no !== prevNo || repositoryName !== prevRepositoryName || username !== prevUsername)
+        const loadCommitAmount = async () =>
         {
-            await this.componentDidMount();
-        }
-        if (!loading && pullRequest !== prevPullRequest)
-        {
-            this.setState({loading: true});
-            await Promise.all([
-                this.loadCommitAmount(),
-                this.loadFileDiffAmount(),
-            ]);
-            this.setState({loading: false});
-        }
-    }
+            const {id} = pullRequest;
+            const commitAmountWrapper = await PullRequestApi.getCommitAmount({id});
+            if (commitAmountWrapper !== null)
+            {
+                const {commitAmount} = commitAmountWrapper;
+                setCommitAmount(commitAmount);
+            }
+        };
 
-    loadPullRequest = async () =>
-    {
-        const {match: {params: {no: noString, repositoryName, username}}, history, loadedPullRequest, loadingPullRequest} = this.props;
-        const no = Number.parseInt(noString);
-        if (Number.isNaN(no) || no <= 0)
+        if (!pullRequestIsLoading)
         {
-            return history.replace(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
+            setLoading(true);
+            loadCommitAmount().finally(() => setLoading(false));
         }
-        await loadingPullRequest();
-        const pullRequest = await PullRequestApi.get({username, name: repositoryName}, {no});
-        if (pullRequest !== null)
-        {
-            await loadedPullRequest(pullRequest);
-        }
-        else
-        {
-            return history.push(PAGE_ID_TO_ROUTE[PAGE_ID.NOT_FOUND]);
-        }
-    };
+    }, [pullRequest, pullRequestIsLoading]);
 
-    loadCommitAmount = async () =>
+    useEffect(() =>
     {
-        const {pullRequest: {id}} = this.props;
-        const commitAmountWrapper = await PullRequestApi.getCommitAmount({id});
-        if (commitAmountWrapper !== null)
+        const loadFileDiffAmount = async () =>
         {
-            const {commitAmount} = commitAmountWrapper;
-            this.setState({commitAmount});
-        }
-    };
+            const {id} = pullRequest;
+            const fileDiffAmountWrapper = await PullRequestApi.getFileDiffAmount({id});
+            if (fileDiffAmountWrapper !== null)
+            {
+                const {amount} = fileDiffAmountWrapper;
+                setFileDiffAmount(amount);
+            }
+        };
 
-    loadFileDiffAmount = async () =>
-    {
-        const {pullRequest: {id}} = this.props;
-        const fileDiffAmountWrapper = await PullRequestApi.getFileDiffAmount({id});
-        if (fileDiffAmountWrapper !== null)
+        if (!pullRequestIsLoading)
         {
-            const {amount} = fileDiffAmountWrapper;
-            this.setState({fileDiffAmount: amount});
+            setLoading(true);
+            loadFileDiffAmount().finally(() => setLoading(false));
         }
-    };
+    }, [pullRequest, pullRequestIsLoading]);
 
-    render()
-    {
-        const {pullRequest, loading: pullRequestIsLoading} = this.props;
-        const {loading, fileDiffAmount, commitAmount} = this.state;
-        return (<View loading={loading || pullRequestIsLoading}
-                      pullRequest={pullRequest}
-                      commitAmount={commitAmount}
-                      fileDiffAmount={fileDiffAmount} />);
-    }
+    return (<View loading={loading || pullRequestIsLoading}
+                  pullRequest={pullRequest}
+                  commitAmount={commitAmount}
+                  fileDiffAmount={fileDiffAmount} />);
 }
 
-const mapStateToProps = (state: StoreState) =>
-{
-    const {PullRequest: {pullRequest, loading}} = state;
-    return {pullRequest, loading};
-};
-
-const mapDispatchToProps = {
-    loadedPullRequest: loadedAction,
-    loadingPullRequest: loadingAction,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PullRequest));
+export default React.memo(PullRequest);
