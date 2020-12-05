@@ -1,2 +1,2 @@
-@import "~highlight.js/scss/github-gist.scss";
-@import url("~highlight.js/scss/vs2015.scss") (prefers-color-scheme: dark);
+@import "~highlight.js/styles/github-gist.css";
+@import url("~highlight.js/styles/vs2015.css") (prefers-color-scheme: dark);
