@@ -22,7 +22,7 @@
     "@types/showdown": "^1.9.3",
     "@types/validator": "^13.0.0",
     "antd": "^4.6.4",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "babel-plugin-import": "^1.12.2",
     "codemirror": "^5.52.0",
     "customize-cra": "^1.0.0",
