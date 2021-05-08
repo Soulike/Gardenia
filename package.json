@@ -5,7 +5,7 @@
   "proxy": "http://localhost:4006",
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
-    "@types/codemirror": "^0.0.108",
+    "@types/codemirror": "^5.60.0",
     "@types/core-js": "^2.5.2",
     "@types/is-number": "^7.0.0",
     "@types/is-url": "^1.2.28",
