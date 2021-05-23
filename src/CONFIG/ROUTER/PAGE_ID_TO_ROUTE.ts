@@ -2,6 +2,7 @@ import {PAGE_ID} from './PAGE_ID';
 
 export const PAGE_ID_TO_ROUTE = Object.freeze({
     [PAGE_ID.NOT_FOUND]: '/404',
+    [PAGE_ID.REPOSITORY_REDIRECT]: '/:username/:repositoryName.git',
     [PAGE_ID.INDEX]: '/',
     [PAGE_ID.LOGIN]: '/login',
     [PAGE_ID.REGISTER]: '/register',
