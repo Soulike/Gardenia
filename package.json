@@ -47,14 +47,14 @@
     "react-scripts": "4.0.3",
     "redux": "^4.0.4",
     "showdown": "^1.9.0",
-    "typescript": "4.0.5"
+    "typescript": "~4.0.5"
   },
   "devDependencies": {
     "@types/faker": "^5.1.0",
     "faker": "^5.0.0",
     "gh-pages": "^3.0.0",
     "source-map-explorer": "^2.0.1",
-    "ts-node": "^9.0.0"
+    "ts-node": "^10.0.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
