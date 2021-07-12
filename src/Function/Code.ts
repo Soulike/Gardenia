@@ -9,15 +9,11 @@ export async function getHighlightedCodeLines(code: string): Promise<string[]>
     await setImmediatePromise();
     const {language} = hljs.highlightAuto(codeLines.slice(0, 250).join('\n'));    // 只取部分内容判定语言
     await setImmediatePromise();
-    let lastTop: HighlightResult['top'] = undefined;
     const highlightedCodeLines: string[] = [];
     for (const codeLine of codeLines)
     {
         await setImmediatePromise();
-        const {top, value} = hljs.highlight(
-            language ? language : 'plaintext',
-            codeLine, true, lastTop);
-        lastTop = top;
+        const {value} = hljs.highlight(codeLine, {language: language ? language : 'plaintext', ignoreIllegals: true});
         highlightedCodeLines.push(value);
     }
     return highlightedCodeLines;
