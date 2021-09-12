@@ -1,2 +1,0 @@
-(this["webpackJsonpsoulike-git"]=this["webpackJsonpsoulike-git"]||[]).push([[6],{1101:function(i,s,t){},1365:function(i,s,t){"use strict";t.r(s);t(1101);var n=t(1102),u=t.n(n);s.default=u.a}}]);
-//# sourceMappingURL=6.92dc2d30.chunk.js.map
