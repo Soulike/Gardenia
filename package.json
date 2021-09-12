@@ -31,6 +31,7 @@
     "showdown": "^1.9.0"
   },
   "devDependencies": {
+    "@craco/craco": "^6.3.0",
     "@types/codemirror": "^5.60.0",
     "@types/core-js": "^2.5.2",
     "@types/faker": "^5.1.0",
@@ -48,6 +49,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/showdown": "^1.9.3",
     "@types/validator": "^13.0.0",
+    "craco-esbuild": "^0.4.0",
     "customize-cra": "^1.0.0",
     "faker": "^5.0.0",
     "gh-pages": "^3.0.0",
@@ -57,12 +59,12 @@
     "typescript": "~4.0.5"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build-dev": "react-app-rewired build",
-    "build": "react-app-rewired build && rm -rf build/static/js/*.map && rm -rf build/static/css/*.map",
+    "start": "craco start",
+    "build-dev": "craco build",
+    "build": "craco build && rm -rf build/static/js/*.map && rm -rf build/static/css/*.map",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build -b build",
-    "test": "react-app-rewired test",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
