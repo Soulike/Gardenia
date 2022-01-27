@@ -5,7 +5,7 @@ import {Skeleton} from 'antd';
 import CommitInfoBar from '../CommitInfoBar';
 import Binary from './Component/Binary';
 import Oversize from './Component/Oversize';
-import path from 'path';
+import path from 'path-browserify';
 import CodeReader from '../../../../../../Component/CodeReader';
 import MarkdownReader from './Component/MarkdownReader';
 import {DrawerProps} from 'antd/lib/drawer';

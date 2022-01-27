@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import View from './View';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
-import {join} from 'path';
+import {join} from 'path-browserify';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {File} from '../../../../../../../../Function';
 import {promisify} from 'util';

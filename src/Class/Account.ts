@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import CryptoJS from 'crypto-js';
 
 /**
  * @class
@@ -21,8 +21,10 @@ export class Account
 
     public static calculateHash(username: string, password: string): string
     {
-        const {sha256} = Account;
-        return sha256(sha256(username) + sha256(password));
+        return CryptoJS.SHA256(
+            CryptoJS.SHA256(username).toString(CryptoJS.enc.Hex) +
+            CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex))
+            .toString(CryptoJS.enc.Hex);
     }
 
     public static validate(obj: Readonly<Record<keyof Account, any>>): boolean
@@ -36,12 +38,5 @@ export class Account
     {
         const {username, hash} = obj;
         return new Account(username, hash);
-    }
-
-    private static sha256(text: string): string
-    {
-        const hash = crypto.createHash('sha256');
-        hash.update(text);
-        return hash.digest('hex');
     }
 }

@@ -4,7 +4,7 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../..
 import {RepositoryInfo} from '../../../../../../Api/RepositoryInfo';
 import isUrl from 'is-url';
 import {ObjectType} from '../../../../../../CONSTANT';
-import path from 'path';
+import path from 'path-browserify';
 import MarkdownPreviewer from '../../../../../../Component/MarkdownPreviewer';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>

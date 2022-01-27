@@ -4,7 +4,7 @@ import {useRouteMatch} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
 import {File} from '../../../../../../../../Function';
-import path from 'path';
+import path from 'path-browserify';
 
 interface IProps
 {

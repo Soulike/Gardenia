@@ -6,7 +6,7 @@ import {Function as RouterFunction, Interface as RouterInterface} from '../../..
 import {File as FileFunction} from '../../../../../../../../Function';
 import {Button, Space} from 'antd';
 import {FileTextOutlined, LeftOutlined} from '@ant-design/icons';
-import path from 'path';
+import path from 'path-browserify';
 import {ObjectType} from '../../../../../../../../CONSTANT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>

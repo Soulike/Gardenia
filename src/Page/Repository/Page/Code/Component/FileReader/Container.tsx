@@ -8,7 +8,7 @@ import {DrawerProps} from 'antd/lib/drawer';
 import eventEmitter, {EVENT} from './Event';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG/ROUTER';
 import {File} from '../../../../../../Function';
-import {basename} from 'path';
+import {basename} from 'path-browserify';
 
 function FileReader()
 {
