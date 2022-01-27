@@ -1,3 +1,0 @@
-(this["webpackJsonpsoulike-git"]=this["webpackJsonpsoulike-git"]||[]).push([[51],{1430:function(f,e,t){"use strict";t.r(e),t.d(e,"default",function(){return l});var o=t(0),n=t.n(o),r=t(47),c=t(49);function i(){const{username:s,repositoryName:a}=Object(r.h)(),u=Object(r.f)();return Object(o.useEffect)(()=>{u.replace(c.Function.generateRepositoryCodeRoute({username:s,repositoryName:a}))},[s,a,u]),n.a.createElement("span",null)}var l=n.a.memo(i)}}]);
-
-//# sourceMappingURL=51.6fddf74b.chunk.js.map

@@ -1,0 +1,3 @@
+"use strict";(self.webpackChunksoulike_git=self.webpackChunksoulike_git||[]).push([[6074],{16074:function(l,n,t){t.r(n),t.d(n,{default:function(){return i}});var e=t(89526),o=t(65092),a=t(18440);function c(){const{username:u,repositoryName:r}=(0,o.UO)(),s=(0,o.k6)();return(0,e.useEffect)(()=>{s.replace(a.Function.generateRepositoryCodeRoute({username:u,repositoryName:r}))},[u,r,s]),e.createElement("span",null)}var i=e.memo(c)}}]);
+
+//# sourceMappingURL=6074.5f4b8f5e.chunk.js.map
