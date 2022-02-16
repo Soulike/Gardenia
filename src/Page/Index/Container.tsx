@@ -18,7 +18,16 @@ interface IState
 class Index extends PureComponent<Readonly<IProps>, IState>
 {
     private static PAGE_SIZE = 10;  // 每一页有几条
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
     private forceUpdatePromise = promisify(this.forceUpdate);
 
     constructor(props: Readonly<IProps>)

@@ -4,7 +4,6 @@ import {Repository} from '../../../../Class';
 import {ButtonProps} from 'antd/lib/button';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../Router';
-import {promisify} from 'util';
 import {Star as StarApi} from '../../../../Api';
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
@@ -20,7 +19,16 @@ interface IState
 class Stars extends PureComponent<IProps, IState>
 {
     private static AMOUNT_PER_PAGE = 20;
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

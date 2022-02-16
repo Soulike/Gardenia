@@ -22,6 +22,7 @@ export default () =>
             ]} render={props =>
             {
                 return (
+                    // @ts-ignore props 的类型是动态的，ts 的表达能力限制
                     <Group {...props}>
                         <Switch>
                             <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.GROUP.REPOSITORIES]}

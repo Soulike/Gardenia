@@ -6,7 +6,7 @@ import {ButtonProps} from 'antd/lib/button';
 import {notification} from 'antd';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 import {RouteComponentProps} from 'react-router-dom';
-import {promisify} from 'util';
+
 
 interface IProps extends RouteComponentProps {}
 
@@ -25,7 +25,16 @@ class Avatar extends PureComponent<IProps, IState>
         'image/png',
     ];
     private fileInputRef = React.createRef<HTMLInputElement>();
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

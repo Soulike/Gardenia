@@ -3,7 +3,6 @@ import View from '../../../../Component/StarButton';
 import {ButtonProps} from 'antd/lib/button';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../Router';
-import {promisify} from 'util';
 import {Star as StarApi} from '../../../../Api';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
@@ -20,7 +19,16 @@ interface IState
 
 class StarButton extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

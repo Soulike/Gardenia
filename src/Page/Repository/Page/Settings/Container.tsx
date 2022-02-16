@@ -46,7 +46,7 @@ class Settings extends PureComponent<Readonly<IProps>, IState>
 
     initMenuItems = async () =>
     {
-        return new Promise(resolve =>
+        return new Promise<void>(resolve =>
         {
             const {match: {params: {username, repositoryName}}} = this.props;
             this.setState({

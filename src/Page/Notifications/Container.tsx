@@ -3,7 +3,7 @@ import View from './View';
 import {Notification as NotificationClass, Notification} from '../../Class';
 import {ButtonProps} from 'antd/lib/button';
 import {Notification as NotificationApi} from '../../Api';
-import {promisify} from 'util';
+
 import {notification} from 'antd';
 
 interface IProps
@@ -23,7 +23,16 @@ interface IState
 class Notifications extends PureComponent<IProps, IState>
 {
     private static readonly NOTIFICATION_AMOUNT_PER_PAGE = 20;
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

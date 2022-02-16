@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import View from './View';
 import {ButtonProps} from 'antd/lib/button';
 import {ModalProps} from 'antd/lib/modal';
-import {promisify} from 'util';
 import {InputProps} from 'antd/lib/input';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {Interface as RouterInterface} from '../../../../../../Router';
@@ -23,7 +22,16 @@ interface IState
 
 class AddMemberButton extends PureComponent<IAddMemberButtonProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IAddMemberButtonProps)
     {

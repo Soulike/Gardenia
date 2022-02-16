@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import View from './View';
 import {Repository} from '../../../../../../Class';
-import {promisify} from 'util';
+
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../Router';
 import {Group as GroupApi} from '../../../../../../Api';
@@ -17,7 +17,16 @@ interface IState
 
 class Repositories extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

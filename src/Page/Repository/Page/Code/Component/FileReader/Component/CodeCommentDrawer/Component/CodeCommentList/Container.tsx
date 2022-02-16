@@ -4,7 +4,7 @@ import {CodeComment} from '../../../../../../../../../../Class';
 import {CodeComment as CodeCommentApi} from '../../../../../../../../../../Api';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../../../../../Router';
-import {promisify} from 'util';
+
 import eventEmitter, {EVENT} from '../../../../Event';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
@@ -21,7 +21,16 @@ interface IState
 
 class CodeCommentList extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

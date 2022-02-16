@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {promisify} from 'util';
+
 import {InputProps} from 'antd/lib/input';
 import {ButtonProps} from 'antd/lib/button';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../../../../../Validator';
@@ -21,7 +21,16 @@ interface IState
 
 class Nickname extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

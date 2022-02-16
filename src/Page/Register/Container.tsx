@@ -9,7 +9,7 @@ import {InputProps} from 'antd/lib/input';
 import {Account} from '../../Class';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
 import {ButtonProps} from 'antd/lib/button';
-import {promisify} from 'util';
+
 
 const {Account: AccountValidator, Profile: ProfileValidator} = ValidatorFunction;
 
@@ -29,7 +29,16 @@ interface IState
 
 class Register extends PureComponent<Readonly<IProps>, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: Readonly<IProps>)
     {

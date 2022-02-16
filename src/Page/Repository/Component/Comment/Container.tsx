@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {Profile} from '../../../../Class';
 import View from './View';
 import {Profile as ProfileApi} from '../../../../Api';
-import {promisify} from 'util';
+
 
 interface IProps
 {
@@ -21,7 +21,16 @@ interface IState
 
 class Comment extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

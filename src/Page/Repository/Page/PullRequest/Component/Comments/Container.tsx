@@ -7,7 +7,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../Router';
 import {IPullRequestState, IState as StoreState} from '../../../../../../Store';
 import {connect} from 'react-redux';
-import {promisify} from 'util';
+
 import {notification} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
 
@@ -27,7 +27,16 @@ interface IState
 class Comments extends Component<IProps, IState>
 {
     private static COMMENT_AMOUNT_PER_PAGE = 25;
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

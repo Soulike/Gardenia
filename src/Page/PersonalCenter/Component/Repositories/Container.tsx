@@ -117,7 +117,7 @@ class Repositories extends PureComponent<Readonly<IProps>, IState>
 
     setToNextPage = async () =>
     {
-        return new Promise(resolve =>
+        return new Promise<void>(resolve =>
         {
             const {pageNumber} = this.state;
             this.setState({pageNumber: pageNumber + 1}, resolve);
@@ -126,7 +126,7 @@ class Repositories extends PureComponent<Readonly<IProps>, IState>
 
     setToPrevPage = async () =>
     {
-        return new Promise(resolve =>
+        return new Promise<void>(resolve =>
         {
             const {pageNumber} = this.state;
             if (pageNumber > 0)

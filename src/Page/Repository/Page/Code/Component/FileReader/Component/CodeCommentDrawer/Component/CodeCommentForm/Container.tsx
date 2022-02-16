@@ -1,7 +1,7 @@
 import React, {HTMLAttributes, PureComponent} from 'react';
 import View from './View';
 import {TextAreaProps} from 'antd/lib/input';
-import {promisify} from 'util';
+
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../../../../../Router';
 import {notification} from 'antd';
@@ -23,7 +23,16 @@ interface IState
 
 class CodeCommentForm extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

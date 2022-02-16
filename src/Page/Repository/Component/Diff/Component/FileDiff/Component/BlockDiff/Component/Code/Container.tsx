@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import {promisify} from 'util';
 import {Code as CodeFunction} from '../../../../../../../../../../Function';
 
 interface IProps
@@ -19,7 +18,16 @@ interface IState
 
 class Code extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

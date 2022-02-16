@@ -6,7 +6,7 @@ import {Group as GroupApi, Profile as ProfileApi} from '../../../../Api';
 import {Account, Profile} from '../../../../Class';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import {notification} from 'antd';
-import {promisify} from 'util';
+
 import {EVENT, eventEmitter} from './EVENT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IGroup> {}
@@ -22,7 +22,16 @@ interface IState
 
 class Members extends PureComponent<Readonly<IProps>, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: Readonly<IProps>)
     {

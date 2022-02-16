@@ -51,7 +51,7 @@ class Comments extends PureComponent<IProps, IState>
 
     init = async () =>
     {
-        return new Promise(resolve =>
+        return new Promise<void>(resolve =>
         {
             this.setState({comments: []}, () => resolve());
         });
@@ -59,7 +59,7 @@ class Comments extends PureComponent<IProps, IState>
 
     loadMoreComments = async () =>
     {
-        return new Promise(async resolve =>
+        return new Promise<void>(async resolve =>
         {
             const {
                 match: {params: {username, repositoryName, no: noString}},

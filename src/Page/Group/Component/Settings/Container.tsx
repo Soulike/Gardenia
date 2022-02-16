@@ -4,7 +4,6 @@ import {IMenuItem} from './Interface';
 import {RouteComponentProps} from 'react-router-dom';
 import {Function as RouterFunction, Interface as RouterInterface} from '../../../../Router';
 import {HomeOutlined, SettingOutlined} from '@ant-design/icons';
-import {promisify} from 'util';
 import {Group as GroupApi} from '../../../../Api';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../CONFIG';
 
@@ -22,7 +21,16 @@ interface IState
 
 class Settings extends PureComponent<Readonly<IProps>, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: Readonly<IProps>)
     {

@@ -6,7 +6,7 @@ import {Interface as RouterInterface} from '../../../../Router';
 import {Branch, Commit} from '../../../../Class';
 import {notification} from 'antd';
 import {ButtonProps} from 'antd/lib/button';
-import {promisify} from 'util';
+
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCommits> {}
 
@@ -21,7 +21,16 @@ interface IState
 class Commits extends PureComponent<IProps, IState>
 {
     private static COMMIT_AMOUNT_PER_PAGE = 50;
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

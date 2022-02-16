@@ -53,7 +53,7 @@ class PullRequestDiffs extends PureComponent<IProps, IState>
 
     init = async () =>
     {
-        return new Promise(resolve =>
+        return new Promise<void>(resolve =>
         {
             this.setState({fileDiffs: []}, () => resolve());
         });

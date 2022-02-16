@@ -59,7 +59,7 @@ class RepositoryMarkdownPreviewer extends PureComponent<IProps, IState>
 
     loadMainBranchName = async () =>
     {
-        return new Promise(async resolve =>
+        return new Promise<void>(async resolve =>
         {
             const {match: {params: {username, repositoryName: name}}} = this.props;
             const branchesWrapper = await RepositoryInfo.branches({username, name});

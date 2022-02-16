@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import View from './View';
 import {CodeComment, Profile} from '../../../../../../../../../../../../../../Class';
 import {Profile as ProfileApi} from '../../../../../../../../../../../../../../Api';
-import {promisify} from 'util';
+
 
 interface IProps
 {
@@ -18,7 +18,16 @@ interface IState
 
 class CardTitle extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

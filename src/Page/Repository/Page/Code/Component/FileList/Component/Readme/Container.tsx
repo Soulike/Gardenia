@@ -5,7 +5,7 @@ import {RepositoryInfo} from '../../../../../../../../Api/RepositoryInfo';
 import {join} from 'path-browserify';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {File} from '../../../../../../../../Function';
-import {promisify} from 'util';
+
 import {ObjectType} from '../../../../../../../../CONSTANT';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode>
@@ -22,7 +22,16 @@ interface IState
 
 class Readme extends PureComponent<Readonly<IProps>, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: Readonly<IProps>)
     {

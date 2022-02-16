@@ -4,7 +4,7 @@ import {RouteComponentProps, withRouter} from 'react-router';
 import {Interface as RouterInterface} from '../../../../../../Router';
 import {Repository} from '../../../../../../Class';
 import {RepositoryInfo as RepositoryInfoApi} from '../../../../../../Api';
-import {promisify} from 'util';
+
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositorySettings> {}
@@ -17,7 +17,16 @@ interface IState
 
 class Options extends PureComponent<Readonly<IProps>, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: Readonly<IProps>)
     {

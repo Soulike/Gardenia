@@ -58,7 +58,7 @@ class Commits extends Component<IProps, IState>
 
     init = async () =>
     {
-        return new Promise(resolve =>
+        return new Promise<void>(resolve =>
         {
             this.setState({commits: []}, () => resolve());
         });

@@ -56,7 +56,7 @@ class Commit extends PureComponent<IProps, IState>
 
     init = async () =>
     {
-        return new Promise(resolve =>
+        return new Promise<void>(resolve =>
         {
             this.setState({diff: []}, () => resolve());
         });

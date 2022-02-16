@@ -10,7 +10,6 @@ import Groups from './Component/Groups';
 import Collaborations from './Component/Collaborations';
 import Stars from './Component/Stars';
 import {Profile as ProfileApi} from '../../Api/Profile';
-import {promisify} from 'util';
 import {Tab} from './Interface';
 
 interface IProps extends RouteComponentProps<RouterInterface.IPersonalCenter> {}
@@ -23,7 +22,16 @@ interface IState
 
 class PersonalCenter extends PureComponent<Readonly<IProps>, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: Readonly<IProps>)
     {

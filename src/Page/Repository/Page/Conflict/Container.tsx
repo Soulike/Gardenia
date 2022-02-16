@@ -75,7 +75,7 @@ class Conflict extends PureComponent<IConflictProps, IState>
 
     loadPullRequest = async () =>
     {
-        return new Promise(async resolve =>
+        return new Promise<void>(async resolve =>
         {
             const {match: {params: {username, repositoryName: name, no: noString}}, history} = this.props;
             const no = Number.parseInt(noString);
@@ -103,7 +103,7 @@ class Conflict extends PureComponent<IConflictProps, IState>
 
     loadConflicts = async () =>
     {
-        return new Promise(async resolve =>
+        return new Promise<void>(async resolve =>
         {
             const {pullRequest} = this.state;
             const {id} = pullRequest;

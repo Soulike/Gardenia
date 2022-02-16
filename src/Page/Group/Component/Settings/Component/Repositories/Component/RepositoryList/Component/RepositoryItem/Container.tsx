@@ -3,7 +3,7 @@ import View from './View';
 import {Repository} from '../../../../../../../../../../Class';
 import {Interface as RouterInterface} from '../../../../../../../../../../Router';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {promisify} from 'util';
+
 import {Group as GroupApi} from '../../../../../../../../../../Api';
 import {notification} from 'antd';
 import {EVENT, eventEmitter} from '../../../../EVENT';
@@ -21,7 +21,16 @@ interface IState
 
 class RepositoryItem extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import View from './View';
 import {PopconfirmProps} from 'antd/lib/popconfirm';
 import {CodeComment} from '../../../../../../../../../../../../../../Class';
-import {promisify} from 'util';
+
 import {CodeComment as CodeCommentApi} from '../../../../../../../../../../../../../../Api';
 import {notification} from 'antd';
 import eventEmitter, {EVENT} from '../../../../../../../../Event';
@@ -19,7 +19,16 @@ interface IState
 
 class CardBottom extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

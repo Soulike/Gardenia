@@ -5,7 +5,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {ObjectType} from '../../../../../../CONSTANT';
 import {Commit} from '../../../../../../Class';
 import {Interface as RouterInterface} from '../../../../../../Router';
-import {promisify} from 'util';
+
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../CONFIG';
 
 interface IProps extends RouteComponentProps<RouterInterface.IRepositoryCode> {}
@@ -20,7 +20,28 @@ interface IState
 
 class FileList extends Component<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    loadMasterBranchName = async () =>
+    {
+        return new Promise<void>(async resolve =>
+        {
+            const {match: {params: {username, repositoryName}}} = this.props;
+            const result = await RepositoryInfo.branches({username, name: repositoryName});
+            if (result !== null)
+            {
+                const {branches} = result;
+                let masterBranchName = '';
+                for (const {name, isDefault} of branches)
+                {
+                    if (isDefault)
+                    {
+                        masterBranchName = name;
+                        break;
+                    }
+                }
+                this.setState({masterBranchName}, () => resolve());
+            }
+        });
+    };
 
     constructor(props: Readonly<IProps>)
     {
@@ -68,25 +89,21 @@ class FileList extends Component<IProps, IState>
         }
     }
 
-    loadMasterBranchName = async () =>
+    loadLastCommit = async () =>
     {
-        return new Promise(async resolve =>
+        return new Promise<void>(async resolve =>
         {
-            const {match: {params: {username, repositoryName}}} = this.props;
-            const result = await RepositoryInfo.branches({username, name: repositoryName});
-            if (result !== null)
+            const {match: {params: {username, repositoryName: name, commitHash, path}}} = this.props;
+            const {masterBranchName} = this.state;
+            const lastCommit = await RepositoryInfo.lastBranchCommit(
+                {username}, {name}, commitHash ? commitHash : masterBranchName, path);
+            if (lastCommit !== null)
             {
-                const {branches} = result;
-                let masterBranchName = '';
-                for (const {name, isDefault} of branches)
-                {
-                    if (isDefault)
-                    {
-                        masterBranchName = name;
-                        break;
-                    }
-                }
-                this.setState({masterBranchName}, () => resolve());
+                this.setState({lastCommit}, () => resolve());
+            }
+            else
+            {
+                resolve();
             }
         });
     };
@@ -109,22 +126,14 @@ class FileList extends Component<IProps, IState>
         }
     };
 
-    loadLastCommit = async () =>
+    private setStatePromise = (state: any) =>
     {
-        return new Promise(async resolve =>
+        return new Promise<void>(resolve =>
         {
-            const {match: {params: {username, repositoryName: name, commitHash, path}}} = this.props;
-            const {masterBranchName} = this.state;
-            const lastCommit = await RepositoryInfo.lastBranchCommit(
-                {username}, {name}, commitHash ? commitHash : masterBranchName, path);
-            if (lastCommit !== null)
-            {
-                this.setState({lastCommit}, () => resolve());
-            }
-            else
+            this.setState(state, () =>
             {
                 resolve();
-            }
+            });
         });
     };
 

@@ -10,7 +10,6 @@ import {Function as RouterFunction} from '../../Router';
 import * as CONFIG from '../../CONFIG';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../Validator';
-import {promisify} from 'util';
 
 interface IProps extends RouteComponentProps {}
 
@@ -26,7 +25,16 @@ interface IState
 
 class CreateRepository extends PureComponent<Readonly<IProps>, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: Readonly<IProps>)
     {

@@ -7,7 +7,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {notification} from 'antd';
 import {PullRequest as PullRequestApi} from '../../../../../../../../Api';
-import {promisify} from 'util';
+
 import {PullRequest} from '../../../../../../../../Class';
 import {ERROR_MESSAGE, Function as ValidatorFunction} from '../../../../../../../../Validator';
 
@@ -26,7 +26,16 @@ interface IState
 
 class CommentPoster extends PureComponent<IProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IProps)
     {

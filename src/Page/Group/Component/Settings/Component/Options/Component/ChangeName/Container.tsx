@@ -5,7 +5,6 @@ import {ButtonProps} from 'antd/lib/button';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Interface as RouterInterface} from '../../../../../../../../Router';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../../../../CONFIG';
-import {promisify} from 'util';
 import {Group as GroupApi} from '../../../../../../../../Api';
 import {ERROR_MESSAGE, Function as ValidatorFunction, HINT} from '../../../../../../../../Validator';
 import {notification} from 'antd';
@@ -20,7 +19,16 @@ export interface IState
 
 class ChangeName extends PureComponent<IChangeNameProps, IState>
 {
-    private setStatePromise = promisify(this.setState);
+    private setStatePromise = (state: any) =>
+    {
+        return new Promise<void>(resolve =>
+        {
+            this.setState(state, () =>
+            {
+                resolve();
+            });
+        });
+    };
 
     constructor(props: IChangeNameProps)
     {
